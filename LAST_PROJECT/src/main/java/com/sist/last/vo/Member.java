@@ -11,14 +11,17 @@ public class Member extends DTO {
 	private String introduce;	//소개
 	private int grade;			//등급
 	private int div;			//회원구분
+	private int scrap;			//스크랩 수
+	private int login;			//로그인
 	private String regDt;		//등록일
 	private String modId;		//수정자
 	private String modDt;		//수정일
 	
 	public Member() {}
 
+
 	public Member(String memberId, String imgId, String passwd, String nickname, String introduce, int grade, int div,
-			String regDt, String modId, String modDt) {
+			int scrap, int login, String regDt, String modId, String modDt) {
 		super();
 		this.memberId = memberId;
 		this.imgId = imgId;
@@ -27,10 +30,14 @@ public class Member extends DTO {
 		this.introduce = introduce;
 		this.grade = grade;
 		this.div = div;
+		this.scrap = scrap;
+		this.login = login;
 		this.regDt = regDt;
 		this.modId = modId;
 		this.modDt = modDt;
 	}
+
+
 
 	public String getMemberId() {
 		return memberId;
@@ -87,6 +94,22 @@ public class Member extends DTO {
 	public void setDiv(int div) {
 		this.div = div;
 	}
+	
+	public int getScrap() {
+		return scrap;
+	}
+
+	public void setScrap(int scrap) {
+		this.scrap = scrap;
+	}
+
+	public int getLogin() {
+		return login;
+	}
+
+	public void setLogin(int login) {
+		this.login = login;
+	}
 
 	public String getRegDt() {
 		return regDt;
@@ -112,12 +135,13 @@ public class Member extends DTO {
 		this.modDt = modDt;
 	}
 
+
 	@Override
 	public String toString() {
 		return "Member [memberId=" + memberId + ", imgId=" + imgId + ", passwd=" + passwd + ", nickname=" + nickname
-				+ ", introduce=" + introduce + ", grade=" + grade + ", div=" + div + ", regDt=" + regDt + ", modId="
-				+ modId + ", modDt=" + modDt + ", toString()=" + super.toString() + "]";
+				+ ", introduce=" + introduce + ", grade=" + grade + ", div=" + div + ", scrap=" + scrap + ", login="
+				+ login + ", regDt=" + regDt + ", modId=" + modId + ", modDt=" + modDt + ", toString()="
+				+ super.toString() + "]";
 	}
-	
 	
 }

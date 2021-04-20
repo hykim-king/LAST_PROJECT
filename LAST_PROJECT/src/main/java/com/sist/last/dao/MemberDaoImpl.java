@@ -31,6 +31,8 @@ public class MemberDaoImpl implements MemberDao {
 			memberVO.setIntroduce(rs.getString("introduce"));
 			memberVO.setGrade(rs.getInt("grade"));
 			memberVO.setDiv(rs.getInt("div"));
+			memberVO.setScrap(rs.getInt("scrap")); //scrap,
+			memberVO.setLogin(rs.getInt("login")); //login 추가
 			memberVO.setRegDt(rs.getString("reg_dt"));
 			memberVO.setModId(rs.getString("mod_id"));
 			memberVO.setModDt(rs.getString("mod_dt"));
@@ -63,6 +65,8 @@ public class MemberDaoImpl implements MemberDao {
 		sb.append(" 	introduce = ?,      \n");
 		sb.append(" 	grade = ?,          \n");
 		sb.append(" 	div = ?,            \n");
+		sb.append(" 	scrap = ?,          \n");
+		sb.append(" 	login = ?,          \n");
 		sb.append(" 	reg_dt = SYSDATE,   \n");
 		sb.append(" 	mod_id = ?,         \n");
 		sb.append(" 	mod_dt = SYSDATE    \n");
@@ -75,6 +79,8 @@ public class MemberDaoImpl implements MemberDao {
 				,member.getIntroduce()
 				,member.getGrade()
 				,member.getDiv()
+				,member.getScrap()
+				,member.getLogin()
 				,member.getModId()
 				,member.getMemberId()
 		};
@@ -119,10 +125,14 @@ public class MemberDaoImpl implements MemberDao {
 		sb.append("     introduce,         \n");
 		sb.append("     grade,             \n");
 		sb.append("     div,               \n");
+		sb.append(" 	scrap,             \n");
+		sb.append(" 	login,             \n");
 		sb.append("     reg_dt,            \n");
 		sb.append("     mod_id,            \n");
 		sb.append("     mod_dt             \n");
 		sb.append(" ) VALUES (             \n");
+		sb.append("     ?,                 \n");
+		sb.append("     ?,                 \n");
 		sb.append("     ?,                 \n");
 		sb.append("     ?,                 \n");
 		sb.append("     ?,                 \n");
@@ -143,6 +153,8 @@ public class MemberDaoImpl implements MemberDao {
 							,member.getIntroduce()
 							,member.getGrade()
 							,member.getDiv()
+							,member.getScrap()
+							,member.getLogin()
 							,member.getModId()
 		};
 		
@@ -165,6 +177,8 @@ public class MemberDaoImpl implements MemberDao {
 		sb.append("     introduce,                                    \n");
 		sb.append("     grade,                                        \n");
 		sb.append("     div,                                          \n");
+		sb.append(" 	scrap,             							  \n");
+		sb.append(" 	login,             							  \n");
 		sb.append("     TO_CHAR(reg_dt,'YYYY/MM/DD HH24MISS') reg_dt, \n");
 		sb.append("     mod_id,                                       \n");
 		sb.append("     TO_CHAR(mod_dt,'YYYY/MM/DD HH24MISS') mod_dt  \n");

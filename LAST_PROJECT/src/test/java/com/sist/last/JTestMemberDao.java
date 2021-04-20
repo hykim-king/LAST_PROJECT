@@ -51,9 +51,9 @@ public class JTestMemberDao {
 		LOG.debug("================");
 		
 		LOG.debug("=context="+context);
-		member01 = new Member("L_100_01","img123","1234","L01","안녕하세요",1,1,"","L01","");
-		member02 = new Member("L_100_02","img456","1234","L02","HI",1,1,"","L02","");
-		member03 = new Member("L_100_03","img789","1234","L03","Hello",1,1,"","L03","");
+		member01 = new Member("L_100_01","img123","1234","L01","안녕하세요",1,1,1,1,"","L01","");
+		member02 = new Member("L_100_02","img456","1234","L02","HI",1,1,1,1,"","L02","");
+		member03 = new Member("L_100_03","img789","1234","L03","Hello",1,1,1,1,"","L03","");
 	
 		dao = context.getBean("memberDao", MemberDaoImpl.class);
 	}
@@ -132,6 +132,8 @@ public class JTestMemberDao {
 		member01.setIntroduce(member01.getIntroduce()+"_U");
 		member01.setGrade(member01.getGrade()+1);
 		member01.setDiv(member01.getDiv()+1);
+		member01.setScrap(member01.getScrap()+1);
+		member01.setLogin(member01.getLogin()+1);
 		member01.setModId(member01.getModId()+"_U");
 		LOG.debug("member01:"+member01);
 		
