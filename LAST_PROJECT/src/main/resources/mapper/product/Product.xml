@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.last.product">
+	<!-- id PK property=Domain.pk column=테이블 컬럼 -->
+	<resultMap type="Product" id="productResult">
+
+		<id property="storeSeq" column="store_seq" />
+		<result property="memberId" column="member_id" />
+		<result property="imgId" column="img_id" />
+		<result property="title" column="title" />
+		<result property="contents" column="contents" />
+		<result property="company" column="company" />
+		<result property="category" column="category" />
+		<result property="tag" column="tag" />
+		<result property="price" column="price" />
+		<result property="quantity" column="quantity" />
+		<result property="refund" column="refund" />
+		<result property="regDt" column="reg_dt" />
+		<result property="modId" column="mod_id" />
+		<result property="modDt" column="mod_dt" />
+	</resultMap>
+	
+	
+	<!-- doRetireve: 동적 sql -->
+	<!-- 검색어가 있을 경우 -->
+	<sql id="searchWord">
+		<choose>
+			<!-- 검색조건 -->
+			<when test=" '' != searchWord ">
+				<choose>
+					<when test=" '10' == searchDiv ">
+						WHERE category = '10'
+						AND title LIKE '%'|| #{searchWord} ||'%'
+						OR tag Like '%'|| #{searchWord} ||'%'
+					</when>
+					<when test=" '20' == searchDiv ">
+						WHERE category = '20'
+						AND title LIKE '%'|| #{searchWord} ||'%'
+						OR tag Like '%'|| #{searchWord} ||'%'
+					</when>
+					<when test=" '30' == searchDiv ">
+						WHERE category = '30'
+						AND title LIKE '%'|| #{searchWord} ||'%'
+						OR tag Like '%'|| #{searchWord} ||'%'
+					</when>
+					<when test=" '40' == searchDiv ">
+						WHERE category = '40'
+						AND title LIKE '%'|| #{searchWord} ||'%'
+						OR tag Like '%'|| #{searchWord} ||'%'
+					</when>
+					<when test=" '50' == searchDiv ">
+						WHERE category = '50'
+						AND title LIKE '%'|| #{searchWord} ||'%'
+						OR tag Like '%'|| #{searchWord} ||'%'
+					</when>
+					<otherwise>
+						WHERE title LIKE '%'|| #{searchWord} ||'%'
+						OR tag Like '%'|| #{searchWord} ||'%'
+					</otherwise>
+				</choose>
+			</when>
+		</choose>
+	</sql>
+	<!-- //검색어가 있을 경우 -->
+	
+	<!-- 검색어가 없을 경우 -->
+	<sql id="searchDiv">
+		<choose>
+			<!-- 검색조건 -->
+			<when test=" '' == searchWord ">
+				<choose>
+					<when test=" '10' == searchDiv ">
+						WHERE category = '10'
+					</when>
+					<when test=" '20' == searchDiv ">
+						WHERE category = '20'
+					</when>
+					<when test=" '30' == searchDiv ">
+						WHERE category = '30'
+					</when>
+					<when test=" '40' == searchDiv ">
+						WHERE category = '40'
+					</when>
+					<when test=" '50' == searchDiv ">
+						WHERE category = '50'
+					</when>
+				</choose>
+			</when>
+		</choose>
+	</sql>
+	<!-- //검색어가 없을 경우 -->
+	
+	<!-- 최신순 정렬 -->
+	<sql id="orderRecent">
+		<choose>
+			<when test=" '10' == orderDiv ">
+				ORDER BY reg_dt DESC
+			</when>
+		</choose>
+	</sql>
+	<!-- //최신순 정렬 -->
+	
+	<!-- 인기순 정렬 -->
+	<sql id="orderReview">
+		<choose>
+			<when test=" '20' == orderDiv ">
+				ORDER BY total_review DESC
+			</when>
+		</choose>
+	</sql>
+	<!-- //인기순 정렬 -->
+	<!-- //doRetireve: 동적 sql -->
+
+
+
+	<!-- doRetrieve -->
+	<select id="doRetrieve" parameterType="SearchOrder"
+		resultType="Product">
+	select a.*,b.*                                                  
+	from(                                                           
+	    select t2.rnum AS num                                            
+	          ,t2.store_seq AS storeSeq                                     
+	          ,t2.member_id AS memberId                                      
+	          ,t2.title                                           
+	          ,t2.company                                         
+			   ,t2.category 
+			   ,t2.contents                                      
+	          ,t2.tag                                             
+			   ,t2.price                                          
+			   ,t2.refund                                         
+	         ,t2.reg_dt AS regDt                                            
+	         ,t2.img_id AS imgId                                           
+	         ,t2.avg_star AS avgStar                                        
+	         ,t2.total_review AS totalReview                                    
+	    from(                                                     
+	        select rownum rnum,t1.*                               
+	         ,(                                                   
+	             SELECT TRUNC(AVG(star_score),1)                  
+	             FROM star                                        
+	             WHERE store_seq = t1.store_seq                   
+	          ) avg_star                                          
+	           ,(			                                      
+				  select count(*)                                 
+				  from review                                     
+				  where review_fk = t1.store_seq 			      
+			   )  total_review                                    
+	        from(                                                 
+	        select *                                              
+	        from product
+	        <include refid="searchWord"/>
+	        <include refid="searchDiv"/>                                          
+	        <include refid="orderRecent"/>
+	        ) t1
+	        <include refid="orderReview"/>                                                  
+	    ) t2                                                                                   
+	    WHERE rnum BETWEEN (#{pageSize} * (#{pageNum}-1)+1) AND (#{pageSize} * (#{pageNum}-1) +#{pageSize})       
+	) a                                                           
+	cross join                                                    
+	(                                                             
+	  select count(*) totalCnt                                   
+	  from product                                                
+	) b                                
+
+	</select>
+
+
+
+
+	<!-- doSelectOne -->
+	<select id="doSelectOne" parameterType="Product"
+		resultMap="productResult">
+
+		SELECT
+		t1.store_seq,
+		t1.member_id,
+		t1.img_id,
+		t1.title,
+		t1.contents,
+		t1.company,
+		t1.category,
+		t1.tag,
+		t1.price,
+		t1.quantity,
+		t1.refund,
+		(
+		SELECT COUNT(*)
+		FROM review
+		WHERE review_fk = t1.store_seq
+		)
+		total_review,
+		(
+		SELECT TRUNC(AVG(star_score),1)
+		FROM star
+		WHERE store_seq
+		= t1.store_seq
+		) avg_star,
+		DECODE(TO_CHAR(SYSDATE,'YYYYMMDD'),TO_CHAR(t1.reg_dt,'YYYYMMDD')
+		,TO_CHAR(t1.reg_dt,'HH24:MI')
+		,TO_CHAR(t1.reg_dt,'YYYY/MM/DD')) reg_dt
+		FROM product t1
+		WHERE store_seq = #{storeSeq}
+
+	</select>
+
+
+
+	<!-- doUpdate -->
+	<insert id="doUpdate" parameterType="Product">
+		UPDATE product
+		SET
+		img_id = #{imgId}
+		,title = #{title}
+		,contents = #{contents}
+		,company = #{contents}
+		,category = #{category}
+		,tag = #{tag}
+		,price = #{price}
+		,quantity = #{quantity}
+		,refund = #{refund}
+		,mod_id = #{modId}
+		,mod_dt = SYSDATE
+		WHERE store_seq = #{storeSeq}
+	</insert>
+
+
+
+
+
+	<!-- delete -->
+	<delete id="doDelete" parameterType="Product">
+		DELETE FROM product
+		WHERE
+		store_seq = #{storeSeq}
+	</delete>
+
+	<!-- insert -->
+	<insert id="doInsert" parameterType="Product">
+		INSERT INTO product (
+		store_seq,
+		member_id,
+		img_id,
+		title,
+		contents,
+		company,
+		category,
+		tag,
+		price,
+		quantity,
+		refund,
+		reg_dt
+		) VALUES (
+		#{storeSeq},
+		#{memberId},
+		#{imgId},
+		#{title},
+		#{contents},
+		#{company},
+		#{category},
+		#{tag},
+		#{price},
+		#{quantity},
+		#{refund},
+		SYSDATE
+		)
+	</insert>
+
+
+
+
+
+
+
+
+
+</mapper>

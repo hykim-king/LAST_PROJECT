@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	
+
+
+	
+	<!--3. Session: Authenticator+PasswordAuthentication -->
+		<!-- sqlSessionTemplate -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactoryBean"/>	
+	</bean>
+	<!-- mybatis config -->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+		<property name="mapperLocations" value="classpath:mapper/**/*.xml"></property>
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	
+	
+	<!-- private Session(Properties props, Authenticator authenticator) { -->
+	<bean id="emailSession" class="javax.mail.Session">
+		<constructor-arg index="0">
+			<props>
+				<prop key="mail.smtp.host">smtp.naver.com</prop>
+				<prop key="mail.smtp.port">465</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				
+				<prop key="mail.smtp.ssl.enable">true</prop>
+				<prop key="mail.smtp.ssl.trust">smtp.naver.com</prop>
+			</props>
+		</constructor-arg>
+		<constructor-arg index="1" ref="authenticator"/>
+	</bean>	
+		
+		
+<!--2. Authenticator: javax.mail와 연결 -->
+	<bean id="authenticator" class="javax.mail.Authenticator">
+		<lookup-method name="getPasswordAuthentication" 
+		   bean="passwordAuth"
+		 />
+	</bean>
+
+	
+
+	<!-- database.properties파일 read -->
+    <context:property-placeholder
+     location="classpath:/resuources/config/database.properties"
+    />
+    		
+ 	<!-- DataSource구형 class  SimpleDriverDataSource-->
+ 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+ 		<property name="driverClassName" value="${jdbc.driverClass}"/>
+ 		<property name="url"             value="${jdbc.url}"/>
+ 		<property name="username"        value="${jdbc.username}"/>
+ 		<property name="password"        value="${jdbc.password}"/>
+ 		<!-- 최대 접속 허용 갯수 -->
+ 		<property name="maxActive" value="${jdbc.maxActive}" />
+ 		<!-- 여분으로 남겨질 Connection -->
+ 		<property name="maxIdle" value="${jdbc.maxIdle}"/>
+ 		<!-- DB연결 대기 시간 -->
+ 		<property name="maxWait" value="${jdbc.maxWait}" />
+ 		<!-- Connection 잘못 관리되어 버려진 연결 찾아 재활용 -->
+ 		<property name="removeAbandoned" value="${jdbc.removeAbandoned}"/>
+ 		<!-- 버려진 연결로 인식할 기본 시간 -->
+ 		<property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}"/>
+ 	</bean>
+ 	
+	<!-- Service -->
+	
+	<bean id="productService" class="com.sist.last.service.ProductServiceImpl">
+		<!-- setter통한 주입: name -->
+		<!-- ref:param -->
+		<property name="productDao" ref="productDao" />
+	</bean>
+
+
+
+	<!-- //Service -->
+	
+	
+	
+	
+    <!-- dao -->
+	<!-- <bean id="qnaDao" class="com.sist.last.dao.QnaDaoImpl">
+		setter통한 주입: name
+		ref:param
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	 -->
+	<!-- <bean id="basketDao" class="com.sist.last.dao.BasketDaoImpl">
+		setter통한 주입: name
+		ref:param
+		<property name="dataSource" ref="dataSource"/>
+	</bean> -->
+	
+	<!-- <bean id="housesDao" class="com.sist.last.dao.HousesDaoImpl">
+		setter통한 주입: name
+		ref:param
+		<property name="dataSource" ref="dataSource" />
+	</bean> -->
+			
+		<bean id="productDao" class="com.sist.last.dao.ProductDaoImpl">
+		<!-- setter통한 주입: name -->
+		<!-- ref:param -->
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- //dao -->
+
+
+</beans>
+

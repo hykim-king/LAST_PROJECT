@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="false"/>
+	</settings>
+	
+	<typeAliases>
+		<!-- Domain에 별칭 부여 VO간략히 사용 -->
+		<typeAlias type="com.sist.last.vo.Product" alias="Product"/>
+		<typeAlias type="com.sist.last.cmn.SearchOrder" alias="SearchOrder"/>
+		<typeAlias type="com.sist.last.cmn.Search" alias="Search"/>
+		
+	</typeAliases>
+</configuration>
