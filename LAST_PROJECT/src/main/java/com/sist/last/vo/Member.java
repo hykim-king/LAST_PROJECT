@@ -38,7 +38,6 @@ public class Member extends DTO {
 	}
 
 
-
 	public String getMemberId() {
 		return memberId;
 	}
