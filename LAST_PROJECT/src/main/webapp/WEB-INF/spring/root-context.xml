@@ -113,10 +113,16 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean> -->
 			
-		<bean id="productDao" class="com.sist.last.dao.ProductDaoImpl">
+	<bean id="productDao" class="com.sist.last.dao.ProductDaoImpl">
 		<!-- setter통한 주입: name -->
 		<!-- ref:param -->
 		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="memberDao" class="com.sist.last.dao.MemberDaoImpl">
+		<!-- setter를 통한 주입 -->
+		<!-- ref:param -->
+		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	<!-- //dao -->
 
