@@ -140,7 +140,7 @@ public class JTestReplyDao {
 		LOG.debug("================");
 		
 		//검색
-		Search search01 = new Search(10,1); 
+		Search search01 = new Search("","",10,1); 
 		
 		dao.doRetrieve(search01);
 		
