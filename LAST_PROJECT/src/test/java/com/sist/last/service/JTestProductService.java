@@ -38,7 +38,7 @@ public class JTestProductService {
 	ApplicationContext context;
 	
 	@Autowired
-	ProductService productService;
+	ProductServiceImpl productService;
 	
 	Product product01;
 	Product product02;

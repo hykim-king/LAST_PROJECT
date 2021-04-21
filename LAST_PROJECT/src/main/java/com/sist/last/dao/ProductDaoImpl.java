@@ -14,14 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-
+import org.springframework.stereotype.Repository;
 
 import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.SearchOrder;
 import com.sist.last.cmn.StringUtil;
 import com.sist.last.vo.Product;
 
-public class ProductDaoImpl extends DTO implements ProductDao {
+@Repository
+public class ProductDaoImpl extends DTO  {
 	final static Logger LOG = LoggerFactory.getLogger(ProductDaoImpl.class);
 	
 	final String NAMESPACE = "com.sist.last.product";//com.sist.ehr.member.doDelete
@@ -32,19 +33,19 @@ public class ProductDaoImpl extends DTO implements ProductDao {
 	//Spring JdbcTemplate
 	JdbcTemplate jdbcTemplate;
 	
-	DataSource dataSource;
+	//DataSource dataSource;
 	
 
 	
 	public ProductDaoImpl() {} //디폴트 생성자
 	
 	//setter를 통한 주입
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
-	}
+//	public void setDataSource(DataSource dataSource) {
+//		this.dataSource = dataSource;
+//		this.jdbcTemplate = new JdbcTemplate(dataSource);
+//	}
 	
-	@Override
+	
 	public List<?> doRetrieve(DTO dto) throws SQLException {
 
 		SearchOrder param = (SearchOrder) dto;
@@ -68,7 +69,7 @@ public class ProductDaoImpl extends DTO implements ProductDao {
 		
 	}
 	
-	@Override
+	
 	public int doUpdate(DTO dto) throws SQLException {
 		int flag = 0;
 		Product product = (Product) dto;
@@ -81,7 +82,7 @@ public class ProductDaoImpl extends DTO implements ProductDao {
 
 
 	
-	@Override
+	
 	public int doDelete(DTO dto) throws SQLException {
 		int flag = 0;
 		Product product = (Product) dto; //다운캐스팅
@@ -97,7 +98,7 @@ public class ProductDaoImpl extends DTO implements ProductDao {
 	
 
 
-	@Override
+	
 	public int doInsert(DTO dto) throws SQLException {
 		int flag = 0;
 		Product product = (Product) dto;
@@ -112,7 +113,7 @@ public class ProductDaoImpl extends DTO implements ProductDao {
 		return flag;
 	}
 	
-	@Override
+	
 	public DTO doSelectOne(DTO dto) throws SQLException {
 		
 		Product inVO = (Product) dto;

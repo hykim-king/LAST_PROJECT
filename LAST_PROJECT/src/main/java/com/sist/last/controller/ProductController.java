@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.sist.last.cmn.Message;
 import com.sist.last.cmn.SearchOrder;
 import com.sist.last.cmn.StringUtil;
-import com.sist.last.service.ProductService;
+import com.sist.last.service.ProductServiceImpl;
 import com.sist.last.vo.Product;
 
 
@@ -26,11 +27,138 @@ public class ProductController {
 	
 	
 	@Autowired
-	ProductService productService;
+	ProductServiceImpl productService;
 	
 	public ProductController() {
 		
 	}
+	
+	@RequestMapping(value = "product/do_insert.do",method = RequestMethod.POST
+			,produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String doInsert(Product param) throws SQLException {
+		LOG.debug("=========================================");
+		LOG.debug("======param======"+param);
+		LOG.debug("=========================================");
+		
+		int flag = productService.doInsert(param);
+		
+		String resultMsg = "";
+		if(flag==1) {
+			resultMsg = param.getTitle()+"프로젝트\n등록 성공";
+		}else {
+			resultMsg = "등록 실패";
+			
+		}
+		
+		Message message = new Message();
+		message.setMsgId(flag+"");
+		message.setMsgContents(resultMsg);
+		
+		Gson gson = new Gson();
+		String jsonStr = gson.toJson(message);
+		LOG.debug("=========================================");
+		LOG.debug("======jsonStr======"+jsonStr);
+		LOG.debug("=========================================");
+		
+		return jsonStr;
+	}
+	
+	@RequestMapping(value = "product/do_delete.do",method = RequestMethod.POST
+			,produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String doDelete(Product param) throws SQLException {
+		LOG.debug("=========================================");
+		LOG.debug("======param======"+param);
+		LOG.debug("=========================================");
+		
+		int flag = this.productService.doDelete(param);
+		String resultMsg = "";
+		if(flag==1) {
+			resultMsg = param.getTitle()+"게시물\n삭제 성공";
+		}else {
+			resultMsg = "삭제 실패";
+			
+		}
+		
+		Message message = new Message();
+		message.setMsgId(flag+"");
+		message.setMsgContents(resultMsg);
+		
+		Gson gson = new Gson();
+		String jsonStr = gson.toJson(message);
+		LOG.debug("=========================================");
+		LOG.debug("======jsonStr======"+jsonStr);
+		LOG.debug("=========================================");
+		
+		return jsonStr;
+	}
+	
+	
+	@RequestMapping(value = "product/do_update.do",method = RequestMethod.POST
+			,produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String doUpdate(Product param) throws SQLException {
+		LOG.debug("=========================================");
+		LOG.debug("======param======"+param);
+		LOG.debug("=========================================");
+		
+		int flag = this.productService.doUpdate(param);
+	
+		String resultMsg = "";
+		if(flag==1) {
+			resultMsg = param.getMemberId()+"님\n수정 성공";
+		}else {
+			resultMsg = "님\n수정 실패";
+		}
+		
+		Message message = new Message();
+		message.setMsgId(flag+"");
+		message.setMsgContents(resultMsg);
+		
+		Gson gson = new Gson();
+		String jsonStr = gson.toJson(message);
+		LOG.debug("=========================================");
+		LOG.debug("======jsonStr======"+jsonStr);
+		LOG.debug("=========================================");
+		
+		return jsonStr;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@RequestMapping(value = "product/do_selectone.do",method = RequestMethod.GET
+			,produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String doSelectOne(Product param) throws SQLException {
+		LOG.debug("=========================================");
+		LOG.debug("======param======"+param);
+		LOG.debug("=========================================");
+		
+		Product outVO =  (Product) this.productService.doSelectOne(param);
+	
+		Gson gson = new Gson();
+		String jsonStr = gson.toJson(outVO);
+		LOG.debug("=========================================");
+		LOG.debug("======jsonStr======"+jsonStr);
+		LOG.debug("=========================================");
+		
+		return jsonStr;
+	}
+	
 	
 	
 	

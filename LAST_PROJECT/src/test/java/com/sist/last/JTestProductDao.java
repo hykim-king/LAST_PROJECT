@@ -24,7 +24,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.SearchOrder;
-import com.sist.last.dao.ProductDao;
+import com.sist.last.cmn.StringUtil;
 import com.sist.last.dao.ProductDaoImpl;
 import com.sist.last.vo.Product;
 
@@ -42,7 +42,7 @@ public class JTestProductDao {
 	ApplicationContext  context;//테스트 오브젝트가 만들어 지고 나면 스프링 테스트 컨텍스트에 의해 자동으로 주입된다.
 	
 	@Autowired
-	private ProductDao dao;
+	private ProductDaoImpl dao;
 		
 	Product product01;
 	Product product02;
@@ -147,14 +147,17 @@ public class JTestProductDao {
 	
 
 	@Test
-	@Ignore
+	//@Ignore
 	public void doInsert() throws SQLException, ClassNotFoundException {
+		
+		product01.setStoreSeq(StringUtil.getPK(""));
 		dao.doInsert(product01);
-		dao.doInsert(product02);
-		dao.doInsert(product03);
-		dao.doInsert(product04);
-		dao.doInsert(product05);
-		dao.doInsert(product06);
+
+//		dao.doInsert(product02);
+//		dao.doInsert(product03);
+//		dao.doInsert(product04);
+//		dao.doInsert(product05);
+//		dao.doInsert(product06);
 		
 		
 	}
@@ -168,7 +171,7 @@ public class JTestProductDao {
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void doRetrieve() throws SQLException {
 		dao.doRetrieve(search01);
 		dao.doRetrieve(search02);
