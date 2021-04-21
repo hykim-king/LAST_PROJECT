@@ -20,7 +20,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.sist.last.dao.OptDao;
+import com.sist.last.dao.OptDaoImpl;
 import com.sist.last.vo.Opt;
 
 //메소드 수행 순서: method ASCENDING ex)a~z
@@ -36,7 +36,7 @@ public class JTestOptDao {
 	ApplicationContext context; //테스트 오브젝트가 만들어 지고 나면 스프링 테스트 컨텍스트에 의해 자동으로 주입된다.
 	
 	@Autowired //이런 타입이 있는지 확인하고 주입
-	private OptDao dao;
+	private OptDaoImpl dao;
 	
 	Opt opt01;
 	Opt opt02;

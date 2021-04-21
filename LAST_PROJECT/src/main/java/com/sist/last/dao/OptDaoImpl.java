@@ -14,51 +14,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.sist.last.cmn.DTO;
 import com.sist.last.vo.Opt;
 
-public class OptDaoImpl implements OptDao {
+@Repository
+public class OptDaoImpl {
 	final static Logger LOG = LoggerFactory.getLogger(OptDaoImpl.class);
 	
 	final String NAMESPACE = "com.sist.last"; //com.sist.ehr.member.doDelete -> 점 붙어야 함
 	
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
-
-	//Spring이 제공해주는 JdbcTemplate
-	JdbcTemplate jdbcTemplate;
-	
-	DataSource dataSource;
-	
-	//ResultSet이 들어가 있음. 조회해온 데이터를 넣음
-	RowMapper<Opt> row = new RowMapper<Opt>() {
-		@Override
-		public Opt mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Opt optVO = new Opt();
-			
-			optVO.setOptSeq(rs.getString("opt_seq"));
-			optVO.setStoreSeq(rs.getString("store_seq"));
-			optVO.setMemberId(rs.getString("member_id"));
-			optVO.setTitle(rs.getString("title"));
-			optVO.setPrice(rs.getInt("price"));
-			optVO.setDiv(rs.getInt("div"));
-			optVO.setRegDt(rs.getString("reg_dt"));
-			optVO.setModId(rs.getString("mod_id"));
-			optVO.setModDt(rs.getString("mod_dt"));
-			
-			return optVO;
-		}
-		
-	};
 	
 	public OptDaoImpl() {}
-	
-	//setter를 통한 주입
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
-	}
 	
 	/**
 	 * 옵션 수정
@@ -66,7 +36,6 @@ public class OptDaoImpl implements OptDao {
 	 * @return int(1:성공, 0:실패)
 	 * @throws SQLException
 	 */
-	@Override
 	public int doUpdate(DTO dto) throws SQLException {
 		int flag = 0;
 		Opt opt = (Opt) dto;
@@ -88,7 +57,6 @@ public class OptDaoImpl implements OptDao {
 	 * @return int(1:성공, 0:실패)
 	 * @throws SQLException
 	 */
-	@Override
 	public int doDelete(DTO dto) throws SQLException {
 		int flag = 0;
 		Opt opt = (Opt) dto;
@@ -116,7 +84,6 @@ public class OptDaoImpl implements OptDao {
 	 * @return int(1:성공, 0:실패)
 	 * @throws SQLException
 	 */
-	@Override
 	public int doInsert(DTO dto) throws SQLException {
 		int flag = 0;
 		Opt opt = (Opt) dto;
@@ -138,7 +105,6 @@ public class OptDaoImpl implements OptDao {
 	 * @return DTO
 	 * @throws SQLException
 	 */
-	@Override
 	public DTO doSelectOne(DTO dto) throws SQLException {
 		Opt inVO = (Opt) dto;
 		Opt outVO = null;
@@ -171,7 +137,6 @@ public class OptDaoImpl implements OptDao {
 	 * @return List<Opt>
 	 * @throws SQLException
 	 */
-	@Override
 	public List<Opt> doRetrieve(DTO dto) throws SQLException {
 		List<Opt> list = null;
 		Opt opt = (Opt) dto;
