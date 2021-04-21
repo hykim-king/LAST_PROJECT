@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.last.qna">
+	<resultMap type="Qna" id="qnaResult">
+		<id property="qnaSeq" column="qna_Seq"/><!-- property가 vo쪽, column 컬럼 -->
+		<result property="memberId" column="member_id"/>
+		<result property="imgId" column="img_id"/>
+		<result property="title" column="title"/>
+		<result property="contents" column="contents"/>
+		<result property="tag" column="tag"/>
+		<result property="regDt" column="reg_dt"/>
+		<result property="modId" column="mod_id"/>
+		<result property="modDt" column="mod_dt"/>
+	</resultMap>
+	
+	<sql id="searchCondition">
+		<where>
+			<choose>
+			  	<when test=" '10' == searchDiv">
+			  		title LIKE '%'|| #{searchWord} ||'%'
+			  	</when>
+			  	<when test=" '20' == searchDiv">
+			  		tag LIKE '%'|| #{searchWord} ||'%'
+			  	</when>
+			  	<when test=" '30' == searchDiv">
+			  		title LIKE '%'|| #{searchWord} ||'%' 
+			  	   OR tag Like '%'|| #{searchWord} ||'%'
+			  	</when>
+			 </choose>  		
+		</where>
+	</sql>
+	
+	<select id="doRetrieve" parameterType="Search" resultType="Qna">
+	SELECT A.*,B.*                                             
+	FROM(                                                          
+	    SELECT 	t2.rnum AS num,                                        
+				t2.qna_seq AS qnaSeq,                                       
+				t2.member_id AS memberId,                                     
+				t2.img_id AS imgId,                                           
+				t2.title,                                               
+				t2.contents,                                         
+				t2.tag,                                                
+				DECODE(TO_CHAR(SYSDATE,'YYYYMMDD'),TO_CHAR(t2.reg_dt,'YYYYMMDD')                          
+				,TO_CHAR(t2.reg_dt,'HH24:MI')                                      
+				,TO_CHAR(t2.reg_dt,'YYYY/MM/DD')) reg_dt    
+	    FROM(                                                                 
+	        	SELECT ROWNUM rnum,t1.*                               
+	        	FROM(                                                             
+	        		SELECT *                                                         
+	        		FROM qna                                                        
+                    <include refid="searchCondition"/>   
+	          		ORDER BY reg_dt ASC                                    
+	          	)t1
+	          	<![CDATA[
+		  		WHERE ROWNUM <= (#{pageSize} * (#{pageNum}-1) + #{pageSize})                                                                                       
+		)t2                                                                    
+		WHERE rnum >= (#{pageSize} * (#{pageNum}-1) + 1) 
+		]]> 	
+	) A                                                                         
+	CROSS JOIN                                                           
+	(                                                                            
+		SELECT COUNT(*) total_cnt                                
+	    FROM qna                                                      
+		<include refid="searchCondition"/>
+	) B                                                                                                                     
+	</select>
+	
+	<select id="doSelectOne" parameterType="Qna" resultMap="qnaResult">
+	SELECT qna_seq,    
+    	member_id,     
+       	img_id,        
+       	title,            
+       	contents,     
+       	tag,             
+       	reg_dt   
+	FROM qna              
+	WHERE qna_seq=#{qnaSeq} 
+	</select>
+	
+	<update id="doUpdate" parameterType="Qna">
+	UPDATE qna
+	SET                        
+		img_id = #{imgId},    
+		title = #{title},        
+		contents = #{contents}, 
+		tag = #{tag},         
+		mod_id = #{modId},   
+		mod_dt = SYSDATE
+	WHERE  qna_seq = #{qnaSeq}  
+	</update>
+	
+	<!-- delete -->
+	<delete id="doDelete" parameterType="Qna"> 
+		 DELETE FROM qna 
+		 WHERE qna_seq = #{qnaSeq}
+	</delete>
+	
+	<!-- insert -->
+	<insert id="doInsert" parameterType="Qna">
+	INSERT INTO qna (
+	    qna_seq,     
+	    member_id, 
+	    img_id,       
+	    title,           
+	    contents,     
+	    tag,            
+	    reg_dt         
+	) VALUES (     
+	    #{qnaSeq},               
+	    #{memberId},               
+	    #{imgId},               
+	    #{title},               
+	    #{contents},               
+	    #{tag},               
+	    SYSDATE     
+	)                     
+	</insert>
+	
+	
+	
+</mapper>

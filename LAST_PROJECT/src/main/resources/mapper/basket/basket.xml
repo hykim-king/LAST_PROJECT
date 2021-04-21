@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.last.basket">
+	<resultMap type="Basket" id="basketResult">
+		<id property="basketSeq" column="basket_Seq"/><!-- property가 User쪽, property 컬럼 -->
+		<result property="storeSeq" column="store_seq"/>
+		<result property="memberId" column="member_id"/>
+		<result property="title" column="title"/>
+		<result property="optone" column="optone"/>
+		<result property="opttwo" column="opttwo"/>
+		<result property="quantity" column="quantity"/>
+		<result property="shipfee" column="shipfee"/>
+		<result property="price" column="price"/>
+		<result property="regDt" column="reg_dt"/>
+		<result property="modId" column="mod_id"/>
+		<result property="modDt" column="mod_dt"/>
+	</resultMap>
+	
+	<select id="doRetrieve" parameterType="Search" resultType="Basket">
+    SELECT A.*,B.*                                                                                            
+	FROM(                                                   
+		SELECT	t2.rnum AS num,                          
+				t2.basket_seq AS basketSeq,                             
+	          	t2.store_seq AS storeSeq,                                
+	          	t2.member_id AS memberId,                              
+	          	t2.title,                                        
+				t2.optone,                                    
+				t2.opttwo,                                    
+				t2.quantity,                                  
+				t2.shipfee,                                    
+				t2.price,                                       
+				DECODE(TO_CHAR(SYSDATE,'YYYYMMDD'),TO_CHAR(t2.reg_dt,'YYYYMMDD')                    
+					   ,TO_CHAR(t2.reg_dt,'HH24:MI')                                    
+					   ,TO_CHAR(t2.reg_dt,'YYYY/MM/DD')) reg_dt  
+		FROM(                                                               
+				SELECT ROWNUM rnum, t1.*                          
+				FROM(                                                           
+						SELECT *                                               
+						FROM basket                                          
+						ORDER BY reg_dt ASC                            
+				)t1
+				<![CDATA[
+				WHERE ROWNUM <= (#{pageSize} * (#{pageNum}-1) + #{pageSize})                                                               
+	    )t2                                                                    
+		WHERE rnum >= (#{pageSize} * (#{pageNum}-1) + 1) 
+		]]> 
+	)A                                                                     
+	CROSS JOIN                                                       
+	(                                                                        
+		SELECT COUNT(*) total_cnt                           
+	    FROM basket                                                   
+	)B                                                                                              
+	</select>
+	
+	
+	<select id="doSelectOne" parameterType="Basket" resultMap="basketResult">
+	SELECT    
+		basket_seq, 
+		store_seq,   
+		member_id, 
+		title,           
+		optone,       
+		opttwo,       
+		quantity,     
+		shipfee,       
+		price,          
+		TO_CHAR(reg_dt,'YYYY/MM/DD HH24MISS') reg_dt    
+	FROM basket  
+	WHERE basket_seq = #{basketSeq}
+	</select>
+	
+	<update id="doUpdate" parameterType="Basket">
+	UPDATE basket
+	SET                        
+		title = #{title},      
+		optone = #{optone},  
+		opttwo = #{opttwo},  
+		quantity = #{quantity},
+		shipfee = #{shipfee}, 
+		price = #{price},
+		mod_id = #{modId}, 
+		mod_dt = SYSDATE 
+	WHERE basket_seq = #{basketSeq}
+	</update>
+	
+	<!-- delete -->
+	<delete id="doDelete" parameterType="Basket"> 
+		 DELETE FROM basket 
+		 WHERE basket_seq = #{basketSeq}
+	</delete>
+	
+	<!-- insert -->
+	<insert id="doInsert" parameterType="Basket">
+		INSERT INTO basket(
+   		basket_seq,     
+  		store_seq,       
+  		member_id,     
+  		title,               
+  		optone,           
+ 		opttwo,           
+ 		quantity,         
+ 		shipfee,           
+ 		price,              
+  		reg_dt         
+		)VALUES(        
+			#{basketSeq},
+			#{storeSeq},
+			#{memberId},
+			#{title},
+			#{optone},
+			#{opttwo},
+			#{quantity},
+			#{shipfee},
+			#{price},
+			SYSDATE
+		)         
+	</insert>
+
+
+</mapper>
