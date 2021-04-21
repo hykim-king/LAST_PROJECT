@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.last">
+
+<!-- https://mybatis.org/mybatis-3/ko/index.html -->
+
+
+	<!-- resultMap -->
+	<resultMap type="HousesLink" id="linkResult">
+		<id property="linkSeq" column="link_seq"/>
+		<result property="housesSeq" column="houses_seq"/>
+		<result property="memberId" column="member_id"/>
+		<result property="link" column="link"/>
+		
+		<result property="div" column="div"/>
+		<result property="regDt" column="reg_dt"/>
+		<result property="modId" column="mod_id"/>
+		<result property="modDt" column="mod_dt"/>
+	</resultMap>
+	
+	<!-- count -->
+	<select id="count" parameterType="HousesLink" resultType="int">
+		SELECT COUNT(*) cnt			
+		FROM houses_link          	
+		WHERE link_seq like #{linkSeq} || '%'
+	</select>
+	
+	<!-- insert -->
+	<insert id="doInsert" parameterType="HousesLink">
+		INSERT INTO houses_link(
+					link_seq,      
+					houses_seq,    
+					member_id,     
+					link,          
+					div,           
+					reg_dt,        
+					mod_id,        
+					mod_dt)        
+		VALUES (               
+					#{linkSeq},             
+					#{housesSeq},             
+					#{memberId},             
+					#{link},             
+					#{div},             
+					SYSDATE,       
+					#{modId},             
+					SYSDATE
+				)    	
+	</insert>
+	
+	<!-- delete -->
+	<delete id="doDelete" parameterType="HousesLink">
+		DELETE FROM houses_link 
+		WHERE link_seq = #{linkSeq} 
+	</delete>
+	
+	
+	<!--doSelectOne  -->
+	<select id="doSelectOne" parameterType="HousesLink" resultMap="linkResult">
+		SELECT  link_seq,	
+		        houses_seq, 
+		        member_id,  
+		        link,       
+		        div,        
+				reg_dt,  
+				mod_id,  
+				mod_dt   
+		FROM houses_link    
+		WHERE link_seq = #{linkSeq}
+	</select>
+	
+	<!--doUpdate  -->
+	<update id="doUpdate" parameterType="HousesLink" >
+		UPDATE houses_link 
+		SET          		
+			  link = #{link},  		 
+			  div= #{div},         	
+			  reg_dt= SYSDATE, 
+			  mod_id = #{modId}, 		
+			  mod_dt = SYSDATE 
+		WHERE link_seq = #{linkSeq}  
+	</update>
+	
+	<!--doRetrieve  -->
+	<select id="doRetrieve" parameterType="HousesLink" resultMap="linkResult">
+		SELECT  link_seq,	
+		        houses_seq, 
+		        member_id,  
+		        link,       
+		        div,        
+			    reg_dt,  
+			    mod_id,  
+			    mod_dt   
+		FROM houses_link    
+		WHERE houses_seq = #{housesSeq}
+	</select>
+
+</mapper>
