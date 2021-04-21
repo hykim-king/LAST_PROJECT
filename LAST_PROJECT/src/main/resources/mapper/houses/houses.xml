@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.last.houses">
+	
+	<resultMap type="Houses" id="housesResult">
+		<id property="housesSeq" column="houses_seq"/>
+		<result property="memberId" column="member_id"/>
+		<result property="imgId" column="img_id"/>
+		<result property="title" column="title"/>
+		<result property="contents" column="contents"/>
+		<result property="tag" column="tag"/>
+		<result property="regDt" column="reg_dt"/>
+		<result property="modId" column="mod_id"/>
+		<result property="modDt" column="mod_dt"/>
+	</resultMap>
+	
+	<!-- 검색 조건 -->
+	<sql id="searchCondition">
+		<where>
+			<choose>
+				<when test=" '10' == searchDiv ">
+					title LIKE '%'|| #{searchWord} ||'%'
+				</when>
+				<when test=" '20' == searchDiv ">
+					tag LIKE '%'|| #{searchWord} ||'%'
+				</when>
+				<when test=" '30' == searchDiv ">
+					title LIKE '%'|| #{searchWord} ||'%'
+					OR tag Like '%'|| #{searchWord} ||'%'
+				</when>
+			</choose> 
+		</where> 
+	</sql>
+	<!--// 검색 조건 -->
+
+	<!-- 정렬 기준 : 최신순 -->
+	<sql id="orderByRecent">
+			<choose>
+				<when test=" '10' == orderDiv ">
+					ORDER BY reg_dt DESC
+				</when>
+			</choose> 
+	</sql>
+	<!-- 정렬 기준 : 인기순 -->
+	<sql id="orderByScrap">
+			<choose>
+				<when test=" '20' == orderDiv ">
+					ORDER BY total_scrap DESC
+				</when>
+			</choose> 
+	</sql>
+	<!--// 정렬 기준 -->
+	
+	<!-- Retrieve -->
+	<select id="doRetrieve" parameterType="SearchOrder" resultType="Houses">
+		SELECT A.*,B.*                                               
+		FROM(                                                        
+		      SELECT t2.rnum                                           
+		            ,t2.houses_seq AS housesSeq                                    
+		            ,t2.member_id  AS memberId                                  
+		            ,t2.title                                          
+		            ,t2.contents                                       
+		            ,t2.tag                                            
+		            ,t2.reg_dt     AS regDt
+		            ,t2.img_id     AS imgId
+		            ,t2.mod_id     AS modId
+		            ,t2.mod_dt     AS modDt
+		            ,(                                                 
+		              SELECT COUNT(*)                                  
+		              FROM scrap                                       
+		              WHERE houses_seq = t2.houses_seq                 
+		            ) totalScrap                                                                                
+		      FROM(                                                    
+		          SELECT rownum rnum,t1.*                              
+		  				,(                                                  
+		              	SELECT COUNT(*)                                      
+		              	FROM scrap                                             
+		              	WHERE houses_seq = t1.houses_seq                       
+		            		) total_scrap                              
+		          FROM(                                                
+		          SELECT *                                             
+		          FROM houses
+		          <include refid="searchCondition"/>
+		          <include refid="orderByRecent"/>
+		          )t1                                                                                           
+		        <![CDATA[
+		        WHERE ROWNUM <= (#{pageSize} * (#{pageNum} - 1) + #{pageSize})                                                               
+		    )t2      
+		    WHERE rnum >= (#{pageSize} * (#{pageNum} - 1) + 1)                                                                
+			]]>
+			<include refid="orderByScrap"/>
+		)A                                                            
+		CROSS JOIN                                                   
+		(                                                            
+			SELECT COUNT(*) totalCnt                                
+			FROM houses          
+			<include refid="searchCondition"/>                                     
+		) B 		
+	</select>
+	
+	<!-- Delete -->
+	<delete id="doDelete" parameterType="Houses">
+		DELETE FROM houses   
+		WHERE houses_seq = #{housesSeq} 
+	</delete>
+	
+	<!-- Insert -->
+	<insert id="doInsert" parameterType="Houses">
+		INSERT INTO houses (       
+				houses_seq,        
+				member_id,         
+				img_id,            
+				title,             
+				contents,          
+				tag,               
+				reg_dt,            
+				mod_id,            
+				mod_dt             
+		) VALUES (                 
+		        #{housesSeq},                 
+		        #{memberId},                 
+		        #{imgId},                 
+		        #{title},                 
+		        #{contents},                 
+		        #{tag},                 
+		        SYSDATE,           
+		        #{modId},                 
+		        SYSDATE            
+		)                          
+	</insert>
+	
+	<!-- SelectOne -->
+	<select id="doSelectOne" parameterType="Houses" resultMap="housesResult">
+		SELECT                                            
+		    houses_seq,                                   
+		    member_id,                                    
+		    img_id,                                       
+		    title,                                        
+		    contents,                                     
+		    tag,                                          
+		    TO_CHAR(reg_dt,'YYYY/MM/DD HH24MISS') reg_dt, 
+		    mod_id,                                       
+		    TO_CHAR(mod_dt,'YYYY/MM/DD HH24MISS') mod_dt  
+		FROM                                              
+		    houses                                        
+		WHERE                                             
+			houses_seq = #{housesSeq}                                
+	</select>
+	
+	<!-- Update -->
+	<update id="doUpdate" parameterType="Houses">
+		UPDATE houses             
+		SET                
+			img_id = #{imgId},       
+			title = #{title},        
+		    contents = #{contents},     
+		    tag = #{tag},
+		    mod_id = #{modId},          
+		    mod_dt = SYSDATE  
+		WHERE                     
+		    houses_seq = #{housesSeq}    
+	</update>
+	
+</mapper>
