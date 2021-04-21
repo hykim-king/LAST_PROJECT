@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.last">
+
+	<select id="doRetrieve" parameterType="SearchPay" resultType="Payment" resultMap="paymentResult">
+		SELECT A.*, B.*                                                              
+		FROM(                                                                        
+			SELECT t2.rnum as num,                                                             
+			          t2.pay_seq,                                                       
+			          t2.store_seq,                                                     
+			          t2.member_id,                                                     
+			          t2.title,                                                         
+			          t2.optone,                                                        
+			          t2.opttwo,                                                        
+			          t2.quantity,                                                      
+			          t2.price,                                                         
+			          t2.shipfee,                                                       
+			          t2.status,                                                        
+			          DECODE(TO_CHAR(SYSDATE,'YYYYMMDD'),TO_CHAR(t2.reg_dt,'YYYYMMDD')  
+				   ,TO_CHAR(t2.reg_dt,'HH24:MI')                                        
+				   ,TO_CHAR(t2.reg_dt,'YYYY/MM/DD')) reg_dt                             
+			FROM(                                                                       
+				SELECT rownum rnum,t1.*                                                 
+				FROM (                                                                  
+					SELECT *                                                            
+					FROM payment                                                        
+					WHERE member_id = #{memberId}                                                 
+					ORDER BY reg_dt DESC                                                
+				) t1                                                                    
+			) t2                                                                        
+		WHERE rnum BETWEEN #{pageSize} *(#{pageNum}-1)+1 AND #{pageSize}*(#{pageNum}-1)+#{pageSize}                                  
+		) A                                                                          
+		CROSS JOIN		                                                            
+			(SELECT COUNT(*) totalCnt                                                   
+			FROM payment                                                                 
+			WHERE member_id = #{memberId}                                                          
+			) B                 
+	</select>
+
+	<resultMap type="Payment" id="paymentResult">
+		<id property="paySeq" column="pay_seq" />
+		<result property="storeSeq" column="store_seq" />
+		<result property="memberId" column="member_id" />
+		<result property="title"    column="title" />
+		<result property="optone"   column="optone" />
+		<result property="opttwo"   column="opttwo" />
+		<result property="quantity" column="quantity" />
+		<result property="price"    column="price" />
+		<result property="shipfee"  column="shipfee" />
+		<result property="status"   column="status" />
+		<result property="regDt"    column="reg_dt" />
+		<result property="modId"    column="mod_id" />
+		<result property="modDt"    column="mod_dt" />
+	</resultMap>
+	
+	<!-- doSelectOne -->
+	<select id="doSelectOne" parameterType="Payment" resultMap="paymentResult">
+		SELECT pay_seq,                                     
+        	store_seq,                                   
+        	member_id,                                   
+        	title,                                       
+        	optone,                                      
+        	opttwo,                                      
+        	quantity,                                    
+        	price,                                       
+        	shipfee,                                     
+        	status,                                      
+        	TO_CHAR(reg_dt,'YYYY/MM/DD HH24MISS') reg_dt                            
+		FROM payment                                        
+		WHERE pay_seq = #{paySeq} 
+	</select>
+	
+	<!-- update -->
+	<update id="doUpdate" parameterType="Payment">
+		UPDATE payment           
+		SET title    = #{title},        
+		    optone   = #{optone},        
+		    opttwo   = #{opttwo},        
+			quantity = #{quantity},        
+			price    = #{price},        
+			mod_id   = #{modId},        
+			mod_dt   = SYSDATE   
+		WHERE pay_seq = #{paySeq}
+	</update>
+	
+	<!-- delete -->
+	<delete id="doDelete" parameterType="Payment">
+		DELETE FROM payment
+		WHERE pay_seq = #{paySeq}  
+	</delete>
+	
+	<!-- insert -->
+	<insert id="doInsert" parameterType="Payment">
+		INSERT INTO payment ( 
+	    pay_seq,          
+	    store_seq,        
+	    member_id,        
+	    title,            
+	    optone,           
+	    opttwo,           
+	    quantity,         
+	    price,            
+	    shipfee,          
+	    status,           
+	    reg_dt,           
+	    mod_id,           
+	    mod_dt            
+	) VALUES (            
+	    #{paySeq},                
+	    #{storeSeq},                
+	    #{memberId},                
+	    #{title},                
+	    #{optone},                
+	    #{opttwo},                
+	    #{quantity},                
+	    #{price},                
+	    #{shipfee},                
+	    #{status},                
+	    SYSDATE,          
+	    #{modId},                
+	    SYSDATE           
+	)                     
+	</insert>
+
+
+</mapper>
