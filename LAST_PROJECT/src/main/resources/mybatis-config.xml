@@ -19,7 +19,7 @@
 <!-- 	<typeAlias type="com.sist.last.vo.Opt" alias="Opt"/> -->
 <!--	<typeAlias type="com.sist.last.vo.Payment" alias="Payment"/> -->
 <!--	<typeAlias type="com.sist.last.vo.HousesLink" alias="HousesLink"/>	-->	
-<!--	<typeAlias type="com.sist.last.vo.Houses" alias="Houses"/> -->
+		<typeAlias type="com.sist.last.vo.Houses" alias="Houses"/> 
 <!--	<typeAlias type="com.sist.last.vo.Reply" alias="Reply"/> -->
 <!--	<typeAlias type="com.sist.last.vo.Star" alias="Star"/> -->
 <!--	<typeAlias type="com.sist.last.vo.Scrap" alias="Scrap"/> -->
