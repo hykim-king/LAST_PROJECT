@@ -51,7 +51,8 @@ public class JTestHousesController {
 
 	Houses houses01;
 	Houses houses02;
-	Houses houses03;
+	Houses houses03; 
+	Houses houses99; //수정용
 
 	// 목록조회 검색
 	SearchOrder search;
@@ -62,6 +63,8 @@ public class JTestHousesController {
 		houses02 = new Houses("5555", "yeonsu55", "5555", "test55", "test55", "test55", "", "yeonsu55", "");
 		houses03 = new Houses("6666", "yeonsu66", "6666", "test66", "test66", "test66", "", "yeonsu66", "");
 
+		houses99 = new Houses("4444", "yeonsu44_U", "4444_U", "test44_U", "test44_U", "test44_U", "", "yeonsu44_U", "");
+		
 		search = new SearchOrder("20", "tag", 10, 1, "10");
 
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -103,24 +106,50 @@ public class JTestHousesController {
 		
 	}
 	
+	private void checkHouses(Houses vsHouses, Houses houses) {
+		// 비교
+		assertThat(vsHouses.getHousesSeq(), is(houses.getHousesSeq()));
+		assertThat(vsHouses.getMemberId(), is(houses.getMemberId()));
+		assertThat(vsHouses.getImgId(), is(houses.getImgId()));
+		assertThat(vsHouses.getTitle(), is(houses.getTitle()));
+		assertThat(vsHouses.getContents(), is(houses.getContents()));
+		assertThat(vsHouses.getTag(), is(houses.getTag()));
+		assertThat(vsHouses.getModId(), is(houses.getModId()));
+	}
+	
 	@Test
+	@Ignore
+	public void doSelectOne() throws Exception {
+		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.get("/houses/do_selectone.do")
+				.param("housesSeq", houses02.getHousesSeq());
+
+		ResultActions resultActions = mockMvc.perform(createMessage)
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk());
+
+		// 출력 결과 요약
+		String result = resultActions.andDo(print()).andReturn().getResponse().getContentAsString();
+
+		LOG.debug("------------------");
+		LOG.debug("result : " + result);
+		LOG.debug("------------------");
+
+		Gson gson = new Gson();
+		Houses outVO = gson.fromJson(result, Houses.class);
+
+		LOG.debug("------------------");
+		LOG.debug("outVO : " + outVO);
+		LOG.debug("------------------");
+
+		checkHouses(houses02, outVO);
+
+	}
+	
+	@Test
+	@Ignore
 	public void doUpdateTest() throws Exception {
-		//기존 데이터 삭제
-		doDelete(houses01);
-		doDelete(houses02);
-		doDelete(houses03);
+		int flag = 0;
 		
-		//등록
-		int flag = doInsert(houses01); 
-		assertThat(flag, is(1)); 
-		
-		flag += doInsert(houses02); 
-		assertThat(flag, is(2)); 
-		
-		flag += doInsert(houses03);
-		assertThat(flag, is(3));  
-		
-		//수정 + update
 		houses01.setImgId(houses01.getImgId()+"_U");
 		houses01.setTitle(houses01.getTitle()+"_U");
 		houses01.setContents(houses01.getContents()+"_U");
@@ -131,10 +160,6 @@ public class JTestHousesController {
 		flag = doUpdate(houses01);
 		assertThat(flag, is(1));
 		
-		//비교
-		Houses checkHouses = (Houses) doSelectOne(houses01);
-		LOG.debug("checkHouses : "+checkHouses);
-		checkHouses(checkHouses, houses01);
 	}
 	
 	public int doUpdate(Houses houses) throws Exception {
@@ -178,87 +203,15 @@ public class JTestHousesController {
 
 	@Test
 	@Ignore
-	public void addAndGet() throws Exception {
-		LOG.debug("================");
-		LOG.debug("=@Test addAndGet=");
-		LOG.debug("================");
-
-		// 검색 용도
-		Houses houses09 = new Houses();
-		houses09.setMemberId("yeonsu");
-
-		// 삭제
-		doDelete(houses01);
-		doDelete(houses02);
-		doDelete(houses03);
-
-		// 등록
-		int flag = doInsert(houses01);
-		assertThat(flag, is(1));
-
-		flag += doInsert(houses02);
-		assertThat(flag, is(2));
-
-		flag += doInsert(houses03);
-		assertThat(flag, is(3));
-
-		// 조회
-		Houses vsHouses01 = (Houses) doSelectOne(houses01);
-		Houses vsHouses02 = (Houses) doSelectOne(houses02);
-		Houses vsHouses03 = (Houses) doSelectOne(houses03);
-
-		checkHouses(vsHouses01, houses01);
-		checkHouses(vsHouses02, houses02);
-		checkHouses(vsHouses03, houses03);
-	}
-
-	private void checkHouses(Houses vsHouses, Houses houses) {
-		// 비교
-		assertThat(vsHouses.getHousesSeq(), is(houses.getHousesSeq()));
-		assertThat(vsHouses.getMemberId(), is(houses.getMemberId()));
-		assertThat(vsHouses.getImgId(), is(houses.getImgId()));
-		assertThat(vsHouses.getTitle(), is(houses.getTitle()));
-		assertThat(vsHouses.getContents(), is(houses.getContents()));
-		assertThat(vsHouses.getTag(), is(houses.getTag()));
-		assertThat(vsHouses.getModId(), is(houses.getModId()));
-	}
-
-	public Houses doSelectOne(Houses houses) throws Exception {
-		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.get("/houses/do_selectone.do")
-				.param("housesSeq", houses.getHousesSeq());
-
-		ResultActions resultActions = mockMvc.perform(createMessage)
-				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(status().isOk());
-
-		// 출력 결과 요약
-		String result = resultActions.andDo(print()).andReturn().getResponse().getContentAsString();
-
-		LOG.debug("------------------");
-		LOG.debug("result : " + result);
-		LOG.debug("------------------");
-
-		Gson gson = new Gson();
-		Houses outVO = gson.fromJson(result, Houses.class);
-
-		LOG.debug("------------------");
-		LOG.debug("outVO : " + outVO);
-		LOG.debug("------------------");
-
-		checkHouses(houses, outVO);
-
-		return outVO;
-	}
-
-	public int doInsert(Houses houses) throws Exception {
+	public void doInsert() throws Exception {
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/houses/do_insert.do")
-				.param("housesSeq", houses.getHousesSeq())
-				.param("memberId", houses.getMemberId())
-				.param("imgId", houses.getImgId())
-				.param("title", houses.getTitle())
-				.param("contents", houses.getContents())
-				.param("tag", houses.getTag())
-				.param("modId", houses.getModId());
+				.param("housesSeq", houses01.getHousesSeq())
+				.param("memberId", houses01.getMemberId())
+				.param("imgId", houses01.getImgId())
+				.param("title", houses01.getTitle())
+				.param("contents", houses01.getContents())
+				.param("tag", houses01.getTag())
+				.param("modId", houses01.getModId());
 
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -275,7 +228,7 @@ public class JTestHousesController {
 		Message getMessage = gson.fromJson(result, Message.class);
 
 		String resultMsg = "";
-		resultMsg = houses.getMemberId() + "님 (" + houses.getHousesSeq() + ") 집들이 게시글을 등록하였습니다.";
+		resultMsg = houses01.getMemberId() + "님 (" + houses01.getHousesSeq() + ") 집들이 게시글을 등록하였습니다.";
 
 		Message message = new Message();
 		message.setMsgId("1");
@@ -284,13 +237,13 @@ public class JTestHousesController {
 		assertThat(getMessage.getMsgId(), is(message.getMsgId()));
 		assertThat(getMessage.getMsgContents(), is(message.getMsgContents()));
 
-		return Integer.parseInt(getMessage.getMsgId());
-
 	}
-
-	public void doDelete(Houses houses) throws Exception {
+	
+	@Test
+	@Ignore
+	public void doDelete() throws Exception {
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/houses/do_delete.do")
-				.param("housesSeq", houses.getHousesSeq());
+				.param("housesSeq", houses01.getHousesSeq());
 
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -307,7 +260,7 @@ public class JTestHousesController {
 		Message getMessage = gson.fromJson(result, Message.class);
 
 		String resultMsg = "";
-		resultMsg = houses.getMemberId() + "님 (" + houses.getHousesSeq() + ") 집들이 게시글을 삭제하였습니다.";
+		resultMsg = houses01.getMemberId() + "님 (" + houses01.getHousesSeq() + ") 집들이 게시글을 삭제하였습니다.";
 
 		Message message = new Message();
 		message.setMsgId("1");
