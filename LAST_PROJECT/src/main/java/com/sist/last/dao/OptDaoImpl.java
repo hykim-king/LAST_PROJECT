@@ -23,7 +23,7 @@ import com.sist.last.vo.Opt;
 public class OptDaoImpl {
 	final static Logger LOG = LoggerFactory.getLogger(OptDaoImpl.class);
 	
-	final String NAMESPACE = "com.sist.last"; //com.sist.ehr.member.doDelete -> 점 붙어야 함
+	final String NAMESPACE = "com.sist.last.opt"; //com.sist.ehr.member.doDelete -> 점 붙어야 함
 	
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
@@ -40,7 +40,7 @@ public class OptDaoImpl {
 		int flag = 0;
 		Opt opt = (Opt) dto;
 		
-		String statement = this.NAMESPACE+".doUpdate99";
+		String statement = this.NAMESPACE+".doUpdate";
 		LOG.debug("==================================");
 		LOG.debug("=opt="+opt);
 		LOG.debug("=statement="+statement);
@@ -63,7 +63,7 @@ public class OptDaoImpl {
 		StringBuffer sb = new StringBuffer(200);
 		
 		//mybatis sql : NAMESPACE+.+id;
-		String statement = this.NAMESPACE+".doDelete99";
+		String statement = this.NAMESPACE+".doDelete";
 		
 		LOG.debug("==================================");
 		LOG.debug("=opt="+opt);
@@ -89,7 +89,7 @@ public class OptDaoImpl {
 		Opt opt = (Opt) dto;
 		
 		//mybatis sql : NAMESPACE+.+id;
-		String statement = this.NAMESPACE+".doInsert99";
+		String statement = this.NAMESPACE+".doInsert";
 		LOG.debug("==================================");
 		LOG.debug("=opt="+opt);
 		LOG.debug("=statement="+statement);
@@ -109,7 +109,7 @@ public class OptDaoImpl {
 		Opt inVO = (Opt) dto;
 		Opt outVO = null;
 		
-		String statement = this.NAMESPACE+".doSelectOne99";
+		String statement = this.NAMESPACE+".doSelectOne";
 		LOG.debug("==================================");
 		LOG.debug("=inVO="+inVO);
 		LOG.debug("=statement="+statement);
@@ -141,7 +141,7 @@ public class OptDaoImpl {
 		List<Opt> list = null;
 		Opt opt = (Opt) dto;
 
-		String statement = this.NAMESPACE+".doRetrieve99";
+		String statement = this.NAMESPACE+".doRetrieve";
 		
 		LOG.debug("==================================");
 		LOG.debug("=opt=\n"+opt);

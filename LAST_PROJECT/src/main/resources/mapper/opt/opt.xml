@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sist.last">
+<mapper namespace="com.sist.last.opt">
 	
 	<!-- id PK property=VO pk column=테이블 컬럼 -->
 	<resultMap type="Opt" id="optResult">
@@ -15,7 +15,7 @@
 		<result property="modDt" column="mod_dt" />
 	</resultMap>
 	
-	<select id="doRetrieve99" parameterType="Opt" resultType="Opt" resultMap="optResult">
+	<select id="doRetrieve" parameterType="Opt" resultType="Opt" resultMap="optResult">
 		SELECT                                      
 		    opt_seq,                                
 		    store_seq,                              
@@ -32,7 +32,7 @@
 	</select>
 	
 	<!-- doSelectOne -->
-	<select id="doSelectOne99" parameterType="Opt" resultMap="optResult">
+	<select id="doSelectOne" parameterType="Opt" resultMap="optResult">
 		SELECT             
 	       opt_seq,    
 	       store_seq,  
@@ -48,7 +48,7 @@
 	</select>
 	
 	<!-- update -->
-	<update id="doUpdate99" parameterType="Opt">
+	<update id="doUpdate" parameterType="Opt">
 		UPDATE opt          
 		SET title = #{title},      
 		    price = #{price},      
@@ -59,13 +59,13 @@
 	</update>
 	
 	<!-- delete -->
-	<delete id="doDelete99" parameterType="Opt">
+	<delete id="doDelete" parameterType="Opt">
 		DELETE FROM opt  
 		WHERE opt_seq = #{optSeq}
 	</delete>
 	
 	<!-- insert -->
-	<insert id="doInsert99" parameterType="Opt">
+	<insert id="doInsert" parameterType="Opt">
 		INSERT INTO opt (  
 		    opt_seq,       
 		    store_seq,     
