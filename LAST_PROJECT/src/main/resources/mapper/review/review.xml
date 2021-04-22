@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.last.review">
+
+	<!-- https://mybatis.org/mybatis-3/ko/sqlmap-xml.html#Result_Maps -->
+	<!-- id PK property=VO pk 속성 column=테이블 컬럼 -->
+	<resultMap type="Review" id="reviewResult">
+		<id property="reviewSeq" column="review_seq"/>
+		<result property="memberId" column="member_id"/>
+		<result property="reviewFk" column="review_fk"/>
+		<result property="div" column="div"/>
+		<result property="contents" column="contents"/>
+		<result property="regDt" column="reg_dt"/>
+		<result property="modId" column="mod_id"/>
+		<result property="modDt" column="mod_dt"/>	
+	</resultMap>
+	
+	<!-- retrieve -->
+	<select id="doRetrieve" parameterType="Search" resultType="Review">
+		SELECT a.*, b.*                                                               
+		FROM(                                                                         
+				SELECT t2.rnum as num,                                                               
+					   t2.review_seq as reviewSeq,                                                         
+					   t2.member_id as memberId,                                                          
+					   t2.review_fk as reviewFk,                                                          
+					   t2.div,                                                                
+					   t2.contents,                                                           
+					   CASE WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD')=TO_CHAR(t2.reg_dt,'YYYY/MM/DD')
+					   THEN TO_CHAR(t2.reg_dt,'HH24:MI')                                      
+					   ELSE TO_CHAR(t2.reg_dt,'YYYY/MM/DD')                                   
+					   END as regDt,                                                            
+					   t2.mod_id as modId,                                                             
+					   CASE WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD')=TO_CHAR(t2.mod_dt,'YYYY/MM/DD')
+					   THEN TO_CHAR(t2.mod_dt,'HH24:MI')                                      
+					   ELSE TO_CHAR(t2.mod_dt,'YYYY/MM/DD')                                   
+					   END as modDt                                                             
+				FROM(                                                                         
+								SELECT ROWNUM rnum,t1.*                                       
+								FROM (                                                        
+										SELECT *                                              
+										FROM review                                             
+										WHERE review_fk = #{reviewFk}                                   
+										ORDER BY reg_dt DESC                                  
+									)t1 
+									<![CDATA[
+	 					WHERE ROWNUM <= (#{pageSize}*(#{pageNum}-1)+#{pageSize})
+	 					                                                                 
+	 			)t2 
+	 	WHERE rnum >= (#{pageSize}*(#{pageNum}-1)+1)  
+	 	]]>                                                                        
+		)A CROSS JOIN(                                                                                  
+				SELECT COUNT(*) totalCnt                                     
+				FROM review                                                                             
+		)B                                                                            
+		
+	</select>
+	
+	<!-- selectone -->
+	<select id="doSelectOne" parameterType="Review" resultMap="reviewResult">
+		SELECT review_seq,                                    
+		       member_id,                                     
+			   review_fk,                                  
+		       div,                                           
+		       contents,                                      
+		       TO_CHAR(reg_dt,'YYYY/MM/DD HH24:MI:SS') reg_dt,
+		       mod_id,                                        
+		       TO_CHAR(mod_dt,'YYYY/MM/DD HH24:MI:SS') mod_dt 
+		FROM review                                           
+		WHERE review_seq = #{reviewSeq}                                    
+	</select>
+
+	<!-- update -->
+	<update id="doUpdate" parameterType="Review">
+		UPDATE review 
+		SET contents = #{contents},
+		    mod_id = #{modId},
+	        mod_dt = SYSDATE  
+	        WHERE review_seq = #{reviewSeq}  
+	</update>
+	
+	<!-- delete -->
+	<delete id="doDelete" parameterType="Review">
+		DELETE FROM review
+		WHERE review_seq = #{reviewSeq}
+	</delete>
+	
+	<!-- insert -->
+	<insert id="doInsert" parameterType="Review">
+		INSERT INTO review ( 
+		    review_seq,      
+		    member_id,       
+		    review_fk,       
+		    div,             
+		    contents,        
+		    reg_dt,          
+		    mod_id,          
+		    mod_dt           
+		) VALUES (           
+		    #{reviewSeq},               
+		    #{memberId},               
+		    #{reviewFk},               
+		    #{div},               
+		    #{contents},               
+		    SYSDATE,         
+		    #{modId},               
+		    SYSDATE                
+		)                    
+	</insert>
+	
+	
+	
+</mapper>
