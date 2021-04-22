@@ -142,6 +142,32 @@ public class JTestHousesDao {
 	
 	@Test
 	@Ignore
+	public void doSelectOne() throws SQLException {
+		dao.doSelectOne(houses01);
+		dao.doSelectOne(houses02);
+		dao.doSelectOne(houses03);
+	}
+	
+	@Test
+	@Ignore
+	public void doInsert() throws SQLException {
+		dao.doInsert(houses01);
+		dao.doInsert(houses02);
+		dao.doInsert(houses03);
+	}
+	
+	@Test
+	@Ignore
+	public void doDelete() throws SQLException {
+		dao.doDelete(houses01);
+		dao.doDelete(houses02);
+		dao.doDelete(houses03);
+	}
+	
+	//---------------------------------------------
+	
+	@Test
+	@Ignore
 	public void addAndGet() throws ClassNotFoundException, SQLException {
 		LOG.debug("================");
 		LOG.debug("=@Test addAndGet=");
