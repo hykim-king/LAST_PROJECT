@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.last.scrap">
+	
+	<!-- sql 이 엘리멘트는 다른 구문에서 재사용가능한 SQL구문을 정의할 때 사용된다 -->
+	<!-- where엘리멘트 -->
+	<sql id="searchCondition">
+		<where>
+			<choose>
+				<when test="  '10'  == searchDiv">
+					name LIKE #{searchWord} || '%'
+				</when>
+				<when test="  '20'  == searchDiv">
+					u_id LIKE #{searchWord} || '%'
+				</when>
+				<when test="  '30'  == searchDiv">
+					email LIKE #{searchWord} || '%'
+				</when>
+			</choose>
+		</where>
+	</sql>
+	
+	<select id="doRetrieve" parameterType="Search" resultType="Scrap" resultMap="scrapResult">
+		
+		 SELECT A.*,B.*                                                                                      
+		 FROM(                                                                                               
+		     SELECT t2.rnum,                                                                                 
+		            t2.scrap_seq,                                                                                 
+		            t2.houses_seq,                                                                                 
+		            t2.member_id,                                                                                 
+		       CASE WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD')=TO_CHAR(t2.reg_dt,'YYYY/MM/DD')             
+		       THEN TO_CHAR(t2.reg_dt,'HH24:MI')                                                   
+		 	   ELSE TO_CHAR(t2.reg_dt,'YYYY/MM/DD')                                               
+		 	   END reg_dt,                                                                       
+		 	   t2.mod_id,                                                                         
+		       CASE WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD')=TO_CHAR(t2.mod_dt,'YYYY/MM/DD')             
+		 	   THEN TO_CHAR(t2.mod_dt,'HH24:MI')                                                  
+		 	   ELSE TO_CHAR(t2.mod_dt,'YYYY/MM/DD')                                               
+		 	   END mod_dt                                                                      
+		     FROM(                                                                                           
+		         SELECT ROWNUM rnum,t1.*                                                                     
+		         FROM (                                                                                      
+		             SELECT *                                                                                
+		             FROM scrap                                                                          
+		             ORDER BY reg_dt desc                                                                    
+		         )t1                                                                                         
+		     )t2                                                                                             
+		     WHERE rnum BETWEEN (#{pageSize} * (#{pageNum}-1) + 1) AND (#{pageSize} * (#{pageNum}-1) + #{pageSize})                                          
+		 )A CROSS JOIN                                                                                       
+		     (SELECT COUNT(*) total_cnt                                                                      
+		      FROM scrap                                                                                 
+		     )B
+		
+	</select>
+	
+	<!-- insert -->
+	<insert id="doInsert" parameterType="Scrap">
+	INSERT INTO scrap (
+		scrap_seq,
+		houses_seq,
+		member_id,
+		reg_dt,
+		mod_id,
+		mod_dt
+	) VALUES (
+		#{scrapSeq},
+		#{housesSeq},
+		#{memberId},
+		SYSDATE,
+		#{modId},
+		SYSDATE
+	)            
+	</insert>
+	
+	<!-- delete -->
+	<delete id="doDelete" parameterType="Scrap">
+		DELETE FROM scrap
+		WHERE  scrap_seq = #{scrapSeq}
+	</delete>
+	
+	<resultMap type="Scrap" id="scrapResult">
+		<id property="scrapSeq" column="scrap_seq" />
+		<result property="housesSeq" column="houses_seq" />
+		<result property="memberId" column="member_id" />
+		<result property="regDt"    column="reg_dt" />
+		<result property="modId"    column="mod_id" />
+		<result property="modDt"    column="mod_dt" />
+	</resultMap>
+	
+	<!-- doSelectOne -->
+	<select id="doSelectOne" parameterType="Scrap" resultMap="scrapResult">
+		SELECT scrap_seq,                                     
+		       houses_seq,                                   
+		       member_id,                                   
+		       TO_CHAR(reg_dt,'YYYY/MM/DD HH24MISS') reg_dt,  
+			      mod_id,     									
+			      mod_dt      									
+		FROM scrap                                        
+		WHERE scrap_seq = #{scrapSeq}                                   
+	</select>
+
+
+</mapper>
+

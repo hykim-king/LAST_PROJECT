@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.last.star">
+	
+	<!-- insert -->
+	<insert id="doInsert" parameterType="Star">
+		INSERT INTO star (
+			star_seq, 
+			store_seq, 
+			member_id, 
+			star_score 
+		) VALUES ( 
+			#{starSeq},
+			#{storeSeq}, 
+			#{memberId}, 
+			#{starScore}
+		)
+	</insert>
+
+	<!-- delete -->
+	<delete id="doDelete" parameterType="Star">
+		DELETE FROM star
+		WHERE  star_seq = #{starSeq}
+	</delete>
+	
+	<!-- doUpdate -->
+	<select id="doUpdate" parameterType="Star">
+		UPDATE star
+		SET        
+		    star_score = #{starScore}
+		WHERE star_seq = #{starSeq}
+	</select>
+
+
+</mapper>
+
