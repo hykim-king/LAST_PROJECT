@@ -21,7 +21,7 @@ import com.sist.last.vo.Payment;
 public class PaymentDaoImpl implements PaymentDao {
 	final static Logger LOG = LoggerFactory.getLogger(PaymentDaoImpl.class);
 
-	final String NAMESPACE = "com.sist.last"; //com.sist.ehr.member.doDelete -> 점 붙어야 함
+	final String NAMESPACE = "com.sist.last.payment"; //com.sist.ehr.member.doDelete -> 점 붙어야 함
 	
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
