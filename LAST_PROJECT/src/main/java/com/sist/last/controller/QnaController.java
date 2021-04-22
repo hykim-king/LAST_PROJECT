@@ -103,9 +103,9 @@ public class QnaController {
 		int flag = this.qnaService.doUpdate(qna);
 		String resultMsg = "";
 		if(1==flag) {
-			resultMsg = qna.getMemberId() + "님 질문이수정 되었습니다.";
+			resultMsg = qna.getMemberId() + "님 질문이 수정되었습니다.";
 		}else {
-			resultMsg = qna.getMemberId() + "님 수정에 실패하였습니다.";
+			resultMsg = qna.getMemberId() + "님 수정이 실패하였습니다.";
 		}
 		Message message = new Message();
 		message.setMsgId(flag+"");
@@ -170,7 +170,7 @@ public class QnaController {
 		int flag = this.qnaService.doDelete(qna);
 		String resultMsg="";
 		if(1==flag) {
-			resultMsg = qna.getMemberId() + "님 Q&A가 삭제 되었습니다.";
+			resultMsg = qna.getQnaSeq() + "가 QnA에서 삭제 되었습니다.";
 		}else {
 			resultMsg = "삭제 실패.";
 		}
@@ -206,9 +206,9 @@ public class QnaController {
 		int flag =qnaService.doInsert(qna);
 		String resultMsg="";
 		if(1==flag) {
-			resultMsg = qna.getMemberId() + "님 Q&A가 등록되었습니다.";
+			resultMsg = qna.getMemberId() + "님 QnA가 등록되었습니다.";
 		}else {
-			resultMsg = "Q&A 등록에 실패하였습니다."; 
+			resultMsg = "QnA 등록에 실패하였습니다."; 
 		}
 
 		Message message = new Message();

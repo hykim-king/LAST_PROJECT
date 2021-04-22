@@ -118,61 +118,18 @@ public class JTestQnaController {
 				
 	}
 	
-	
-	
 	@Test
 	//@Ignore
-	public void doUpdateTest() throws Exception {
-		//1. 기존데이터 삭제 
-		//2. 신규데이터 입력 
-		//3. 데이터수정 + update
-		
-		//1.
-		doDelete(qna01);
-		doDelete(qna02);
-		doDelete(qna03);
-		
-		
-		//2.
-		int flag = doInsert(qna01);
-		assertThat(flag, is(1));//flag(actual)과 is(예상) 비교
-				
-				
-		flag += doInsert(qna02);
-		assertThat(flag, is(2));//flag(actual)과 is(예상) 비교
-				
-
-		flag += doInsert(qna03);
-		assertThat(flag, is(3));//flag(actual)과 is(예상) 비교
-		
-		//3.수정
-//		qna01.setImgId(qnaUp.getImgId());
-//		qna01.setTitle(qnaUp.getTitle());
-//		qna01.setContents(qnaUp.getContents());
-//		qna01.setTag(qnaUp.getTag());
-//
-//		LOG.debug("qna01:"+qna01);
-		
-		flag = doUpdate(qnaUp);
-		assertThat(flag, is(1));
-		
-		//3.1. 수정데이터 조회
-		Qna changeQna = (Qna)doSelectOne(qnaUp);
-		LOG.debug("changeUser:"+changeQna);
-		checkQna(changeQna, qnaUp);
-	}
-	
-	
-	public int doUpdate(Qna qna) throws Exception {
+	public void doUpdate() throws Exception {
 		//url호출, param전달
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/qna/do_update.do")
-				.param("qnaSeq", qna.getQnaSeq())
-				.param("memberId", qna.getMemberId())
-				.param("imgId", qna.getImgId())
-				.param("title", qna.getTitle())
-				.param("contents", qna.getContents())
-				.param("tag", qna.getTag())
-				.param("modId", qna.getModId());
+				.param("qnaSeq", qnaUp.getQnaSeq())
+				.param("memberId", qnaUp.getMemberId())
+				.param("imgId", qnaUp.getImgId())
+				.param("title", qnaUp.getTitle())
+				.param("contents", qnaUp.getContents())
+				.param("tag", qnaUp.getTag())
+				.param("modId", qnaUp.getModId());
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))		
 				.andExpect(status().isOk());
@@ -192,60 +149,60 @@ public class JTestQnaController {
 		LOG.debug("-------------------");
 			
 			
-		return Integer.parseInt(getMessage.getMsgId());
+		//return Integer.parseInt(getMessage.getMsgId());
 			
 	}
 	
-	@Test
-	//@Ignore
-	public void addAndGet()throws Exception {
-		LOG.debug("=======================");
-		LOG.debug("=@addAndGet=");
-		LOG.debug("=======================");
-
-		
-		//검색용도
-		Qna qna09=new Qna();
-		qna09.setQnaSeq("qnaSeqTest99");
-		
-		//삭제
-		doDelete(qna01);
-		doDelete(qna02);
-		doDelete(qna03);
-		
-		//등록
-		int flag = doInsert(qna01);
-		assertThat(flag, is(1));//flag(actual)과 is(예상) 비교
-				
-				
-		flag += doInsert(qna02);
-		assertThat(flag, is(2));//flag(actual)과 is(예상) 비교
-				
-
-		flag += doInsert(qna03);
-		assertThat(flag, is(3));//flag(actual)과 is(예상) 비교
-		
-		//단건조회:user01  
-		Qna vsQna01 = doSelectOne(qna01);
-		
-		//단건조회:user02
-		Qna vsQna02 = doSelectOne(qna02);
-		
-		//단건조회:user03
-		Qna vsQna03 = doSelectOne(qna03);
-		
-		//비교 
-		checkQna(vsQna01, qna01);
-		checkQna(vsQna02, qna02);
-		checkQna(vsQna03, qna03);
-	}
+//	@Test
+//	@Ignore
+//	public void addAndGet()throws Exception {
+//		LOG.debug("=======================");
+//		LOG.debug("=@addAndGet=");
+//		LOG.debug("=======================");
+//
+//		
+//		//검색용도
+//		Qna qna09=new Qna();
+//		qna09.setQnaSeq("qnaSeqTest99");
+//		
+//		//삭제
+//		doDelete(qna01);
+//		doDelete(qna02);
+//		doDelete(qna03);
+//		
+//		//등록
+//		int flag = doInsert(qna01);
+//		assertThat(flag, is(1));//flag(actual)과 is(예상) 비교
+//				
+//				
+//		flag += doInsert(qna02);
+//		assertThat(flag, is(2));//flag(actual)과 is(예상) 비교
+//				
+//
+//		flag += doInsert(qna03);
+//		assertThat(flag, is(3));//flag(actual)과 is(예상) 비교
+//		
+//		//단건조회:user01  
+//		Qna vsQna01 = doSelectOne(qna01);
+//		
+//		//단건조회:user02
+//		Qna vsQna02 = doSelectOne(qna02);
+//		
+//		//단건조회:user03
+//		Qna vsQna03 = doSelectOne(qna03);
+//		
+//		//비교 
+//		checkQna(vsQna01, qna01);
+//		checkQna(vsQna02, qna02);
+//		checkQna(vsQna03, qna03);
+//	}
 	
 	
 
-	public Qna doSelectOne(Qna qna) throws Exception {
+	public Qna doSelectOne() throws Exception {
 		//url호출, param전달
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.get("/qna/do_selectone.do")
-				.param("qnaSeq", qna.getQnaSeq());
+				.param("qnaSeq", qna01.getQnaSeq());
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8)) 
 				.andExpect(status().isOk());
@@ -262,7 +219,7 @@ public class JTestQnaController {
 		LOG.debug("-outVO-" + outVO);
 		LOG.debug("-------------------");
 				
-		checkQna(qna,outVO);
+		checkQna(qna01,outVO);
 				
 		return outVO;
 	}
@@ -278,11 +235,12 @@ public class JTestQnaController {
 	}
 	
 
-
-	public void doDelete(Qna qna) throws Exception {
+	@Test
+	//@Ignore
+	public void doDelete() throws Exception {
 		//url호출, param전달
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/qna/do_delete.do")
-				.param("qnaSeq", qna.getQnaSeq());
+				.param("qnaSeq", qna01.getQnaSeq());
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))		
 				.andExpect(status().isOk());
@@ -299,7 +257,7 @@ public class JTestQnaController {
 		Message getMessage = gson.fromJson(result, Message.class);
 		
 		String resultMsg = "";
-		resultMsg = qna.getMemberId() + "님 Q&A가 삭제 되었습니다.";
+		resultMsg = qna01.getQnaSeq() + "가 QnA에서 삭제 되었습니다.";
 		
 		Message message = new Message();
 		message.setMsgId("1");
@@ -307,17 +265,18 @@ public class JTestQnaController {
 		
 	}
 	
-//	@RequestMapping(value="qna/do_insert", method=RequestMethod.POST
-//			,produces = "application/json; charset=UTF-8")
-	public int doInsert(Qna qna) throws Exception {
+	
+	@Test
+	//@Ignore
+	public void doInsert() throws Exception {
 	//url호출, param전달
 	MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/qna/do_insert.do")
-			.param("qnaSeq", qna.getQnaSeq())
-			.param("memberId", qna.getMemberId())
-			.param("imgId", qna.getImgId())
-			.param("title", qna.getTitle())
-			.param("contents", qna.getContents())
-			.param("tag", qna.getTag());
+			.param("qnaSeq", qna01.getQnaSeq())
+			.param("memberId", qna01.getMemberId())
+			.param("imgId", qna01.getImgId())
+			.param("title", qna01.getTitle())
+			.param("contents", qna01.getContents())
+			.param("tag", qna01.getTag());
 	
 	ResultActions resultActions = mockMvc.perform(createMessage)
 			.andExpect(status().isOk());
@@ -338,7 +297,7 @@ public class JTestQnaController {
 	LOG.debug("-------------------");
 	
 	String resultMsg = "";
-	resultMsg = qna.getMemberId() + "님 Q&A가 등록되었습니다.";
+	resultMsg = qna01.getMemberId() + "님 QnA가 등록되었습니다.";
 	
 	
 	Message message = new Message();
@@ -347,7 +306,7 @@ public class JTestQnaController {
 	assertThat(getMessage.getMsgId(), is(message.getMsgId()));
 	assertThat(getMessage.getMsgContents(), is(message.getMsgContents()));
 	
-	return Integer.parseInt(getMessage.getMsgId());
+	//return Integer.parseInt(getMessage.getMsgId());
 	
 	}
 	

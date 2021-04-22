@@ -173,7 +173,7 @@ public class BasketController {
 		int flag = this.basketService.doDelete(basket);
 		String resultMsg="";
 		if(1==flag) {
-			resultMsg = basket.getTitle() + "이(가) 장바구니에서 삭제되었습니다.";
+			resultMsg = basket.getBasketSeq() + "이(가) 장바구니에서 삭제되었습니다.";
 		}else {
 			resultMsg = "삭제 실패.";
 		}

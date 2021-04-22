@@ -112,66 +112,22 @@ public class JTestBasketController {
 				
 	}
 	
-	
+		
 	@Test
 	//@Ignore
-	public void doUpdateTest() throws Exception {
-		//1. 기존데이터 삭제 
-		//2. 신규데이터 입력 
-		//3. 데이터수정 + update
-		
-		//1.
-		doDelete(basket01);
-		doDelete(basket02);
-		doDelete(basket03);
-		
-		
-		//2.
-		int flag = doInsert(basket01);
-		assertThat(flag, is(1));//flag(actual)과 is(예상) 비교
-				
-				
-		flag += doInsert(basket02);
-		assertThat(flag, is(2));//flag(actual)과 is(예상) 비교
-				
-
-		flag += doInsert(basket03);
-		assertThat(flag, is(3));//flag(actual)과 is(예상) 비교
-		
-		//3.수정
-		basket01.setTitle(basketUp.getTitle());
-		basket01.setOptone(basketUp.getOptone());
-		basket01.setOpttwo(basketUp.getOpttwo());
-		basket01.setQuantity(basketUp.getQuantity());
-		basket01.setShipfee(basketUp.getShipfee());
-		basket01.setPrice(basketUp.getPrice());
-
-		LOG.debug("basket01:"+basket01);
-		
-		flag = doUpdate(basket01);
-		assertThat(flag, is(1));
-		
-		//3.1. 수정데이터 조회
-		Basket changeBasket = (Basket)doSelectOne(basket01);
-		LOG.debug("changeBasket:"+changeBasket);
-		checkUser(changeBasket, basket01);
-	}
-	
-	
-
-	public int doUpdate(Basket basket) throws Exception {
+	public void doUpdate() throws Exception {
 		//url호출, param전달
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/basket/do_update.do")
-				.param("basketSeq", basket.getBasketSeq())
-				.param("storeSeq", basket.getStoreSeq())
-				.param("memberId", basket.getMemberId())
-				.param("title", basket.getTitle())
-				.param("optone", basket.getOptone())
-				.param("opttwo", basket.getOpttwo())
-				.param("quantity", basket.getQuantity()+"")
-				.param("shipfee", basket.getShipfee()+"")
-				.param("price", basket.getPrice()+"")
-				.param("modId", basket.getModId());
+				.param("basketSeq", basketUp.getBasketSeq())
+				.param("storeSeq", basketUp.getStoreSeq())
+				.param("memberId", basketUp.getMemberId())
+				.param("title", basketUp.getTitle())
+				.param("optone", basketUp.getOptone())
+				.param("opttwo", basketUp.getOpttwo())
+				.param("quantity", basketUp.getQuantity()+"")
+				.param("shipfee", basketUp.getShipfee()+"")
+				.param("price", basketUp.getPrice()+"")
+				.param("modId", basketUp.getModId());
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))		
 				.andExpect(status().isOk());
@@ -191,60 +147,61 @@ public class JTestBasketController {
 		LOG.debug("-------------------");
 			
 			
-		return Integer.parseInt(getMessage.getMsgId());
+		//return Integer.parseInt(getMessage.getMsgId());
 			
 	}
 	
 	
+//	@Test
+//	@Ignore
+//	public void addAndGet()throws Exception {
+//		LOG.debug("=======================");
+//		LOG.debug("=@addAndGet=");
+//		LOG.debug("=======================");
+//
+//		
+//		//검색용도
+//		Basket basket09=new Basket();
+//		basket09.setBasketSeq("basketSeqTest99");
+//		
+//		//삭제
+//		doDelete(basket01);
+//		doDelete(basket02);
+//		doDelete(basket03);
+//		
+//		//등록
+//		int flag = doInsert(basket01);
+//		assertThat(flag, is(1));//flag(actual)과 is(예상) 비교
+//				
+//				
+//		flag += doInsert(basket02);
+//		assertThat(flag, is(2));//flag(actual)과 is(예상) 비교
+//				
+//
+//		flag += doInsert(basket03);
+//		assertThat(flag, is(3));//flag(actual)과 is(예상) 비교
+//		
+//		//단건조회:basket01  
+//		Basket vsBasket01 = doSelectOne(basket01);
+//		
+//		//단건조회:basket02
+//		Basket vsBasket02 = doSelectOne(basket02);
+//		
+//		//단건조회:basket03
+//		Basket vsBasket03 = doSelectOne(basket03);
+//		
+//		//비교 
+//		checkUser(vsBasket01, basket01);
+//		checkUser(vsBasket02, basket02);
+//		checkUser(vsBasket03, basket03);
+//	}
+	
 	@Test
 	//@Ignore
-	public void addAndGet()throws Exception {
-		LOG.debug("=======================");
-		LOG.debug("=@addAndGet=");
-		LOG.debug("=======================");
-
-		
-		//검색용도
-		Basket basket09=new Basket();
-		basket09.setBasketSeq("basketSeqTest99");
-		
-		//삭제
-		doDelete(basket01);
-		doDelete(basket02);
-		doDelete(basket03);
-		
-		//등록
-		int flag = doInsert(basket01);
-		assertThat(flag, is(1));//flag(actual)과 is(예상) 비교
-				
-				
-		flag += doInsert(basket02);
-		assertThat(flag, is(2));//flag(actual)과 is(예상) 비교
-				
-
-		flag += doInsert(basket03);
-		assertThat(flag, is(3));//flag(actual)과 is(예상) 비교
-		
-		//단건조회:basket01  
-		Basket vsBasket01 = doSelectOne(basket01);
-		
-		//단건조회:basket02
-		Basket vsBasket02 = doSelectOne(basket02);
-		
-		//단건조회:basket03
-		Basket vsBasket03 = doSelectOne(basket03);
-		
-		//비교 
-		checkUser(vsBasket01, basket01);
-		checkUser(vsBasket02, basket02);
-		checkUser(vsBasket03, basket03);
-	}
-	
-	
-	public Basket doSelectOne(Basket basket) throws Exception {
+	public void doSelectOne() throws Exception {
 		//url호출, param전달
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.get("/basket/do_selectone.do")
-				.param("basketSeq", basket.getBasketSeq());
+				.param("basketSeq", basket01.getBasketSeq());
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))	
 				.andExpect(status().isOk());
@@ -261,9 +218,9 @@ public class JTestBasketController {
 		LOG.debug("-outVO-" + outVO);
 		LOG.debug("-------------------");
 				
-		checkUser(basket,outVO);
+		checkUser(basket01,outVO);
 				
-		return outVO;
+		//return outVO;
 	}
 	
 	private void checkUser(Basket vsBasket, Basket basket) {
@@ -279,11 +236,12 @@ public class JTestBasketController {
 		assertThat(vsBasket.getPrice(), is(basket.getPrice()));	
 	}
 	
-
-	public void doDelete(Basket basket) throws Exception {
+	@Test
+	//@Ignore
+	public void doDelete() throws Exception {
 		//url호출, param전달
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/basket/do_delete.do")
-				.param("basketSeq", basket.getBasketSeq());
+				.param("basketSeq", basket01.getBasketSeq());
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))	
 				.andExpect(status().isOk());
@@ -300,7 +258,7 @@ public class JTestBasketController {
 		Message getMessage = gson.fromJson(result, Message.class);
 		
 		String resultMsg = "";
-		resultMsg = basket.getTitle() + "이(가) 장바구니에서 삭제되었습니다.";
+		resultMsg = basket01.getBasketSeq() + "이(가) 장바구니에서 삭제되었습니다.";
 		
 		Message message = new Message();
 		message.setMsgId("1");
@@ -308,22 +266,22 @@ public class JTestBasketController {
 		
 	}
 	
-
-	public int doInsert(Basket basket) throws Exception {
+	@Test
+	//@Ignore
+	public void doInsert() throws Exception {
 		//url호출, param전달
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/basket/do_insert.do")
-				.param("basketSeq", basket.getBasketSeq())
-				.param("storeSeq", basket.getStoreSeq())
-				.param("memberId", basket.getMemberId())
-				.param("title", basket.getTitle())
-				.param("optone", basket.getOptone())
-				.param("opttwo", basket.getOpttwo())
-				.param("quantity", basket.getQuantity()+"")
-				.param("shipfee", basket.getShipfee()+"")
-				.param("price", basket.getPrice()+"");
+				.param("basketSeq", basket01.getBasketSeq())
+				.param("storeSeq", basket01.getStoreSeq())
+				.param("memberId", basket01.getMemberId())
+				.param("title", basket01.getTitle())
+				.param("optone", basket01.getOptone())
+				.param("opttwo", basket01.getOpttwo())
+				.param("quantity", basket01.getQuantity()+"")
+				.param("shipfee", basket01.getShipfee()+"")
+				.param("price", basket01.getPrice()+"");
 	
 		
-		//ResultActions: Allows applying actions, such as expectations, on the result of an executedrequest.
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(status().isOk());
 						
@@ -344,7 +302,7 @@ public class JTestBasketController {
 		LOG.debug("-------------------");
 				
 		String resultMsg = "";
-		resultMsg = basket.getTitle() + "이(가) 장바구니에 등록되었습니다.";
+		resultMsg = basket01.getTitle() + "이(가) 장바구니에 등록되었습니다.";
 				
 				
 		Message message = new Message();
@@ -353,7 +311,7 @@ public class JTestBasketController {
 		assertThat(getMessage.getMsgId(), is(message.getMsgId()));
 		assertThat(getMessage.getMsgContents(), is(message.getMsgContents()));
 				
-		return Integer.parseInt(getMessage.getMsgId());
+		//return Integer.parseInt(getMessage.getMsgId());
 	}
 	
 	
