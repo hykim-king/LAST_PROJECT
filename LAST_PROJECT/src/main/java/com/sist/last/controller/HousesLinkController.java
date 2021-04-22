@@ -36,7 +36,7 @@ public class HousesLinkController {
 	/**
 	 * 집들이 링크 전체조회
 	 * @param dto
-	 * @return List<?>
+	 * @return JSON
 	 * @throws SQLException
 	 */
 	@RequestMapping(value = "houseslink/do_retrieve.do",method = RequestMethod.GET
@@ -76,7 +76,7 @@ public class HousesLinkController {
 	/**
 	 * 집들이 링크 수정
 	 * @param dto
-	 * @return int (1:성공/0:실패)
+	 * @return JSON (1:성공/0:실패)
 	 * @throws SQLException
 	 */
 	@RequestMapping(value = "houseslink/do_update.do",method = RequestMethod.POST
@@ -93,9 +93,9 @@ public class HousesLinkController {
 		
 		String resultMsg = "";
 		if(1==flag) {
-			resultMsg = link.getMemberId()+"님 ("+link.getLinkSeq()+") 링크 업데이트성공";
+			resultMsg = "("+link.getLink()+") 링크 수정 성공";
 		}else {
-			resultMsg = "링크 업데이트 실패";
+			resultMsg = "링크 수정 실패";
 		}
 		//메세지 읽고 
 		Message message = new Message();
@@ -115,7 +115,7 @@ public class HousesLinkController {
 	/**
 	 * 집들이 링크 단건조회
 	 * @param dto
-	 * @return DTO
+	 * @return JSON
 	 * @throws SQLException
 	 */
 	@RequestMapping(value = "houseslink/do_selectone.do",method = RequestMethod.GET
@@ -146,7 +146,7 @@ public class HousesLinkController {
 	/**
 	 * 집들이 링크 삭제
 	 * @param dto
-	 * @return  int (1:성공/0:실패)
+	 * @return  JSON (1:성공/0:실패)
 	 * @throws SQLException
 	 */
 	@RequestMapping(value = "houseslink/do_delete.do",method = RequestMethod.POST

@@ -75,6 +75,10 @@ public class JTestHousesLinkController {
 		LOG.debug("tearDown()");
 	}
 	
+	/**
+	 * 전체조회 테스트
+	 * @throws Exception
+	 */
 	@Test
 	@Ignore
 	public void doRetrieve() throws Exception {
@@ -105,6 +109,10 @@ public class JTestHousesLinkController {
 		}
 	}//--doRetrieve
 	
+	/**
+	 * 업데이트 테스트
+	 * @throws Exception
+	 */
 	@Test
 	@Ignore
 	public void doUpdateTest() throws Exception {
@@ -112,76 +120,27 @@ public class JTestHousesLinkController {
 		LOG.debug("JTestHousesLinkController-doUpdateTest()");
 		LOG.debug("===================");
 		
-		//삭제
-		doDelete(link01);
-		doDelete(link02);
-		doDelete(link03);
+		int flag = 0;
 		
-		//등록
-		int flag = doInsert(link01);
-		flag += doInsert(link02);
-		flag += doInsert(link03);
-		assertThat(flag, is(3));	
-		
-		//데이터 수정 +update
-		link01.setLink(link01.getLink()+"_**");
-		link01.setDiv(link01.getDiv()+7);
-		link01.setModId(link01.getModId()+"_**");
-		LOG.debug("update===================");
+		link01.setLink(link01.getLink()+"_UP");
+		link01.setDiv(link01.getDiv()+6);
+		link01.setModId(link01.getModId()+"_UP");
+		LOG.debug("===================");
 		LOG.debug("link01:"+link01);
-		LOG.debug("update===================");
+		LOG.debug("===================");
 		
-		flag = doUpdate(link01);
-		assertThat(flag, is(1));	
-		
-		//비교
-		HousesLink checkLink = doSelectOne(link01);
-		LOG.debug("checkLink:"+checkLink);
-		checkLink(checkLink, link01);
-		
+		flag = this.doUpdate(link01);	
+		assertThat(flag, is(1));
 	}//--doUpdateTest
-
-	@Test
-	//@Ignore
-	public void addAndGet() throws Exception{
-		LOG.debug("===================");
-		LOG.debug("JTestHousesLinkController-addAndGet()");
-		LOG.debug("===================");
-		
-		//검색
-		HousesLink link09 = new HousesLink();
-		link09.setLinkSeq("HAHA_133");
-		
-		//삭제
-		doDelete(link01);
-		doDelete(link02);
-		doDelete(link03);
-		
-		//등록
-		int flag = doInsert(link01);
-		flag += doInsert(link02);
-		flag += doInsert(link03);
-		assertThat(flag, is(3));
-		
-		//조회
-		HousesLink vsLink01 = doSelectOne(link01);
-		HousesLink vsLink02 = doSelectOne(link02);
-		HousesLink vsLink03 = doSelectOne(link03);
-		
-		checkLink(vsLink01, link01);
-		checkLink(vsLink02, link02);
-		checkLink(vsLink03, link03);
-	
-		
-	}//--addAndGet
 	
 	public int doUpdate(HousesLink link) throws  Exception{
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/houseslink/do_update.do")
-				.param("linkSeq", link.getLinkSeq())
-				.param("memberId", link.getMemberId())
-				.param("link", link.getLink())
-				.param("div", link.getDiv()+"")
-				.param("modId", link.getModId());				
+				.param("linkSeq", link01.getLinkSeq())
+				.param("housesSeq", link01.getHousesSeq())
+				.param("memberId", link01.getMemberId())
+				.param("link", link01.getLink())
+				.param("div",Integer.toString(link01.getDiv()))
+				.param("modId", link01.getModId());				
 		
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -197,7 +156,7 @@ public class JTestHousesLinkController {
 		Message getMessage = gson.fromJson(result, Message.class);
 		
 		String resultMsg = "";
-		resultMsg = link.getMemberId()+"님 ("+link.getLinkSeq()+") 링크 업데이트성공";
+		resultMsg = "("+link.getLink()+") 링크 수정 성공";
 		
 		Message message = new Message();
 		message.setMsgId("1");
@@ -208,11 +167,22 @@ public class JTestHousesLinkController {
 		
 		return Integer.parseInt(getMessage.getMsgId());
 		
-	}//--doUpdate
+	}//--doUpdate	
 	
-	public HousesLink doSelectOne(HousesLink link) throws  Exception{
+	/**
+	 * 단건조회 테스트
+	 * @throws Exception
+	 */
+	@Test
+	@Ignore
+	public void doSelectOne() throws Exception{
+		LOG.debug("===================");
+		LOG.debug("JTestHousesLinkController-doSelectOne()");
+		LOG.debug("===================");
+		
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.get("/houseslink/do_selectone.do")
-				.param("linkSeq", link.getLinkSeq());
+				.param("linkSeq", link03.getLinkSeq());
+				
 		
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -228,18 +198,22 @@ public class JTestHousesLinkController {
 		HousesLink outVO = gson.fromJson(result, HousesLink.class);
 		LOG.debug("===================");
 		LOG.debug("outVO:"+outVO);
-		LOG.debug("===================");
+		LOG.debug("===================");	
 		
-		//데이터 비교
-		checkLink(link, outVO);
-		
-		return outVO;
-		
+		checkLink(link03, outVO);
 	}//--doSelectOne
 	
-	public void doDelete(HousesLink link) throws  Exception{
+
+	/**
+	 * 삭제 테스트
+	 * @param link
+	 * @throws Exception
+	 */
+	@Test
+	@Ignore
+	public void doDelete() throws  Exception{
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/houseslink/do_delete.do")
-				.param("linkSeq", link.getLinkSeq());
+				.param("linkSeq", link01.getLinkSeq());
 		
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -255,7 +229,7 @@ public class JTestHousesLinkController {
 		Message getMessage = gson.fromJson(result, Message.class);
 		
 		String resultMsg = "";
-		resultMsg = link.getMemberId()+"님 ("+link.getLink()+") 링크 삭제성공";
+		resultMsg = link01.getMemberId()+"님 ("+link01.getLink()+") 링크 삭제성공";
 		
 		Message message = new Message();
 		message.setMsgId("1");
@@ -263,15 +237,16 @@ public class JTestHousesLinkController {
 		
 	}//--doDelete
 	
-
-	public int doInsert(HousesLink link) throws  Exception{
+	@Test
+	@Ignore
+	public void doInsert() throws  Exception{
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/houseslink/do_insert.do")
-				.param("linkSeq", link.getLinkSeq())
-				.param("housesSeq", link.getHousesSeq())
-				.param("memberId", link.getMemberId())
-				.param("link", link.getLink())
-				.param("div", link.getDiv()+"")
-				.param("modId", link.getModId());
+				.param("linkSeq", link01.getLinkSeq())
+				.param("housesSeq", link01.getHousesSeq())
+				.param("memberId", link01.getMemberId())
+				.param("link", link01.getLink())
+				.param("div",Integer.toString(link01.getDiv()))
+				.param("modId", link01.getModId());
 		
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -287,7 +262,7 @@ public class JTestHousesLinkController {
 		Message getMessage = gson.fromJson(result, Message.class);
 		
 		String resultMsg = "";
-		resultMsg = link.getMemberId()+"님 ("+link.getLink()+") 링크 등록성공";
+		resultMsg = link01.getMemberId()+"님 ("+link01.getLink()+") 링크 등록성공";
 		
 		Message message = new Message();
 		message.setMsgId("1");
@@ -295,11 +270,9 @@ public class JTestHousesLinkController {
 		
 		assertThat(getMessage.getMsgId(), is(message.getMsgId()));
 		assertThat(getMessage.getMsgContents(), is(message.getMsgContents()));
-		
-		return Integer.parseInt(getMessage.getMsgId());
 	}//--doInsert
 	
-//	//save data vs insert data
+	//save data vs insert data
 	private void checkLink(HousesLink vsLink, HousesLink link) {
 		
 		assertThat(vsLink.getLinkSeq(), is(link.getLinkSeq()));
