@@ -59,7 +59,7 @@ public class JTestHousesService {
 					new Houses("6666", "yeonsu66", "6666", "test66", "test66", "test66", "", "yeonsu66", "")
 			);
 		
-		search = new SearchOrder("20", "tag", 10, 1, "20");
+		search = new SearchOrder("20", "tag", 10, 1, "10");
 
 	}
 
@@ -98,6 +98,56 @@ public class JTestHousesService {
 			LOG.debug(vo.toString());
 		}
 	}
+	
+	@Test
+	@Ignore
+	public void doSelectOne() throws SQLException {
+		Houses houses01 = houses.get(0);
+		Houses houses02 = houses.get(1);
+		Houses houses03 = houses.get(2);
+
+		this.housesService.doSelectOne(houses01);
+		this.housesService.doSelectOne(houses02);
+		this.housesService.doSelectOne(houses03);
+	}
+	
+	@Test
+	@Ignore
+	public void doUpdate() throws SQLException {
+		int flag = 0;
+		
+		Houses houses01 = houses.get(0);
+		houses01.setImgId(houses01.getImgId()+"_U");
+		houses01.setTitle(houses01.getTitle()+"_U");
+		houses01.setContents(houses01.getContents()+"_U");
+		houses01.setTag(houses01.getTag()+"_U");
+		houses01.setModId(houses01.getModId()+"_U");
+		LOG.debug(houses01);
+		
+		flag = this.housesService.doUpdate(houses01);
+		assertThat(flag, is(1));
+	}
+	
+	@Test
+	@Ignore
+	public void doInsert() throws SQLException {
+		int flag = 0;
+		//입력
+		for(Houses houses : houses) {
+			flag += this.housesService.doInsert(houses);
+		}
+		assertThat(flag, is(3));
+	}
+	
+	@Test
+	@Ignore
+	public void doDelete() throws SQLException {
+		for(Houses houses : houses) {
+			this.housesService.doDelete(houses);
+		}
+	}
+	
+	//---------------------------------------------
 	
 	@Test
 	@Ignore
