@@ -31,6 +31,7 @@ public class HousesLinkDaoImpl {
 	SqlSessionTemplate sqlSessionTemplate;
 	
 	public HousesLinkDaoImpl() { }
+	
 
 
 	/**
