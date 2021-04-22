@@ -12,20 +12,20 @@
 		<!-- 공통 부분 -->
 		<typeAlias type="com.sist.last.cmn.SearchOrder" alias="SearchOrder"/>		
 		<typeAlias type="com.sist.last.cmn.Search" alias="Search"/>
-		<!-- <typeAlias type="com.sist.last.cmn.SearchPay" alias="SearchPay"/> -->
+		 <typeAlias type="com.sist.last.cmn.SearchPay" alias="SearchPay"/> 
 		<!-- //공통 부분 -->
 		
 		<typeAlias type="com.sist.last.vo.Product" alias="Product"/>
-<!-- 	<typeAlias type="com.sist.last.vo.Opt" alias="Opt"/> -->
-<!--	<typeAlias type="com.sist.last.vo.Payment" alias="Payment"/> -->
-<!--	<typeAlias type="com.sist.last.vo.HousesLink" alias="HousesLink"/>	-->	
+ 	<typeAlias type="com.sist.last.vo.Opt" alias="Opt"/> 
+	<typeAlias type="com.sist.last.vo.Payment" alias="Payment"/> 
+	<typeAlias type="com.sist.last.vo.HousesLink" alias="HousesLink"/>	
  		<typeAlias type="com.sist.last.vo.Houses" alias="Houses"/> 
-<!--	<typeAlias type="com.sist.last.vo.Reply" alias="Reply"/> -->
-<!--	<typeAlias type="com.sist.last.vo.Star" alias="Star"/> -->
-<!--	<typeAlias type="com.sist.last.vo.Scrap" alias="Scrap"/> -->
-<!--	<typeAlias type="com.sist.last.vo.Review" alias="Review"/> -->
-<!--	<typeAlias type="com.sist.last.vo.Image" alias="Image"/> -->
-<!-- 	<typeAlias type="com.sist.last.vo.Basket" alias="Basket"/> -->
-<!--	<typeAlias type="com.sist.last.vo.Qna" alias="Qna"/> -->
+	<typeAlias type="com.sist.last.vo.Reply" alias="Reply"/>
+	<typeAlias type="com.sist.last.vo.Star" alias="Star"/> 
+	<typeAlias type="com.sist.last.vo.Scrap" alias="Scrap"/> 
+	<typeAlias type="com.sist.last.vo.Review" alias="Review"/>
+	<typeAlias type="com.sist.last.vo.Image" alias="Image"/> 
+	<typeAlias type="com.sist.last.vo.Basket" alias="Basket"/> 
+	<typeAlias type="com.sist.last.vo.Qna" alias="Qna"/> 
 	</typeAliases>
 </configuration>

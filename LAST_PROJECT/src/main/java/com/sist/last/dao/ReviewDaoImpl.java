@@ -1,0 +1,176 @@
+package com.sist.last.dao;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+
+import com.sist.last.cmn.DTO;
+import com.sist.last.cmn.Search;
+import com.sist.last.vo.Review;
+
+@Repository
+public class ReviewDaoImpl {
+
+	final static Logger LOG = LoggerFactory.getLogger(ReviewDaoImpl.class);
+	
+	final String NAMESPACE = "com.sist.last.review";
+	
+	@Autowired
+	SqlSessionTemplate sqlSessionTemplate;
+	
+	// spring이 제공하는 jdbcTemplate
+	JdbcTemplate jdbcTemplate;
+
+	DataSource dataSource;
+
+	// 원하는 형태의 결과값을 반환
+	RowMapper<Review> row = new RowMapper<Review>() {
+
+		@Override
+		// rowNum만큼 반복
+		public Review mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+			Review reviewVO = new Review();
+
+			reviewVO.setReviewSeq(rs.getString("review_seq"));
+			reviewVO.setMemberId(rs.getString("member_id"));
+			reviewVO.setReviewFk(rs.getString("review_fk"));
+			reviewVO.setDiv(rs.getString("div"));
+			reviewVO.setContents(rs.getString("contents"));
+			reviewVO.setRegDt(rs.getString("reg_dt"));
+			reviewVO.setModId(rs.getString("mod_id"));
+			reviewVO.setModDt(rs.getString("mod_dt"));
+			
+			reviewVO.setNum(rs.getInt("rnum"));
+			reviewVO.setTotalCnt(rs.getInt("total_cnt"));
+
+			// LOG.debug("rowNum: " + rowNum);
+
+			return reviewVO;
+		}
+
+	};
+
+	public ReviewDaoImpl() {
+
+	}
+
+	// setter를 통한 주입
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	}
+	
+	public List<?> doRetrieve(DTO dto) throws SQLException {		
+
+		Search param = (Search) dto;
+		
+		//mybatis sql: NAMESPACE+.+id;
+		String statement = this.NAMESPACE+".doRetrieve";                                
+		
+		LOG.debug("========================");
+		LOG.debug("param: " + param);
+		LOG.debug("statement: " + statement);
+		LOG.debug("========================");
+		
+		List<Review> list = sqlSessionTemplate.selectList(statement, param);
+		
+		for (Review vo : list) {
+			LOG.debug(vo.toString());
+		}
+				
+		return list;
+	}
+	
+	public DTO doSelectOne(DTO dto) throws SQLException {
+		Review inVO = (Review) dto;
+		Review outVO = null;
+		
+		//mybatis sql: NAMESPACE+.+id;
+		String statement = this.NAMESPACE+".doSelectOne";
+		
+		LOG.debug("========================");
+		LOG.debug("review: " + inVO);
+		LOG.debug("statement: " + statement);
+		LOG.debug("========================");
+		
+		outVO = this.sqlSessionTemplate.selectOne(statement, inVO);
+		
+		LOG.debug("========================");
+		LOG.debug("outVO: " + outVO);
+		LOG.debug("========================");
+		
+		// data가 없을 경우 예외 발생
+		if (null == outVO) {
+			throw new EmptyResultDataAccessException(1);
+		}
+				
+		return outVO;
+	}
+	
+	public int doUpdate(DTO dto) throws SQLException {
+		int flag = 0;
+		Review review = (Review) dto;  
+		
+		//mybatis sql: NAMESPACE+.+id;
+		String statement = this.NAMESPACE+".doUpdate";
+		
+		LOG.debug("========================");
+		LOG.debug("user: " + review);
+		LOG.debug("statement: " + statement);
+		LOG.debug("========================");
+		
+		flag = this.sqlSessionTemplate.update(statement, review);
+			
+		return flag;
+		
+	}
+	
+	public int doDelete(DTO dto) throws SQLException {
+		int flag = 0;
+		Review review = (Review) dto;  
+		
+		//mybatis sql: NAMESPACE+.+id;
+		String statement = this.NAMESPACE+".doDelete";
+		
+		LOG.debug("========================");
+		LOG.debug("user: " + review);
+		LOG.debug("statement: " + statement);
+		LOG.debug("========================");
+		
+		flag = this.sqlSessionTemplate.insert(statement, review);
+		
+		return flag;
+	}
+
+	public int doInsert(DTO dto) throws SQLException {
+		int flag = 0;
+		Review review = (Review) dto;
+		
+		//mybatis sql: NAMESPACE+.+id;
+		String statement = this.NAMESPACE+".doInsert";
+		
+		LOG.debug("========================");
+		LOG.debug("user: " + review);
+		LOG.debug("statement: " + statement);
+		LOG.debug("========================");
+		
+		flag = this.sqlSessionTemplate.insert(statement, review);
+		
+		return flag;
+
+	}
+
+}
