@@ -24,6 +24,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.sist.last.dao.HousesLinkDao;
+import com.sist.last.dao.HousesLinkDaoImpl;
 import com.sist.last.vo.HousesLink;
 
 
@@ -42,7 +43,7 @@ public class JTestHousesLinkService {
 	HousesLinkService linkService;
 	
 	@Autowired
-	HousesLinkDao linkDao;
+	HousesLinkDaoImpl linkDao;
 	
 	@Autowired
 	DataSource dataSource;

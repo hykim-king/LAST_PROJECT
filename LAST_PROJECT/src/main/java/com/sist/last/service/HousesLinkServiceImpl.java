@@ -5,24 +5,24 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.sist.last.cmn.DTO;
 import com.sist.last.dao.HousesLinkDao;
+import com.sist.last.dao.HousesLinkDaoImpl;
 import com.sist.last.vo.HousesLink;
 
-public class HousesLinkServiceimpl implements HousesLinkService {
+@Service
+public class HousesLinkServiceImpl implements HousesLinkService {
 	
 	final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	
-	private HousesLinkDao housesLinkDao;//interface
+	@Autowired
+	private HousesLinkDaoImpl housesLinkDao;
 	
-	public HousesLinkServiceimpl() { }
+	public HousesLinkServiceImpl() { }
 	
-	//setter통한 DI
-	public void setHousesLinkDao(HousesLinkDao housesLinkDao) {
-		this.housesLinkDao = housesLinkDao;
-	}
-
 
 	@Override
 	public List<?> doRetrieve(DTO dto) throws SQLException {
