@@ -26,6 +26,7 @@ public class BasketController {
 	final String VIEW_NAME = "basket/basket_mng";
 	
 	@Autowired
+	
 	BasketService basketService;
 	
 	
@@ -45,6 +46,7 @@ public class BasketController {
 	public String doRetrieve(Search search)throws SQLException{
 		LOG.debug("================================");
 		LOG.debug("=param:" + search);
+		LOG.debug("================================");
 		LOG.debug("================================");
 		
 		///NVL처리 
