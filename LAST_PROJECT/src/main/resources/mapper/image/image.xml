@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.last.image">
+
+	<!-- https://mybatis.org/mybatis-3/ko/sqlmap-xml.html#Result_Maps -->
+	<!-- id PK property=VO pk 속성 column=테이블 컬럼 -->
+	<resultMap type="Image" id="imageResult">
+		<id property="imgId" column="img_id"/>
+		<result property="imgNum" column="img_num"/>
+		<result property="orgName" column="org_name"/>
+		<result property="saveName" column="save_name"/>
+		<result property="savePath" column="save_path"/>
+		<result property="imgSize" column="img_size"/>
+		<result property="imgExt" column="img_ext"/>
+	</resultMap>
+	
+	<!-- retrieve -->
+	<select id="doRetrieve" parameterType="Image" resultMap="imageResult">
+		SELECT img_id,       
+		       img_num,      
+		       org_name,     
+		       save_name,    
+		       save_path,  	 
+		       img_size,     
+		       SUBSTR(org_name,INSTR(org_name, '.', -1) + 1) AS img_ext       
+		FROM   image         
+		WHERE  img_id = #{imgId}     
+		ORDER BY img_num ASC 
+	</select>
+	
+	<!-- selectone -->
+	<select id="doSelectOne" parameterType="Image" resultMap="imageResult">
+		SELECT img_id,     
+			   img_num,   
+			   org_name,  
+			   save_name, 
+		       save_path,  
+		       img_size,   
+		       SUBSTR(org_name,INSTR(org_name, '.', -1) + 1) AS img_ext     
+		FROM image         
+		WHERE img_id = #{imgId}    
+	</select>
+	
+	<!-- upadate -->
+	<update id="doUpdate" parameterType="Image">
+		UPDATE image      
+		SET img_num =  #{imgNum},  
+		    org_name = #{orgName}, 
+		    save_name = #{saveName},
+		    save_path = #{savePath},
+		    img_size = #{imgSize}, 
+		    img_ext = #{imgExt}   
+		WHERE img_id = #{imgId}   
+	</update>	
+	
+	<!-- delete -->
+	<delete id="doDelete" parameterType="Image">
+		DELETE FROM image
+		WHERE img_id = #{imgId} 
+	</delete>
+
+	<!-- insert -->
+	<insert id="doInsert" parameterType="Image">
+		INSERT INTO image ( 
+		    img_id,         
+		    img_num,        
+		    org_name,       
+		    save_name,      
+		    save_path,      
+		    img_size,       
+		    img_ext         
+		) VALUES (          
+		    #{imgId},              
+		    #{imgNum},              
+		    #{orgName},              
+		    #{saveName},              
+		    #{savePath},              
+		    #{imgSize},              
+		    #{imgExt}               
+		)                                      
+	</insert>
+	
+	
+	
+</mapper>
