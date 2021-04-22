@@ -123,20 +123,58 @@ public class ScrapDaoImpl implements ScrapDao {
 	}
 
 	@Override
-	public List<?> doRetrieve(DTO dto) throws SQLException {
-		Search param = (Search) dto;
-		String statement = this.NAMESPACE+".doRetrieve";
+	public List<Scrap> doRetrieve(DTO dto) throws SQLException {
+		Search  param = (Search) dto;
 		
-		LOG.debug("==================================");
+		StringBuffer sb=new StringBuffer(1000);
+		sb.append(" SELECT A.*,B.*                                                                                      \n");
+		sb.append(" FROM(                                                                                               \n");
+		sb.append("     SELECT t2.rnum,                                                                                 \n");
+		sb.append("            t2.scrap_seq,                                                                                 \n");
+		sb.append("            t2.houses_seq,                                                                                 \n");
+		sb.append("            t2.member_id,                                                                                 \n");
+		sb.append("       CASE WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD')=TO_CHAR(t2.reg_dt,'YYYY/MM/DD')             \n");
+		sb.append("       THEN TO_CHAR(t2.reg_dt,'HH24:MI')                                                   \n");
+		sb.append(" 	   ELSE TO_CHAR(t2.reg_dt,'YYYY/MM/DD')                                               \n");
+		sb.append(" 	   END reg_dt,                                                                       \n");
+		sb.append(" 	   t2.mod_id,                                                                         \n");
+		sb.append("       CASE WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD')=TO_CHAR(t2.mod_dt,'YYYY/MM/DD')             \n");
+		sb.append(" 	   THEN TO_CHAR(t2.mod_dt,'HH24:MI')                                                  \n");
+		sb.append(" 	   ELSE TO_CHAR(t2.mod_dt,'YYYY/MM/DD')                                               \n");
+		sb.append(" 	   END mod_dt                                                                      \n");
+		sb.append("     FROM(                                                                                           \n");
+		sb.append("         SELECT ROWNUM rnum,t1.*                                                                     \n");
+		sb.append("         FROM (                                                                                      \n");
+		sb.append("             SELECT *                                                                                \n");
+		sb.append("             FROM scrap                                                                          \n");
+		sb.append("             ORDER BY reg_dt desc                                                                    \n");
+		sb.append("         )t1                                                                                         \n");
+		sb.append("     )t2                                                                                             \n");
+		sb.append("     WHERE rnum BETWEEN (? * (?-1) + 1) AND (? * (?-1) + ?)                                          \n");
+		sb.append(" )A CROSS JOIN                                                                                       \n");
+		sb.append("     (SELECT COUNT(*) total_cnt                                                                      \n");
+		sb.append("      FROM scrap                                                                                 \n");
+		sb.append("     )B                                                                                              \n");
+		
+		LOG.debug("=sql=\n"+sb.toString());
 		LOG.debug("=param=\n"+param);
-		LOG.debug("=statement="+statement);
-		LOG.debug("==================================");
 		
-		List<Scrap> list = this.sqlSessionTemplate.selectList(statement, param);
-		for(Scrap vo:list) {
-			LOG.debug(vo.toString());
-		}
+		//query에 파라메터 set
+		List<Object>   listArg = new ArrayList<Object>();
 		
+			//페이징 정보
+			listArg.add(param.getPageSize());
+			listArg.add(param.getPageNum());
+			listArg.add(param.getPageSize());
+			listArg.add(param.getPageNum());
+			listArg.add(param.getPageSize());		
+			
+//		LOG.debug("1=listArg="+listArg.toArray());
+//		for(Object ob:listArg) {
+//			LOG.debug("=ob="+ob.toString());
+//		}
+		List<Scrap> list = jdbcTemplate.query(sb.toString(), listArg.toArray(), row);
+		LOG.debug("2=param=");
 		return list;
 	}
 
