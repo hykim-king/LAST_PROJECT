@@ -17,6 +17,7 @@ import com.sist.last.cmn.Message;
 import com.sist.last.cmn.Search;
 import com.sist.last.cmn.StringUtil;
 import com.sist.last.service.PaymentService;
+import com.sist.last.service.PaymentServiceImpl;
 import com.sist.last.vo.Payment;
 import com.sist.last.vo.Reply;
 
@@ -27,7 +28,7 @@ public class PaymentController {
 	final String VIEW_NAME = "payment/payment_mng";
 	
 	@Autowired
-	PaymentService paymentService;
+	PaymentServiceImpl paymentService;
 	
 	public PaymentController() {}
 	

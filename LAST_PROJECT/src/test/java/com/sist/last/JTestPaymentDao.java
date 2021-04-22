@@ -135,7 +135,7 @@ public class JTestPaymentDao {
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void addAndGet() throws ClassNotFoundException, SQLException {
 		LOG.debug("=======================");
 		LOG.debug("=@addAndGet=");

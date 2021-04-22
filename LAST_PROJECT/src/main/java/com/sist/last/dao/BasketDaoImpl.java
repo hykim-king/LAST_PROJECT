@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.Search;
@@ -21,6 +22,7 @@ import com.sist.last.cmn.StringUtil;
 import com.sist.last.vo.Basket;
 
 
+@Repository
 public class BasketDaoImpl extends DTO implements BasketDao {
 
 	final static Logger LOG = LoggerFactory.getLogger(BasketDaoImpl.class);
@@ -33,7 +35,7 @@ public class BasketDaoImpl extends DTO implements BasketDao {
 	//Spring JdbcTemplate:This is the central class in the JDBC core package.It simplifies the use of JDBC and helps to avoid common errors.
 	JdbcTemplate jdbcTemplate;
 	
-	DataSource dataSource;
+	//DataSource dataSource;
 	
 	RowMapper<Basket> row = new RowMapper<Basket>() {
 		@Override
@@ -60,10 +62,10 @@ public class BasketDaoImpl extends DTO implements BasketDao {
 	
 	public BasketDaoImpl() {}
 	
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
-	}
+//	public void setDataSource(DataSource dataSource) {
+//		this.dataSource = dataSource;
+//		this.jdbcTemplate = new JdbcTemplate(dataSource);
+//	}
 
 
 	@Override

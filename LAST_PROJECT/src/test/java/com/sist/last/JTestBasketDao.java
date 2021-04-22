@@ -83,7 +83,7 @@ public class JTestBasketDao {
 	}
 	
 	@Test
-//	@Ignore
+	@Ignore
 	public void doSelectOne() throws SQLException {
 		dao.doSelectOne(basket01);
 		dao.doSelectOne(basket02);

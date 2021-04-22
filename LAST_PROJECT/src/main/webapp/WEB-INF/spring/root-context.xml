@@ -108,11 +108,7 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="basketDaoImpl" class="com.sist.last.dao.BasketDaoImpl">
-		<!-- setter통한 주입: name -->
-		<!-- ref:param -->
-		<property name="dataSource" ref="dataSource" />
-	</bean>
+
 	<bean id="qnaDaoImpl" class="com.sist.last.dao.QnaDaoImpl">
 		<!-- setter통한 주입: name -->
 		<!-- ref:param -->

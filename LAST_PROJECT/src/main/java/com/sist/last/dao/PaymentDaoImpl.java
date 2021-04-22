@@ -13,12 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.SearchPay;
 import com.sist.last.vo.Payment;
 
-public class PaymentDaoImpl implements PaymentDao {
+@Repository
+public class PaymentDaoImpl extends DTO implements PaymentDao {
 	final static Logger LOG = LoggerFactory.getLogger(PaymentDaoImpl.class);
 
 	final String NAMESPACE = "com.sist.last.payment"; //com.sist.ehr.member.doDelete -> 점 붙어야 함
@@ -29,7 +31,7 @@ public class PaymentDaoImpl implements PaymentDao {
 	//Spring이 제공해주는 JdbcTemplate
 	JdbcTemplate jdbcTemplate;
 	
-	DataSource dataSource;
+	//DataSource dataSource;
 	
 	//ResultSet이 들어가 있음. 조회해온 데이터를 넣음
 	RowMapper<Payment> row = new RowMapper<Payment>() {
@@ -62,12 +64,12 @@ public class PaymentDaoImpl implements PaymentDao {
 	}
 	
 	//setter를 통한 주입
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
-		
-	}
-	
+//	public void setDataSource(DataSource dataSource) {
+//		this.dataSource = dataSource;
+//		this.jdbcTemplate = new JdbcTemplate(dataSource);
+//		
+//	}
+//	
 	/**
 	 * 결제 목록조회
 	 * @param dto
