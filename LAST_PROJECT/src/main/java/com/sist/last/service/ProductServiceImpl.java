@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sist.last.cmn.DTO;
+import com.sist.last.cmn.StringUtil;
 import com.sist.last.dao.ProductDaoImpl;
+import com.sist.last.vo.Product;
 
 @Service
 public class ProductServiceImpl  {
@@ -51,7 +53,10 @@ public class ProductServiceImpl  {
 
 	
 	public int doInsert(DTO dto) throws SQLException {
-		// TODO Auto-generated method stub
+		
+		Product product = (Product) dto;
+		product.setStoreSeq(StringUtil.getPK(""));
+		
 		return this.productDao.doInsert(dto);
 	}
 	
