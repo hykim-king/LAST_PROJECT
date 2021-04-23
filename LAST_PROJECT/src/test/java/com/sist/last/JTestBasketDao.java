@@ -75,7 +75,7 @@ public class JTestBasketDao {
 	}
 
 	@Test
-	@Ignore
+	//@Ignore
 	public void doInsert() throws SQLException {
 		dao.doInsert(basket01);
 		dao.doInsert(basket02);
@@ -83,7 +83,7 @@ public class JTestBasketDao {
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void doSelectOne() throws SQLException {
 		dao.doSelectOne(basket01);
 		dao.doSelectOne(basket02);
@@ -96,7 +96,7 @@ public class JTestBasketDao {
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void doDelete() throws SQLException {
 		dao.doDelete(basket01);
 		dao.doDelete(basket02);
@@ -104,7 +104,7 @@ public class JTestBasketDao {
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void doUpdate() throws SQLException {
 		dao.doDelete(basket01);
 		dao.doInsert(basket01);

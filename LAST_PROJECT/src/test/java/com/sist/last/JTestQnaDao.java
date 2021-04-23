@@ -80,7 +80,7 @@ public class JTestQnaDao {
 
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void doInsert() throws SQLException {
 		dao.doInsert(qna01);
 		dao.doInsert(qna02);
@@ -88,7 +88,7 @@ public class JTestQnaDao {
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void doSelectOne() throws SQLException {
 		dao.doSelectOne(qna01);
 		dao.doSelectOne(qna02);
@@ -106,7 +106,7 @@ public class JTestQnaDao {
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void doDelete() throws SQLException {
 		dao.doDelete(qna01);
 		dao.doDelete(qna02);
@@ -114,14 +114,14 @@ public class JTestQnaDao {
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void doUpdate() throws SQLException {
-		dao.doInsert(qna01);
+		//dao.doInsert(qna01);
 		dao.doUpdate(qnaUp);
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void beans() {
 		LOG.debug("context: "+context);
 		assertThat(context, is(notNullValue()));
