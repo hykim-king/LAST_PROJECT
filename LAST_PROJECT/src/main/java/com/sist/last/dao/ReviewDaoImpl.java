@@ -30,49 +30,10 @@ public class ReviewDaoImpl {
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 	
-	// spring이 제공하는 jdbcTemplate
-	JdbcTemplate jdbcTemplate;
-
-	DataSource dataSource;
-
-	// 원하는 형태의 결과값을 반환
-	RowMapper<Review> row = new RowMapper<Review>() {
-
-		@Override
-		// rowNum만큼 반복
-		public Review mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-			Review reviewVO = new Review();
-
-			reviewVO.setReviewSeq(rs.getString("review_seq"));
-			reviewVO.setMemberId(rs.getString("member_id"));
-			reviewVO.setReviewFk(rs.getString("review_fk"));
-			reviewVO.setDiv(rs.getString("div"));
-			reviewVO.setContents(rs.getString("contents"));
-			reviewVO.setRegDt(rs.getString("reg_dt"));
-			reviewVO.setModId(rs.getString("mod_id"));
-			reviewVO.setModDt(rs.getString("mod_dt"));
-			
-			reviewVO.setNum(rs.getInt("rnum"));
-			reviewVO.setTotalCnt(rs.getInt("total_cnt"));
-
-			// LOG.debug("rowNum: " + rowNum);
-
-			return reviewVO;
-		}
-
-	};
-
 	public ReviewDaoImpl() {
 
 	}
 
-	// setter를 통한 주입
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
-	}
-	
 	public List<?> doRetrieve(DTO dto) throws SQLException {		
 
 		SearchReview param = (SearchReview) dto;

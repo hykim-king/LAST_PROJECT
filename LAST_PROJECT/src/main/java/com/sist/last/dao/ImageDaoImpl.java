@@ -27,38 +27,9 @@ public class ImageDaoImpl {
 	
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
-	
-	// spring이 제공하는 jdbcTemplate
-	JdbcTemplate jdbcTemplate;
-
-	DataSource dataSource;
-
-	RowMapper<Image> row = new RowMapper<Image>() {
-
-		@Override
-		public Image mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Image imageVO = new Image();
-
-			imageVO.setImgId(rs.getString("img_id"));
-			imageVO.setImgNum(rs.getInt("img_num"));
-			imageVO.setOrgName(rs.getString("org_name"));
-			imageVO.setSaveName(rs.getString("save_name"));
-			imageVO.setSavePath(rs.getString("save_path"));
-			imageVO.setImgSize(rs.getString("img_size"));
-			imageVO.setImgExt(rs.getString("img_ext"));
-
-			return imageVO;
-		}
-
-	};
 
 	public ImageDaoImpl() {
 
-	}
-
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
 	public List<?> doRetrieve(DTO dto) throws SQLException {
