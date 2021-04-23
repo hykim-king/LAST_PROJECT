@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sist.last.cmn.DTO;
+import com.sist.last.cmn.StringUtil;
 import com.sist.last.dao.BasketDaoImpl;
+import com.sist.last.vo.Basket;
 
 public class BasketServiceImpl implements BasketService {
 
@@ -45,7 +47,11 @@ public class BasketServiceImpl implements BasketService {
 
 	@Override
 	public int doInsert(DTO dto) throws SQLException {
-		return this.basketDao.doInsert(dto);
+		
+		Basket basket= (Basket) dto;
+		basket.setBasketSeq(StringUtil.getPK(""));
+		
+		return this.basketDao.doInsert(basket);
 	}
 
 }

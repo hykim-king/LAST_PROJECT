@@ -7,7 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.sist.last.cmn.DTO;
+import com.sist.last.cmn.StringUtil;
 import com.sist.last.dao.QnaDaoImpl;
+import com.sist.last.vo.Qna;
 
 public class QnaServiceImpl implements QnaService {
 
@@ -43,7 +45,11 @@ public class QnaServiceImpl implements QnaService {
 
 	@Override
 	public int doInsert(DTO dto) throws SQLException {
-		return this.QnaDao.doInsert(dto);
+		
+		Qna qna = (Qna) dto;
+		qna.setQnaSeq(StringUtil.getPK(""));
+		
+		return this.QnaDao.doInsert(qna);
 	}
 
 }
