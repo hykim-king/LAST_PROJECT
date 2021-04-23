@@ -22,7 +22,7 @@ public class PaymentServiceImpl implements PaymentService {
 	@Autowired
 	private PaymentDaoImpl dao;
 	
-	public PaymentServiceImpl() {}
+	public PaymentServiceImpl() {} 
 	
 	@Override
 	public List<?> doRetrieve(DTO dto) throws SQLException {

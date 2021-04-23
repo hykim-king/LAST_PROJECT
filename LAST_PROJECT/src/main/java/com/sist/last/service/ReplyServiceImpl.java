@@ -21,7 +21,7 @@ public class ReplyServiceImpl implements ReplyService {
 	
 	public ReplyServiceImpl() {}
 	
-	@Override
+	@Override 
 	public int doUpdate(DTO dto) throws SQLException {
 
 		return this.dao.doUpdate(dto);
