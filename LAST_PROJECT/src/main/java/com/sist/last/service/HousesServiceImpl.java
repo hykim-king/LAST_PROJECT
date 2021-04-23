@@ -47,6 +47,7 @@ public class HousesServiceImpl implements HousesService {
 		houses.setHousesSeq(StringUtil.getPK(""));
 
 		return this.housesDao.doInsert(houses);
+		
 	}
 
 	@Override
