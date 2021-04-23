@@ -100,7 +100,6 @@ public class JTestHousesService {
 	}
 	
 	@Test
-	@Ignore
 	public void doSelectOne() throws SQLException {
 		Houses houses01 = houses.get(0);
 		Houses houses02 = houses.get(1);
@@ -112,7 +111,6 @@ public class JTestHousesService {
 	}
 	
 	@Test
-	@Ignore
 	public void doUpdate() throws SQLException {
 		int flag = 0;
 		
@@ -126,6 +124,9 @@ public class JTestHousesService {
 		
 		flag = this.housesService.doUpdate(houses01);
 		assertThat(flag, is(1));
+		
+		//조회
+		Houses vsHouses01 = (Houses) this.housesService.doSelectOne(houses01);
 	}
 	
 	@Test
@@ -150,7 +151,6 @@ public class JTestHousesService {
 	//---------------------------------------------
 	
 	@Test
-	@Ignore
 	public void addAndUpGet() throws SQLException {
 		//삭제
 		for(Houses houses : houses) {
