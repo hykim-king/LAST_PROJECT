@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sist.last.cmn.DTO;
+import com.sist.last.cmn.StringUtil;
 import com.sist.last.dao.ReviewDaoImpl;
+import com.sist.last.vo.Review;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -54,6 +56,9 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public int doInsert(DTO dto) throws SQLException {
+		
+		Review review = (Review) dto;
+		review.setReviewSeq(StringUtil.getPK(""));
 
 		return this.reviewDao.doInsert(dto);
 	}
