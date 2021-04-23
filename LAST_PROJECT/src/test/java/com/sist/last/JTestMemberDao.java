@@ -66,7 +66,6 @@ public class JTestMemberDao {
 	}
 
 	@Test
-	@Ignore
 	public void doInsert() throws SQLException {
 		LOG.debug("================");
 		LOG.debug("==@doInsert==");
@@ -89,7 +88,6 @@ public class JTestMemberDao {
 	
 	
 	@Test
-	@Ignore
 	public void doDelete() throws SQLException {
 		LOG.debug("================");
 		LOG.debug("==@doDelete==");
@@ -103,7 +101,6 @@ public class JTestMemberDao {
 	
 	
 	@Test
-	@Ignore
 	public void doUpdate() throws SQLException {
 		LOG.debug("================");
 		LOG.debug("==@doUpdate==");
@@ -147,7 +144,6 @@ public class JTestMemberDao {
 	}
 	
 	@Test
-//	@Ignore
 	public void doSelectOne() throws SQLException {
 		LOG.debug("================");
 		LOG.debug("==@doSelectOne==");
