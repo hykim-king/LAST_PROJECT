@@ -68,7 +68,6 @@ public class JTestOptDao {
 	 * @throws SQLException
 	 */
 	@Test
-	@Ignore
 	public void doUpdate() throws SQLException {
 		//1. 기존데이터 삭제
 		//2. 신규데이터 입력
@@ -131,9 +130,9 @@ public class JTestOptDao {
 		//검색용도
 		Opt opt09 = new Opt();
 		opt09.setStoreSeq("12345");
-		opt09.setDiv(2);
+		opt09.setDiv(1);
 		List<Opt> list = dao.doRetrieve(opt09);
-		assertThat(list.size(),is(1));
+		assertThat(list.size(),is(2));
 	}
 	
 	/**

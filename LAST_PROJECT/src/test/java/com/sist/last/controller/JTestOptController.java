@@ -70,7 +70,6 @@ public class JTestOptController {
 	}
 	
 	@Test
-	@Ignore
 	public void doRetrieve() throws Exception {
 		//url호출, param 전달
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.get("/opt/do_retrieve.do")
@@ -129,7 +128,6 @@ public class JTestOptController {
 	}
 	
 	@Test
-	@Ignore
 	public void doUpdate() throws Exception {
 		opt01.setTitle(opt01.getTitle()+"_U");
 		//url호출, param 전달
