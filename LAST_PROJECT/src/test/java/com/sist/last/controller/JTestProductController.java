@@ -89,8 +89,30 @@ public class JTestProductController {
 	}
 	
 	@Test
-	@Ignore
-	public void doInsert() throws Exception {
+	public void allTest() throws Exception {
+		doDelete(product01);
+		doDelete(product02);
+		doDelete(product03);
+		
+		
+		doInsert(product01);
+		doInsert(product02);
+		doInsert(product03);
+		
+		doSelectOne(product01);
+		doSelectOne(product02);
+		doSelectOne(product03);
+		
+		doUpdate(product01);
+		
+		doRetrieve(search01);
+		doRetrieve(search02);
+		
+	}
+	
+	
+	
+	public void doInsert(Product product01) throws Exception {
 	
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/product/do_insert.do")
 				.param("storeSeq", product01.getStoreSeq()).param("memberId", product01.getMemberId()).param("imgId", product01.getImgId())
@@ -127,9 +149,8 @@ public class JTestProductController {
 		
 	}
 	
-	@Test
-	//@Ignore
-	public void doUpdate() throws Exception {
+
+	public void doUpdate(Product product01) throws Exception {
 		product01.setTitle("test01_UU");
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/product/do_update.do")
 				.param("storeSeq", product01.getStoreSeq()).param("modId", product01.getMemberId()).param("imgId", product01.getImgId())
@@ -155,9 +176,8 @@ public class JTestProductController {
 		
 	}
 	
-	@Test
-	@Ignore
-	public void doDelete() throws Exception {
+	
+	public void doDelete(Product product01) throws Exception {
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/product/do_delete.do").param("storeSeq", product01.getStoreSeq());
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -190,9 +210,8 @@ public class JTestProductController {
 	
 	
 	
-	@Test
-	@Ignore
-	public void doRetrieve() throws Exception {
+
+	public void doRetrieve(SearchOrder search02) throws Exception {
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.get("/product/do_retrieve.do")
 				.param("searchDiv", search02.getSearchDiv())
 				.param("searchWord", search02.getSearchWord())
@@ -215,9 +234,8 @@ public class JTestProductController {
 		
 	}
 	
-	@Test
-	@Ignore
-	public void doSelectOne() throws Exception {
+
+	public void doSelectOne(Product product01) throws Exception {
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.get("/product/do_selectone.do").param("storeSeq",
 				product01.getStoreSeq());
 		
