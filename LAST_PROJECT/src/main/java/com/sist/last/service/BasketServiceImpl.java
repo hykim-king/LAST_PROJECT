@@ -6,12 +6,14 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.StringUtil;
 import com.sist.last.dao.BasketDaoImpl;
 import com.sist.last.vo.Basket;
 
+@Service
 public class BasketServiceImpl implements BasketService {
 
 	final Logger LOG = LoggerFactory.getLogger(this.getClass());

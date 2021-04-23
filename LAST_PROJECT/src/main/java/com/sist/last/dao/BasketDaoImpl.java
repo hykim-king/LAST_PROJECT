@@ -37,28 +37,6 @@ public class BasketDaoImpl extends DTO implements BasketDao {
 	
 	//DataSource dataSource;
 	
-	RowMapper<Basket> row = new RowMapper<Basket>() {
-		@Override
-		public Basket mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Basket basketVO =  new Basket();
-			basketVO.setBasketSeq(rs.getString("basket_seq"));
-			basketVO.setStoreSeq(rs.getString("store_seq"));
-			basketVO.setMemberId(rs.getString("member_id"));
-			basketVO.setTitle(rs.getString("title"));
-			basketVO.setOptone(rs.getString("optone"));
-			basketVO.setOpttwo(rs.getString("opttwo"));
-			basketVO.setQuantity(rs.getInt("quantity"));
-			basketVO.setShipfee(rs.getInt("shipfee"));
-			basketVO.setPrice(rs.getInt("price"));
-			basketVO.setRegDt(rs.getString("reg_dt"));
-				
-			//추가?
-			basketVO.setNum(rs.getInt("rnum"));
-			basketVO.setTotalCnt(rs.getInt("total_cnt"));
-	
-			return basketVO;
-		}
-	};
 	
 	public BasketDaoImpl() {}
 	

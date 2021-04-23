@@ -86,10 +86,7 @@
 
 	<!-- Service -->
 
-	<bean id="basketService"
-		class="com.sist.last.service.BasketServiceImpl">
-		<property name="basketDao" ref="basketDaoImpl" />
-	</bean>
+
 	<bean id="qnaService" class="com.sist.last.service.QnaServiceImpl">
 		<property name="qnaDao" ref="qnaDaoImpl" />
 	</bean>

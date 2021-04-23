@@ -17,6 +17,7 @@ import com.sist.last.cmn.Message;
 import com.sist.last.cmn.Search;
 import com.sist.last.cmn.StringUtil;
 import com.sist.last.service.BasketService;
+import com.sist.last.service.BasketServiceImpl;
 import com.sist.last.vo.Basket;
 
 @Controller
@@ -25,9 +26,8 @@ public class BasketController {
 	final Logger LOG = LoggerFactory.getLogger(BasketController.class);
 	final String VIEW_NAME = "basket/basket_mng";
 	
-	@Autowired
-	
-	BasketService basketService;
+	@Autowired	
+	BasketServiceImpl basketService;
 	
 	
 	public BasketController() {}
