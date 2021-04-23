@@ -57,7 +57,7 @@ public class ProductServiceImpl  {
 		Product product = (Product) dto;
 		product.setStoreSeq(StringUtil.getPK(""));
 		
-		return this.productDao.doInsert(dto);
+		return this.productDao.doInsert(product);
 	}
 	
 }
