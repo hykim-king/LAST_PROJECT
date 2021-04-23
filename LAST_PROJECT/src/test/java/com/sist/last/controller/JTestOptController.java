@@ -247,7 +247,6 @@ public class JTestOptController {
 	}
 
 	@Test
-	@Ignore
 	public void beans() {
 		LOG.debug("webApplicationContext"+webApplicationContext);
 		LOG.debug("mockMvc:"+mockMvc);
