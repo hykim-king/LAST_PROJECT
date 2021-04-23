@@ -43,7 +43,7 @@ public class JTestImageDao {
 	Image image03;
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void doSelectOne() throws SQLException {
 		// 단건조회
 		dao.doSelectOne(image01);	

@@ -89,7 +89,6 @@ public class JTestReviewDao {
 	}
 		
 	@Test
-	// @Ignore
 	public void doUpdate() throws ClassNotFoundException, SQLException {
 		//리뷰 삭제
 		dao.doDelete(review01);

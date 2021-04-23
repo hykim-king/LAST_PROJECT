@@ -80,7 +80,6 @@ public class JTestReviewController {
 	}
 	
 	@Test
-	//@Ignore
 	public void addAndGet() throws Exception {
 		
 		LOG.debug("--------------");
@@ -120,7 +119,6 @@ public class JTestReviewController {
 	}
 	
 	@Test
-	//@Ignore
 	public void doRetrieve() throws Exception {
 		// url 호출, set param
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/review/do_retrieve.do")
