@@ -52,7 +52,6 @@ public class JTestHousesController {
 	Houses houses01;
 	Houses houses02;
 	Houses houses03; 
-	Houses houses99; //수정용
 
 	// 목록조회 검색
 	SearchOrder search;
@@ -62,8 +61,6 @@ public class JTestHousesController {
 		houses01 = new Houses("4444", "yeonsu44", "4444", "test44", "test44", "test44", "", "yeonsu44", "");
 		houses02 = new Houses("5555", "yeonsu55", "5555", "test55", "test55", "test55", "", "yeonsu55", "");
 		houses03 = new Houses("6666", "yeonsu66", "6666", "test66", "test66", "test66", "", "yeonsu66", "");
-
-		houses99 = new Houses("4444", "yeonsu44_U", "4444_U", "test44_U", "test44_U", "test44_U", "", "yeonsu44_U", "");
 		
 		search = new SearchOrder("20", "tag", 10, 1, "10");
 
@@ -106,6 +103,27 @@ public class JTestHousesController {
 		
 	}
 	
+	@Test
+	public void doUpdateTest() throws Exception {
+		int flag = 0;
+		
+		houses01.setImgId(houses01.getImgId()+"_U");
+		houses01.setTitle(houses01.getTitle()+"_U");
+		houses01.setContents(houses01.getContents()+"_U");
+		houses01.setTag(houses01.getTag()+"_U");
+		houses01.setModId(houses01.getModId()+"_U");
+		LOG.debug(houses01);
+		
+		flag = doUpdate(houses01);
+		assertThat(flag, is(1));
+		
+		//비교
+		Houses checkHouses = (Houses) doSelectOne(houses01);
+		LOG.debug("checkHouses : "+checkHouses);
+		checkHouses(checkHouses, houses01);
+		
+	}
+	
 	private void checkHouses(Houses vsHouses, Houses houses) {
 		// 비교
 		assertThat(vsHouses.getHousesSeq(), is(houses.getHousesSeq()));
@@ -117,11 +135,9 @@ public class JTestHousesController {
 		assertThat(vsHouses.getModId(), is(houses.getModId()));
 	}
 	
-	@Test
-	@Ignore
-	public void doSelectOne() throws Exception {
+	public Houses doSelectOne(Houses houses) throws Exception {
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.get("/houses/do_selectone.do")
-				.param("housesSeq", houses02.getHousesSeq());
+				.param("housesSeq", houses.getHousesSeq());
 
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -141,25 +157,9 @@ public class JTestHousesController {
 		LOG.debug("outVO : " + outVO);
 		LOG.debug("------------------");
 
-		checkHouses(houses02, outVO);
+		checkHouses(houses, outVO);
 
-	}
-	
-	@Test
-	@Ignore
-	public void doUpdateTest() throws Exception {
-		int flag = 0;
-		
-		houses01.setImgId(houses01.getImgId()+"_U");
-		houses01.setTitle(houses01.getTitle()+"_U");
-		houses01.setContents(houses01.getContents()+"_U");
-		houses01.setTag(houses01.getTag()+"_U");
-		houses01.setModId(houses01.getModId()+"_U");
-		LOG.debug(houses01);
-		
-		flag = doUpdate(houses01);
-		assertThat(flag, is(1));
-		
+		return outVO;
 	}
 	
 	public int doUpdate(Houses houses) throws Exception {
@@ -202,7 +202,6 @@ public class JTestHousesController {
 	}
 
 	@Test
-	@Ignore
 	public void doInsert() throws Exception {
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/houses/do_insert.do")
 				.param("housesSeq", houses01.getHousesSeq())
@@ -240,7 +239,6 @@ public class JTestHousesController {
 	}
 	
 	@Test
-	@Ignore
 	public void doDelete() throws Exception {
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/houses/do_delete.do")
 				.param("housesSeq", houses01.getHousesSeq());
