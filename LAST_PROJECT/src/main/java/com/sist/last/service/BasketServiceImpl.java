@@ -20,10 +20,6 @@ public class BasketServiceImpl implements BasketService {
 	
 	@Autowired
 	private BasketDaoImpl basketDao;
-	
-	public void setBasketDao(BasketDaoImpl basketDao) {
-		this.basketDao = basketDao;
-	}
 
 	public BasketServiceImpl() {}
 	

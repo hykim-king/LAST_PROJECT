@@ -84,16 +84,7 @@
 			value="${jdbc.removeAbandonedTimeout}" />
 	</bean>
 
-	<!-- Service -->
 
-
-	<bean id="qnaService" class="com.sist.last.service.QnaServiceImpl">
-		<property name="qnaDao" ref="qnaDaoImpl" />
-	</bean>
-
-
-
-	<!-- //Service -->
 	<bean id="starDao" class="com.sist.last.dao.StarDaoImpl">
 		<!-- setter통한 주입: name -->
 		<!-- ref:param -->
@@ -104,14 +95,6 @@
 		<!-- ref:param -->
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-
-
-	<bean id="qnaDaoImpl" class="com.sist.last.dao.QnaDaoImpl">
-		<!-- setter통한 주입: name -->
-		<!-- ref:param -->
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-
 
 
 	<bean id="memberDao" class="com.sist.last.dao.MemberDaoImpl">

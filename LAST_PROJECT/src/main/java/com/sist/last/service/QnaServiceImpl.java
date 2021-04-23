@@ -5,21 +5,21 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.StringUtil;
 import com.sist.last.dao.QnaDaoImpl;
 import com.sist.last.vo.Qna;
 
+@Service
 public class QnaServiceImpl implements QnaService {
 
 	final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	
-	private QnaDaoImpl QnaDao;
-	
-	public void setQnaDao(QnaDaoImpl qnaDao) {
-		QnaDao = qnaDao;
-	}
+	@Autowired
+	private QnaDaoImpl QnaDao;	
 
 	public QnaServiceImpl() {}
 	
