@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sist.last.cmn.DTO;
+import com.sist.last.cmn.StringUtil;
 import com.sist.last.dao.HousesDaoImpl;
+import com.sist.last.vo.Houses;
 
 @Service
 public class HousesServiceImpl implements HousesService {
@@ -40,7 +42,12 @@ public class HousesServiceImpl implements HousesService {
 
 	@Override
 	public int doInsert(DTO dto) throws SQLException {
-		return this.housesDao.doInsert(dto);
+		
+		Houses houses = (Houses) dto;
+		houses.setHousesSeq(StringUtil.getPK(""));
+
+		return this.housesDao.doInsert(houses);
+		
 	}
 
 	@Override
