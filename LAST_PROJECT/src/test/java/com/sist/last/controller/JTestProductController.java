@@ -90,20 +90,20 @@ public class JTestProductController {
 	
 	@Test
 	public void allTest() throws Exception {
-		doDelete(product01);
-		doDelete(product02);
-		doDelete(product03);
+//		doDelete(product01);
+//		doDelete(product02);
+//		doDelete(product03);
 		
 		
 		doInsert(product01);
 		doInsert(product02);
 		doInsert(product03);
 		
-		doSelectOne(product01);
-		doSelectOne(product02);
-		doSelectOne(product03);
+//		doSelectOne(product01);
+//		doSelectOne(product02);
+//		doSelectOne(product03);
 		
-		doUpdate(product01);
+		//doUpdate(product01);
 		
 		doRetrieve(search01);
 		doRetrieve(search02);

@@ -147,7 +147,7 @@ public class JTestProductDao {
 	
 
 	@Test
-	//@Ignore
+	@Ignore
 	public void doInsert() throws SQLException, ClassNotFoundException {
 		
 		product01.setStoreSeq(StringUtil.getPK(""));
