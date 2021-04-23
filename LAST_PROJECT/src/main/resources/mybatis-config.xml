@@ -13,6 +13,7 @@
 		<typeAlias type="com.sist.last.cmn.SearchOrder" alias="SearchOrder"/>		
 		<typeAlias type="com.sist.last.cmn.Search" alias="Search"/>
 		 <typeAlias type="com.sist.last.cmn.SearchPay" alias="SearchPay"/> 
+		 <typeAlias type="com.sist.last.cmn.SearchReview" alias="SearchReview"/> 
 		<!-- //공통 부분 -->
 		
 		<typeAlias type="com.sist.last.vo.Product" alias="Product"/>
