@@ -120,7 +120,7 @@ public class JTestReviewController {
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void doRetrieve() throws Exception {
 		// url 호출, set param
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/review/do_retrieve.do")

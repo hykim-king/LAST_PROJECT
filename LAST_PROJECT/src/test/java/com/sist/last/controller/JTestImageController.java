@@ -74,7 +74,7 @@ public class JTestImageController {
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void doUpdateTest() throws Exception {
 		// 1. 기존 데이터 삭제
 		// 2. 신규 데이터 입력
@@ -111,7 +111,7 @@ public class JTestImageController {
 	}
 
 	@Test
-	//@Ignore
+	@Ignore
 	public void doRetrieve() throws Exception {
 		// url 호출, set param
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/image/do_retrieve.do")

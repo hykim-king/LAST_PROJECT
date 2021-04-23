@@ -17,7 +17,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.sist.last.cmn.DTO;
-import com.sist.last.cmn.Search;
+import com.sist.last.cmn.SearchReview;
 import com.sist.last.vo.Review;
 
 @Repository
@@ -75,7 +75,7 @@ public class ReviewDaoImpl {
 	
 	public List<?> doRetrieve(DTO dto) throws SQLException {		
 
-		Search param = (Search) dto;
+		SearchReview param = (SearchReview) dto;
 		
 		//mybatis sql: NAMESPACE+.+id;
 		String statement = this.NAMESPACE+".doRetrieve";                                

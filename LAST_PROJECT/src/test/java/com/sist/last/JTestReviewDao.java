@@ -67,7 +67,6 @@ public class JTestReviewDao {
 	}
 	
 	@Test
-	@Ignore
 	public void doRetrieve() throws ClassNotFoundException, SQLException {
 		dao.doRetrieve(search01);
 	}
