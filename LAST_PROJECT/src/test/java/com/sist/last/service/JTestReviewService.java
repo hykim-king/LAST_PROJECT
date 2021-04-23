@@ -41,12 +41,6 @@ public class JTestReviewService {
 	@Autowired
 	ReviewDaoImpl reviewDao;
 	
-	@Autowired
-	DataSource dataSource;
-	
-	@Autowired
-	PlatformTransactionManager transactionManager;
-	
 	@Before
 	public void setUp() throws Exception {
 	}
@@ -60,14 +54,12 @@ public class JTestReviewService {
 		LOG.debug("context: " + context);
 		LOG.debug("reviewService: " + reviewService);
 		LOG.debug("reviewDao: " + reviewDao);
-		LOG.debug("dataSource: " + dataSource);
-		LOG.debug("transactionManager: " + transactionManager);
+
 
 		assertThat(this.context, is(notNullValue()));
 		assertThat(this.reviewService, is(notNullValue()));
 		assertThat(this.reviewDao, is(notNullValue()));
-		assertThat(this.dataSource, is(notNullValue()));
-		assertThat(this.transactionManager, is(notNullValue()));
+
 	}
 
 }
