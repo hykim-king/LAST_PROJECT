@@ -1,6 +1,7 @@
 package com.sist.last;
 
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 import java.sql.SQLException;
@@ -20,7 +21,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.sist.last.cmn.Search;
-import com.sist.last.dao.ReplyDao;
 import com.sist.last.dao.ReplyDaoImpl;
 import com.sist.last.vo.Reply;
 
@@ -31,13 +31,13 @@ import com.sist.last.vo.Reply;
 									"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"})
 public class JTestReplyDao {
 	
-	final static Logger LOG = LoggerFactory.getLogger(JTestReplyDao.class);
+	final static Logger LOG = LoggerFactory.getLogger(JTestReplyDao.class); 
 	
 	@Autowired
 	ApplicationContext context;
 	
 	@Autowired
-	private ReplyDao dao;
+	private ReplyDaoImpl dao;
 	
 	Reply reply01;
 	Reply reply02;
@@ -55,7 +55,6 @@ public class JTestReplyDao {
 		reply02 = new Reply("R_02", "L_100_02", "1234", "reply02~~", "", "L_100_02", "");
 		reply03 = new Reply("R_03", "L_100_03", "1234", "reply03~~", "", "L_100_03", "");
 	
-		dao = context.getBean("replyDao", ReplyDaoImpl.class);
 	
 	}
 
@@ -93,11 +92,11 @@ public class JTestReplyDao {
 	}
 	
 	@Test
-//	@Ignore
+	@Ignore
 	public void doUpdate() throws SQLException {
 		LOG.debug("================");
 		LOG.debug("==@doUpdate==");
-		LOG.debug("================");
+		LOG.debug("================"); 
 		
 		//삭제
 		dao.doDelete(reply01);
@@ -128,6 +127,9 @@ public class JTestReplyDao {
 		Reply vsReply02 = (Reply) dao.doSelectOne(reply02);
 		Reply vsReply03 = (Reply) dao.doSelectOne(reply03);
 		
+		checkHouses(vsReply01, reply01);
+		checkHouses(vsReply02, reply02);
+		checkHouses(vsReply03, reply03);
 		
 		
 	}
@@ -147,5 +149,10 @@ public class JTestReplyDao {
 		
 	}
 	
+	
+	private void checkHouses(Reply vsReply, Reply reply) {
+		//비교
+		assertThat(vsReply.getContents(), is(reply.getContents()));
+	}
 
 }
