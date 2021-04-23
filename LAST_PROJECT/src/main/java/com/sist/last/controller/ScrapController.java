@@ -17,17 +17,17 @@ import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.Message;
 import com.sist.last.cmn.Search;
 import com.sist.last.cmn.StringUtil;
-import com.sist.last.service.ScrapService;
+import com.sist.last.service.ScrapServiceImpl;
 import com.sist.last.vo.Scrap;
 
 @Controller
 public class ScrapController {
 	
 	final Logger LOG = LoggerFactory.getLogger(ScrapController.class);
-	final String VIEW_NAME = "scrap/scrap_mng";
+//	final String VIEW_NAME = "scrap/scrap_mng";
 	
 	@Autowired
-	ScrapService scrapService;
+	ScrapServiceImpl scrapService;
 	
 	public ScrapController() {}
 	

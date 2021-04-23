@@ -11,7 +11,7 @@ import com.sist.last.cmn.DTO;
 import com.sist.last.dao.StarDaoImpl;
 
 @Service
-public class StarServiceImpl implements StarService {
+public class StarServiceImpl {
 	
 	final Logger LOG = LoggerFactory.getLogger(StarServiceImpl.class);
 	
@@ -23,17 +23,17 @@ public class StarServiceImpl implements StarService {
 	}
 	
 
-	@Override
+	
 	public int doUpdate(DTO dto) throws SQLException {
 		return this.starDao.doUpdate(dto);
 	}
 
-	@Override
+	
 	public int doDelete(DTO dto) throws SQLException {
 		return this.starDao.doDelete(dto);
 	}
 
-	@Override
+	
 	public int doInsert(DTO dto) throws SQLException {
 		return this.starDao.doInsert(dto);
 	}

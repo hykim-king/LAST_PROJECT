@@ -11,22 +11,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.sist.last.cmn.Message;
-import com.sist.last.service.StarService;
+import com.sist.last.service.StarServiceImpl;
 import com.sist.last.vo.Star;
-
 
 @Controller
 public class StarController {
 
 	final Logger LOG = LoggerFactory.getLogger(StarController.class);
-	final String VIEW_NAME = "star/star_mng";
+//	final String VIEW_NAME = "star/star_mng";
 	
 	@Autowired
-	StarService starService;
+	StarServiceImpl starService;
 	
-	public StarController() {
-		
-	}
+	public StarController() {}
 	
 	/**
 	 * 별점 수정

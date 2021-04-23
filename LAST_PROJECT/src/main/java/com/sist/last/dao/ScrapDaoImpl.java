@@ -14,12 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.Search;
 import com.sist.last.vo.Scrap;
 
-public class ScrapDaoImpl implements ScrapDao {
+@Repository
+public class ScrapDaoImpl extends DTO {
 	final static Logger LOG = LoggerFactory.getLogger(StarDaoImpl.class);
 	
 	final String NAMESPACE = "com.sist.last.scrap";
@@ -30,7 +32,6 @@ public class ScrapDaoImpl implements ScrapDao {
 	//Spring JdbcTemplate
 	JdbcTemplate jdbcTemplate;
 	
-	DataSource dataSource;
 	
 	RowMapper<Scrap> row = new RowMapper<Scrap>() {
 		@Override
@@ -51,13 +52,8 @@ public class ScrapDaoImpl implements ScrapDao {
 	
 	public ScrapDaoImpl() {}
 	
-	//setter를 통한 주입
-		public void setDataSource(DataSource dataSource) {
-			this.dataSource = dataSource;
-			this.jdbcTemplate = new JdbcTemplate(dataSource);
-		}
 
-		@Override
+
 		public DTO doSelectOne(DTO dto) throws SQLException {
 			Scrap inVO = (Scrap) dto;
 			Scrap outVO = null;
@@ -84,7 +80,7 @@ public class ScrapDaoImpl implements ScrapDao {
 			return outVO;
 		}
 
-	@Override
+
 	public int doInsert(DTO dto) throws SQLException {
 		int flag = 0;
 		Scrap user = (Scrap) dto;
@@ -101,7 +97,7 @@ public class ScrapDaoImpl implements ScrapDao {
 		return flag;
 	}
 
-	@Override
+
 	public int doDelete(DTO dto) throws SQLException {
 		int flag = 0;
 		Scrap   user = (Scrap)dto;
@@ -122,60 +118,28 @@ public class ScrapDaoImpl implements ScrapDao {
 		return flag;
 	}
 
-	@Override
-	public List<Scrap> doRetrieve(DTO dto) throws SQLException {
-		Search  param = (Search) dto;
+
+	public List<?> doRetrieve(DTO dto) throws SQLException {
+
+		Search param = (Search) dto;
 		
-		StringBuffer sb=new StringBuffer(1000);
-		sb.append(" SELECT A.*,B.*                                                                                      \n");
-		sb.append(" FROM(                                                                                               \n");
-		sb.append("     SELECT t2.rnum,                                                                                 \n");
-		sb.append("            t2.scrap_seq,                                                                                 \n");
-		sb.append("            t2.houses_seq,                                                                                 \n");
-		sb.append("            t2.member_id,                                                                                 \n");
-		sb.append("       CASE WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD')=TO_CHAR(t2.reg_dt,'YYYY/MM/DD')             \n");
-		sb.append("       THEN TO_CHAR(t2.reg_dt,'HH24:MI')                                                   \n");
-		sb.append(" 	   ELSE TO_CHAR(t2.reg_dt,'YYYY/MM/DD')                                               \n");
-		sb.append(" 	   END reg_dt,                                                                       \n");
-		sb.append(" 	   t2.mod_id,                                                                         \n");
-		sb.append("       CASE WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD')=TO_CHAR(t2.mod_dt,'YYYY/MM/DD')             \n");
-		sb.append(" 	   THEN TO_CHAR(t2.mod_dt,'HH24:MI')                                                  \n");
-		sb.append(" 	   ELSE TO_CHAR(t2.mod_dt,'YYYY/MM/DD')                                               \n");
-		sb.append(" 	   END mod_dt                                                                      \n");
-		sb.append("     FROM(                                                                                           \n");
-		sb.append("         SELECT ROWNUM rnum,t1.*                                                                     \n");
-		sb.append("         FROM (                                                                                      \n");
-		sb.append("             SELECT *                                                                                \n");
-		sb.append("             FROM scrap                                                                          \n");
-		sb.append("             ORDER BY reg_dt desc                                                                    \n");
-		sb.append("         )t1                                                                                         \n");
-		sb.append("     )t2                                                                                             \n");
-		sb.append("     WHERE rnum BETWEEN (? * (?-1) + 1) AND (? * (?-1) + ?)                                          \n");
-		sb.append(" )A CROSS JOIN                                                                                       \n");
-		sb.append("     (SELECT COUNT(*) total_cnt                                                                      \n");
-		sb.append("      FROM scrap                                                                                 \n");
-		sb.append("     )B                                                                                              \n");
+		LOG.debug("1=param====="+param);
+
+		String statement = this.NAMESPACE + ".doRetrieve";
 		
-		LOG.debug("=sql=\n"+sb.toString());
-		LOG.debug("=param=\n"+param);
+		LOG.debug("====statement=====" + statement);
+		LOG.debug("=======================================");
 		
-		//query에 파라메터 set
-		List<Object>   listArg = new ArrayList<Object>();
+		List<Scrap> list = sqlSessionTemplate.selectList(statement, param);
 		
-			//페이징 정보
-			listArg.add(param.getPageSize());
-			listArg.add(param.getPageNum());
-			listArg.add(param.getPageSize());
-			listArg.add(param.getPageNum());
-			listArg.add(param.getPageSize());		
-			
-//		LOG.debug("1=listArg="+listArg.toArray());
-//		for(Object ob:listArg) {
-//			LOG.debug("=ob="+ob.toString());
-//		}
-		List<Scrap> list = jdbcTemplate.query(sb.toString(), listArg.toArray(), row);
-		LOG.debug("2=param=");
+		for (Scrap vo : list) {
+			LOG.debug(vo.toString());
+		}
+
 		return list;
+		
+		
+		
 	}
 
 }

@@ -156,7 +156,7 @@ public class JTestScrapController {
 	}
 	
 	@Test
-	@Ignore
+//	@Ignore
 	public void doDelete() throws Exception {
 		//url호출, param 전달
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/scrap/do_delete.do")

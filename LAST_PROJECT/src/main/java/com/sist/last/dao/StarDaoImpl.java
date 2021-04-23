@@ -9,11 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.sist.last.cmn.DTO;
 import com.sist.last.vo.Star;
 
-public class StarDaoImpl implements StarDao {
+@Repository
+public class StarDaoImpl extends DTO {
 	final static Logger LOG = LoggerFactory.getLogger(StarDaoImpl.class);
 	
 	final String NAMESPACE = "com.sist.last.star";
@@ -24,17 +26,10 @@ public class StarDaoImpl implements StarDao {
 	//Spring JdbcTemplate
 	JdbcTemplate jdbcTemplate;
 	
-	DataSource dataSource;
-	
 	public StarDaoImpl() {}
 	
-	//setter를 통한 주입
-		public void setDataSource(DataSource dataSource) {
-			this.dataSource = dataSource;
-			this.jdbcTemplate = new JdbcTemplate(dataSource);
-		}
 
-	@Override
+
 	public int doInsert(DTO dto) throws SQLException {
 		int flag = 0;
 		Star user = (Star) dto;
@@ -51,7 +46,7 @@ public class StarDaoImpl implements StarDao {
 		return flag;
 	}
 
-	@Override
+
 	public int doDelete(DTO dto) throws SQLException {
 		int flag = 0;
 		Star   user = (Star)dto;
@@ -72,7 +67,7 @@ public class StarDaoImpl implements StarDao {
 		return flag;
 	}
 
-	@Override
+
 	public int doUpdate(DTO dto) throws SQLException {
 		int flag = 0;
 		Star star = (Star) dto;

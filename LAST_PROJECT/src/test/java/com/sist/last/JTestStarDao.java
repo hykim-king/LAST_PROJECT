@@ -18,7 +18,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.sist.last.dao.StarDao;
+import com.sist.last.dao.StarDaoImpl;
 import com.sist.last.vo.Star;
 
 //메소드 수행 순서: method ASCENDING ex)a~z
@@ -34,7 +34,7 @@ public class JTestStarDao {
 	ApplicationContext  context;//테스트 오브젝트가 만들어 지고 나면 스프링 테스트 컨텍스트에 의해 자동으로 주입된다.
 	
 	@Autowired
-	private StarDao dao;
+	private StarDaoImpl dao;
 		
 	Star star01;
 	Star star02;

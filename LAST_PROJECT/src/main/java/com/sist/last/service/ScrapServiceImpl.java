@@ -13,7 +13,7 @@ import com.sist.last.dao.ScrapDaoImpl;
 import com.sist.last.vo.Scrap;
 
 @Service
-public class ScrapServiceImpl implements ScrapService {
+public class ScrapServiceImpl {
 	
 	final Logger LOG = LoggerFactory.getLogger(ScrapServiceImpl.class);
 	
@@ -24,22 +24,22 @@ public class ScrapServiceImpl implements ScrapService {
 		
 	}
 
-	@Override
+
 	public DTO doSelectOne(DTO dto) throws SQLException {
 		return this.scrapDao.doSelectOne(dto);
 	}
 
-	@Override
-	public List<Scrap> doRetrieve(DTO dto) throws SQLException {
+
+	public List<?> doRetrieve(DTO dto) throws SQLException {
 		return this.scrapDao.doRetrieve(dto);
 	}
 
-	@Override
+
 	public int doDelete(DTO dto) throws SQLException {
 		return this.scrapDao.doDelete(dto);
 	}
 
-	@Override
+
 	public int doInsert(DTO dto) throws SQLException {
 		return this.scrapDao.doInsert(dto);
 	}

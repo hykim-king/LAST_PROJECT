@@ -15,7 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.sist.last.cmn.Search;
-import com.sist.last.dao.ScrapDao;
+import com.sist.last.dao.ScrapDaoImpl;
 import com.sist.last.vo.Scrap;
 
 //메소드 수행 순서: method ASCENDING ex)a~z
@@ -31,7 +31,7 @@ public class JtestScrapDao {
 	ApplicationContext  context;//테스트 오브젝트가 만들어 지고 나면 스프링 테스트 컨텍스트에 의해 자동으로 주입된다.
 	
 	@Autowired
-	private ScrapDao dao;
+	private ScrapDaoImpl dao;
 	
 	Scrap scrap01;
 	Scrap scrap02;
@@ -56,21 +56,21 @@ public class JtestScrapDao {
 	}
 	
 	@Test
-//	@Ignore
+	@Ignore
 	public void doInsert() throws SQLException {
 		dao.doInsert(scrap01);
 		
 	}
 	
 	@Test
-//	@Ignore
+	@Ignore
 	public void doDelete() throws SQLException {
 		dao.doDelete(scrap01);
 		
 	}
 	
 	@Test
-//	@Ignore
+	@Ignore
 	public void doSelectOne() throws SQLException {
 		dao.doSelectOne(scrap01);
 	}
