@@ -106,7 +106,7 @@ public class JTestProductController {
 		doUpdate(product01);
 		
 		doRetrieve(search01);
-		doRetrieve(search02);
+		
 		
 	}
 	
