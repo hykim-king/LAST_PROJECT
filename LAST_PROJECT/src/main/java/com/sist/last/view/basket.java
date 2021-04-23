@@ -11,12 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class basket {
 	
 	
-	@RequestMapping(value="houses/home_view.do",method= RequestMethod.GET)
-	public String loginView(Model model) throws SQLException {
-		
-		
-	
-		return "houses/Community_Home";
-	}
+
 	
 }
