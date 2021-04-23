@@ -60,7 +60,7 @@ public class ReviewServiceImpl implements ReviewService {
 		Review review = (Review) dto;
 		review.setReviewSeq(StringUtil.getPK(""));
 
-		return this.reviewDao.doInsert(dto);
+		return this.reviewDao.doInsert(review);
 	}
 
 }
