@@ -43,6 +43,7 @@ public class JTestImageDao {
 	Image image03;
 	
 	@Test
+	//@Ignore
 	public void doSelectOne() throws SQLException {
 		// 단건조회
 		dao.doSelectOne(image01);	
@@ -51,7 +52,6 @@ public class JTestImageDao {
 	}
 
 	@Test
-	//@Ignore
 	public void doUpdate() throws SQLException {
 		// 사진 삭제
 		dao.doDelete(image01);

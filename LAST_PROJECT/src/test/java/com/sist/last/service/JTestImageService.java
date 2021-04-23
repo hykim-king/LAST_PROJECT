@@ -41,12 +41,6 @@ public class JTestImageService {
 	@Autowired
 	ImageDaoImpl imageDao;
 
-	@Autowired
-	DataSource dataSource;
-
-	@Autowired
-	PlatformTransactionManager transactionManager;
-
 	@Before
 	public void setUp() throws Exception {
 	}
@@ -60,14 +54,11 @@ public class JTestImageService {
 		LOG.debug("context: " + context);
 		LOG.debug("imageService: " + imageService);
 		LOG.debug("imageDao: " + imageDao);
-		LOG.debug("dataSource: " + dataSource);
-		LOG.debug("transactionManager: " + transactionManager);
 
 		assertThat(this.context, is(notNullValue()));
 		assertThat(this.imageService, is(notNullValue()));
 		assertThat(this.imageDao, is(notNullValue()));
-		assertThat(this.dataSource, is(notNullValue()));
-		assertThat(this.transactionManager, is(notNullValue()));
+
 	}
 
 }
