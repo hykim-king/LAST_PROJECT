@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sist.last.cmn.DTO;
+import com.sist.last.cmn.StringUtil;
 import com.sist.last.dao.HousesLinkDao;
 import com.sist.last.dao.HousesLinkDaoImpl;
 import com.sist.last.vo.HousesLink;
@@ -52,7 +53,10 @@ public class HousesLinkServiceImpl implements HousesLinkService {
 	@Override
 	public int doInsert(DTO dto) throws SQLException {
 		
-		return this.housesLinkDao.doInsert(dto);
+		HousesLink link = (HousesLink) dto;
+		link.setLinkSeq(StringUtil.getPK(""));
+		
+		return this.housesLinkDao.doInsert(link);
 	}
 
 }//--class
