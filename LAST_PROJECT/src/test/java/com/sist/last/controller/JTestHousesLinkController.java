@@ -80,7 +80,7 @@ public class JTestHousesLinkController {
 	 * @throws Exception
 	 */
 	@Test
-	@Ignore
+	//@Ignore
 	public void doRetrieve() throws Exception {
 		
 		LOG.debug("===================");
@@ -114,7 +114,7 @@ public class JTestHousesLinkController {
 	 * @throws Exception
 	 */
 	@Test
-	@Ignore
+	//@Ignore
 	public void doUpdateTest() throws Exception {
 		LOG.debug("===================");
 		LOG.debug("JTestHousesLinkController-doUpdateTest()");
@@ -174,7 +174,7 @@ public class JTestHousesLinkController {
 	 * @throws Exception
 	 */
 	@Test
-	@Ignore
+	//@Ignore
 	public void doSelectOne() throws Exception{
 		LOG.debug("===================");
 		LOG.debug("JTestHousesLinkController-doSelectOne()");
@@ -210,7 +210,7 @@ public class JTestHousesLinkController {
 	 * @throws Exception
 	 */
 	@Test
-	@Ignore
+	//@Ignore
 	public void doDelete() throws  Exception{
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/houseslink/do_delete.do")
 				.param("linkSeq", link01.getLinkSeq());
@@ -238,7 +238,7 @@ public class JTestHousesLinkController {
 	}//--doDelete
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void doInsert() throws  Exception{
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/houseslink/do_insert.do")
 				.param("linkSeq", link01.getLinkSeq())

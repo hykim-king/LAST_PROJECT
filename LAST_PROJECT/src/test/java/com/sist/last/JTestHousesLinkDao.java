@@ -24,6 +24,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.StringUtil;
 import com.sist.last.dao.HousesLinkDao;
+import com.sist.last.dao.HousesLinkDaoImpl;
 import com.sist.last.vo.HousesLink;
 
 
@@ -41,7 +42,7 @@ public class JTestHousesLinkDao {
 	ApplicationContext context;
 	
 	@Autowired
-	private HousesLinkDao linkDao;
+	private HousesLinkDaoImpl linkDao;
 	
 	HousesLink link01;
 	HousesLink link02;
@@ -104,7 +105,7 @@ public class JTestHousesLinkDao {
 	
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void doUpdate() throws SQLException {
 		LOG.debug("==============");
 		LOG.debug("==doUpdate()==");
@@ -149,7 +150,7 @@ public class JTestHousesLinkDao {
 	
 
 	@Test
-	@Ignore
+	//@Ignore
 	public void AddAndGet() throws ClassNotFoundException, SQLException {
 		LOG.debug("==============");
 		LOG.debug("==AddAndGet()==");
