@@ -55,7 +55,7 @@
   <link href="${hContext}/resources/lhc/bootstrap_lhc.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <%-- <link href="${hContext}/resources/lhc/shop-homepage.css" rel="stylesheet"> --%>
+  <link href="${hContext}/resources/lhc/shop-homepage.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="${hContext}/resources/lhc/base.css">
   <link rel="stylesheet" type="text/css" href="${hContext}/resources/lhc/normalize.css">
   
@@ -63,61 +63,88 @@
 </head>
 <body>
 
+<%--  "총글수 : " ${total_cnt} ${search }<br/>
+	${list }  --%>
+	
+  <!-- header -->
+
+  <!--//header -->
+
+		<!-- hidden -->
+
+		<input type = "hidden" name = "pageSize"  id="pageSize" value="8" />
+
+		<!-- hidden -->
 		
   <!--  컨테이너 -->
  <div class="container">
-  <h4>집들이</h4><br/>
-					
-		<!-- 프로젝트 출력 -->	   	
-	   	  <div class="row col-lg-12">
-		   	<div class="col-xs-8 col-sm-9 col-md-8 col-lg-2">
-	 				<select class="form-control input-sm" name="orderDiv" id="orderDiv">					
-	    		  		<option value="10">최신순</option>	    		  		
-						<option value="20">인기순</option>
-	    		  </select> 
-		    </div>
-		    <div class="col-xs-8 col-sm-9 col-md-8 col-lg-2">
-	 				<select class="form-control input-sm" name="searchDiv" id="searchDiv">			
-	    		  		<option value="10">제목</option>	    		  		
-						<option value="20">태그</option>
-						<option value="30">제목+태그</option>
-	    		  </select> 
-		    </div>
-		   	<div class="col-xs-8 col-sm-9 col-md-6 col-lg-6">
-	   			<input type = "text" size = "20" name = "searchWord" id = "searchWord" placeholder = "검색어를 입력해주세요" />
-			</div>
-			<div class="col-xs-8 col-sm-9 col-md-12 col-lg-2">
-					<input type="button" class="btn btn-primary btn-sm"  value="조회" id="doRetrieveBtn"/>
-			</div>	  	
-		  </div>
-			<br/>
-		  <!-- //row-->
-		  <div class="row col-lg-12">
-			<div class="col-lg-3 text-right ">
-	 				<select class="form-control input-sm " name="pageSize" id="pageSize">				
-	    		  		<option value="4">4개씩 보기</option>	    		  		
-						<option value="8">8개씩 보기</option>
-						<option value="12">12개씩 보기</option>
-	    		  </select> 
-		    </div>
-		  </div>
-		  <br/>
-		  <!-- row -->	
-		  <div id="rowCard" class="row">
-
-		  </div>	
-		   <!-- //row -->	
-		<!-- pagenation -->
-		<div class="row col-lg-12">
-			<div id="page-selection" class="text-right page">
-				
-			</div>
+ 	<div class="row">
+		<!-- 슬라이드 페이지 -->
+		<div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+		      <ol class="carousel-indicators">
+		      	 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">
+		      	  	<c:if test = "${list.size() > 0 }">
+						<c:forEach var = "vo" items = "${list }"> 
+		           		   	<li data-target="#carouselExampleIndicators" data-slide-to="${vo.num }" ></li>
+		           	   </c:forEach>
+	       		   </c:if>
+		      </ol>
+			<div class="carousel-inner " role="listbox" >
+				<div class="carousel-item active" >
+					<h4> hot 리스트</h4>
+					<img class="d-block img-fluid" src="${hContext}/resources/lhc/ignore.PNG" >
+				</div>			
+	       		<c:if test = "${list.size() > 0 }">
+				  <c:forEach var = "vo" items = "${list }"> 
+									
+				<div class="carousel-item listBigImage" >
+					<h4><c:out value = "${vo.p_title}" /></h4>	        		    
+						<small class = "yeah" style = "display:none;">
+	        		    	<c:out value = "${vo.p_seq}" />
+						</small>
+				    <img class="d-block img-fluid" src="/${vo.p_thumb}" >
+				</div>
+								        
+			      </c:forEach>
+		    	</c:if>
+	        </div>
+		
+          
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+          
+        </div> 
+        <!-- //슬라이드 -->
 		</div>
-		<!--// pagenation -->
+		<!-- row -->	
+ 
+ 
+  <h4>집들이</h4><br/>
+	<div id="rowCard" class="row">
+
+	</div>
+	<br/>	
+	<!-- //rowHousesCard -->	 
+		<!-- //집들이 출력 -->		
+		<!-- qna 출력 -->
+	<h4>QnA</h4><br/>
+	<div id="rowQnaCard" class="row">
+
+	</div>	
+		<!-- //qna 출력 -->		   
+		   
+
 </div>
 <!--  // 컨테이너 -->
-		
- 
+  
+  
 	<!-- javascript -->
  <script type="text/javascript">
  
@@ -127,18 +154,12 @@
 		console.log("1.document:최초수행!");
 		//화면 로딩 되면 바로 출력
 		doRetrieve(1);
+		doRetrieveQna(1);
 		
 	});//--document ready
- 
-	$("#doRetrieveBtn").on("click",function(e) {
-		console.log("doRetrieveBtn");
-		e.preventDefault(); //두번 호출 방지.
-		doRetrieve(1);
-		
-	});
-	
-	
+ 	
     function doRetrieve(page) {
+    	console.log("doRetrieve");
      	$.ajax({
     		type: "GET",
     		url:"${hContext }/houses/do_retrieve.do",
@@ -146,9 +167,6 @@
     		dataType:"html",
     		data:{
     			pageSize: $("#pageSize").val(),
-    			searchDiv: $("#searchDiv").val(),
-    			searchWord: $("#searchWord").val(),
-    			orderDiv: $("#orderDiv").val(),
     			pageNum: page
     		},
     		success:function(data){//통신 성공
@@ -176,19 +194,20 @@
     				$.each(parseData, function(i, value) {
     					//console.log(i+","+value.name);
     					
-    					html +="<div class='col-lg-3 col-md-6 mb-4 rowCardClick'>";
+    					html +="<div class='col-lg-3 col-md-6 mb-1 rowCardClick'>";
 						html +=		"<div class='card h-100'>";
-						html +=			"<img class='card-img-top' src='${hContext}/resources/lhc/ignore.PNG' >";
-						html +=		"<div>";
+						html +=			"<img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/resources/lhc/ignore.PNG' >";
+						html +=		"<div class='card-body'>";
 						html +="	<small class='text-muted'>"+value.tag+"</small>";
 						html +=" <h6 class='card-title'>"+value.title+"</h6>";
 						html +="</div>";
-						html +=" <div id='rowCardClick' class='text-center'>";
+						html +=" <div id='rowCardClick' class='card-footer text-center'>";
 						html +="<small class='text-muted'>"+value.memberId+"</small>";
 						html +="  <small class = 'gotta' style = 'display:none;''>"+value.housesSeq+"</small>";
 						html +="</div>";	
 						html +="</div>";	
-						html +="</div>";							
+						html +="</div>";	
+						
     				});
     				
     			}else {//data가 없는 경우
@@ -204,7 +223,7 @@
     			console.log("page:"+page);
     			
     			//페이징 처리: 총 페이지, 현재글
-    			renderingPage(pageTotal,page);
+    			//renderingPage(pageTotal,page);
     			
     			
     			//doInit();//입력 form 초기화
@@ -219,7 +238,85 @@
     	});
     }
     
-    
+    function doRetrieveQna(page) {
+    	console.log("doRetrieveQna");
+     	$.ajax({
+    		type: "GET",
+    		url:"${hContext }/qna/do_retrieve.do",
+    		asyn:"true",
+    		dataType:"html",
+    		data:{
+    			pageSize: $("#pageSize").val(),
+    			pageNum: page
+    		},
+    		success:function(data){//통신 성공
+        		//console.log("success data:"+data);
+    			var parseData = JSON.parse(data);
+    			
+    			//기존 데이터 삭제.
+    			$("#rowQnaCard").empty();
+    			var html = "";
+    			
+    			let totalCount = 0;
+    			let pageTotal = 1;
+    			
+    			console.log("parseData:"+parseData[0].totalCnt);
+    			
+    			
+    			console.log("parseData.length:"+parseData.length);
+    			
+    			//data가 있는 경우
+    			if(parseData.length>0) {
+    				totalCount = parseData[0].totalCnt;
+    				pageTotal =  totalCount/$("#pageSize").val(); //42/10 ->4.2
+    				pageTotal = Math.ceil(pageTotal); // 42/10 ->5
+    				
+    				$.each(parseData, function(i, value) {
+    					//console.log(i+","+value.name);
+    					
+    					html +="<div class='col-lg-3 col-md-6 mb-1 rowQnaCardClick'>";
+						html +=		"<div class='card h-100'>";
+						html +=			"<img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/resources/lhc/ignore.PNG' >";
+						html +=		"<div class='card-body'>";
+						html +="	<small class='text-muted'>"+value.tag+"</small>";
+						html +=" <h6 class='card-title'>"+value.title+"</h6>";
+						html +="</div>";
+						html +=" <div id='rowQnaCardClick' class='card-footer text-center'>";
+						html +="<small class='text-muted'>"+value.memberId+"</small>";
+						html +="  <small class = 'gotta' style = 'display:none;''>"+value.qnaSeq+"</small>";
+						html +="</div>";	
+						html +="</div>";	
+						html +="</div>";	
+						
+    				});
+    				
+    			}else {//data가 없는 경우
+    				html +="<tr>";
+    				html +="	<td class='text-center' colspan='99'>등록된 게시물이 없습니다.</td>";    		
+    				html +="</tr>";    				
+    			}
+    			
+    			//body에 데이터 추가
+    			$("#rowQnaCard").append(html);
+    			
+    			console.log("pageTotal:"+pageTotal);
+    			console.log("page:"+page);
+    			
+    			//페이징 처리: 총 페이지, 현재글
+    			//renderingPage(pageTotal,page);
+    			
+    			
+    			//doInit();//입력 form 초기화
+    			
+        	},
+        	error:function(data){//실패시 처리
+        		console.log("error:"+data);
+        	},
+        	complete:function(data){//성공/실패와 관계없이 수행!
+        		console.log("complete:"+data);
+        	}
+    	});
+    }
  	//--table click
 	$("#rowCard").on("click","#rowCardClick",function(e){
 		e.preventDefault();
@@ -237,39 +334,25 @@
 			 
 		}); 
     
+	$("#rowQnaCard").on("click","#rowQnaCardClick",function(e){
+		e.preventDefault();
+		console.log("rowCard");
+ 	 	let tds = $(this).children();
+ 	 	console.log(tds);
+		var qnaSeq = tds.eq(1).text();
+		console.log(qnaSeq); 
 		
+		
+ 
+			
+			window.location.href = "${hContext}/qna/qna_list.do?qnaSeq="+qnaSeq;
 	
-		
-		
-	
-	//paging
-	//pageTotal : 총페이지 수 : 총글수/페이지 사이즈(10)
-	//page : 현재페이지
-	function renderingPage(pageTotal,page) {
-		//이전 연결된 Event 핸들러를 요소에서 제거
-		$("#page-selection").unbind('page');
-		
-		$("#page-selection").bootpag({
-		    total: pageTotal,  		
-		    page: page,			
-		    maxVisible: 5,	    
-		    leaps: true,
-		    firstLastUse: true, 
-		    first: '←',
-		    last: '→',
-		    wrapClass: 'pagination', 
-		    activeClass: 'active',
-		    disabledClass: 'disabled',
-		    nextClass: 'next',
-		    prevClass: 'prev',
-		    lastClass: 'last',
-		    firstClass: 'first'
-		}).on("page", function(event, num){
-		   doRetrieve(num);
+			 
 		}); 
-		
-	}
+    
 	
+		
+		
  
  
  

@@ -59,6 +59,13 @@ public class houses {
 		return "houses/home_test";
 	}
 	
+//	@RequestMapping(value="qna/qna_list.do",method= RequestMethod.GET)
+//	public String qnaView(Model model) throws SQLException {
+//
+//		
+//		return "qna/qna_list";
+//	}
+//	
 	
 	public List<?> getCodedopageRetrieve(List<DTO> codeList) throws SQLException {
 		
