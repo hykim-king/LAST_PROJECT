@@ -55,6 +55,7 @@
               <img src="images/image_1.jpg" alt="" class="img-fluid">
             </p>
             
+            
     <!-- tag -->        
             <div class="tag-widget post-tag-container mb-5 mt-5">
               <div class="tagcloud">

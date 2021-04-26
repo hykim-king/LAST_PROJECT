@@ -40,7 +40,7 @@ public class qna {
 		
 		return VIEW_NAME;
 		
-	}//--view
+	}//--view//////
 	
 	@RequestMapping(value = "/qna_detail.do", method = RequestMethod.GET)
 	public String view2(Model model) throws SQLException{
