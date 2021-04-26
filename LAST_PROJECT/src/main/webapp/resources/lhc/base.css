@@ -1,0 +1,226 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+html{font-size:16px;}
+body{height:100%; padding-top:0; font-size:100%; font-weight:normal; font-family: 'Noto Sans KR', sans-serif; line-height:24px; background-color:#fff; color:#000; overflow-y:overlay; letter-spacing:-1px;}
+_:-ms-fullscreen, :root body{overflow-y:scroll;}
+@media screen and (min-width:0\0) { body{overflow-y:scroll\9;} }
+
+/***
+     [reset]
+		 	  ***/
+*{box-sizing:border-box;}
+*:after{clear:both;}
+dl,
+ol,
+ul{margin:0; padding:0;}
+ul li{list-style:none}
+dl,
+dd{margin-bottom:0;}
+label{margin-bottom:0;}
+em{font-style:normal;}
+a{display:block; color:#333; text-decoration:none;}
+a:hover{color:inherit;}
+p{margin:0;}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{margin:0;}
+img{display:block;}
+button,
+button:focus{outline:0;}
+
+/*** [reset 끝] ***/
+
+
+/***
+     [bootstrap reset]
+		 	  			***/
+a:focus{text-decoration:none;}
+
+dl,
+dd,
+dt{line-height:initial;}
+
+.btn{padding:0; line-height:inherit; font-size:inherit; font-weight:inherit; border-radius:0;}
+
+/*** [bootstrap reset 끝] ***/
+
+
+
+/***
+     [공통]
+		 	***/
+/* 영역 */
+.container{width:1080px; margin:0 auto;}
+
+/* form tag */
+input,
+textarea,
+select{width:100%; padding:0.3rem; color:#333; border:1px solid #b5b5b5;}
+
+/* 가로정렬 :: inine-block */
+.in-block{font-size:0;}
+.in-block > *{display:inline-block; font-size:initial; vertical-align:middle;}
+@media screen\0 {
+    .in-block > *{font-size:1rem;}
+}
+
+/*** [공통 끝] ***/
+
+
+
+/***
+     [상단 네비게이션]
+		 	           ***/
+/* 전체 스타일 */
+header{position:relative; width:100%; background-color:transparent; color:#231f20; border-bottom:1px solid #d9d9d9; box-sizing:border-box;}
+header a{color:#231f20;}
+
+/* 영역 */
+.gnb_inner:after{content:""; display:block; clear:both; overflow:hidden;}
+.gnb_inner .gnb_gohome{float:left; margin-right:5%;}
+.gnb_inner .gnb_depth{float:left; min-width:35%;}
+.gnb_inner .gnb_tool_wrap{float:right; width:20%;}
+
+/* 상단 로고 */
+.gnb_gohome a{line-height:70px;}
+.gnb_gohome a:hover{text-decoration:none;}
+.gnb_gohome a span{font-size:2.3rem; font-weight:500; color:#2ed5d5; letter-spacing:0;}
+
+/* 상단 네비게이션 */
+.gnb_depth01_lst > li{position:relative; width:calc(100% / 3); text-align:center;}
+.gnb_depth01_lst > li > a{position:relative; display:inline-block; min-width:215px; font-size:1.5rem; line-height:70px; font-weight:bold; text-decoration:none;}
+.gnb_depth01_lst > li:hover > a{color:#2ed5d5;
+-webkit-transition:all 0.3s ease; -moz-transition:all 0.3s ease; -o-transition:all 0.3s ease; transition:all 0.3s ease;}
+
+/* 상단 툴바 */
+.gnb_tool_wrap .gnb_toolbar_lst > li{width:calc(100% / 2); text-align:center;}
+.gnb_tool_wrap .gnb_toolbar_lst > li > a{font-size:1rem; line-height:70px; font-weight:bold; text-decoration:none;}
+.gnb_tool_wrap .gnb_toolbar_lst > li:hover > a{color:#a2a2a2;
+-webkit-transition:all 0.3s ease; -moz-transition:all 0.3s ease; -o-transition:all 0.3s ease; transition:all 0.3s ease;}
+
+/*** [상단 네비게이션 끝] ***/
+
+
+
+/***
+     [홈페이지 정보]
+		 		    ***/
+/* 영역 */
+#footer{width:100%;}
+/* 홈페이지 정보 영역 */
+.footer_outer{padding:2rem 0; font-size:0.875rem; font-weight:400; text-align:center; background-color:#000000d6; color:#999;}
+.footer_inner h6{line-height:30px;}
+
+/*** [홈페이지 정보 끝] ***/
+
+
+
+/***
+     [컨텐츠 공통]
+		 		***/
+/* 영역 */
+#contents{position:relative;}
+.cont_wrap{margin-top:3.5rem; padding-bottom:5rem;}
+
+/* 컨텐츠 제목 */
+.cont_form_ttl{margin-bottom:1.75rem; font-size:1.25rem; font-weight:600; color:#222;}
+
+/* 컨텐츠 상단 출력 옵션 */
+.comn_rst_tool_wrap:after{content:""; display:block; clear:both; overflow:hidden;}
+.comn_rst_tool_wrap{margin-bottom:2rem;}
+.comn_rst_tool_wrap .comn_rst_cont{float:left;}
+.comn_rst_cont .comn_rst_cont_txt{font-weight:bold; color:#ffa500;}
+.comn_rst_tool_wrap .comn_rst_optn_outer_wrap{float:right;}
+.comn_rst_optn_outer_wrap select{width:215px; margin-right:-1px;}
+.comn_rst_optn_outer_wrap input{width:50px; padding:0.35rem 0;}
+
+/* 도표 */
+.comn_table{width:100%; border:1px solid #bababa; border-collapse:collapse;}
+.comn_table tr > *{padding:1rem;}
+.comn_table tr{border-bottom:1px solid #bababa;}
+.comn_table tr th{text-align:center; background-color:#f5f5f5; color:#4a4a4a;}
+
+/* 버튼 */
+.btn_base{width:215px; padding:0.5rem 0; text-align:center;}
+.btn_base:hover{opacity:0.9;}
+
+/* 컨텐츠 버튼 */
+.comn_btn_wrap{margin-top:3rem;}
+.comn_btn_lst{text-align:center;}
+.comn_btn_lst li{margin-right:10px;}
+.comn_btn_lst li:last-child{margin-right:0;}
+.btn_save{background-color:#2ed5d5; color:#fff; border:1px solid #2ed5d5;}
+.btn_cancle{background-color:#fff; color:#2ed5d5; border:1px solid #2ed5d5;}
+
+/* 리스트 페이지 */
+.pagination li{margin-right:10px;}
+.pagination li:last-child{margin-right:0;}
+
+
+/*** [컨텐츠 공통 끝] ***/
+
+
+
+/***
+     [판매자 등록 폼]
+		 		  ***/
+/* 도표 폼  */
+.seller_form{width:20%;}
+.seller_form .btn_insr_img{margin:-3px 0; background-color:#2ed5d5; color:#fff; border:1px solid #2ed5d5;}
+.seller_form textarea{height:300px;}
+
+/*** [판매자 등록 폼 끝] ***/
+
+
+
+/***
+     [후원내역 폼]
+		 	    ***/
+/* 도표 폼 */
+.supt_form{text-align:center;}
+.supt_form tr th{border:1px solid #bababa}
+
+/*** [후원내역 폼 끝] ***/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
