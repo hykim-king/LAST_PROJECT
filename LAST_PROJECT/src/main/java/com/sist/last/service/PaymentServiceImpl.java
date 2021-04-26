@@ -45,7 +45,7 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public int doInsert(DTO dto) throws SQLException {
 		Payment payment = (Payment) dto; 
-		payment.setPaySeq(StringUtil.getPK("")); 
+		payment.setPaySeq(StringUtil.getPK("yyyyMMdd24mmss")); 
 
 		return this.dao.doInsert(payment);
 	}

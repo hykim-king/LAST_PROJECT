@@ -36,7 +36,7 @@ public class ReplyServiceImpl implements ReplyService {
 	@Override
 	public int doInsert(DTO dto) throws SQLException {
 		Reply reply = (Reply) dto;
-		reply.setReplySeq(StringUtil.getPK(""));
+		reply.setReplySeq(StringUtil.getPK("yyyyMMdd24mmss"));
 		
 		return this.dao.doInsert(reply);
 	}
