@@ -345,7 +345,7 @@
 		
  
 			
-			window.location.href = "${hContext}/qna/qna_list.do?qnaSeq="+qnaSeq;
+			window.location.href = "${hContext}/qna/qna_view.do?qnaSeq="+qnaSeq;
 	
 			 
 		}); 
