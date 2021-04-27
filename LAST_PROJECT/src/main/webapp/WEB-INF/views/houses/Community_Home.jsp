@@ -196,7 +196,7 @@
     					
     					html +="<div class='col-lg-3 col-md-6 mb-1 rowCardClick'>";
 						html +=		"<div class='card h-100'>";
-						html +=			"<img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/resources/lhc/ignore.PNG' >";
+						html +=			"<a href='${hContext}/houses/test_view.do?housesSeq="+value.housesSeq+"'><img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/resources/lhc/ignore.PNG' ></a>";
 						html +=		"<div class='card-body'>";
 						html +="	<small class='text-muted'>"+value.tag+"</small>";
 						html +=" <h6 class='card-title'>"+value.title+"</h6>";
@@ -276,7 +276,7 @@
     					
     					html +="<div class='col-lg-3 col-md-6 mb-1 rowQnaCardClick'>";
 						html +=		"<div class='card h-100'>";
-						html +=			"<img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/resources/lhc/ignore.PNG' >";
+						html +=			"<a href='${hContext}/qna/qna_view.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/resources/lhc/ignore.PNG' ></a>";
 						html +=		"<div class='card-body'>";
 						html +="	<small class='text-muted'>"+value.tag+"</small>";
 						html +=" <h6 class='card-title'>"+value.title+"</h6>";

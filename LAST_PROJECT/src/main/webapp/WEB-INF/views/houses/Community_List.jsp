@@ -62,7 +62,7 @@
 
 </head>
 <body>
-
+	${list }
 		
   <!--  컨테이너 -->
  <div class="container">
@@ -176,15 +176,15 @@
     				$.each(parseData, function(i, value) {
     					//console.log(i+","+value.name);
     					
-    					html +="<div class='col-lg-3 col-md-6 mb-4 rowCardClick'>";
+    					html +="<div  class='col-lg-3 col-md-6 mb-4'>";
 						html +=		"<div class='card h-100'>";
-						html +=			"<img class='card-img-top' src='${hContext}/resources/lhc/ignore.PNG' >";
+						html +=			"<a href='${hContext}/houses/test_view.do?housesSeq="+value.housesSeq+"'><img class='card-img-top' src='${hContext}/resources/lhc/ignore.PNG' ></a>";
 						html +=		"<div>";
-						html +="	<small class='text-muted'>"+value.tag+"</small>";
-						html +=" <h6 class='card-title'>"+value.title+"</h6>";
+						html +="	<h6  class='text-muted'>"+value.tag+"</h6 >";
+						html +=" <h6 class='card-title'>"+value.memberId+"</h6>";
 						html +="</div>";
 						html +=" <div id='rowCardClick' class='text-center'>";
-						html +="<small class='text-muted'>"+value.memberId+"</small>";
+						html +="<h4 class='text-muted'>"+value.title+"</h4>";
 						html +="  <small class = 'gotta' style = 'display:none;''>"+value.housesSeq+"</small>";
 						html +="</div>";	
 						html +="</div>";	
