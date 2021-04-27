@@ -49,7 +49,7 @@
 
 </head>
 <body>
-list:${list}
+
 <!-- div container -->
 	<div class="wrap container">
 
@@ -59,7 +59,7 @@ list:${list}
 	    <div class="jumbotron jumbotron-fluid mx-4">
 	        <h2>질문과 답변</h2>
 	        <p class="lead">인테리어 고수들에게 조언을 받으세요</p>
-	        <p><a class="btn btn-lg btn-success" href="#" role="button">질문 등록하기</a></p>
+	        <input type="button" class="btn btn-lg btn-success"  value="질문 등록하기" id="doRegistBtn"/>
 	     </div>
 	<hr class="my-2">
 	<!-- 수평선 긋기 -->
@@ -108,13 +108,63 @@ list:${list}
 	
 	<!-- javascript -->
 	<script type="text/javascript">
-	
+		//jquery 객체 생성 완료
 		$(document).ready(function(){
 			console.log("document ready");
 			
 			//화면 로딩시 보여줄 데이터
 			doRetrieve(1);
 		});
+		
+		//paging
+		//pageTotal:총 페이지수= 총글수/페이지사이즈(10)
+		//page:현재페이지
+		//maxVisible:bottom 페이지
+		function renderingPage(pageTotal,page){
+			//이전 연결된 Event 핸들러 요소에서 제거
+			$("#page-selection").unbind('page');
+			
+			$("#page-selection").bootpag({
+			    total: pageTotal,
+			    page: page,//시작
+			    maxVisible: 10,
+			    leaps: true,
+			    firstLastUse: true,
+			    first: '←',
+			    last: '→',
+			    wrapClass: 'pagination',
+			    activeClass: 'active',
+			    disabledClass: 'disabled',
+			    nextClass: 'next',
+			    prevClass: 'prev',
+			    lastClass: 'last',
+			    firstClass: 'first' 
+			}).on("page", function(event, num){
+				doRetrieve(num);//ajax 서버 호출
+			}); 
+		}//--renderingPage
+		
+		
+		//등록 버튼 
+		$("#doRegistBtn").on("click",function(e){
+			console.log("doRegistBtn");
+			e.preventDefault();//한번만 호출
+			
+			let tds = $(this).children();
+			console.log("tds:"+tds);
+			
+			//멤버ID,qnaSeq 등록페이지로 데이터 넘김
+			var memberId = tds.eq(0).text();
+			console.log("memberId:"+memberId);
+			//var qnaSeq = tds.eq(1).text();
+			//console.log("qnaSeq:"+qnaSeq);
+			
+			
+			window.location.href = "${hContext}/qna/qna_regist.do?memberId="+memberId;
+
+		});	//--doRegistBtn
+		
+		
 		
 		//조회 버튼
 		$("#doRetrieveBtn").on("click",function(e){
@@ -140,14 +190,25 @@ list:${list}
 	    		success:function(data){//통신 성공
 	        		console.log("success data:"+data);
 	        		var parseData = JSON.parse(data);
-	        		console.log("parseData.length:"+parseData.length);
 	        		
 	        		//기존데이터 삭제
 	        		$("#rowCol").empty();
 	        		var html = "";
 	        		
+	        		//페이징 변수
+	        		let totalCount = 0;//총 글수
+	        		let pageTotal = 1;//총 페이지수
+	        		
+	        		console.log("parseData.length:"+parseData.length);
+	        		console.log("totalCount:"+parseData[0].totalCount);
+	        		
 					//data가 있는 경우
 					if(parseData.length>0){
+						
+						totalCount = parseData[0].totalCount;
+						pageTotal  = totalCount/$("#pageSize").val();//42/10->4.2
+						pageTotal = Math.ceil(pageTotal);//42/10->4.2->5
+						
 						
 						$.each(parseData,function(i,value){
 							console.log(i+","+value.name);
@@ -169,6 +230,11 @@ list:${list}
 					
 					//body에 데이터 추가
 					$("#rowCol").append(html);	
+					
+					//페이징처리
+					console.log(pageTotal+","+page);
+					renderingPage(pageTotal,page);
+		
 	        	},
 	        	error:function(data){//실패시 처리
 	        		console.log("error:"+data);
