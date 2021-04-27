@@ -99,6 +99,13 @@
 		WHERE scrap_seq = #{scrapSeq}                                   
 	</select>
 
+	<select id="idCheck" parameterType="Scrap" resultType="int">
+		SELECT COUNT(*) cnt
+		FROM scrap
+		WHERE houses_seq = #{housesSeq}
+		AND member_id = #{memberId}
+	</select>
+
 
 </mapper>
 

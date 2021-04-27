@@ -52,7 +52,20 @@ public class ScrapDaoImpl extends DTO {
 	
 	public ScrapDaoImpl() {}
 	
-
+	public int scrapCheck(DTO dto) {
+		int flag = 0;
+		
+		Scrap scrap = (Scrap) dto;
+		String statement = this.NAMESPACE+".idCheck";
+		LOG.debug("=======================================");
+		LOG.debug("====user=====" + scrap);
+		LOG.debug("====statement=====" + statement);
+		LOG.debug("=======================================");
+		
+		flag=this.sqlSessionTemplate.selectOne(statement, scrap);
+		LOG.debug("flag"+flag);
+		return flag;
+	}
 
 		public DTO doSelectOne(DTO dto) throws SQLException {
 			Scrap inVO = (Scrap) dto;

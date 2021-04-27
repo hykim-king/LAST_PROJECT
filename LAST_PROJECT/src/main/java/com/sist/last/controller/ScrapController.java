@@ -146,11 +146,15 @@ public class ScrapController {
 		LOG.debug("=param:"+scrap);
 		LOG.debug("===================================");
 		
+		
+		
 		int flag = this.scrapService.doInsert(scrap);
 		String resultMsg = "";
 		if(1==flag) {
 			resultMsg ="스크랩 등록 성공.";
-		} else {
+		}else if(2==flag) {
+			resultMsg ="이미 등록한 스크랩입니다.";
+		}	else {
 			resultMsg = "등록 실패.";
 		}
 		

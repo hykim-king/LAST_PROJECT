@@ -45,7 +45,15 @@ public class ScrapServiceImpl {
 		Scrap scrap = (Scrap) dto;
 		scrap.setScrapSeq(StringUtil.getPK(""));
 		
-		return this.scrapDao.doInsert(scrap);
+		int flag = scrapDao.scrapCheck(scrap);
+		if(flag>0) {
+			flag=2;
+			return flag;
+		}else {
+		
+			flag = this.scrapDao.doInsert(scrap);
+		}
+		return flag;
 	}
 
 }

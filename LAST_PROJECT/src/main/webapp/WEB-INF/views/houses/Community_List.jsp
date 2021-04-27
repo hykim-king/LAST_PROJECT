@@ -64,6 +64,12 @@
 <body>
 	${list }
 		
+	<!-- hidden -->
+		
+			
+			
+	<!-- //hidden -->
+		
   <!--  컨테이너 -->
  <div class="container">
   <h4>집들이</h4><br/>
@@ -137,6 +143,7 @@
 		
 	});
 	
+
 	
     function doRetrieve(page) {
      	$.ajax({
@@ -158,12 +165,13 @@
     			//기존 데이터 삭제.
     			$("#rowCard").empty();
     			var html = "";
+    			var scrapBtn = $("#doScrapBtn");
     			
     			let totalCount = 0;
     			let pageTotal = 1;
     			
     			console.log("parseData:"+parseData[0].totalCnt);
-    			
+    			console.log("scrapBtn:"+scrapBtn);
     			
     			console.log("parseData.length:"+parseData.length);
     			
@@ -175,20 +183,25 @@
     				
     				$.each(parseData, function(i, value) {
     					//console.log(i+","+value.name);
+    					console.log("eachscrapBtn"+scrapBtn);
+    					html+="<div  class='col-lg-3 col-md-6 mb-4'>";
+    					html+="	<div class='card h-100'>";
+    					html+="		<a href='${hContext}/houses/test_view.do?housesSeq="+value.housesSeq+"'><img class='card-img-top' src='${hContext}/resources/lhc/ignore.PNG' ></a>";
+    					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
+    					html+="		<div id='buttonClick' class='row col-lg-12'>";
+    					html+="			<h6 class='card-title col-lg-8'>"+value.memberId+"</h6>";
+    					html+="			<input type='button' class='btn btn-primary btn-sm col-lg-4'  value='스크랩' name='doScrapBtn' id='doScrapBtn'/>";
+    					html+="			<small class = 'gotta' style = 'display:none;''>"+value.housesSeq+"</small>";
+    					html+="		</div>";
+    					html+="		<div id='rowCardClick' class='text-center'>";
+    					html+="			<h4 class='text-muted'>"+value.title+"</h4>";
+    					html+="			<small class = 'gotta' style = 'display:none;''>"+value.housesSeq+"</small>";
+    					html+="		</div>";	
+    					html+="	</div>";	
+    					html+="</div>";	
     					
-    					html +="<div  class='col-lg-3 col-md-6 mb-4'>";
-						html +=		"<div class='card h-100'>";
-						html +=			"<a href='${hContext}/houses/test_view.do?housesSeq="+value.housesSeq+"'><img class='card-img-top' src='${hContext}/resources/lhc/ignore.PNG' ></a>";
-						html +=		"<div>";
-						html +="	<h6  class='text-muted'>"+value.tag+"</h6 >";
-						html +=" <h6 class='card-title'>"+value.memberId+"</h6>";
-						html +="</div>";
-						html +=" <div id='rowCardClick' class='text-center'>";
-						html +="<h4 class='text-muted'>"+value.title+"</h4>";
-						html +="  <small class = 'gotta' style = 'display:none;''>"+value.housesSeq+"</small>";
-						html +="</div>";	
-						html +="</div>";	
-						html +="</div>";							
+    					
+
     				});
     				
     			}else {//data가 없는 경우
@@ -221,6 +234,48 @@
     
     
  	//--table click
+	$("#rowCard").on("click","#buttonClick",function(e){
+		e.preventDefault();
+		console.log("buttonClick");
+ 	 	let tds = $(this).children();
+ 	 	console.log(tds);
+ 	 	var memberId = tds.eq(0).text();
+		var button = tds.eq(1).text();
+		var housesSeq = tds.eq(2).text();
+		console.log("button"+button); 
+		console.log("memberId"+memberId); 
+		console.log("housesSeq"+housesSeq); 
+
+		let url = "${hContext}/scrap/do_insert.do"
+			let parameters = {
+				"scrapSeq" :-1,
+				"memberId" :memberId,//이부분은 차후 세션에서 받을 예정
+				"housesSeq" :housesSeq,
+				"modId":memberId//이부분은 차후 세션에서 받을 예정
+				};
+			let method = "POST";
+			let async = true;	
+			console.log(parameters);
+			console.log(url);
+ 		EClass.callAjax(url , parameters, method ,async, function(data){
+			console.log("data"+data.memberId);
+			console.log("data"+data.housesSeq);
+			if("1"==data.msgId) {//등록 성공
+				alert(data.msgContents);
+				//doRetrieve(1);
+			}else {//등록 실패
+				alert(data.msgId+"\n"+data.msgContents);
+			}
+			
+
+			
+				
+			}); 
+			 
+		}); 
+    
+		
+ 	//--button click
 	$("#rowCard").on("click","#rowCardClick",function(e){
 		e.preventDefault();
 		console.log("rowCard");
@@ -236,9 +291,6 @@
 	
 			 
 		}); 
-    
-		
-	
 		
 		
 	

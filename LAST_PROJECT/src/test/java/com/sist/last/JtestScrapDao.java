@@ -37,6 +37,10 @@ public class JtestScrapDao {
 	Scrap scrap02;
 	Scrap scrap03;
 	
+	Scrap check01;
+	Scrap check02;
+	Scrap check03;
+	
 	@Before
 	public void setUp() throws Exception {
 		LOG.debug("=======================");
@@ -46,6 +50,9 @@ public class JtestScrapDao {
 		LOG.debug("=context="+context);
 		
 		scrap01=new Scrap("13","1","1","","","");
+		check01= new Scrap("","2222","yeonsu22","","","");
+		check02= new Scrap("","2221","yeonsu22","","","");
+		check03= new Scrap("","2221","yeonsu21","","","");
 	}
 
 	@After
@@ -53,6 +60,14 @@ public class JtestScrapDao {
 		LOG.debug("=======================");
 		LOG.debug("=@tearDown=");
 		LOG.debug("=======================");
+	}
+	
+	
+	@Test
+	public void doScrapCheck() throws SQLException {
+		dao.scrapCheck(check01);
+		dao.scrapCheck(check02);
+		dao.scrapCheck(check03);
 	}
 	
 	@Test
@@ -77,7 +92,7 @@ public class JtestScrapDao {
 	
 	
 	@Test
-//	@Ignore
+	@Ignore
 	public void doRetrieve() throws SQLException {
 		LOG.debug("================");
 		LOG.debug("==@doRetrieve==");
