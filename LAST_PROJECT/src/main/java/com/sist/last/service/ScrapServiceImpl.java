@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sist.last.cmn.DTO;
+import com.sist.last.cmn.StringUtil;
 import com.sist.last.dao.ScrapDaoImpl;
 import com.sist.last.vo.Scrap;
 
@@ -41,7 +42,10 @@ public class ScrapServiceImpl {
 
 
 	public int doInsert(DTO dto) throws SQLException {
-		return this.scrapDao.doInsert(dto);
+		Scrap scrap = (Scrap) dto;
+		scrap.setScrapSeq(StringUtil.getPK(""));
+		
+		return this.scrapDao.doInsert(scrap);
 	}
 
 }
