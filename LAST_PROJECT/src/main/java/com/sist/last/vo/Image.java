@@ -9,14 +9,14 @@ public class Image extends DTO {
 	private String orgName;// 원본이름
 	private String saveName;// 저장 이름
 	private String savePath;// 저장 경로
-	private String imgSize;// 이미지 크기
+	private long imgSize;// 이미지 크기
 	private String imgExt;// 확장자
 
 	public Image() {
 
 	}
 
-	public Image(String imgId, int imgNum, String orgName, String saveName, String savePath, String imgSize,
+	public Image(String imgId, int imgNum, String orgName, String saveName, String savePath, long imgSize,
 			String imgExt) {
 		super();
 		this.imgId = imgId;
@@ -68,11 +68,11 @@ public class Image extends DTO {
 		this.savePath = savePath;
 	}
 
-	public String getImgSize() {
+	public long getImgSize() {
 		return imgSize;
 	}
 
-	public void setImgSize(String imgSize) {
+	public void setImgSize(long imgSize) {
 		this.imgSize = imgSize;
 	}
 

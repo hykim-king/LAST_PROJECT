@@ -60,9 +60,9 @@ public class JTestImageController {
 	public void setUp() throws Exception {
 		LOG.debug("setUp()");
 
-		image01 = new Image("20210415", 1, "spring.jpg", "spring.jpg", "last/upload", "12.345", "");
-		image02 = new Image("20210416", 2, "summer.jpg", "summer.jpg", "last/upload", "12.345", "");
-		image03 = new Image("20210417", 3, "fall.jpg", "fall.jpg", "last/upload", "12.345", "");
+		image01 = new Image("20210415", 1, "spring.jpg", "spring.jpg", "last/upload", 123, "");
+		image02 = new Image("20210416", 2, "summer.jpg", "summer.jpg", "last/upload", 123, "");
+		image03 = new Image("20210417", 3, "fall.jpg", "fall.jpg", "last/upload", 123, "");
 
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
@@ -138,7 +138,7 @@ public class JTestImageController {
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/image/do_update.do")
 				.param("imgId", image01.getImgId()).param("imgNum", image01.getImgNum() + "")
 				.param("orgName", image01.getOrgName()).param("saveName", image01.getSaveName())
-				.param("savePath", image01.getSavePath()).param("imgSize", image01.getImgSize())
+				.param("savePath", image01.getSavePath()).param("imgSize", String.valueOf(image01.getImgSize()))
 				.param("imgExt", image01.getImgExt());
 
 		ResultActions resultActions = mockMvc.perform(createMessage)
@@ -220,10 +220,13 @@ public class JTestImageController {
 	public int doInsert(Image image01) throws Exception {
 		// url 호출, set param
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/image/do_insert.do")
-				.param("imgId", image01.getImgId()).param("imgNum", image01.getImgNum() + "")
-				.param("orgName", image01.getOrgName()).param("saveName", image01.getSaveName())
-				.param("savePath", image01.getSavePath()).param("imgSize", image01.getImgSize())
-				.param("imgExt", image01.getImgExt());
+				.param("imgId", image01.getImgId())
+				.param("imgNum", image01.getImgNum() + "")
+				.param("orgName", image01.getOrgName())
+				.param("saveName", image01.getSaveName())
+				.param("savePath", image01.getSavePath())
+				.param("imgSize", String.valueOf(image01.getImgSize()))
+				.param("imgExt", image01.getImgExt());			
 
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))

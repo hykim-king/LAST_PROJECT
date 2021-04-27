@@ -87,9 +87,9 @@ public class JTestImageDao {
 
 		LOG.debug("context: " + context);
 
-		image01 = new Image("20210415", 1, "spring.jpg", "spring.jpg", "last/upload", "12.345", "");
-		image02 = new Image("20210416", 2, "summer.jpg", "summer.jpg", "last/upload", "12.345", "");
-		image03 = new Image("20210417", 3, "fall.jpg", "fall.jpg", "last/upload", "12.345", "");
+		image01 = new Image("20210415", 1, "spring.jpg", "spring.jpg", "last/upload", 145, "");
+		image02 = new Image("20210416", 2, "summer.jpg", "summer.jpg", "last/upload", 145, "");
+		image03 = new Image("20210417", 3, "fall.jpg", "fall.jpg", "last/upload", 125, "");
 
 	}
 
