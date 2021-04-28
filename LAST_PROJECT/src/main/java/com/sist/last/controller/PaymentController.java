@@ -16,10 +16,8 @@ import com.google.gson.Gson;
 import com.sist.last.cmn.Message;
 import com.sist.last.cmn.Search;
 import com.sist.last.cmn.StringUtil;
-import com.sist.last.service.PaymentService;
 import com.sist.last.service.PaymentServiceImpl;
 import com.sist.last.vo.Payment;
-import com.sist.last.vo.Reply;
 
 @Controller
 public class PaymentController {
@@ -115,7 +113,7 @@ public class PaymentController {
 	@ResponseBody
 	public String doSelectOne(Payment payment) throws SQLException{
 		
-		Reply outVO = (Reply) this.paymentService.doSelectOne(payment);
+		Payment outVO = (Payment) this.paymentService.doSelectOne(payment);
 		LOG.debug("=============================");
 		LOG.debug("outVO:"+outVO);
 		LOG.debug("=============================");
@@ -149,9 +147,9 @@ public class PaymentController {
 			search.setPageSize(10);
 		}
 		
-		List<Reply> list = (List<Reply>) this.paymentService.doRetrieve(search);
+		List<Payment> list = (List<Payment>) this.paymentService.doRetrieve(search);
 		
-		for(Reply vo: list) {
+		for(Payment vo: list) {
 			LOG.debug(vo.toString());
 		}
 		
