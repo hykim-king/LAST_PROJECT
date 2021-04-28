@@ -47,7 +47,7 @@ public class QnaServiceImpl implements QnaService {
 	public int doInsert(DTO dto) throws SQLException {
 		
 		Qna qna = (Qna) dto;
-		qna.setQnaSeq(StringUtil.getPK(""));
+		qna.setQnaSeq(StringUtil.getPK("yyyyMMdd24mmss"));
 		
 		return this.QnaDao.doInsert(qna);
 	}
