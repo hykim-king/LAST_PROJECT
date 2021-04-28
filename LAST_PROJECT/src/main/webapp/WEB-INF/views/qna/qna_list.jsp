@@ -80,8 +80,8 @@
 		<div class="row col-lg-12">
 			<div class="col-xs-8 col-sm-9 col-md-8 col-lg-2 text-right ">
 	 				<select class="form-control input-sm " name="pageSize" id="pageSize">				
-	    		  		<option value="4">3개씩 보기</option>	    		  		
-						<option value="8">6개씩 보기</option>
+	    		  		<option value="3">3개씩 보기</option>	    		  		
+						<option value="6">6개씩 보기</option>
 	    		  </select> 
 		    </div>
 		  </div>
