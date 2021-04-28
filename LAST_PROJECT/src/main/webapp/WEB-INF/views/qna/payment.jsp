@@ -44,159 +44,388 @@
 	
 </head>
 <body>
-	<!-- table -->
-	<table border="1" class="orderinfo">
-	         <thead>
-	            <tr style="text-align: center;">
-	              <!--  <th width="150px;">이미지</th> -->
-	               <th width="180px;">상품명 </th>
-	               <th width="100px;">판매가</th>
-	               <th width="60px;">수량</th>
-	               <th width="100px;">합계</th>
-	            </tr>
-	         </thead>
-	         <tbody>
-	         
-	         <c:choose>
-	            <c:when test="">
-	               <h1><strong>주문할 상품이 없습니다.</strong></h1>
-	            </c:when>
-	            <c:when test="">
-	         <c:forEach items="" var="cart">
-	         <c:set var="pro_saving" value=""  />
-	         <fmt:formatNumber value="" type="number" var=""/>
-	         <fmt:formatNumber value="" type="number" var=""/>
-	            <tr>
-	               <th><%-- <a href="${contextPath}/product/productdetail.do?pro_code=${cart.cart_pro_code}"> --%>
-	              <!--  <img width="70px" height="105px" src=""></a></th> -->
-	               <td><%-- <a href="${contextPath}/product/productdetail.do?pro_code=${cart.cart_pro_code}">${cart.pro_name}</a> --%></td>
-	               <td><strong><br></strong></td>
-	               <td>원</td>
-	               <td>개</td>
-	               <td><strong><fmt:formatNumber value="" pattern="" />원</strong></th> 
-	            </tr>
-	            <c:set var="final_total_order_price" value="" />
-	            <c:set var="final_total_order_quantity" value="" />
-	             <c:set var="final_total_pro_saving" value=""/> 
-	             
-	             <input type="hidden" name="" value=" " />
-	             <input type="hidden" name="size" value="" />
-	             <input type="hidden" name="color"  value=""/>
-	              <input type="hidden" name="price" value="" /> 
-	             <input type="hidden" name="quantity" value="" />
-	             <input type="hidden" name="saving" value="" />
-	             <input type="hidden" name="total" value="" /> 
-	         </c:forEach>
-	         </c:when>
-	         </c:choose>
-	         </tbody>
-	      </table>
-	<!-- //table -->
+<!-- div container -->
+	<div class="wrap container">
 	
-  
+		<!--장바구니 데이터 가져오기  -->
+		<!-- 제목 -->
+	 	<div class="page-header">
+	 		<h2>결제</h2>
+	 	</div>
+	    <!--// 제목 -->
+	    
+	 <!-- 페이지 검색영역 -->
+		<div class="row col-lg-12">
+			<div class="col-xs-8 col-sm-9 col-md-8 col-lg-2 text-right ">
+	 			 <select class="form-control input-sm " name="pageSize" id="pageSize">				
+	    		  		<option value="3">3개씩 보기</option>	    		  		
+						<option value="5">5개씩 보기</option>
+	    		  </select> 
+		    </div>
+		  </div>
+	<!-- //페이지 검색영역 --> 
+	    
+        <!-- table -->
+		<div class="table-responsive">
+		    <!-- table -->
+			<table id="BasketTable" class="table table-striped table-bordered table-hover table-condensed">
+				<thead class="bg-primary">  
+					<th class="text-center col-lg-3 col-md-1  col-xs-3">상품 이미지</th>
+					<th class="text-center col-lg-3 col-md-3  col-xs-3">상품명</th>
+					<th class="text-center col-lg-2 col-md-2  col-xs-2">가격</th>  
+					<th class="text-center col-lg-2 col-md-2  col-xs-2">수량</th>
+					<th class="text-center col-lg-2 col-md-2  col-xs-2">합계</th>
+				</thead>
+			    <tbody>
+			    </tbody>
+			</table>
+		</div>
+        <!--// table -->
+        
+        <!-- pagenation -->
+		<div class="text-center">
+			<div id="page-selection" class="text-center page"></div>
+		</div>
+	    <!--// pagenation -->	
+        
+        <!--//장바구니 데이터 가져오기  -->
+        
+        
+        <!-- 주문내역 -->
+        <!-- 주문내역 제목 -->
+	 	<div class="page-header">
+	 		<h2>주문내역</h2>
+	 	</div>
+	    <!--// 주문내역 제목 -->
+	    
+	   <!-- table -->
+		<div class="table-responsive">
+		    <!-- table -->
+			<table id="OrderTable" class="table table-striped table-bordered table-hover table-condensed">
+				<thead class="bg-primary">  
+					<th class="text-center col-lg-3 col-md-3  col-xs-3">총 주문금액</th>
+				</thead>
+			    <tbody>
+			    </tbody>
+			</table>
+		</div>
+        <!--// table -->
+	    <!-- //주문내역 -->
+	    	
+        <!--상세정보입력  -->
+		<!-- 제목 -->
+	 	<div class="page-header">
+	 		<h2>상세정보입력</h2>
+	 	</div>
+	    <!--// 제목 -->	
+	    
+	    <!-- form --> 
+	    <form action="" class="form-horizontal">
+		  <div class="form-group">
+		    <div class="col-xs-8 col-sm-9 col-md-12 col-lg-12">
+		      <input type="text" class="form-control" id="uId" name="uId"  placeholder="주문하시는 분" maxlength="20">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <div class="col-xs-8 col-sm-9 col-md-12 col-lg-8">
+		      <input type="text" class="form-control" id="name" name="name"  placeholder="우편번호" maxlength="50">
+		      <input type="button" class="btn btn-primary btn-sm"  value="주소찾기" id="postBtn"/>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		   <div class="col-xs-8 col-sm-9 col-md-12 col-lg-12">
+		      <input type="password" class="form-control" id="passwd" name="passwd"  placeholder="주소" maxlength="50">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <div class="col-xs-8 col-sm-9 col-md-12 col-lg-12">
+		      <input type="text" numberonly class="form-control" id="login" name="login"  placeholder="나머지주소" maxlength="7">
+		    </div>
+		  </div>			    	    	
+	    </form>
+	    <!--// form --> 
+	    <!--//상세정보입력  -->
+	    
+	    <!-- 버튼 -->
+	    <div class="row text-right">
+	        <div   class="col-xs-8 col-sm-9 col-md-12 col-lg-12">
+	        	<input type="button" class="btn btn-primary btn-lg"  value="결제" id="paymentBtn"/>
+	        	<input type="button" class="btn btn-primary btn-lg"  value="취소" id="cancelBtn"/>
+	        </div>
+	    </div>
+	    <!--// 버튼 -->    
+	</div>
+<!-- //div container -->
 
-       <!--11111111111111111111111111-->
-		<div class="row">
-               <div class="col-md-12 mb-5 mb-md-0">
-               <Br><br>
-                  <h2 class="h3 mb-3 text-black">상세정보 입력</h2>
-                  <div style="border: 1px solid darkgray;" class="p-3 p-lg-5">
-
-                     <!--이름-->
-                     <div class="form-group row">
-                        <div class="col-md-12">
-                           <label for="c_companyname" class="text-black">주문하시는분 
-                           <span style="color: red;">*</span></label> 
-                           <input type="text" class="form-control" value="${memberInfo.member_name }" id="member_name" />
-                        </div>
-                     </div>
-
-                     <!--주소-->
-                     <div class="form-group row">
-                        <div class="col-md-8">
-                           <label for="c_address" class="text-black">주소 <span
-                              class="text-danger">*</span></label> <input type="text"
-                              class="form-control" id="postaddr" placeholder="우편번호"
-                              value="${memberInfo.member_addr1 }">
-                        </div>
-
-                        <div class="col-md-4">
-                           <label for="c_address" class="text-black"><br></label> <input
-                              type="button" class="form-control" id="c_address"
-                              name="c_address" onclick="find_addr()" value="주소찾기">
-                        </div>
-                     </div>
-
-                     <div class="form-group">
-                        <input type="text" class="form-control" id="loadaddr"
-                           placeholder="주소" value="${memberInfo.member_addr2 }">
-                     </div>
-                     <div class="form-group">
-                        <input type="text" class="form-control" id="jiaddr"
-                           placeholder="동" value="${memberInfo.member_addr3 }">
-                     </div>
-                     <div class="form-group">
-                        <input type="text" class="form-control" id="detailaddr"
-                           placeholder="나머지주소" value="${memberInfo.member_addr4 }">
-                     </div>
-
-
-                     <!--전화번호-->
-<%--                      <div class="form-group row">
-                        <div class="col-md-4">
-                           <label for="c_state_country" class="text-black">휴대전화 <span
-                              class="text-danger">*</span></label> <input type="text"
-                              class="form-control" id="member_cp1" name="c_state_country"
-                              value="${memberInfo.member_cp1 }">
-                        </div>
-                        <div class="col-md-4">
-                           <label for="c_postal_zip" class="text-black"><br></label>
-                           <input type="text" class="form-control" maxlength="4"
-                              id="member_cp2" value="${memberInfo.member_cp2 }"
-                              onkeypress="if (event.keyCode<48|| event.keyCode>57)  event.returnValue=false;"
-                              style='IME-MODE: disabled;'>
-                        </div>
-                        <div class="col-md-4">
-                           <label for="c_postal_zip" class="text-black"><br></label>
-                           <input type="text" class="form-control" maxlength="4"
-                              id="member_cp3" value="${memberInfo.member_cp3 }"
-                              onkeypress="if (event.keyCode<48|| event.keyCode>57)  event.returnValue=false;"
-                              style='IME-MODE: disabled;'>
-                        </div>
-                     </div> --%>
-
-                  </div>
-               </div>
-
-               <Br><Br><Br>
-        </div>
-
-
-
-			<div class="row mb-5">
-			               <div class="col-md-12">
-			                  <br><br>
-			                     <h2 class="h3 mb-3 text-black">Your Order</h2>
-			                        <div style="border: 1px solid darkgray;" class="p-3 p-lg-5 border">
-			                           <table class="table site-block-order-table mb-5">
-			   
-			                              <tbody>
-			                                 <tr>
-			                                    <td class="text-black font-weight-bold"><strong>총주문금액</strong></td>
+	<!-- javascript -->
+	<script type="text/javascript">
+	
+		//jquery 객체생성이 완료
+		$(document).ready(function() {
+			console.log("document ready");
 			
-			                                    <td><label  id="final_total_order_price">${final_total_order_price }</label>원</td>
-			                                 </tr>
+			//화면 로딩시 보여줄 데이터 
+			doRetrieve();
+			//doPayment();
+		});//--document ready	
+		
+
+		//조회버튼 실행시 
+		function doRetrieve(page){
+			console.log("page:"+page);
+			$.ajax({
+	    		type: "GET",
+	    		url:"${hContext}/payment/do_retrieve.do",
+	    		asyn:"true",
+	    		dataType:"html",
+	    		data:{
+	    			pageSize:$("#pageSize").val(),
+	    			//memberId:$("#memberId").val(),
+	    			pageNum:page
+	    		},
+	    		success:function(data){//통신 성공
+	        		console.log("success data:"+data);
+	        		var parseData = JSON.parse(data);
+	        		
+	        		//기존데이터 삭제
+	        		$("#BasketTable>tbody").empty();
+	        		var html = "";
+	        		
+	        		//페이징 변수
+	        		let totalCount = 0;//총 글수
+	        		let pageTotal = 1;//총 페이지수
+	        		
+	        		//합계(하나의 상품 총 가격) 변수
+	        		let productTotal = 0;
+	        		
+	        		console.log("parseData.length:"+parseData.length);
+	        		console.log("totalCount:"+parseData[0].totalCount);
+	        		
+					//data가 있는 경우
+					if(parseData.length>0){
+						
+						totalCount = parseData[0].totalCount;
+						pageTotal  = totalCount/$("#pageSize").val();//42/10->4.2
+						pageTotal = Math.ceil(pageTotal);//42/10->4.2->5
+						
+						//하나의 상품 총 가격
+						productTotal = price * quantity;
+						
+						$.each(parseData,function(i,value){
+							console.log(i+","+value.name);
+							html += "<tr>";
+							html += "	<td class='text-center'><img src='${hContext}/resources/../..' alt='Image placeholder'></td>";
+							html += "	<td class='text-center'>"+value.title+"</td>";//상품명
+							html += "	<td class='text-center'>"+value.price+"</td>";//가격
+							html += "	<td class='text-center'>"+value.quantity+"</td>";//수량
+							html += "	<td class='text-center'>"+value.productTotal+"</td>";//합계(하나의 상품 총 가격)
+							html += "</tr>";
+						});
+						
+					}else{//data가 없는 경우
+	    				html +="<tr>";
+	    				html +="	<td class='text-center' colspan='99'>장바구니에 상품을 담아주세요</td>";    		
+	    				html +="</tr>";   
+					}
+					
+					//tbody에 데이터 추가
+					$("#BasketTable>tbody").append(html);	
+					
+					//페이징처리
+					console.log(pageTotal+","+page);
+					renderingPage(pageTotal,page);
+		
+	        	},
+	        	error:function(data){//실패시 처리
+	        		console.log("error:"+data);
+	        	},
+	        	complete:function(data){//성공/실패와 관계없이 수행!
+	        		console.log("complete:"+data);
+	        	}
+	    	});
+		}//--doRetrieve
+		
+		
+		//주문내역(총 주문금액)
+		function doPayment(){
+			console.log("doPayment");
 			
-			<!-- <button class="bubbly-buttons" onclick="apply_discount()" ></button>
-			 -->                                 
-			                              </tbody>                           
-			                              
-			                           </table>
-									</div>
-								</div>
-							</div> 
-			<center>
-			    <button type="button" class="bubbly-buttons"  onclick="order(this.form)">결제하기   </button> 
-			 </center>
-		</body>
+			$.ajax({
+	    		type: "GET",
+	    		//url:"${hContext}/payment/do_retrieve.do",만들어야함
+	    		asyn:"true",
+	    		dataType:"html",
+	    		data:{
+						//data 넣기
+	    		},
+	    		success:function(data){//통신 성공
+	        		console.log("success data:"+data);
+	        		var parseData = JSON.parse(data);
+	        		
+	        		//기존데이터 삭제
+	        		$("#OrderTable>tbody").empty();
+	        		var html = "";
+	        		
+	        		//합계(하나의 상품 총 가격) 변수
+	        		let productTotal = 0;
+	        		//총 주문금액
+	        		let totalPayment = 0;
+	        	
+	        		console.log("parseData.length:"+parseData.length);
+
+					if(parseData.length>0){//data가 있는 경우
+						
+						//하나의 상품 총 가격
+						productTotal = price * quantity;
+						//총 주문금액
+						totalPayment += productTotal;
+						
+						$.each(parseData,function(i,value){
+							console.log(i+","+value.name);
+							html += "<tr>";
+							html += "	<td class='text-center'>"+value.totalPayment+"</td>";//총 주문금액
+							html += "</tr>";
+						});
+						
+					}else{//data가 없는 경우
+	    				html +="<tr>";
+	    				html +="	<td class='text-center' colspan='99'>장바구니에 상품을 담아주세요</td>";    		
+	    				html +="</tr>";   
+					}
+					
+					//tbody에 데이터 추가
+					$("#OrderTable>tbody").append(html);	
+
+	        	},
+	        	error:function(data){//실패시 처리
+	        		console.log("error:"+data);
+	        	},
+	        	complete:function(data){//성공/실패와 관계없이 수행!
+	        		console.log("complete:"+data);
+	        	}
+	    	});			
+		}//--doPayment
+		
+		
+		
+		//paging
+		//pageTotal:총 페이지수= 총글수/페이지사이즈(10)
+		//page:현재페이지
+		//maxVisible:bottom 페이지
+		function renderingPage(pageTotal,page){
+			//이전 연결된 Event 핸들러 요소에서 제거
+			$("#page-selection").unbind('page');
+			
+			$("#page-selection").bootpag({
+			    total: pageTotal,
+			    page: page,//시작
+			    maxVisible: 3,
+			    leaps: true,
+			    firstLastUse: true,
+			    first: '←',
+			    last: '→',
+			    wrapClass: 'pagination',
+			    activeClass: 'active',
+			    disabledClass: 'disabled',
+			    nextClass: 'next',
+			    prevClass: 'prev',
+			    lastClass: 'last',
+			    firstClass: 'first' 
+			}).on("page", function(event, num){
+				doRetrieve(num);//ajax 서버 호출
+			}); 
+		}//--renderingPage
+		
+		
+		
+		//주소찾기
+
+		
+		
+		//결제버튼
+		$("#paymentBtn").on("click",function(e){
+			console.log("paymentBtn");
+			e.preventDefault();//한번만 호출
+			
+		 	let tds = $(this).children();
+	 	 	console.log(tds);
+	 	 	
+	 	 	var memberId = tds.eq(0).text();
+			var paySeq = tds.eq(1).text();
+			
+			console.log("memberId:"+memberId); 
+			console.log("paySeq:"+paySeq); 
+
+			let url = "${hContext}/payment/do_insert.do"
+				let parameters = {
+					"paySeq" : paySeq,
+					"memberId" :memberId,//세션
+					"storeSeq" :storeSeq,
+					"modId":memberId//세션
+					};
+				let method = "POST";
+				let async = true;	
+				
+				console.log(parameters);
+				console.log(url);
+				
+			if(confirm("결제하시겠습니까?")==false) return;
+				
+	 		EClass.callAjax(url , parameters, method ,async, function(data){
+				console.log("data"+data.memberId);
+				console.log("data"+data.paySeq);
+				
+				if("1"==data.msgId) {//결제 성공
+					alert(data.msgContents);
+					//doRetrieve(1);
+				}else {//결제 실패
+					alert(data.msgId+"\n"+data.msgContents);
+				}
+	
+			}); 		
+		});//--paymentBtn
+		
+		
+		
+		//취소버튼
+		$("#cancelBtn").on("click",function(e){
+			console.log("cancelBtn");
+			e.preventDefault();//한번만 호출
+			
+			 let url = "${hContext}/payment/do_delete.do";
+			 let parameter = {
+					 			"paySeq" : paySeq};
+			 let method = "POST";
+			 let async = true;	
+			 
+			console.log(parameters);
+			console.log(url);
+			 
+			 if(confirm("결제를 취소하시겠습니까?")==false) return;
+			 
+			 EClass.callAjax(url, parameter, method, async, function(data) {
+					 console.log("data:"+data);
+					 console.log("data:"+data.paySeq);
+					 
+					 //성공/실패 여부 메세지 출력
+					 console.log("data.msgContents:"+data.msgContents);
+					 
+					 if("1"==data.msgId){//취소성공
+						 alert(data.msgContents);
+					 	 //doRetrieve(1);
+					 }else{//취소실패
+						 alert(data.msgId+"\n"+data.msgContents); 
+					 }
+					 
+				 });
+			
+		});	//--cancelBtn	
+		
+		
+		
+		
+		
+	</script>
+	<!-- //javascript -->
+</body>
 </html>
