@@ -14,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.Search;
 import com.sist.last.vo.Reply;
 
+@Repository
 public class ReplyDaoImpl implements ReplyDao{
 	final static Logger LOG = LoggerFactory.getLogger(ReplyDaoImpl.class);
 	
@@ -27,8 +29,8 @@ public class ReplyDaoImpl implements ReplyDao{
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 	
-	JdbcTemplate jdbcTemplate;
-	DataSource dataSource;
+//	JdbcTemplate jdbcTemplate;
+//	DataSource dataSource;
 	
 	RowMapper<Reply> row = new RowMapper<Reply>() {
 		@Override
@@ -51,11 +53,11 @@ public class ReplyDaoImpl implements ReplyDao{
 	
 	public ReplyDaoImpl() {}
 
-	//setter를 통한 주입
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
-	}
+//	//setter를 통한 주입
+//	public void setDataSource(DataSource dataSource) {
+//		this.dataSource = dataSource;
+//		this.jdbcTemplate = new JdbcTemplate(dataSource);
+//	}
 
 
 	@Override

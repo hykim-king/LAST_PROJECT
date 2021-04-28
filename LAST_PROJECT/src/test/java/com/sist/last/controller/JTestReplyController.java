@@ -95,42 +95,42 @@ public class JTestReplyController {
 	}
 	
 	
+//	@Test
+//	@Ignore
+//	public void doUpdateTest() throws Exception {
+//		//1.
+//		doDelete(reply01);
+//		doDelete(reply02);
+//		doDelete(reply03);
+//		
+//		//2.
+//		int flag = doInsert(reply01);
+//		assertThat(flag, is(1)); //flag(actual)과 is(예상) 비교
+//		
+//		flag += doInsert(reply02);
+//		assertThat(flag, is(2)); //flag(actual)과 is(예상) 비교
+//		
+//		flag += doInsert(reply03);
+//		assertThat(flag, is(3)); //flag(actual)과 is(예상) 비교
+//		
+//		//3.
+//		reply01.setContents(reply01.getContents()+"99");
+//		
+//		LOG.debug("reply01:"+reply01);
+//		
+//		flag = doUpdate(reply01);
+//		assertThat(flag, is(1));
+//		
+//		//3.1 수정 데이터 조회
+//		Reply changeReply = (Reply) doSelectOne(reply01);
+//		LOG.debug("changeReply"+changeReply);
+//		checkUser(changeReply,reply01);
+//				
+//	}
+	
+	
 	@Test
-	@Ignore
-	public void doUpdateTest() throws Exception {
-		//1.
-		doDelete(reply01);
-		doDelete(reply02);
-		doDelete(reply03);
-		
-		//2.
-		int flag = doInsert(reply01);
-		assertThat(flag, is(1)); //flag(actual)과 is(예상) 비교
-		
-		flag += doInsert(reply02);
-		assertThat(flag, is(2)); //flag(actual)과 is(예상) 비교
-		
-		flag += doInsert(reply03);
-		assertThat(flag, is(3)); //flag(actual)과 is(예상) 비교
-		
-		//3.
-		reply01.setContents(reply01.getContents()+"99");
-		
-		LOG.debug("reply01:"+reply01);
-		
-		flag = doUpdate(reply01);
-		assertThat(flag, is(1));
-		
-		//3.1 수정 데이터 조회
-		Reply changeReply = (Reply) doSelectOne(reply01);
-		LOG.debug("changeReply"+changeReply);
-		checkUser(changeReply,reply01);
-				
-	}
-	
-	
-	
-	public int doInsert(Reply reply01) throws Exception {
+	public void doInsert() throws Exception {
 		//url호출, param전달
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/reply/do_insert.do")
 										.param("replySeq", reply01.getReplySeq())
@@ -159,7 +159,7 @@ public class JTestReplyController {
 		LOG.debug("----------------------------------------");
 		
 		String resultMsg = "";
-		resultMsg = reply01.getMemberId() + "님\n수정 성공.";
+		resultMsg = reply01.getMemberId() + "님 댓글 등록 성공.";
 	
 		Message message = new Message();
 		message.setMsgId("1");
@@ -168,12 +168,13 @@ public class JTestReplyController {
 		assertThat(getMessage.getMsgId(), is(message.getMsgId()));
 		assertThat(getMessage.getMsgContents(), is(message.getMsgContents()));
 	
-		return Integer.parseInt(getMessage.getMsgId());
+		//return Integer.parseInt(getMessage.getMsgId());
 
 	}
 	
-	
-	public void doDelete(Reply reply01) throws Exception {
+	@Test
+	@Ignore
+	public void doDelete() throws Exception {
 		//url호출, param전달
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/reply/do_delete.do")
 				.param("replySeq", reply01.getReplySeq())
@@ -210,8 +211,9 @@ public class JTestReplyController {
 		
 	}
 	
-	
-	public int doUpdate(Reply reply01) throws Exception {
+	@Test
+	@Ignore
+	public void doUpdate() throws Exception {
 		//url호출, param전달
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/reply/do_update.do")
 										.param("replySeq", reply01.getReplySeq())
@@ -242,11 +244,13 @@ public class JTestReplyController {
 		String resultMsg = "";
 		resultMsg = reply01.getMemberId() + "님\n수정 성공.";
 	
-		return Integer.parseInt(getMessage.getMsgId());
+		//return Integer.parseInt(getMessage.getMsgId());
 		
 	}
-
-	public Reply doSelectOne(Reply reply01) throws Exception {
+	
+	@Test
+	@Ignore
+	public void doSelectOne() throws Exception {
 		//url호출, param전달
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.get("/reply/do_selectone.do")
 				.param("replySeq", reply01.getReplySeq())
@@ -270,7 +274,7 @@ public class JTestReplyController {
 		
 		checkUser(reply01, outVO);
 		
-		return outVO;
+		//return outVO;
 	}
 	
 	private void checkUser(Reply vsReply, Reply reply01) {
@@ -283,7 +287,8 @@ public class JTestReplyController {
 		assertThat(vsReply.getModId(), is(reply01.getModId()));
 	}
 	
-	
+	@Test
+	@Ignore
 	public void doRetrieve() throws Exception {
 		
 		MockHttpServletRequestBuilder createMessage = 

@@ -18,6 +18,7 @@ import com.sist.last.cmn.Message;
 import com.sist.last.cmn.Search;
 import com.sist.last.cmn.StringUtil;
 import com.sist.last.service.ReplyService;
+import com.sist.last.service.ReplyServiceImpl;
 import com.sist.last.vo.Reply;
 
 
@@ -29,8 +30,9 @@ public class ReplyController {
 	
 	
 	@Autowired
-	ReplyService replyService;
+	ReplyServiceImpl replyService;
 	
+
 	public ReplyController() {
 		
 	}
