@@ -57,7 +57,18 @@
 	<!-- 수평선 긋기 -->
 	 <hr class="my-2">
 	    <div class="jumbotron jumbotron-fluid mx-4">
-	        <h2>질문과 답변</h2>
+	    	<!-- ~를 위한 추천 메세지 띄우기 -->
+	    	<h2>
+				<c:choose>
+					<c:when test="${null != sessionScope.memberInfo }"><!-- 로그인 했을때 -->
+							${sessionScope.memberInfo.nickname}님을 위한 질문과 답변
+					</c:when>
+					<c:otherwise><!-- 로그인 안했을때 -->
+						당신을 위한 질문과 답변
+					</c:otherwise>
+				</c:choose>
+			</h2>
+			<!--// ~를 위한 추천 메세지 띄우기 -->
 	        <p class="lead">인테리어 고수들에게 조언을 받으세요</p>
 	        <input type="button" class="btn btn-lg btn-success"  value="질문 등록하기" id="doRegistBtn"/>
 	     </div>
@@ -146,6 +157,7 @@
 		
 		
 		//등록 버튼 
+		//확인완료
 		$("#doRegistBtn").on("click",function(e){
 			console.log("doRegistBtn");
 			e.preventDefault();//한번만 호출
@@ -156,11 +168,11 @@
 			//멤버ID,qnaSeq 등록페이지로 데이터 넘김
 			var memberId = tds.eq(0).text();
 			console.log("memberId:"+memberId);
-			//var qnaSeq = tds.eq(1).text();
-			//console.log("qnaSeq:"+qnaSeq);
 			
+			var qnaSeq = tds.eq(1).text();
+			console.log("qnaSeq:"+qnaSeq);
 			
-			window.location.href = "${hContext}/qna/qna_regist.do?memberId="+memberId;
+			window.location.href = "${hContext}/qna/qna_regist.do?memberId=memberId+&qnaSeq=qnaSeq" ;
 
 		});	//--doRegistBtn
 		
@@ -214,8 +226,8 @@
 							console.log(i+","+value.name);
 							html += "<div class='col-lg-4'>";
 							html += "   <h2>"+value.title+"</h2>";
-							html += "    <img src='' alt='Image placeholder'>";
-							html += "   <p>"+value.contents+"</p>";	
+							html += "    <img src='${hContext}/resources/../..' alt='Image placeholder'>";
+							html += "   <p>"+value.tag+"</p>";	
 							html += "	<div class='row col-lg-4'>";
 							html +=	"		<input type='button' class='btn btn-primary' value='Read more'/>";
 							html += "	</div>";
@@ -252,8 +264,10 @@
 		$("#rowCol").on("click",function(e){
 			e.preventDefault();
 			console.log("rowCol");
+			
 			let tds = $(this).children();
 			console.log("tds:"+tds);
+			
 			var qnaSeq = tds.eq(1).text();
 			console.log(qnaSeq);
 			

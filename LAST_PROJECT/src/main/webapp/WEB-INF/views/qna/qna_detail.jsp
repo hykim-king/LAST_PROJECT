@@ -47,17 +47,17 @@
 	<!-- div container -->
 	<div class="wrap container">
 	
-	        <div class="row">
-	          <div class="col-lg-8 ftco-animate">
-	        <!-- title -->
-				<h2 class="mb-3">제목</h2>
-			<!-- image -->
-				<p>
-	              <img src="images/image_1.jpg" alt="Image placeholder" class="img-fluid">
-	            </p>
-	        <!-- contents -->
-	            <p>작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용</p>
-	
+	  <div class="row">
+	  	<!-- form --> 
+	    <form action="" class="form-horizontal">
+		    <!--qnaSeq  -->
+			<input type="text" class="form-control" id="qnaSeq" name="qnaSeq">
+		 </form>
+	    <!--// form --> 
+			<!-- 단건조회 데이터 -->	
+			<div class="row" id="qnaSelectOne">
+
+				</div>
 	
 	    <!-- tag -->        
 	            <div class="tag-widget post-tag-container mb-5 mt-5">
@@ -71,67 +71,75 @@
 	    <!-- //tag --> 
 	    
 	          
-	    <!--Leave a comment  -->
-	       <div class="comment-form-wrap pt-5">
-	          <h3 class="mb-5">Leave a comment</h3>
-	            <form action="#" class="p-5 bg-light">
-	               <div class="form-group">
-	                   	<input class="form-control input-lg" type="text" placeholder="댓글을 남겨보세요">
-	                </div>
-	                <div class="form-group">
-	                    <input type="submit" value="Post Comment" class="btn py-3 px-4 btn-primary">
-	                </div>
-	             </form>
-	         </div>
-	     <!--//Leave a comment-->
+	    <!--  댓글  --><!--레이아웃 참고사이트 : https://private.tistory.com/65 -->
+	    <div class="container">
+	        <label for="content">comment</label>
+	        <form name="commentInsertForm">
+	            <div class="input-group">
+	               <input type="hidden" name="bno" value="${detail.bno}"/>
+	               <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
+	               <span class="input-group-btn">
+	                    <button class="btn btn-default" type="button" name="commentInsertBtn">등록</button>
+	               </span>
+	              </div>
+	        </form>
+	    </div>
+	     <!-- // 댓글  -->
 	     
-	
-			<!-- comments -->
-	            <div class="pt-5 mt-5">
-	              <h3 class="mb-5">6 Comments</h3>
-	              <ul class="comment-list">
-	                <li class="comment">
-	                  <div class="vcard bio">
-	                    <img src="images/person_1.jpg" alt="Image placeholder">
-	                  </div>
-	                  <div class="comment-body">
-	                    <h3>John Doe</h3>
-	                    <div class="">June 27, 2018 at 2:21pm</div>
-	                    		<p>댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용</p>
-	                    <p><a href="#" class="reply">Reply</a></p>
-	                  </div>
-	                </li>
-	
-	                <li class="comment">
-	                  <div class="vcard bio">
-	                    <img src="images/person_1.jpg" alt="Image placeholder">
-	                  </div>
-	                  <div class="comment-body">
-	                    <h3>John Doe</h3>
-	                    <div class="">June 27, 2018 at 2:21pm</div>
-	                   		<p>댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용</p>
-	                    <p><a href="#" class="reply">Reply</a></p>
-	                  </div>
-	
-	
-	                      <ul class="children">
-	                        <li class="comment">
-	                          <div class="vcard bio">
-	                            <img src="images/person_1.jpg" alt="Image placeholder">
-	                          </div>
-	                          <div class="comment-body">
-	                            <h3>John Doe</h3>
-	                            <div class="">June 27, 2018 at 2:21pm</div>
-	                           		<p>댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용</p>
-	                            <p><a href="#" class="reply">Reply</a></p>
-	                          </div>
-	                        </li>
-	                  	</ul>
-	                </li>
-	              </ul> 
-	            </div> <!-- END comment-list -->
-	        </div><!-- .col-md-8 --> 
+	    <div class="container">
+	        <div class="commentList"></div>
+	    </div>
 		</div><!-- //row -->
-	</div><!-- //div container -->	
+	</div><!-- //div container -->
+	
+	<!-- javascript -->
+	<script type="text/javascript">
+
+	
+	//jquery 객체 생성 완료
+	$(document).ready(function(){
+		console.log("document ready");
+
+		//화면 로딩시 보여줄 데이터
+		doSelectOne("qnaSeqTest03");
+	});
+	
+	//단건조회 페이지 화면 로딩 시 실행
+	function doSelectOne(qnaSeq){
+		
+		console.log("function doSelectOne");
+		
+		 let url = "${hContext}/qna/do_selectone.do";
+		 let parameter = {"qnaSeq":qnaSeq};
+		 let method = "GET";
+		 let async = true;
+		 
+		 console.log("url:"+url);
+		 console.log("parameter:"+parameter);
+		 
+		 EClass.callAjax(url, parameter, method, async, function(data) {
+			 console.log("data:"+data);
+			 
+			 console.log("data.qnaSeq:"+data.qnaSeq);
+
+			 	var html = "";
+			 	
+				html += "<div>";
+				html += "<hr class='my-2'>";
+				html += "	<h2 class='mb-3'>"+data.title+"</h2>";
+				html += "<hr class='my-2'>";
+				html += "    <img src='' alt='Image placeholder'>";
+				html += "<p>"+data.contents+"</p>";
+				html += "</div>";
+			 
+				//body에 데이터 추가
+				$("#qnaSelectOne").append(html);	
+		 });
+
+	}//--doSelectOne
+	
+	</script>
+	<!-- //javascript -->
+		
 </body>
 </html>
