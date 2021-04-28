@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sist.last.payment">
 
-	<select id="doRetrieve" parameterType="SearchPay" resultType="Payment" resultMap="paymentResult">
+	<select id="doRetrieve" parameterType="SearchPay" resultType="Payment">
 		SELECT A.*, B.*                                                              
 		FROM(                                                                        
-			SELECT t2.rnum as num,                                                             
-			          t2.pay_seq,                                                       
-			          t2.store_seq,                                                     
-			          t2.member_id,                                                     
+			SELECT t2.rnum AS num,                                                             
+			          t2.pay_seq AS paySeq,                                                       
+			          t2.store_seq AS storeSeq,                                                     
+			          t2.member_id AS memberId,                                                     
 			          t2.title,                                                         
 			          t2.optone,                                                        
 			          t2.opttwo,                                                        
