@@ -37,7 +37,7 @@ public class scrap {
 		
 		Houses outVO = (Houses) this.housesService.doSelectOne(houses);
 		Image imageVO = new Image();
-		imageVO.setImgId(houses.getImgId());
+		imageVO.setImgId(outVO.getImgId());
 		
 		
 		model.addAttribute("vo", outVO);
