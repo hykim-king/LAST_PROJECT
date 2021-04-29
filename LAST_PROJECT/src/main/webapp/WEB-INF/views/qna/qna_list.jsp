@@ -18,6 +18,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../cmn/common.jsp" %>
+<%@ include file="../cmn/header.jsp" %>
 <c:set var="hContext" value="${pageContext.request.contextPath }" ></c:set>
 <!DOCTYPE html>
 <html>
@@ -76,7 +77,7 @@
 	<!-- 수평선 긋기 -->
 	<!--// Jumbotron -->
 
-	<!-- 검색영역 -->
+	<!-- 검색영역 --><!--  -->
 		<div class="row col-lg-12">
 			<div class="col-xs-8 col-sm-9 col-md-8 col-lg-2 text-right ">
 	 				<select class="form-control input-sm " name="pageSize" id="pageSize">				
@@ -103,8 +104,10 @@
 	<!-- //검색영역 -->       
          
 	<!-- row of columns -->
-	<div class="row" id="rowCol">
-
+	<div class="container">
+		<div class="row" id="rowCol">
+	
+		   </div>
 	   </div>
 	 <!-- //row of columns -->
 	   	 
