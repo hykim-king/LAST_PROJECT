@@ -47,7 +47,30 @@
 	<script src="${hContext}/resources/store/js/main.js"></script>
 </head>
 <body>
-
+	<!-- header -->
+	<%@ include file="../cmn/header.jsp"%>
+	
+	<header class="header">
+        <div class="container">
+        	<div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__logo">
+                    </div>
+                </div> 
+                <div class="col-lg-6 col-md-6">
+                    <nav class="header__menu mobile-menu">
+                        <ul></ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__nav__option"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+	<!-- //header -->
+	
+	
 	<!-- body -->
 	<div class="wrap container">
 		<section class="product spad">
