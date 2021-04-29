@@ -56,7 +56,7 @@
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
                     </div>
-                </div>
+                </div> 
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul></ul>
