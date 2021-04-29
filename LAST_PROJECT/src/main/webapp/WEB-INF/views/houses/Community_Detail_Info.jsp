@@ -7,7 +7,9 @@
 	수정일    	 수정자       수정내용
 	------------ ---------  ------------------
 	2021. 4. 26. 곽소언       최초작성
-	2021. 4. 27. 곽소언       수정1
+	2021. 4. 27. 곽소언       수정 
+	2021. 4. 28. 곽소언       수정_댓글
+	2021. 4. 29. 곽소언       수정
 	
 	author eclass 개발팀
 	since 2020/11/23
@@ -51,11 +53,14 @@
 <body>
 	${vo }
 	${image }
+	
+	<!-- header -->
+		<%@ include file="../cmn/header.jsp"%>
+	<!--//header -->
+	
 	<!-- div container -->
 	<div class="wrap container">
-	   <!-- header -->
-		 <jsp:include page="../cmn/header.jsp"></jsp:include> 
-	   <!--//header -->
+
 	   
 	   	 <!-- 제목 -->
 	 	<div class="page-header">
@@ -356,6 +361,9 @@
 				html +="</tr>";
 				html +="<tr>";
 				html +="	<td class='text-center'>"+data.imgId+"</td>";
+				html +="</tr>";
+				html +="<tr>";
+				html +="	<td class='text-center'>"+data.contents+"</td>";
 				html +="</tr>";
 				
 				//tbody에 데이터 추가
