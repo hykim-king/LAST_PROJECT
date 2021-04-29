@@ -52,18 +52,36 @@ public class ScrapDaoImpl extends DTO {
 	
 	public ScrapDaoImpl() {}
 	
+	public int count(DTO dto) {
+		int cnt = 0;
+		
+		Scrap scrap = (Scrap) dto;
+		String statement = this.NAMESPACE + ".count";
+
+		LOG.debug("=param=\n" + scrap);
+		LOG.debug("=============================");
+		cnt = this.sqlSessionTemplate.selectOne(statement, scrap);
+
+		LOG.debug("=============================");
+		LOG.debug("=cnt=" + cnt);
+		LOG.debug("=============================");
+
+		return cnt;
+	}
+	
+	
 	public int scrapCheck(DTO dto) {
 		int flag = 0;
 		
 		Scrap scrap = (Scrap) dto;
 		String statement = this.NAMESPACE+".idCheck";
 		LOG.debug("=======================================");
-		LOG.debug("====user=====" + scrap);
+		LOG.debug("====scrap=====" + scrap);
 		LOG.debug("====statement=====" + statement);
 		LOG.debug("=======================================");
 		
 		flag=this.sqlSessionTemplate.selectOne(statement, scrap);
-		LOG.debug("flag"+flag);
+		LOG.debug("flag:"+flag);
 		return flag;
 	}
 
@@ -96,16 +114,16 @@ public class ScrapDaoImpl extends DTO {
 
 	public int doInsert(DTO dto) throws SQLException {
 		int flag = 0;
-		Scrap user = (Scrap) dto;
+		Scrap scrap = (Scrap) dto;
 		
 		//mybatis sql: NAMESPACE+.+id;
 		String statement = this.NAMESPACE+".doInsert";
 		LOG.debug("=============================");
-		LOG.debug("=user="+user);
+		LOG.debug("=scrap="+scrap);
 		LOG.debug("=statement="+statement);
 		LOG.debug("=============================");	
 		
-		flag = sqlSessionTemplate.insert(statement, user);
+		flag = sqlSessionTemplate.insert(statement, scrap);
 		
 		return flag;
 	}

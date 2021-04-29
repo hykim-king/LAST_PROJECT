@@ -55,5 +55,18 @@ public class ScrapServiceImpl {
 		}
 		return flag;
 	}
+	
+	
+	public boolean  isExist(DTO dto) throws SQLException {
+		Scrap scrap = (Scrap) dto;
+
+		if(scrapDao.scrapCheck(scrap)>0) {
+			return true;
+		}else {
+			return false;
+		}
+
+	}
+	
 
 }
