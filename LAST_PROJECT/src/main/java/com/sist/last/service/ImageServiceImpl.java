@@ -9,7 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sist.last.cmn.DTO;
+import com.sist.last.cmn.StringUtil;
 import com.sist.last.dao.ImageDaoImpl;
+import com.sist.last.dao.QnaDaoImpl;
+import com.sist.last.vo.Image;
+import com.sist.last.vo.Qna;
 
 @Service
 public class ImageServiceImpl implements ImageService {
@@ -18,6 +22,9 @@ public class ImageServiceImpl implements ImageService {
 
 	@Autowired
 	private ImageDaoImpl imageDao;
+	
+	@Autowired
+	private QnaDaoImpl qnaDao;
 
 	public ImageServiceImpl() {
 
@@ -55,6 +62,22 @@ public class ImageServiceImpl implements ImageService {
 	public int doInsert(DTO dto) throws SQLException {
 
 		return this.imageDao.doInsert(dto);
+	}
+
+	@Override
+	public int doInsertQnaImg(List<Image> imageList, int imgNum) throws SQLException {
+
+		int flag = 0;
+		int cnt = 0;
+		
+		if (imageList.size() > 0) {
+			
+			
+
+
+		}
+
+		return flag;
 	}
 
 }

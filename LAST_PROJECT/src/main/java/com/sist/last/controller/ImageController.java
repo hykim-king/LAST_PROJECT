@@ -1,6 +1,8 @@
 package com.sist.last.controller;
 
+import java.io.File;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,9 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.gson.Gson;
 import com.sist.last.cmn.Message;
+import com.sist.last.cmn.StringUtil;
 import com.sist.last.service.ImageService;
 import com.sist.last.vo.Image;
 
@@ -28,6 +33,60 @@ public class ImageController {
 	public ImageController() {
 
 	}
+	
+	@RequestMapping(value = "image/do_upload.do", method = RequestMethod.POST
+			,produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String doUpload(MultipartHttpServletRequest request) throws Exception {
+		
+		List<MultipartFile> fileList = request.getFiles("file_list");
+		
+		Gson gson = new Gson();
+		
+		//파일이 업로드 될 경로
+		String path = "C:\\Users\\SIST\\git\\LAST_PROJECT\\LAST_PROJECT\\src\\main\\webapp\\resources";
+		String simplePath = "/resources/img/";
+		
+		
+		//위에서 설정한 경로의 폴더가 없을 경우 생성
+		File dir = new File(path);
+		if(!dir.exists()) {
+			dir.mkdir();
+		}
+		
+		
+		List<Image> imageList = new ArrayList<Image>();
+		
+		for(MultipartFile file : fileList){
+			if(!file.isEmpty()) {
+				String orgName = file.getOriginalFilename();
+				String saveName = StringUtil.getPK("yyyyMMddHHmmss");
+				long fileSize = (long) file.getSize();
+				String fileExt = orgName.substring(orgName.lastIndexOf("."));
+				
+				Image image = new Image();
+				image.setOrgName(orgName);
+				image.setSaveName(saveName);
+				image.setSavePath(simplePath);
+				image.setImgSize(fileSize);
+				image.setImgExt(fileExt);
+				
+				imageList.add(image);
+				
+				file.transferTo(new File(path, saveName));
+			}
+		}
+		
+		
+		String jsonStr = gson.toJson(imageList.toArray());
+		
+		LOG.debug(jsonStr);
+		
+		return jsonStr;
+		
+	}
+	
+	
 
 	@RequestMapping(value = "image/do_retrieve.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
