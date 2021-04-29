@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,13 +16,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sist.last.cmn.StringUtil;
+import com.sist.last.service.ImageServiceImpl;
 import com.sist.last.service.QnaService;
 import com.sist.last.vo.Image;
+import com.sist.last.vo.Qna;
 
 @Controller
 public class image {
@@ -28,14 +33,80 @@ public class image {
 	final Logger LOG = LoggerFactory.getLogger(image.class);
 
 	// 절대 경로 상수로 올리기
+	// qna
 	final String UPLOAD_IMG_DIR = "C:\\Users\\SIST\\git\\LAST_PROJECT\\LAST_PROJECT\\src\\main\\webapp\\resources\\img";
-
+	
 	@Autowired
 	QnaService qnaService;
 
 	public image() {
 
 	}
+	
+//	@RequestMapping(value = "qna/qna_upload.do", method = RequestMethod.POST)
+//	public List<Map<String, Object>> test(Qna qna, Image image, 
+//			MultipartHttpServletRequest mpRequest) throws Exception{
+//		
+//		Iterator<String> iterator = mpRequest.getFileNames();
+//		
+//		MultipartFile mFile = null;
+//		String orgName = null;
+//		String ext = null;
+//		String saveName = null;
+//		String imgId = null;
+//		
+//		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+//		Map<String, Object> listMap = null;
+//		
+//		int imgNum = imageService.doInsertQnaImg(qna, image);
+//		
+//		// 년도
+//		String year = StringUtil.formatDate("yyyy");
+//		// 월
+//		String month = StringUtil.formatDate("MM");
+//		LOG.debug("year: " + year);
+//		LOG.debug("month: " + month);
+//
+//		String datePath = UPLOAD_IMG_DIR + File.separator + year + File.separator + month;
+//		LOG.debug("datePath: " + datePath);
+//		
+//		File file = new File(UPLOAD_IMG_DIR);
+//		if(file.exists() == false) {
+//			file.mkdirs();
+//		}
+//		
+//		while(iterator.hasNext()) {
+//			mFile = mpRequest.getFile(iterator.next());
+//			if(mFile.isEmpty() == false) {
+//				orgName = mFile.getOriginalFilename();
+//				ext = orgName.substring(orgName.lastIndexOf("."));
+//				saveName += "." + ext;
+//				imgId = StringUtil.getPK("yyyyMMddHHmmss");
+//				
+//				file = new File(UPLOAD_IMG_DIR + saveName);
+//				mFile.transferTo(file);
+//				listMap = new HashMap<String, Object>();
+//				listMap.put("img_id", imgId);
+//				listMap.put("img_num", imgNum);
+//				listMap.put("org_name", orgName);
+//				listMap.put("save_name", saveName);
+//				listMap.put("img_size", mFile.getSize());
+//				listMap.put("save_path", datePath);
+//				listMap.put("ext", ext);
+//				list.add(listMap);
+//			}
+//		}
+//		return list;
+//	}
+	
+	// 화면 띄우기
+	@RequestMapping(value = "store/product_regist.do")
+	public String storeView(Model model) throws SQLException {
+
+		LOG.debug("registView");
+
+		return "regist/product_upload";
+	}		
 	
 	// 화면 띄우기
 	@RequestMapping(value = "houses/houses_regist.do")
@@ -46,6 +117,19 @@ public class image {
 		return "regist/houses_upload";
 	}	
 	
+	@RequestMapping(value = "houses/houses_upload.do", method = RequestMethod.POST)
+	public String housesUpload(MultipartHttpServletRequest mReg, ModelAndView modelAndView)
+			throws IllegalStateException, IOException {
+		
+		LOG.debug("------------------------");
+		LOG.debug("-----housesUpload()-----");
+		LOG.debug("------------------------");	
+	
+
+		
+		return "houses/Community_List";
+		
+	}
 	
 
 	// 화면 띄우기
@@ -101,6 +185,7 @@ public class image {
 
 		while (files.hasNext()) {
 			Image image = new Image();
+			
 			String upFileNm = files.next();
 			LOG.debug("upFileNm: " + upFileNm);
 
@@ -155,7 +240,7 @@ public class image {
 		} // --while
 
 		modelAndView.addObject("list", list);
-		modelAndView.setViewName("regist/upload");
+		modelAndView.setViewName("regist/qna_upload");
 
 		return "qna/qna_list";
 
