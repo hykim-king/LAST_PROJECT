@@ -17,6 +17,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="../cmn/common.jsp" %>
+<%@ include file="../cmn/header.jsp" %>
 <c:set var="hContext" value="${pageContext.request.contextPath }"></c:set>
 <!DOCTYPE html>
 <html>
@@ -47,13 +49,8 @@
 	<!-- div container -->
 	<div class="wrap container">
 	
+	  <div class="container">
 	  <div class="row">
-	  	<!-- form --> 
-	    <form action="" class="form-horizontal">
-		    <!--qnaSeq  -->
-			<input type="text" class="form-control" id="qnaSeq" name="qnaSeq">
-		 </form>
-	    <!--// form --> 
 			<!-- 단건조회 데이터 -->	
 			<div class="row" id="qnaSelectOne">
 
@@ -69,6 +66,7 @@
 	              </div>
 	            </div>
 	    <!-- //tag --> 
+	    </div><!--// Container -->
 	    
 	          
 	    <!--  댓글  --><!--레이아웃 참고사이트 : https://private.tistory.com/65 -->
