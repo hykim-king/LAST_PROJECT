@@ -35,14 +35,6 @@ public class basket {
 		return "mypage/Member_MyPage";
 	}
 	
-	//http://localhost:8080/last/mypage/mypage.do
-	@RequestMapping(value = "mypage/mypage.do" ,method= RequestMethod.GET)
-	public String profile(Model model) throws SQLException {
-
-		return "mypage/mypage";
-	}
-	
-	
 	/**
 	 * 헤더
 	 * @param model
