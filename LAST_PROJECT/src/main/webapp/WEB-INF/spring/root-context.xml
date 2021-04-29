@@ -65,10 +65,10 @@
 	<!--1. PasswordAuthentication -->
 	<bean id="passwordAuth" class="javax.mail.PasswordAuthentication">
 		<constructor-arg index="0">
-			<value>morningstar_0921@naver.com</value>
+			<value></value>
 		</constructor-arg>
 		<constructor-arg index="1">
-			<value>whdeoismylove</value>
+			<value></value>
 		</constructor-arg>
 	</bean>
 	
