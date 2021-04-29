@@ -1,8 +1,10 @@
 package com.sist.last.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,17 +16,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.sist.last.cmn.Message;
 import com.sist.last.cmn.StringUtil;
 import com.sist.last.service.ImageService;
+import com.sist.last.vo.Grade;
 import com.sist.last.vo.Image;
+import com.sist.last.vo.Member;
 
 @Controller
 public class ImageController {
 
 	final Logger LOG = LoggerFactory.getLogger(ImageController.class);
+	final String UPLOAD_MEMBER_IMG_DIR = "C:\\20201123_eClass\\04_SPRING\\workspace\\LAST_PAYMENT\\src\\main\\webapp\\resources\\img\\member";
 	final String VIEW_NAME = "image/image_mng";
 
 	@Autowired
@@ -86,6 +92,127 @@ public class ImageController {
 		
 	}
 	
+	@RequestMapping(value = "image/member_upload.do", method = RequestMethod.POST)
+	public ModelAndView imageInsert(MultipartHttpServletRequest mReg,ModelAndView modelAndView) throws IllegalStateException, IOException, SQLException {
+		LOG.debug("======================");
+		LOG.debug("=upload()=");
+		LOG.debug("======================");
+		
+		File imgRootDir = new File(UPLOAD_MEMBER_IMG_DIR);
+		if(imgRootDir.isDirectory()==false) {
+			boolean flag = imgRootDir.mkdir();
+			LOG.debug("=upload() 생성여부="+flag);  
+		}
+		//년도
+		String year = StringUtil.formatDate("yyyy");
+		//월
+		String month = StringUtil.formatDate("MM");
+		LOG.debug("=year="+year);
+		LOG.debug("=month="+month);
+		
+		String datePath = UPLOAD_MEMBER_IMG_DIR+File.separator+year+File.separator+month;;
+		LOG.debug("=datePath="+datePath);
+		File dateImgPath = new File(datePath);
+		if(dateImgPath.isDirectory()==false) {
+			boolean flag =dateImgPath.mkdirs();
+			LOG.debug("=upload() dateFilePath="+flag);  
+		}
+		//--2021/04
+		
+		Image image = new Image();
+		
+		Iterator<String> images = mReg.getFileNames();
+		while(images.hasNext()) {
+			
+			String upImageNm = images.next();
+			LOG.debug("=upImageNm="+upImageNm);
+			
+			//파일정보
+			MultipartFile mFile = mReg.getFile(upImageNm);
+			
+			//원본파일
+			String orgName = mFile.getOriginalFilename();
+			LOG.debug("=orgName="+orgName);
+			
+			if(null == orgName || "".equals(orgName))continue;
+			
+			image.setOrgName(orgName);
+			image.setImgSize(mFile.getSize()); //bytes
+			
+			//202104231424+uuid
+			//2021042314241445c634a525064f4faba151d7bd8d365de7
+			String saveName = StringUtil.getPK("yyyyMMddHH24mmss");
+			LOG.debug("=saveName="+saveName);
+			
+			String ext = "";
+			if(orgName.indexOf(".")>-1) {
+				ext = orgName.substring(orgName.indexOf(".")+1);
+				saveName+="."+ext;
+			}
+			LOG.debug("=ext="+ext);
+			LOG.debug("=saveName+ext="+saveName);
+			image.setSaveName(saveName);
+			image.setImgExt(ext);
+			
+			LOG.debug("=image="+image);
+			
+			//Server에 저장: 저장 파일명으로 저장
+			File renameImg = new File(datePath, image.getSaveName());
+			LOG.debug("=renameFile.getAbsolutePath()="+renameImg.getAbsolutePath());
+			datePath = datePath.replaceAll("\\\\", "/");
+			image.setSavePath(datePath);
+			//fileVO.setSaveFileNm(renameFile.getAbsolutePath());
+			
+			LOG.debug("=image="+image);
+			
+			//file server로 저장
+			mFile.transferTo(new File(image.getSavePath()+File.separator+
+					                  image.getSaveName()));
+			LOG.debug("mFile:"+mFile);
+			
+			int idx = datePath.indexOf("/resources");
+			datePath = datePath.substring(idx);
+			image.setSavePath(datePath);
+			LOG.debug("idx:"+idx);
+			LOG.debug("datePath:"+datePath);
+			
+		}//--while
+		
+		String savePath;
+		String saveName;
+		
+		if(null==image.getSavePath() || image.getSavePath().equals("")) {
+			savePath = mReg.getParameter("savePath");
+			saveName = mReg.getParameter("saveName");
+		} else {
+			savePath = image.getSavePath();
+			saveName = image.getSaveName();
+		}
+		
+		String imgId = mReg.getParameter("imgId");
+		String passwd = mReg.getParameter("passwd");
+		String nickname = mReg.getParameter("nickname");
+		String introduce = mReg.getParameter("introduce");
+		String grade = mReg.getParameter("grade");
+		int div = Integer.parseInt(mReg.getParameter("div"));
+		int scrap = Integer.parseInt(mReg.getParameter("scrap"));
+		int login = Integer.parseInt(mReg.getParameter("login"));
+		String regDt = mReg.getParameter("regDt");
+		String modId = mReg.getParameter("modId");
+		String memberId = mReg.getParameter("memberId");
+		
+		Member member = new Member(memberId, imgId, savePath, saveName ,passwd, nickname, introduce, Grade.valueOf(grade), div, scrap, login, regDt, modId, modId);
+		LOG.debug("=passwd="+passwd);
+		
+		int flag = this.imageService.doInsertImgMember(image, member);
+		LOG.debug("=flag="+flag);
+		
+		modelAndView.addObject("image",image);
+		modelAndView.addObject("member",member);
+		modelAndView.setViewName("login/Member_Edit");
+		
+		return modelAndView;
+	}
 	
 
 	@RequestMapping(value = "image/do_retrieve.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

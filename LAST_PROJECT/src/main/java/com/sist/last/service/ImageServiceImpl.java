@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.StringUtil;
 import com.sist.last.dao.ImageDaoImpl;
+import com.sist.last.dao.MemberDaoImpl;
 import com.sist.last.dao.QnaDaoImpl;
 import com.sist.last.vo.Image;
+import com.sist.last.vo.Member;
 import com.sist.last.vo.Qna;
 
 @Service
@@ -20,6 +22,9 @@ public class ImageServiceImpl implements ImageService {
 
 	final Logger LOG = LoggerFactory.getLogger(ImageServiceImpl.class);
 
+	@Autowired
+	private MemberDaoImpl memberDao;
+	
 	@Autowired
 	private ImageDaoImpl imageDao;
 	
@@ -77,6 +82,39 @@ public class ImageServiceImpl implements ImageService {
 
 		}
 
+		return flag;
+	}
+
+	@Override
+	public int doInsertImgMember(DTO image, DTO member) throws SQLException {
+		int flag = 0;
+		Image imageVO = (Image) image;
+		Member memberVO = (Member) member;
+		
+		String pk = StringUtil.getPK("yyyyMMddHH24mmss");
+
+		LOG.debug("=============================");
+		LOG.debug("=imageVO="+imageVO);
+		LOG.debug("=memberVO="+memberVO);
+		LOG.debug("=============================");
+		
+		if(null == imageVO.getOrgName() || imageVO.getOrgName().equals("")) {
+			flag = this.memberDao.doUpdate(memberVO);
+		} else {
+			imageVO.setImgId(pk);
+			imageVO.setImgNum(1);
+			memberVO.setImgId(pk);
+			
+			LOG.debug("=============================");
+			LOG.debug("=imageVO="+imageVO);
+			LOG.debug("=memberVO="+memberVO);
+			LOG.debug("=============================");
+			
+			flag = this.memberDao.doUpdate(memberVO);
+			LOG.debug("=flag="+flag);
+			flag += this.imageDao.doInsert(imageVO);
+		}
+				
 		return flag;
 	}
 

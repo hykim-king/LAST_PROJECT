@@ -63,7 +63,7 @@
 	    
 	    <!-- <img src="/resources/img/member/2021/04/20210427162417078e7af8fa3ee340c18a0464b13eea75e0.png" /> -->
 	    <!-- form -->
-	    <form action="${hContext}/image/image_upload.do" method="post" enctype="multipart/form-data"  
+	    <form action="${hContext}/image/member_upload.do" method="post" enctype="multipart/form-data"  
 	    class="form-horizontal" id="doUpdateFrm">
 	      <!-- hidden -->
 	      <input type="hidden" class="form-control" value="1" id="div" name="div"/>

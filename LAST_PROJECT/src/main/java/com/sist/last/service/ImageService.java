@@ -9,6 +9,15 @@ import com.sist.last.vo.Image;
 public interface ImageService {
 	
 	/**
+	 * 회원정보수정(이미지업로드)
+	 * @param image
+	 * @param member
+	 * @return
+	 * @throws SQLException
+	 */
+	int doInsertImgMember(DTO image, DTO member) throws SQLException;
+	
+	/**
 	 * img num 
 	 * @param qna
 	 * @param image
