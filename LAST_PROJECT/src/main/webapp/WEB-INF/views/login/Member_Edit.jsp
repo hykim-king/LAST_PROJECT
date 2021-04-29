@@ -169,7 +169,7 @@
 			e.preventDefault();
 			
 			doUpdateSession();
-			window.location.href = "${hContext}/main/main_view.do";
+			window.location.href = "${hContext}/houses/home_view.do";
 		});
 		
     	function doUpdateSession(){
