@@ -17,6 +17,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../cmn/common.jsp" %>
+<%@ include file="../cmn/header.jsp"%>
 <c:set var="hContext" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
