@@ -53,7 +53,7 @@
 	<script src="${hContext}/resources/js/jquery.bootpag.js"> </script>
 	
   <!-- Bootstrap core CSS -->
-  <link href="${hContext}/resources/lhc/bootstrap_lhc.css" rel="stylesheet">
+<link href="${hContext}/resources/lhc/bootstrap_lhc.css" rel="stylesheet"> 
 
   <!-- Custom styles for this template -->
   <link href="${hContext}/resources/lhc/shop-homepage.css" rel="stylesheet">
@@ -143,7 +143,7 @@
 			              	<small class="gotta" style="display:none;">${vo.housesSeq } </small>
 				            </div>
 				            <div id="rowPopularCardClick" class="text-center">
-			                <a href="${hContext}/houses/test_view.do?housesSeq=${vo.housesSeq}">
+			                <a href="${hContext}/houses/houses_detail.do?housesSeq=${vo.housesSeq}">
 			                <h4 class="text-muted">
 			                  ${vo.title }
 			                </h4>
@@ -414,7 +414,7 @@
 		
  
 			
-			window.location.href = "${hContext}/houses/houses/houses_detail.do?housesSeq="+housesSeq;
+			window.location.href = "${hContext}/houses/houses_detail.do?housesSeq="+housesSeq;
 	
 			 
 		}); 

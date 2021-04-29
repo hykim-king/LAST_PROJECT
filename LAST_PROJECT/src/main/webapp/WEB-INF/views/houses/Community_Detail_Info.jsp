@@ -49,7 +49,8 @@
     <script src="${hContext}/resources/js/jquery.bootpag.js"></script>  
 </head>
 <body>
-
+	${vo }
+	${image }
 	<!-- div container -->
 	<div class="wrap container">
 	   <!-- header -->
