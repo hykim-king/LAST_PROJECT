@@ -58,7 +58,7 @@
 		<form id="regFrm" action="${hContext}/qna/qna_upload.do" method="POST" enctype="multipart/form-data" class="form-horizontal">
 			<input type="hidden" class="form-control" id="qnaSeq" name="qnaSeq" value="">
 			<input type="hidden" class="form-control" id="memberId" name="memberId" value="tjdus">
-			<input type="hidden" class="form-control" id="imgId" name="imgId" value="1">
+			<input type="hidden" class="form-control" id="imgNum" name="imgNum" value="3">
 			<input type="hidden" class="form-control" id="regDt" name="regDt" value="2021/04/28">			
 						
 			<div class="form-group">
@@ -103,76 +103,114 @@
 
 
 	<script type="text/javascript">
+	
 		//jquery 객채생성이 완료
 		$(document).ready(function() {
 			console.log("document 최초수행");
 
 		});//--document ready
 		
-		$("#doInsert").on("click", function(e){
+		function imageUpload(formData) {
+
+		    var form = jQuery("#regFrm")[0];
+		    var formData = new FormData(form);
+
+		    jQuery.ajax({
+		          url : "${hContext}/qna/qna_upload.do", 
+		          type : "POST", 
+		          processData : false, 
+		          contentType : false, 
+		          data : formData, 
+		          success:function(map) {
+		        }
+		    });
+		}
+
+ 		$("#doInsert").on("click", function(e){
 			console.log("doInsert");
+			e.preventDefault();
+			imageUpload(formData);
+			
+			if(eUtil.ISEmpty($("#title").val()) == true){
+				alert("제목을 입력하세요.");
+				$("#title").focus();
+				return;
+			}			
+			
+			if(eUtil.ISEmpty($("#contents").val()) == true){
+				alert("내용을 입력하세요.");
+				$("#contents").focus();
+				return;
+			}	
+			
+			if(eUtil.ISEmpty($("#tag").val()) == true){
+				alert("태그를 입력하세요.");
+				$("#tag").focus();
+				return;
+			}				
+			
+			if(confirm("등록하시겠습니까?")==false)return;
 			
 			$.ajax({
 		  		type: "POST",
 		  		url:"${hContext}/qna/do_insert.do",
-		  		asyn:"true",
+		  		asyn:"false",
 		  		dataType:"html",
 		  		data:{
-		  			qnaSeq: $("#qnaSeq").val(),
-		  			memberId: $("#memberId").val(),
-		  			imgId: $("#imgId").val(),
-		  			title: $("#title").val(),
-		  			contents: $("#contents").val(),
-		  			tag: $("#tag").val(),
-		  			regDt: $("#regDt").val()
-		  		},
-		  		
-		  		success:function(data){//통신 성공
-		      		var message = JSON.parse(data);
-		  			console.log(message.msgContents);
-		  			
-		  			//상품 이미지 등록
-		  			$.ajax({
-		  		  		type: "POST",
-		  		  		url:"${hContext}/qna/qna_upload.do",
-		  		  		asyn:"true",
-		  		  		processData: "false",
-		  		  		contentType: "false",
+			  			qnaSeq: $("#qnaSeq").val(),
+			  			memberId: $("#memberId").val(),
+			  			imgId: $("#imgId").val(),
+			  			title: $("#title").val(),
+			  			contents: $("#contents").val(),
+			  			tag: $("#tag").val(),
+			  			regDt: $("#regDt").val()
+			  		},
+			  		
+			  		success : function(data) {//통신 성공
+						var jsonObj = JSON.parse(data)
+						console.log("success data: " + data);
+			  		
+						$.ajax({
+							type: "POST",
+			  		  		url:"${hContext}/image/do_insert.do",
+			  		  		asyn:"false",
+			  		  		dataType:"html",
+			  		  		data:{
+					  		  		imgId: $("#imgId").val(),
+					  		  		imgNum: $("#imgNum").val(),
+						  		  	orgName: $("#orgName").val(),
+							  		savePath: $("#savePath").val(),
+							  		imgSize: $("#imgSize").val(),
+							  		imgExt: $("#imgExt").val(),		  		  						  		  		
+					  		  	},
+				 		  		success:function(data){//통신 성공
+				  		      		var message = JSON.parse(data);
+				  		  			console.log(message.msgContents);
 
-		  		  		dataType:"html",
-		  		  		data:{
-		  		  		imgId: $("#imgId").val(),
-		  		  		imgNum: $("#imgNum").val(),
-			  		  	orgName: $("#orgName").val(),
-				  		savePath: $("#savePath").val(),
-				  		imgSize: $("#imgSize").val(),
-				  		imgExt: $("#imgExt").val(),		  		  		
-		  		  		
-		  		  		},
-		  		  		success:function(data){//통신 성공
-		  		      		var message = JSON.parse(data);
-		  		  			console.log(message.msgContents);
-		  		  			alert("상품 등록이 완료되었습니다.");
-		  		  			window.location.href = "${hContext}/qna/qna_list.do";
-		  		      	},
-		  		      	error:function(data){//실패시 처리
-		  		      		console.log("error:"+data);
-		  		      	},
-		  		      	complete:function(data){//성공/실패와 관계없이 수행!
-		  		      		console.log("complete:"+data);
-		  		      	}
-		  		  	});
-		  			
-		      	},
-		      	error:function(data){//실패시 처리
-		      		console.log("error:"+data);
-		      	},
-		      	complete:function(data){//성공/실패와 관계없이 수행!
-		      		console.log("complete:"+data);
-		      	}
-		  	});
-		  	
-		  });	
+				  		  			window.location.href = "${hContext}/qna/qna_list.do";
+				  		      	},
+				  		      	error:function(data){//실패시 처리
+				  		      		console.log("error:"+data);
+				  		      	},
+				  		      	complete:function(data){//성공/실패와 관계없이 수행!
+				  		      		console.log("complete:"+data);
+				  		      	}
+				  		  	});
+				  			
+				      	},
+				      	error:function(data){//실패시 처리
+				      		console.log("error:"+data);
+				      	},
+				      	complete:function(data){//성공/실패와 관계없이 수행!
+				      		console.log("complete:"+data);
+				      	}
+				  	});
+
+					
+					
+			});
+				
+
 		
 	</script>
 

@@ -4,8 +4,18 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.sist.last.cmn.DTO;
+import com.sist.last.vo.Image;
 
 public interface ImageService {
+	
+	/**
+	 * img num 
+	 * @param qna
+	 * @param image
+	 * @return
+	 * @throws SQLException
+	 */
+	public int doInsertQnaImg(List<Image> imageList, int imgNum) throws SQLException;
 
 	/**
 	 * 목록조회
