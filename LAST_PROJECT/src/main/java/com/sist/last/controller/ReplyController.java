@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 
 import com.sist.last.cmn.Message;
-import com.sist.last.cmn.Search;
+import com.sist.last.cmn.SearchReview;
 import com.sist.last.cmn.StringUtil;
 import com.sist.last.service.ReplyService;
 import com.sist.last.service.ReplyServiceImpl;
@@ -40,12 +40,12 @@ public class ReplyController {
 	@RequestMapping(value = "reply/do_retrieve.do", method = RequestMethod.GET
 			,produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String doRetrieve(Search search) throws SQLException {
+	public String doRetrieve(SearchReview search) throws SQLException {
 		//NVL처리
-		//검색구분
-		search.setSearchDiv(StringUtil.nvl(search.getSearchDiv(), ""));
-		//검색어
-		search.setSearchWord(StringUtil.nvl(search.getSearchWord(), ""));
+//		//검색구분
+//		search.setSearchDiv(StringUtil.nvl(search.getSearchDiv(), ""));
+//		//검색어
+//		search.setSearchWord(StringUtil.nvl(search.getSearchWord(), ""));
 		
 		//페이지 넘
 		if(search.getPageNum()==0) {
@@ -56,6 +56,9 @@ public class ReplyController {
 		if(search.getPageSize()==0) {
 			search.setPageSize(10);
 		}
+		
+		//reviewFk
+		search.setReviewFk(StringUtil.nvl(search.getReviewFk(), ""));
 		
 		List<Reply> list = (List<Reply>) this.replyService.doRetrieve(search);
 		
