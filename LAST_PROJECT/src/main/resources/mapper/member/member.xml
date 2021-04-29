@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.last.member">
+	
+	<!-- passwordCheck -->
+	<select id="passwordCheck" parameterType="Member" resultType="int">
+		SELECT COUNT(*) cnt
+		FROM member
+		WHERE member_id = #{memberId}
+		AND passwd = #{passwd}
+	</select>
+	
+	<!-- nickCheck -->
+	<select id="nickCheck" parameterType="Member" resultType="int">
+		SELECT COUNT(*) cnt
+		FROM member
+		WHERE nickname = #{nickname}
+	</select>
+	
+	<!-- idCheck -->
+	<select id="idCheck" parameterType="Member" resultType="int">
+		SELECT COUNT(*) cnt
+		FROM member
+		WHERE member_id = #{memberId}
+	</select>
+	
+	<!-- getAll -->
+	<select id="getAll" parameterType="Member" resultMap="memberResult">
+		SELECT                                           
+		    member_id,                                   
+		    img_id,                                      
+		    passwd,                                      
+		    nickname,                                    
+		    introduce,                                   
+		    grade,                                       
+		    div,                                         
+			scrap,             							 
+			login,             							 
+		    TO_CHAR(reg_dt,'YYYY/MM/DD HH24MISS') reg_dt,
+		    mod_id,                                      
+		    TO_CHAR(mod_dt,'YYYY/MM/DD HH24MISS') mod_dt 
+		FROM                                             
+			member                                       
+		WHERE	member_id LIKE #{memberId} || '%'                  
+		ORDER BY member_id                               
+	</select>
+	
+	<resultMap type="Member" id="memberResult">
+		<id property="memberId" column="member_id"/>
+		<result property="imgId" column="img_id"/>
+		<result property="savePath" column="save_path"/>
+		<result property="saveName" column="save_name"/>
+		<result property="passwd" column="passwd"/>
+		<result property="nickname" column="nickname"/>
+		<result property="introduce" column="introduce"/>
+		<result property="intGrade" column="grade"/>
+		<result property="div" column="div"/>
+		<result property="scrap" column="scrap"/>
+		<result property="login" column="login"/>
+		<result property="regDt" column="reg_dt"/>
+		<result property="modId" column="mod_id"/>
+		<result property="modDt" column="mod_dt"/>
+	</resultMap>
+	
+	<!-- doSelectOne -->
+	<select id="doSelectOne" parameterType="Member" resultMap="memberResult">
+		SELECT                                           
+		    t1.member_id,                                   
+		    t2.img_id,                                      
+		    t2.save_path,
+		    t2.save_name,
+		    t1.passwd,                                      
+		    t1.nickname,                                    
+		    t1.introduce,                                   
+		    t1.grade,                                       
+		    t1.div,                                         
+			t1.scrap,             							 
+			t1.login,             							 
+		    TO_CHAR(t1.reg_dt,'YYYY/MM/DD') reg_dt,
+		    t1.mod_id,                                      
+		    TO_CHAR(t1.mod_dt,'YYYY/MM/DD') mod_dt 
+		FROM                                             
+			member t1 LEFT OUTER JOIN image t2                                      
+		    ON t1.img_id = t2.img_id
+		WHERE t1.member_id = #{memberId}                      
+	</select>
+	
+	<!-- update -->
+	<update id="doUpdate" parameterType="Member">
+		UPDATE member        
+		SET                 
+		    img_id = #{imgId}, 
+			passwd = #{passwd},      
+			nickname = #{nickname},    
+			introduce = #{introduce},   
+			grade = #{intGrade},       
+			div = #{div},         
+			scrap = #{scrap},       
+			login = #{login},
+			reg_dt = TO_DATE('${regDt}','YYYY/MM/DD'),
+			mod_id = #{modId},      
+			mod_dt = SYSDATE
+		WHERE member_id = #{memberId}  
+	</update>
+	
+	<!-- delete -->
+	<delete id="doDelete" parameterType="Member">
+		DELETE FROM member 
+		WHERE member_id = #{memberId}
+	</delete>
+	
+	<!-- insert -->
+	<insert id="doInsert" parameterType="Member">
+		INSERT INTO member (
+		    member_id,      
+		    img_id,         
+		    passwd,         
+		    nickname,       
+		    introduce,      
+		    grade,          
+		    div,            
+			scrap,          
+			login,          
+		    reg_dt,         
+		    mod_id,         
+		    mod_dt          
+		) VALUES (          
+		    #{memberId},              
+		    #{imgId},              
+		    #{passwd},              
+		    #{nickname},              
+		    #{introduce},              
+		    #{intGrade},              
+		    #{div},              
+		    #{scrap},              
+		    #{login},              
+		    SYSDATE,        
+		    #{modId},              
+		    SYSDATE         
+		)                   
+	</insert>
+
+
+</mapper>

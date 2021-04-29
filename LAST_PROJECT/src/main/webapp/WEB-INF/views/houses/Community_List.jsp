@@ -20,6 +20,7 @@
 <!-- 국제화 -->
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../cmn/common.jsp" %>
+<%@ include file="../cmn/header.jsp"%>
 <c:set var="hContext" value="${pageContext.request.contextPath }" ></c:set>
 <!DOCTYPE html>
 <html lang="ko">

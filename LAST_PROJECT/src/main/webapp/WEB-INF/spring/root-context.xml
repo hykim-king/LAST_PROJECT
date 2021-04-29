@@ -39,8 +39,47 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 
-
-
+	<!-- aspectj Transaction처리 -->
+	<!-- PlatformTransactionManager 구현체: DataSourceTransactionManager -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- do로 시작하는 모든 메소드는 read-only=true transaction 관리 대상에서 제외 -->
+			<tx:method name="do*" read-only="true" />
+			<!-- do로 시작하는 모든 메소드는 read-only=false transaction 관리 대상 -->
+			<tx:method name="up*" read-only="false" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- 트랜잭션 advisor -->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.sist.list..*ServiceImpl.*(..))" id="txPointcut" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
+	</aop:config>
+	<!--// aspectj Transaction처리 -->
+	
+	<!-- email set -->
+	<!--1. PasswordAuthentication -->
+	<bean id="passwordAuth" class="javax.mail.PasswordAuthentication">
+		<constructor-arg index="0">
+			<value>morningstar_0921@naver.com</value>
+		</constructor-arg>
+		<constructor-arg index="1">
+			<value>whdeoismylove</value>
+		</constructor-arg>
+	</bean>
+	
+	<!--2. Authenticator -->
+	<bean id="authenticator" class="javax.mail.Authenticator">
+		<lookup-method name="getPasswordAuthentication" 
+		   bean="passwordAuth"
+		 />
+	</bean>
+	
+	<!--3. Session: Authenticator+PasswordAuthentication  -->
 	<!-- private Session(Properties props, Authenticator authenticator) { -->
 	<bean id="emailSession" class="javax.mail.Session">
 		<constructor-arg index="0">
@@ -48,22 +87,17 @@
 				<prop key="mail.smtp.host">smtp.naver.com</prop>
 				<prop key="mail.smtp.port">465</prop>
 				<prop key="mail.smtp.auth">true</prop>
-
 				<prop key="mail.smtp.ssl.enable">true</prop>
-				<prop key="mail.smtp.ssl.trust">smtp.naver.com</prop>
+				<prop key="mail.smtp.ssl.trust">smtp.naver.com</prop>	
 			</props>
 		</constructor-arg>
 		<constructor-arg index="1" ref="authenticator" />
 	</bean>
-
-
-	<!--2. Authenticator: javax.mail와 연결 -->
-	<bean id="authenticator" class="javax.mail.Authenticator">
-		<lookup-method name="getPasswordAuthentication"
-			bean="passwordAuth" />
+	
+	<!--4. JavaMailSenderImpl: 전송가능한 mail설정 -->
+	<bean id="mailSenderImpl" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="session" ref="emailSession" />
 	</bean>
-
-
 
 	<!-- database.properties파일 read -->
 	<context:property-placeholder
@@ -89,17 +123,6 @@
 		<property name="removeAbandonedTimeout"
 			value="${jdbc.removeAbandonedTimeout}" />
 	</bean>
-
-
-
-
-	<bean id="memberDao" class="com.sist.last.dao.MemberDaoImpl">
-		<!-- setter를 통한 주입 -->
-		<!-- ref:param -->
-		<property name="dataSource" ref="dataSource"></property>
-	</bean>
-	<!-- //dao -->
-
 
 </beans>
 
