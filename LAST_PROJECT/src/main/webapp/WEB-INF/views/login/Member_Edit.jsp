@@ -160,7 +160,7 @@
     
 	  //jquery 객채생성이 완료
 		$(document).ready(function() {
-			console.log("1.document:최초수행!");
+			console.log("1.document:최초수행!");  
 		});//--document ready
 		
 		//수정
