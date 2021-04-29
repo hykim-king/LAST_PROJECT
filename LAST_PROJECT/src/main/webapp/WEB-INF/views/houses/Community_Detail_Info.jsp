@@ -156,6 +156,7 @@
 		console.log(insertData);
 	    commentInsert(insertData); //Insert 함수호출(아래)
 		commentList(1);
+		$("#content").val("");
 	});
 
 	//댓글 목록
