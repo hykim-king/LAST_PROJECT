@@ -53,7 +53,7 @@
 	<!-- div container -->
 	<div class="wrap container">
 	   <!-- header -->
-		<%-- <jsp:include page="/inc/header.jsp"></jsp:include> --%>
+		 <jsp:include page="../cmn/header.jsp"></jsp:include> 
 	   <!--//header -->
 	   
 	   	 <!-- 제목 -->
