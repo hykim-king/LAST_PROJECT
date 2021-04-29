@@ -62,7 +62,7 @@
 
 </head>
 <body>
-	${list }
+
 		
 	<!-- hidden -->
 		
@@ -186,7 +186,7 @@
     					console.log("eachscrapBtn"+scrapBtn);
     					html+="<div  class='col-lg-3 col-md-6 mb-4'>";
     					html+="	<div class='card h-100'>";
-    					html+="		<a href='${hContext}/houses/test_view.do?housesSeq="+value.housesSeq+"'><img class='card-img-top' src='${hContext}/resources/lhc/ignore.PNG' ></a>";
+    					html+="		<a href='${hContext}/houses/houses_detail.do?housesSeq="+value.housesSeq+"'><img class='card-img-top' src='${hContext}/resources/lhc/ignore.PNG' ></a>";
     					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
     					html+="		<div id='buttonClick' class='row col-lg-12'>";
     					html+="			<h6 class='card-title col-lg-8'>"+value.memberId+"</h6>";
@@ -287,7 +287,7 @@
 		
  
 			
-			window.location.href = "${hContext}/houses/test_view.do?housesSeq="+housesSeq;
+			window.location.href = "${hContext}/houses/houses_detail.do?housesSeq="+housesSeq;
 	
 			 
 		}); 

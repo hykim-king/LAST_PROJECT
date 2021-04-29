@@ -20,6 +20,7 @@
 <!-- 국제화 -->
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../cmn/common.jsp" %>
+<%@ include file="../cmn/header.jsp"%>
 <c:set var="hContext" value="${pageContext.request.contextPath }" ></c:set>
 <!DOCTYPE html>
 <html lang="ko">
@@ -62,14 +63,13 @@
 
 </head>
 <body>
-
+<%-- ${list} --%>
 <%--  "총글수 : " ${total_cnt} ${search }<br/>
 	${list }  --%>
 	
-  <!-- header -->
+	<!-- header -->
 
   <!--//header -->
-
 		<!-- hidden -->
 
 		<input type = "hidden" name = "pageSize"  id="pageSize" value="8" />
@@ -78,14 +78,14 @@
 		
   <!--  컨테이너 -->
  <div class="container">
- 	<div class="row">
+  	<div class="row">
 		<!-- 슬라이드 페이지 -->
 		<div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
 		      <ol class="carousel-indicators">
 		      	 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">
 		      	  	<c:if test = "${list.size() > 0 }">
 						<c:forEach var = "vo" items = "${list }"> 
-		           		   	<li data-target="#carouselExampleIndicators" data-slide-to="${vo.num }" ></li>
+		           		   	<li data-target="#carouselExampleIndicators" data-slide-to="${vo.title }" ></li>
 		           	   </c:forEach>
 	       		   </c:if>
 		      </ol>
@@ -97,12 +97,13 @@
 	       		<c:if test = "${list.size() > 0 }">
 				  <c:forEach var = "vo" items = "${list }"> 
 									
-				<div class="carousel-item listBigImage" >
-					<h4><c:out value = "${vo.p_title}" /></h4>	        		    
+				<div class="carousel-item" >
+					<h4><c:out value = "${vo.title}" /></h4>	        		    
 						<small class = "yeah" style = "display:none;">
-	        		    	<c:out value = "${vo.p_seq}" />
+	        		    	<c:out value = "${vo.housesSeq}" />
 						</small>
-				    <img class="d-block img-fluid" src="/${vo.p_thumb}" >
+				    <img class="d-block img-fluid" src="${hContext}/resources/lhc/ignore.PNG" >
+				   <%--  <img class="d-block img-fluid" src="/${vo.imgId}" > --%>
 				</div>
 								        
 			      </c:forEach>
@@ -123,10 +124,47 @@
         </div> 
         <!-- //슬라이드 -->
 		</div>
-		<!-- row -->	
+		<!-- row -->
  
  
-  <h4>집들이</h4><br/>
+  <h2>집들이</h2><br/>
+  <h4>인기순</h4>
+ <div id="rowPopularCard" class="row">      
+           <c:choose>
+			<c:when test = "${list.size() > 0 }">
+				<c:forEach var = "vo" items = "${list }"> 
+					<div class="col-lg-3 col-md-6 mb-4">
+			            <div class="card h-100">
+			              <a href="${hContext}/houses/houses_detail.do?housesSeq=${vo.housesSeq}"><img class="card-img-top" src="${hContext}/resources/lhc/ignore.PNG" alt=""></a>
+			              <h6  class="text-muted">${vo.tag}</h6 >
+			              <div  class="row col-lg-12">			              
+			               <h6  class="card-title col-lg-8">${vo.memberId}</h6 >	
+			              	<input id="buttonPopularClick" type="button" class="btn btn-primary btn-sm col-lg-4"  value="스크랩" name="doScrapBtn" id="doScrapBtn"/>
+			              	<small class="gotta" style="display:none;">${vo.housesSeq } </small>
+				            </div>
+				            <div id="rowPopularCardClick" class="text-center">
+			                <a href="${hContext}/houses/test_view.do?housesSeq=${vo.housesSeq}">
+			                <h4 class="text-muted">
+			                  ${vo.title }
+			                </h4>
+			                </a>
+			                <small class="gotta" style="display:none;">${vo.housesSeq } </small>
+			              </div>
+			            </div>
+			          </div>
+				</c:forEach>
+			 </c:when>
+				
+			<c:otherwise>
+				<h6>데이터가 없습니다.</h6><br/>
+			</c:otherwise>
+			            		
+          </c:choose>  
+         
+           		
+          </div>
+  	<br/>
+  	<h4>최신순</h4>
 	<div id="rowCard" class="row">
 
 	</div>
@@ -158,6 +196,7 @@
 		
 	});//--document ready
  	
+	//최신순
     function doRetrieve(page) {
     	console.log("doRetrieve");
      	$.ajax({
@@ -194,19 +233,21 @@
     				$.each(parseData, function(i, value) {
     					//console.log(i+","+value.name);
     					
-    					html +="<div class='col-lg-3 col-md-6 mb-1 rowCardClick'>";
-						html +=		"<div class='card h-100'>";
-						html +=			"<a href='${hContext}/houses/test_view.do?housesSeq="+value.housesSeq+"'><img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/resources/lhc/ignore.PNG' ></a>";
-						html +=		"<div class='card-body'>";
-						html +="	<small class='text-muted'>"+value.tag+"</small>";
-						html +=" <h6 class='card-title'>"+value.title+"</h6>";
-						html +="</div>";
-						html +=" <div id='rowCardClick' class='card-footer text-center'>";
-						html +="<small class='text-muted'>"+value.memberId+"</small>";
-						html +="  <small class = 'gotta' style = 'display:none;''>"+value.housesSeq+"</small>";
-						html +="</div>";	
-						html +="</div>";	
-						html +="</div>";	
+    					html+="<div  class='col-lg-3 col-md-6 mb-4'>";
+    					html+="	<div class='card h-100'>";
+    					html+="		<a href='${hContext}/houses/houses_detail.do?housesSeq="+value.housesSeq+"'><img class='card-img-top' src='${hContext}/resources/lhc/ignore.PNG' ></a>";
+    					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
+    					html+="		<div id='buttonClick' class='row col-lg-12'>";
+    					html+="			<h6 class='card-title col-lg-8'>"+value.memberId+"</h6>";
+    					html+="			<input type='button' class='btn btn-primary btn-sm col-lg-4'  value='스크랩' name='doScrapBtn' id='doScrapBtn'/>";
+    					html+="			<small class = 'gotta' style = 'display:none;''>"+value.housesSeq+"</small>";
+    					html+="		</div>";
+    					html+="		<div id='rowCardClick' class='text-center'>";
+    					html+="			<h4 class='text-muted'>"+value.title+"</h4>";
+    					html+="			<small class = 'gotta' style = 'display:none;''>"+value.housesSeq+"</small>";
+    					html+="		</div>";	
+    					html+="	</div>";	
+    					html+="</div>";	
 						
     				});
     				
@@ -238,6 +279,7 @@
     	});
     }
     
+	//qna 
     function doRetrieveQna(page) {
     	console.log("doRetrieveQna");
      	$.ajax({
@@ -274,19 +316,21 @@
     				$.each(parseData, function(i, value) {
     					//console.log(i+","+value.name);
     					
-    					html +="<div class='col-lg-3 col-md-6 mb-1 rowQnaCardClick'>";
-						html +=		"<div class='card h-100'>";
-						html +=			"<a href='${hContext}/qna/qna_view.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/resources/lhc/ignore.PNG' ></a>";
-						html +=		"<div class='card-body'>";
-						html +="	<small class='text-muted'>"+value.tag+"</small>";
-						html +=" <h6 class='card-title'>"+value.title+"</h6>";
-						html +="</div>";
-						html +=" <div id='rowQnaCardClick' class='card-footer text-center'>";
-						html +="<small class='text-muted'>"+value.memberId+"</small>";
-						html +="  <small class = 'gotta' style = 'display:none;''>"+value.qnaSeq+"</small>";
-						html +="</div>";	
-						html +="</div>";	
-						html +="</div>";	
+    					html+="<div  class='col-lg-3 col-md-6 mb-4'>";
+    					html+="	<div class='card h-100'>";
+    					html +=			"<a href='${hContext}/qna/qna_detail.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/resources/lhc/ignore.PNG' ></a>";
+    					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
+    					html+="		<div id='buttonClick' class='row col-lg-12'>";
+    					html+="			<h6 class='card-title col-lg-8'>"+value.memberId+"</h6>";
+    					html+="			<small class = 'gotta' style = 'display:none;''>"+value.qnaSeq+"</small>";
+    					html+="		</div>";
+    					html+="		<div id='rowQnaCardClick' class='text-center'>";
+    					html+="			<h4 class='text-muted'>"+value.title+"</h4>";
+    					html+="			<small class = 'gotta' style = 'display:none;''>"+value.qnaSeq+"</small>";
+    					html+="		</div>";	
+    					html+="	</div>";	
+    					html+="</div>";	
+    					
 						
     				});
     				
@@ -317,7 +361,48 @@
         	}
     	});
     }
- 	//--table click
+	
+	//최신순 스크랩 버튼 클릭
+	$("#rowCard").on("click","#buttonClick",function(e){
+		e.preventDefault();
+		console.log("buttonClick");
+ 	 	let tds = $(this).children();
+ 	 	console.log(tds);
+ 	 	var memberId = tds.eq(0).text();
+		var button = tds.eq(1).text();
+		var housesSeq = tds.eq(2).text();
+		console.log("button"+button); 
+		console.log("memberId"+memberId); 
+		console.log("housesSeq"+housesSeq); 
+
+		let url = "${hContext}/scrap/do_insert.do"
+			let parameters = {
+				"scrapSeq" :-1,
+				"memberId" :memberId,//이부분은 차후 세션에서 받을 예정
+				"housesSeq" :housesSeq,
+				"modId":memberId//이부분은 차후 세션에서 받을 예정
+				};
+			let method = "POST";
+			let async = true;	
+			console.log(parameters);
+			console.log(url);
+ 		EClass.callAjax(url , parameters, method ,async, function(data){
+			console.log("data"+data.memberId);
+			console.log("data"+data.housesSeq);
+			if("1"==data.msgId) {//등록 성공
+				alert(data.msgContents);
+				//doRetrieve(1);
+			}else {//등록 실패
+				alert(data.msgId+"\n"+data.msgContents);
+			}
+			
+
+			
+				
+			}); 
+			 
+		}); 
+ 	//집들이 최신순 title 클릭시 페이지 이동
 	$("#rowCard").on("click","#rowCardClick",function(e){
 		e.preventDefault();
 		console.log("rowCard");
@@ -329,11 +414,12 @@
 		
  
 			
-			window.location.href = "${hContext}/houses/test_view.do?housesSeq="+housesSeq;
+			window.location.href = "${hContext}/houses/houses/houses_detail.do?housesSeq="+housesSeq;
 	
 			 
 		}); 
     
+ 	//qna 타이틀 클릭시 페이지 이동
 	$("#rowQnaCard").on("click","#rowQnaCardClick",function(e){
 		e.preventDefault();
 		console.log("rowCard");
@@ -345,7 +431,7 @@
 		
  
 			
-			window.location.href = "${hContext}/qna/qna_view.do?qnaSeq="+qnaSeq;
+			window.location.href = "${hContext}/qna/qna_detail.do?qnaSeq="+qnaSeq;
 	
 			 
 		}); 
