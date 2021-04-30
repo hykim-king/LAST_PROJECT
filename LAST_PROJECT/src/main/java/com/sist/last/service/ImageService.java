@@ -24,7 +24,7 @@ public interface ImageService {
 	 * @return
 	 * @throws SQLException
 	 */
-	public int doInsertQnaImg(List<Image> imageList, int imgNum) throws SQLException;
+	public int doInsertQnaImg(DTO image, DTO qna) throws SQLException;
 
 	/**
 	 * 목록조회

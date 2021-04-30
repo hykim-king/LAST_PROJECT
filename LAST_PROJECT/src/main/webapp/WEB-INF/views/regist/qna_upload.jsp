@@ -55,11 +55,11 @@
 		<!--// 제목 -->
 
 		<!-- form -->
-		<form id="regFrm" action="${hContext}/qna/qna_upload.do" method="POST" enctype="multipart/form-data" class="form-horizontal">
-			<input type="hidden" class="form-control" id="qnaSeq" name="qnaSeq" value="">
+		<form id="regFrm" action="${hContext}/image/qna_upload.do" method="POST" enctype="multipart/form-data" class="form-horizontal">
+ 			<input type="hidden" class="form-control" id="qnaSeq" name="qnaSeq" value=""> 
 			<input type="hidden" class="form-control" id="memberId" name="memberId" value="tjdus">
-			<input type="hidden" class="form-control" id="imgNum" name="imgNum" value="3">
-			<input type="hidden" class="form-control" id="regDt" name="regDt" value="2021/04/28">			
+ 			<input type="text" class="form-control" id="imgId" name="imgId" value="">
+			<input type="hidden" class="form-control" id="regDt" name="regDt" value="">		 	
 						
 			<div class="form-group">
 				<label for="title" class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">제목</label>
@@ -110,26 +110,10 @@
 
 		});//--document ready
 		
-		function imageUpload(formData) {
-
-		    var form = jQuery("#regFrm")[0];
-		    var formData = new FormData(form);
-
-		    jQuery.ajax({
-		          url : "${hContext}/qna/qna_upload.do", 
-		          type : "POST", 
-		          processData : false, 
-		          contentType : false, 
-		          data : formData, 
-		          success:function(map) {
-		        }
-		    });
-		}
 
  		$("#doInsert").on("click", function(e){
 			console.log("doInsert");
 			e.preventDefault();
-			imageUpload(formData);
 			
 			if(eUtil.ISEmpty($("#title").val()) == true){
 				alert("제목을 입력하세요.");
@@ -151,7 +135,9 @@
 			
 			if(confirm("등록하시겠습니까?")==false)return;
 			
-			$.ajax({
+			document.getElementById('regFrm').submit();			
+
+/*  			 	$.ajax({
 		  		type: "POST",
 		  		url:"${hContext}/qna/do_insert.do",
 		  		asyn:"false",
@@ -169,33 +155,7 @@
 			  		success : function(data) {//통신 성공
 						var jsonObj = JSON.parse(data)
 						console.log("success data: " + data);
-			  		
-						$.ajax({
-							type: "POST",
-			  		  		url:"${hContext}/image/do_insert.do",
-			  		  		asyn:"false",
-			  		  		dataType:"html",
-			  		  		data:{
-					  		  		imgId: $("#imgId").val(),
-					  		  		imgNum: $("#imgNum").val(),
-						  		  	orgName: $("#orgName").val(),
-							  		savePath: $("#savePath").val(),
-							  		imgSize: $("#imgSize").val(),
-							  		imgExt: $("#imgExt").val(),		  		  						  		  		
-					  		  	},
-				 		  		success:function(data){//통신 성공
-				  		      		var message = JSON.parse(data);
-				  		  			console.log(message.msgContents);
 
-				  		  			window.location.href = "${hContext}/qna/qna_list.do";
-				  		      	},
-				  		      	error:function(data){//실패시 처리
-				  		      		console.log("error:"+data);
-				  		      	},
-				  		      	complete:function(data){//성공/실패와 관계없이 수행!
-				  		      		console.log("complete:"+data);
-				  		      	}
-				  		  	});
 				  			
 				      	},
 				      	error:function(data){//실패시 처리
@@ -204,14 +164,10 @@
 				      	complete:function(data){//성공/실패와 관계없이 수행!
 				      		console.log("complete:"+data);
 				      	}
-				  	});
-
-					
-					
-			});
+				  	});   */
 				
-
-		
+			});
+	
 	</script>
 
 </body>

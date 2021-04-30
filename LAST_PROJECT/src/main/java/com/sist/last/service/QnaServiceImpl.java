@@ -51,5 +51,6 @@ public class QnaServiceImpl implements QnaService {
 		
 		return this.QnaDao.doInsert(qna);
 	}
+	
 
 }

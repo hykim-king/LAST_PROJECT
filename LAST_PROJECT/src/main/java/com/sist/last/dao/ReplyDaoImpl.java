@@ -17,7 +17,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.sist.last.cmn.DTO;
-import com.sist.last.cmn.SearchReview;
+import com.sist.last.cmn.Search;
 import com.sist.last.vo.Reply;
 
 @Repository
@@ -141,7 +141,7 @@ public class ReplyDaoImpl implements ReplyDao{
 	@Override
 	public List<?> doRetrieve(DTO dto) throws SQLException {
 
-		SearchReview param = (SearchReview) dto;
+		Search param = (Search) dto;
 		
 		String statement = this.NAMESPACE+".doRetrieve";
 		
