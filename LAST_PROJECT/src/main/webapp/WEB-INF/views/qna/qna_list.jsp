@@ -46,7 +46,16 @@
     <script src="${hContext}/resources/js/eclass.js"></script>
 	<script src="${hContext}/resources/js/eutil.js"></script>
 	<script src="${hContext}/resources/js/jquery.bootpag.js"></script>
-	
+<style type="text/css">
+.row {
+width: 1200px;
+margin: 0 auto;
+}
+.row div {
+width: 400px;
+margin: 0px 0px;
+}
+</style>	
 
 </head>
 <body>
@@ -108,14 +117,16 @@
 		<div class="row" id="rowCol">
 	
 		   </div>
-	   </div>
-	 <!-- //row of columns -->
-	   	 
-	 <!-- pagenation -->
+		   
+	<!-- pagenation -->
 		<div class="text-center">
 			<div id="page-selection" class="text-center page"></div>
 		</div>
 	 <!--// pagenation -->	
+	   </div>
+	 <!-- //row of columns -->
+	   	 
+
 	    
 	</div>
 	<!-- /container -->
@@ -127,7 +138,7 @@
 			console.log("document ready");
 			
 			//화면 로딩시 보여줄 데이터
-			doRetrieve(1);
+			doRetrieve();
 		});
 		
 		//paging
