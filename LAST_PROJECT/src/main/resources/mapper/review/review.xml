@@ -52,7 +52,7 @@
 				SELECT COUNT(*) totalCnt                                     
 				FROM review
 				WHERE review_fk = #{reviewFk}                                                                              
-		)B                                                                            
+		)B                                                                               
 		
 	</select>
 	
