@@ -10,7 +10,7 @@
     
     author eclass 개발팀
     since 2020.11.23
-    Copyright (C) by KandJang All right reserved.
+    Copyright (C) by KandJang All right reserved.---------
 */
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
