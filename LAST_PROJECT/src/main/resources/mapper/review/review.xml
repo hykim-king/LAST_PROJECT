@@ -16,7 +16,7 @@
 	</resultMap>
 	
 	<!-- retrieve -->
-	<select id="doRetrieve" parameterType="Search" resultType="Review">
+	<select id="doRetrieve" parameterType="SearchReview" resultType="Review">
 		SELECT a.*, b.*                                                               
 		FROM(                                                                         
 				SELECT t2.rnum as num,                                                               
