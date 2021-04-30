@@ -46,16 +46,6 @@
     <script src="${hContext}/resources/js/eclass.js"></script>
 	<script src="${hContext}/resources/js/eutil.js"></script>
 	<script src="${hContext}/resources/js/jquery.bootpag.js"></script>
-<style type="text/css">
-.row {
-width: 1200px;
-margin: 0 auto;
-}
-.row div {
-width: 400px;
-margin: 0px 0px;
-}
-</style>	
 
 </head>
 <body>
@@ -90,8 +80,9 @@ margin: 0px 0px;
 		<div class="row col-lg-12">
 			<div class="col-xs-8 col-sm-9 col-md-8 col-lg-2 text-right ">
 	 				<select class="form-control input-sm " name="pageSize" id="pageSize">				
-	    		  		<option value="3">3개씩 보기</option>	    		  		
-						<option value="6">6개씩 보기</option>
+	    		  		<option value="6">6개씩 보기</option>	    		  		
+						<option value="9">9개씩 보기</option>
+						<option value="12">12개씩 보기</option>
 	    		  </select> 
 		    </div>
 		  </div>
@@ -112,22 +103,22 @@ margin: 0px 0px;
 		 </div>  
 	<!-- //검색영역 -->       
          
-	<!-- row of columns -->
-	<div class="container">
-		<div class="row" id="rowCol">
-	
-		   </div>
-		   
-	<!-- pagenation -->
-		<div class="text-center">
-			<div id="page-selection" class="text-center page"></div>
-		</div>
-	 <!--// pagenation -->	
-	   </div>
-	 <!-- //row of columns -->
-	   	 
+            <div class="pt-5 mt-5">
+	           <h3 class="mb-5">최근 Q&A를 확인해보세요!</h3>
+	              <ul class="comment-list" id="qnaList"><!-- start comment-list -->
+	                <li class="comment">
+		                  
+	                </li>
+	              </ul><!-- END comment-list -->
+            </div>
+            
+            <!-- pagenation -->
+				<div class="text-center">
+					<div id="page-selection" class="text-center page"></div>
+				</div>
+			<!--// pagenation -->	
 
-	    
+
 	</div>
 	<!-- /container -->
 	
@@ -218,7 +209,7 @@ margin: 0px 0px;
 	        		var parseData = JSON.parse(data);
 	        		
 	        		//기존데이터 삭제
-	        		$("#rowCol").empty();
+	        		$("#qnaList").empty();
 	        		var html = "";
 	        		
 	        		//페이징 변수
@@ -238,14 +229,17 @@ margin: 0px 0px;
 						
 						$.each(parseData,function(i,value){
 							console.log(i+","+value.name);
-							html += "<div class='col-lg-4'>";
-							html += "   <h2>"+value.title+"</h2>";
-							html += "    <img src='${hContext}/resources/../..' alt='Image placeholder'>";
-							html += "   <p>"+value.tag+"</p>";	
-							html += "	<div class='row col-lg-4'>";
-							html +=	"		<input type='button' class='btn btn-primary' value='Read more'/>";
-							html += "	</div>";
-							html += "</div>";
+							html+= "<li class='comment'>";
+							html+= "<div class='vcard bio'>";
+							html+= "  <img src='${hContext}/resources/img/qna/2021/04' >";
+							html+= "</div>";
+							html+= "	<div class='comment-body'>";
+							html+= "  		<h3>"+value.title+"</h3>";
+							html+= "  		<div class='meta'>"+value.regDt+"</div>";
+							html+= "  		<p>"+value.tag+"</p>";
+							html+= "  		<p><a href='#' class='reply'>read more</a></p>";
+							html+= "	</div>";
+							html+= "</li>";
 						});
 						
 					}else{//data가 없는 경우
@@ -255,7 +249,7 @@ margin: 0px 0px;
 					}
 					
 					//body에 데이터 추가
-					$("#rowCol").append(html);	
+					$("#qnaList").append(html);	
 					
 					//페이징처리
 					console.log(pageTotal+","+page);
@@ -275,9 +269,9 @@ margin: 0px 0px;
 		
 		//data click -> doSelectOne(단건조회)로 이동
 		//확인완료
-		$("#rowCol").on("click",function(e){
+		$("#qnaList").on("click",function(e){
 			e.preventDefault();
-			console.log("rowCol");
+			console.log("qnaList");
 			
 			let tds = $(this).children();
 			console.log("tds:"+tds);

@@ -42,14 +42,14 @@
 				t2.tag,                                                
 				DECODE(TO_CHAR(SYSDATE,'YYYYMMDD'),TO_CHAR(t2.reg_dt,'YYYYMMDD')                          
 				,TO_CHAR(t2.reg_dt,'HH24:MI')                                      
-				,TO_CHAR(t2.reg_dt,'YYYY/MM/DD')) reg_dt    
+				,TO_CHAR(t2.reg_dt,'YYYY/MM/DD')) as regDt  
 	    FROM(                                                                 
 	        	SELECT ROWNUM rnum,t1.*                               
 	        	FROM(                                                             
 	        		SELECT *                                                         
 	        		FROM qna                                                        
                     <include refid="searchCondition"/>   
-	          		ORDER BY reg_dt ASC                                    
+	          		ORDER BY reg_dt DESC                                    
 	          	)t1
 	          	<![CDATA[
 		  		WHERE ROWNUM <= (#{pageSize} * (#{pageNum}-1) + #{pageSize})                                                                                       
