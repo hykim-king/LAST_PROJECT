@@ -21,7 +21,7 @@
     <div class="login-dark">
         <form>
             <div class="illustration">
-            	<i class="icon ion-ios-help-outline"></i>
+            	<i class="icon ion-ios-locked-outline"></i>
             </div>
             <div class="form-group" id="memberIdAuth">
             	<input class="form-control" type="text" id="memberId" name="memberId" placeholder="이메일">

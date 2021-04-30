@@ -21,7 +21,8 @@
         <form action="<c:url value='/login/login.do'/>" name="login_frm" method="POST">
             <h2 class="sr-only">Login Form</h2>
             <div class="illustration">
-            	<i class="icon ion-ios-locked-outline"></i>
+            	<!-- <i class="icon ion-ios-locked-outline"></i> -->
+            	<img src="${hContext}/resources/images/logo2.png" width="250" align="center" />
             </div>
             <div class="form-group">
             	<input class="form-control" type="text" id="memberId" name="memberId" placeholder="이메일">
