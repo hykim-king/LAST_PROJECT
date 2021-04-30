@@ -16,7 +16,7 @@
 
 
 	<!-- doRetrieve -->
-	<select id="doRetrieve" parameterType="SearchReview" resultType="Reply">
+	<select id="doRetrieve" parameterType="Search" resultType="Reply">
 		SELECT A.*, B.*                                                                              
 		FROM(                                                                                        
 			SELECT t2.rnum AS num,                                                                          
@@ -35,8 +35,7 @@
 				SELECT ROWNUM rnum, t1.*                                                             
 				FROM(                                                                                
 					SELECT *                                                                         
-					FROM reply           
-					WHERE review_seq = #{reviewFk}                                                              
+					FROM reply                                                                      
 					ORDER BY reg_dt DESC 
 					                                                           
 				)t1
@@ -48,8 +47,7 @@
 		)A                                                                                           
 		CROSS JOIN                                                                                   
 		(	SELECT COUNT(*) totalCnt                                                            
-			FROM reply        
-			WHERE review_seq = #{reviewFk}                                                                     
+			FROM reply                                                                       
 		)B                    
 	</select>
 	
