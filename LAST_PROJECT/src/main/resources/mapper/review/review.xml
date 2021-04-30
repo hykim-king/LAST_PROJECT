@@ -53,7 +53,7 @@
 				FROM review
 				WHERE review_fk = #{reviewFk}                                                                              
 		)B                                              
-		
+
 	</select>
 	
 	<!-- selectone -->
