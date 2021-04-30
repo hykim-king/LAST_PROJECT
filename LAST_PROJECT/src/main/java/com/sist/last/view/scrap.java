@@ -36,14 +36,14 @@ public class scrap {
 		LOG.debug("=================");
 		
 		Houses outVO = (Houses) this.housesService.doSelectOne(houses);
-		Image imageVO = new Image();
-		imageVO.setImgId(outVO.getImgId());
+		//Image imageVO = new Image();
+		//imageVO.setImgId(houses.getImgId());
 		
 		
 		model.addAttribute("vo", outVO);
-		List<Image> image = (List<Image>) this.imageService.doRetrieve(imageVO);
+		//List<Image> image = (List<Image>) this.imageService.doRetrieve(imageVO);
 		
-		model.addAttribute("image",image);
+		//model.addAttribute("image",image);
 		
 		return "houses/Community_Detail_Info";              //이 페이지 띄워주는거 같음!!!!
 	}
