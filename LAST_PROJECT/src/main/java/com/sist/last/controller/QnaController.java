@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +17,8 @@ import com.google.gson.Gson;
 import com.sist.last.cmn.Message;
 import com.sist.last.cmn.Search;
 import com.sist.last.cmn.StringUtil;
+import com.sist.last.service.ImageService;
+import com.sist.last.service.ImageServiceImpl;
 import com.sist.last.service.QnaService;
 import com.sist.last.vo.Qna;
 
@@ -28,7 +31,12 @@ public class QnaController {
 	@Autowired
 	QnaService qnaService;
 	
+	@Autowired
+	ImageServiceImpl imageService;
+	
 	public QnaController() {}
+	
+
 	
 	
 	/**
@@ -204,6 +212,7 @@ public class QnaController {
 		LOG.debug("================================");
 		
 		int flag =qnaService.doInsert(qna);
+
 		String resultMsg="";
 		if(1==flag) {
 			resultMsg = qna.getMemberId() + "님 QnA가 등록되었습니다.";

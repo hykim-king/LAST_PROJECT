@@ -11,9 +11,13 @@ import org.springframework.stereotype.Service;
 
 import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.StringUtil;
+import com.sist.last.dao.HousesDaoImpl;
+import com.sist.last.dao.HousesLinkDaoImpl;
 import com.sist.last.dao.ImageDaoImpl;
 import com.sist.last.dao.MemberDaoImpl;
 import com.sist.last.dao.QnaDaoImpl;
+import com.sist.last.vo.Houses;
+import com.sist.last.vo.HousesLink;
 import com.sist.last.vo.Image;
 import com.sist.last.vo.Member;
 import com.sist.last.vo.Qna;
@@ -31,6 +35,12 @@ public class ImageServiceImpl implements ImageService {
 	
 	@Autowired
 	private QnaDaoImpl qnaDao;
+	
+	@Autowired
+	private HousesDaoImpl housesDao;
+	
+	@Autowired
+	private HousesLinkDaoImpl housesLinkDao;
 
 	public ImageServiceImpl() {
 
@@ -106,6 +116,8 @@ public class ImageServiceImpl implements ImageService {
 	@Override
 	public int doInsertQnaImg(DTO image, DTO qna) throws SQLException {
 
+		int flag = 0;
+		
 		Image imageVO = (Image) image;
 		Qna qnaVO = (Qna) qna;
 		
@@ -117,21 +129,65 @@ public class ImageServiceImpl implements ImageService {
 		String imgId = StringUtil.getPK("yyyyMMddHHmmss");
 		LOG.debug("imgId: " + imgId);
 		
+		qnaVO.setQnaSeq(StringUtil.getPK("yyyyMMdd24mmss"));
+		
+//		// 사진 첨부 안하면 바로 insert
+//		if(null == imageVO.getOrgName() || imageVO.getOrgName().equals("")) {
+//			
+//			flag = flag += this.qnaDao.doInsert(qnaVO);
+//			
+//		} else {
+		
 		imageVO.setImgNum(pk);
 		imageVO.setImgId(imgId);
 		qnaVO.setImgId(imgId);
 		
 		LOG.debug("imageVO: "+imageVO);
 		LOG.debug("qnaVO: "+qnaVO);
-		
-		qnaVO.setQnaSeq(StringUtil.getPK("yyyyMMdd24mmss"));
-		
 
-		int flag = this.imageDao.doInsert(imageVO);
+		flag = this.imageDao.doInsert(imageVO);
 		flag += this.qnaDao.doInsert(qnaVO);
+		
+//		}
 			
 		return flag;
 		
 		}
 
+	@Override
+	public int doInsertHousesImg(DTO image, DTO houses, DTO housesLink) throws SQLException {
+
+		Image imageVO = (Image) image;
+		Houses housesVO = (Houses) houses;
+		HousesLink housesLinkVO = (HousesLink) housesLink;
+		
+		// 이미지 아이디--------------------------------------------
+		String imgId = StringUtil.getPK("yyyyMMddHHmmss");
+		LOG.debug("imgId: " + imgId);
+		
+		imageVO.setImgId(imgId);
+		housesVO.setImgId(imgId);
+				
+		// 집들이 seq 값--------------------------------------------
+		String housesSeq = StringUtil.getPK("yyyyMMddHHmmss");
+		
+		housesVO.setHousesSeq(housesSeq);
+		housesLinkVO.setHousesSeq(housesSeq);
+		
+		// 집들이링크 seq 값--------------------------------------------
+		housesLinkVO.setLinkSeq(StringUtil.getPK("")); 
+		
+		LOG.debug("imageVO: " + imageVO);		
+		LOG.debug("housesVO: " + housesVO);
+		LOG.debug("housesLinkVO: " + housesLinkVO);
+		
+		int flag = this.imageDao.doInsert(imageVO);
+		flag += this.housesDao.doInsert(housesVO);
+		flag += this.housesLinkDao.doInsert(housesLinkVO);	
+		
+		return flag;
+		
+		}
+
+	
 	}

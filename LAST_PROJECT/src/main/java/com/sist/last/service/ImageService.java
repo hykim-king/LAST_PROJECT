@@ -18,13 +18,22 @@ public interface ImageService {
 	int doInsertImgMember(DTO image, DTO member) throws SQLException;
 	
 	/**
-	 * img num 
+	 * QnA 사진 업로드
 	 * @param qna
 	 * @param image
 	 * @return
 	 * @throws SQLException
 	 */
 	public int doInsertQnaImg(DTO image, DTO qna) throws SQLException;
+	
+	/**
+	 * 집들이 사진 업로드
+	 * @param qna
+	 * @param image
+	 * @return
+	 * @throws SQLException
+	 */
+	public int doInsertHousesImg(DTO image, DTO houses, DTO housesLink) throws SQLException;	
 
 	/**
 	 * 목록조회

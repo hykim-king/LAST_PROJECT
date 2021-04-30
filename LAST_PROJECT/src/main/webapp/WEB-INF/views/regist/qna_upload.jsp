@@ -56,10 +56,7 @@
 
 		<!-- form -->
 		<form id="regFrm" action="${hContext}/image/qna_upload.do" method="POST" enctype="multipart/form-data" class="form-horizontal">
- 			<input type="hidden" class="form-control" id="qnaSeq" name="qnaSeq" value=""> 
-			<input type="hidden" class="form-control" id="memberId" name="memberId" value="tjdus">
- 			<input type="text" class="form-control" id="imgId" name="imgId" value="">
-			<input type="hidden" class="form-control" id="regDt" name="regDt" value="">		 	
+			<input type="hidden" class="form-control" id="memberId" name="memberId" value="tjdus"> 	
 						
 			<div class="form-group">
 				<label for="title" class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">제목</label>
@@ -126,7 +123,7 @@
 				$("#contents").focus();
 				return;
 			}	
-			
+					
 			if(eUtil.ISEmpty($("#tag").val()) == true){
 				alert("태그를 입력하세요.");
 				$("#tag").focus();
@@ -137,7 +134,7 @@
 			
 			document.getElementById('regFrm').submit();			
 
-/*  			 	$.ajax({
+/*  			$.ajax({
 		  		type: "POST",
 		  		url:"${hContext}/qna/do_insert.do",
 		  		asyn:"false",

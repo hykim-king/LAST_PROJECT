@@ -55,8 +55,8 @@
 		<!--// 제목 -->
 
 		<!-- form -->
-		<form action="${hContext}/houses/houses_upload.do" method="POST"
-			enctype="multipart/form-data" class="form-horizontal" id="uploadFrm">
+		<form id="regFrm" action="${hContext}/image/houses_upload.do" method="POST" enctype="multipart/form-data" class="form-horizontal" id="uploadFrm">
+		<input type="hidden" class="form-control" id="memberId" name="memberId" value="tjdus"> 	
 
 			<div class="form-group">
 				<label for="title" class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">제목</label>
@@ -89,8 +89,9 @@
 			<div class="form-group" id='linkFrm'>
 				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">링크</label>
 				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10 form-inline">
-					<input type="text" class="form-control" id="tag" name="tag" placeholder="URL은 최대 3개까지 입력할 수 있습니다.">
+					<input type="text" class="form-control" id="link" name="link" placeholder="URL은 최대 3개까지 입력할 수 있습니다." >
 					<input type="button" class="btn btn-primary btn-sm"  value="추가" id="addLink">
+					<input type="hidden" class="form-control" id="div" name="div" value="1">
 				</div>
 			</div>			
 
@@ -104,11 +105,7 @@
 			</div>
 			
 			<!-- 값 임의 설정 -->
-			<input type="hidden" class="form-control" id="housesSeq" name="housesSeq" value="">
 			<input type="hidden" class="form-control" id="memberId" name="memberId" value="tjdus">
-			<input type="hidden" class="form-control" id="imgId" name="imgId" value="">
-			<input type="hidden" class="form-control" id="regDt" name="regDt" value="">
-			<input type="hidden" class="form-control" id="modId" name="modId" value="tjdus2">
 
 	</div>
 	<!--// div container -->
@@ -130,9 +127,41 @@
 			console.log("doInsert");
 			e.preventDefault();
 			
+			if(eUtil.ISEmpty($("#title").val()) == true){
+				alert("제목을 입력하세요.");
+				$("#title").focus();
+				return;
+			}			
+			
+			if(eUtil.ISEmpty($("#contents").val()) == true){
+				alert("내용을 입력하세요.");
+				$("#contents").focus();
+				return;
+			}	
+			
+			if(eUtil.ISEmpty($("#image").val()) == true){
+				alert("내용을 image.");
+				$("#image").focus();
+				return;
+			}	
+					
+			if(eUtil.ISEmpty($("#tag").val()) == true){
+				alert("태그를 입력하세요.");
+				$("#tag").focus();
+				return;
+			}	
+			
+			if(eUtil.ISEmpty($("#link").val()) == true){
+				alert("링크를 입력하세요.");
+				$("#link").focus();
+				return;
+			}	
+				
 			if(confirm("등록하시겠습니까?")==false)return;
 			
-			let url = "${hContext}/houses/do_insert.do";
+			document.getElementById('regFrm').submit();
+			
+/* 			let url = "${hContext}/houses/do_insert.do";
 			let parameter = {
 								"housesSeq"      : $("#housesSeq").val(),
 								"memberId"     : $("#memberId").val(),
@@ -158,12 +187,13 @@
 				}
 		
 			});
-
+ */
 		});
 		// house doInsert ------------------------------	
 	
 		// 링크 html ------------------------------
 		var maxAppend = 1; // 버튼누른 횟수 저장
+		//var div = 2;
 	
 		$("#addLink").on("click",function(){
 			console.log("addLink");  					
@@ -171,10 +201,11 @@
 			if (maxAppend >= 3) return; // 4번째부터는 append 안되고 return 시키기
 			
     		var html =  "<div class='form-group' id='linkFrm'>                                                                            ";
-    			html += "	<label class='col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label'>링크</label>                     		  	  ";
+    			html += "	<label class='col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label'></label>                     		  	  ";
     			html += "	<div class='col-xs-8 col-sm-9 col-md-10 col-lg-10 form-inline'>                                               ";
     			html += "		<input type='text' class='form-control' id='tag' name='tag' placeholder='URL은 최대 3개까지 입력할 수 있습니다.'> ";
-    			html += "		<input type='button' class='btn-del btn btn-primary btn-sm'  value='삭제'>						  ";
+    			html += "		<input type='button' class='btn-del btn btn-primary btn-sm'  value='삭제'>									";
+   				//html +=	"		<input type='hidden' class='form-control' id='div' name='div' value=''>									";
     			html += "	</div>                                                                                                        ";
     			html += "</div>																										      ";
     		
@@ -182,7 +213,6 @@
 			maxAppend++;
 			
 			}); 
-
 		
 		$(document).on("click",".btn-del",function(e){
 			console.log("btn_del_file");
