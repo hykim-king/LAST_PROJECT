@@ -43,61 +43,7 @@ public class image {
 
 	}
 	
-//	@RequestMapping(value = "qna/qna_upload.do", method = RequestMethod.POST)
-//	public List<Map<String, Object>> test(Qna qna, Image image, 
-//			MultipartHttpServletRequest mpRequest) throws Exception{
-//		
-//		Iterator<String> iterator = mpRequest.getFileNames();
-//		
-//		MultipartFile mFile = null;
-//		String orgName = null;
-//		String ext = null;
-//		String saveName = null;
-//		String imgId = null;
-//		
-//		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
-//		Map<String, Object> listMap = null;
-//		
-//		int imgNum = imageService.doInsertQnaImg(qna, image);
-//		
-//		// 년도
-//		String year = StringUtil.formatDate("yyyy");
-//		// 월
-//		String month = StringUtil.formatDate("MM");
-//		LOG.debug("year: " + year);
-//		LOG.debug("month: " + month);
-//
-//		String datePath = UPLOAD_IMG_DIR + File.separator + year + File.separator + month;
-//		LOG.debug("datePath: " + datePath);
-//		
-//		File file = new File(UPLOAD_IMG_DIR);
-//		if(file.exists() == false) {
-//			file.mkdirs();
-//		}
-//		
-//		while(iterator.hasNext()) {
-//			mFile = mpRequest.getFile(iterator.next());
-//			if(mFile.isEmpty() == false) {
-//				orgName = mFile.getOriginalFilename();
-//				ext = orgName.substring(orgName.lastIndexOf("."));
-//				saveName += "." + ext;
-//				imgId = StringUtil.getPK("yyyyMMddHHmmss");
-//				
-//				file = new File(UPLOAD_IMG_DIR + saveName);
-//				mFile.transferTo(file);
-//				listMap = new HashMap<String, Object>();
-//				listMap.put("img_id", imgId);
-//				listMap.put("img_num", imgNum);
-//				listMap.put("org_name", orgName);
-//				listMap.put("save_name", saveName);
-//				listMap.put("img_size", mFile.getSize());
-//				listMap.put("save_path", datePath);
-//				listMap.put("ext", ext);
-//				list.add(listMap);
-//			}
-//		}
-//		return list;
-//	}
+
 	
 	// 화면 띄우기
 	@RequestMapping(value = "store/product_regist.do")
@@ -131,7 +77,6 @@ public class image {
 		
 	}
 	
-
 	// 화면 띄우기
 	@RequestMapping(value = "qna/qna_regist.do")
 	public String registView(Model model) throws SQLException {
@@ -149,98 +94,7 @@ public class image {
 		LOG.debug("-----upload()-----");
 		LOG.debug("------------------");
 
-		// 폴더당 생성 파일 수 limit 존재
-		// 2021/04
-		File fileRootDir = new File(UPLOAD_IMG_DIR);
-		if (fileRootDir.isDirectory() == false) {
-			boolean flag = fileRootDir.mkdir();
-			LOG.debug("upload() 생성여부" + flag);
-		}
-
-		// 년도
-		String year = StringUtil.formatDate("yyyy");
-		// 월
-		String month = StringUtil.formatDate("MM");
-		LOG.debug("year: " + year);
-		LOG.debug("month: " + month);
-
-		String datePath = UPLOAD_IMG_DIR + File.separator + year + File.separator + month;
-		LOG.debug("datePath: " + datePath);
-
-		File dateFilePath = new File(datePath);
-		if (dateFilePath.isDirectory() == false) {
-			boolean flag = dateFilePath.mkdirs();
-
-			LOG.debug("upload() dateFilePath: " + flag);
-		}
-
-		List<Image> list = new ArrayList<Image>();
-
-		String title = mReg.getParameter("title");
-		String tag = mReg.getParameter("tag");
-		LOG.debug("title: " + title);
-		LOG.debug("tag: " + tag);
 		
-		Iterator<String> files = mReg.getFileNames();
-
-		while (files.hasNext()) {
-			Image image = new Image();
-			
-			String upFileNm = files.next();
-			LOG.debug("upFileNm: " + upFileNm);
-
-			// file 정보
-			MultipartFile mFile = mReg.getFile(upFileNm);
-
-			// 원본파일
-			String orgName = mFile.getOriginalFilename();
-			LOG.debug("orgName: " + orgName);
-
-			if (null == orgName || "".equals(orgName))
-				continue;
-
-			image.setOrgName(orgName);
-			image.setImgSize(mFile.getSize());
-			
-			// 파일아이디(pk값)
-			String imgId = StringUtil.getPK("yyyyMMddHHmmss");
-			LOG.debug("imgId: " + imgId);
-
-			// 저장파일명
-			String saveName = StringUtil.getPK("yyyyMMddHHmmss");
-			LOG.debug("saveName: " + saveName);
-
-			// 확장자
-			String ext = "";
-			if (orgName.indexOf(".") > -1) {
-				ext = orgName.substring(orgName.indexOf(".") + 1);
-				saveName += "." + ext;
-			}
-
-			LOG.debug("ext: " + ext);
-
-			image.setImgId(imgId);
-			image.setSaveName(saveName);
-			image.setImgExt(ext);
-
-			// 저장파일명으로 server에 저장
-			File renameFile = new File(datePath, image.getSaveName());
-			// 파일 절대경로
-			LOG.debug("renameFile.getAbsolutePath(): " + renameFile.getAbsolutePath());
-
-			// 파일 경로
-			image.setSavePath(datePath);
-			LOG.debug("image: " + image);
-
-			list.add(image);
-
-			// 파일을 server에 저장
-			mFile.transferTo(new File(image.getSavePath() + File.separator + image.getSaveName()));
-
-		} // --while
-
-		modelAndView.addObject("list", list);
-		modelAndView.setViewName("regist/qna_upload");
 
 		return "qna/qna_list";
 

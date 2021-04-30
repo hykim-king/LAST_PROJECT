@@ -2,6 +2,7 @@ package com.sist.last.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,22 +71,6 @@ public class ImageServiceImpl implements ImageService {
 	}
 
 	@Override
-	public int doInsertQnaImg(List<Image> imageList, int imgNum) throws SQLException {
-
-		int flag = 0;
-		int cnt = 0;
-		
-		if (imageList.size() > 0) {
-			
-			
-
-
-		}
-
-		return flag;
-	}
-
-	@Override
 	public int doInsertImgMember(DTO image, DTO member) throws SQLException {
 		int flag = 0;
 		Image imageVO = (Image) image;
@@ -118,4 +103,35 @@ public class ImageServiceImpl implements ImageService {
 		return flag;
 	}
 
-}
+	@Override
+	public int doInsertQnaImg(DTO image, DTO qna) throws SQLException {
+
+		Image imageVO = (Image) image;
+		Qna qnaVO = (Qna) qna;
+		
+		Random random = new Random();
+		int pk = random.nextInt(8) + 1;
+		LOG.debug("pk: "+pk);
+		
+		// 파일아이디(pk값)
+		String imgId = StringUtil.getPK("yyyyMMddHHmmss");
+		LOG.debug("imgId: " + imgId);
+		
+		imageVO.setImgNum(pk);
+		imageVO.setImgId(imgId);
+		qnaVO.setImgId(imgId);
+		
+		LOG.debug("imageVO: "+imageVO);
+		LOG.debug("qnaVO: "+qnaVO);
+		
+		qnaVO.setQnaSeq(StringUtil.getPK("yyyyMMdd24mmss"));
+		
+
+		int flag = this.imageDao.doInsert(imageVO);
+		flag += this.qnaDao.doInsert(qnaVO);
+			
+		return flag;
+		
+		}
+
+	}

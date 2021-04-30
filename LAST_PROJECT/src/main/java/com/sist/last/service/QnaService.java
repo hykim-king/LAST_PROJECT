@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.sist.last.cmn.DTO;
+import com.sist.last.vo.Qna;
 
 public interface QnaService {
 	/**
@@ -45,4 +46,6 @@ public interface QnaService {
 	 * @throws SQLException
 	 */
 	int doInsert(DTO dto) throws SQLException;
+	
+
 }
