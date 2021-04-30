@@ -48,10 +48,29 @@
             </ul>
           </div>
           <div class="site-header__middle">
-            <a href="#" class="brand">Intery</a>
+            <img src="${hContext }/resources/images/logo.png" width="100"/>
           </div>
           <div class="site-header__end top">
-            <a href="${hContext}/member/login_view.do" class="button">로그인</a>
+            <c:choose>
+				<c:when test="${null != sessionScope.member }">
+					<ul class="nav navbar-nav">
+						<li class="nav-item">
+							<a class="nav-link" href='javascript:goLogOut();'>
+								 <span class="glyphicon glyphicon-log-out" aria-hidden="true">&nbsp;로그아웃</span>
+							</a>
+						</li>
+					</ul>
+				</c:when>
+				<c:otherwise>
+					<ul class="nav navbar-nav">
+						<li class="nav-item">
+							<a class="nav-link" href='${hContext}/member/login_view.do'>
+								 <span class="glyphicon glyphicon-log-in" aria-hidden="true">&nbsp;로그인</span>
+							</a>
+						</li>
+					</ul>
+				</c:otherwise>
+			</c:choose>
           </div>
         </div>
       </div>
@@ -112,9 +131,14 @@
       </div>
     </header>
     <!-- Header End -->
-
+	<script>
+		function goLogOut(){
+			console.log("goLogOut");
+			window.location.href = '<c:out value="${hContext}/member/do_logoff.do"/>';
+		}
+	</script>
     <script src="js/header-14.js"></script>
-  
+  	
 
 </body>
 </html>
