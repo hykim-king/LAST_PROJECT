@@ -18,14 +18,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="hContext" value="${pageContext.request.contextPath}"></c:set>
 <!DOCTYPE html>
-<!-- Bootstrap core CSS -->
-<link href="${hContext}/resources/lhc/bootstrap_lhc.css" rel="stylesheet">
-<!-- 부트스트랩 -->
-<link href="${hContext }/resources/css/bootstrap.min.css"
-	rel="stylesheet">
 
-<link rel="stylesheet" type="text/css"
-	href="${hContext }/resources/jji/mypage.css" />
 <html>
 <head>
     <meta charset="UTF-8">
@@ -34,6 +27,14 @@
     <link href="${hContext}/resources/jji/header-14.css" rel="stylesheet">
     <link href="${hContext}/resources/jji/reset.min.css" rel="stylesheet">
     <link href="${hContext}/resources/jji/style.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+	<link href="${hContext}/resources/lhc/bootstrap_lhc.css" rel="stylesheet">
+	<!-- 부트스트랩 -->
+	<link href="${hContext }/resources/css/bootstrap.min.css"
+	rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css"
+	href="${hContext }/resources/jji/mypage.css" />
  </head>
 <body>
     <!-- Header Start -->
@@ -50,8 +51,7 @@
             <a href="#" class="brand">Intery</a>
           </div>
           <div class="site-header__end top">
-            <a href="${hContext}/member/login_view.do">로그인</a>
-            <a href="#" class="button">회원가입</a>
+            <a href="${hContext}/member/login_view.do" class="button">로그인</a>
           </div>
         </div>
       </div>
