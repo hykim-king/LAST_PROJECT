@@ -37,6 +37,9 @@ body {
 	-webkit-font-smoothing: antialiased;
 }
 
+
+
+
 h1,
 h2,
 h3,
@@ -915,6 +918,7 @@ ol {
 .filter__controls {
 	text-align: center;
 	margin-bottom: 45px;
+	margin-top: 45px;
 }
 
 .filter__controls li {
@@ -1088,9 +1092,32 @@ ol {
 	margin-right: -5px;
 }
 
+/* h6: company */
+.product__item__text h6 {
+	font-size: 14px;
+	color: #848484;
+	font-weight: 400;
+}
+
+/* h5: title */
 .product__item__text h5 {
+	font-size: 17px;
 	color: #0d0d0d;
-	font-weight: 700;
+	font-weight: 600;
+}
+
+/* h4: price */
+.product__item__text h4 {
+	font-size: 16px;
+	color: #46578A;
+	font-weight: 400;
+}
+
+/* h3: review */
+.product__item__text h3 {
+	font-size: 14px;
+	color: #F8DC7F;
+	font-weight: 400;
 }
 
 .product__item__text .product__color__select {
