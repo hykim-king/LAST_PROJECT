@@ -137,7 +137,7 @@
 				//"msgId":"1","msgContents"
 				if("0"==data.msgId){//사용할 수 있음
 					$("#memberIdStatus").val("1");//사용할 수 있음
-					if(null==member){
+					if('null'==member){
 						alert("인증번호가 전송되었습니다.");
 						sendAuthEmail($("#memberId").val());
 						add_auth();
