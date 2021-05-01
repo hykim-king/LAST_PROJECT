@@ -16,7 +16,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>  
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="hContext" value="${pageContext.request.contextPath }"> </c:set> 
+<c:set var="hContext" value="${pageContext.request.contextPath }"> </c:set>
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,7 +56,7 @@
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
                     </div>
-                </div> 
+                </div>
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul></ul>
@@ -69,8 +69,7 @@
         </div>
     </header>
 	<!-- //header -->
-	
-	
+
 	<!-- body -->
 	<div class="wrap container">
 		<section class="product spad">
@@ -80,17 +79,67 @@
 			 	<div class="row">
 	                <div class="col-lg-12">
 	                    <ul class="filter__controls">
-	                        <li class="active" >Category Best Sellers</li>
+	                        <li class="active" >Categories</li>
 	                    </ul>
 	                </div>
 	            </div>
 			 </div>
-			 <div class="row text-center" id="category">
-			 	<div class="row no-gutters clients-wrap clearfix wow fadeInUp">
-		         </div>                                                                                                                                               
-	         </div>
-			 <!-- //카테고리존 -->
 			 
+			 
+			 <div class="row text-center" id="category">
+			 	<div class="col-lg-2 col-md-4 col-6">
+					<div class="product__item" id="category_img">
+						<a href="${hContext}/store/store_category.do">
+							<img src="${hContext}/resources/store/img/category/00.JPG" class="img-fluid aos-init aos-animate" data-aos="flip-right">
+						</a>
+					</div>
+				</div>
+			 
+				<div class="col-lg-2 col-md-4 col-6">
+					<div class="product__item" id="category_img">
+						<a href="${hContext}/store/store_category.do?category=10">
+							<img src="${hContext}/resources/store/img/category/01.JPG" class="img-fluid aos-init aos-animate" data-aos="flip-right">
+						</a>
+					</div>
+				</div>
+				
+				<div class="col-lg-2 col-md-4 col-6">
+					<div class="product__item" id="category_img">
+						<a href="${hContext}/store/store_category.do?category=20">
+							<img src="${hContext}/resources/store/img/category/02.JPG" class="img-fluid aos-init aos-animate" data-aos="flip-right">
+						</a>
+					</div>
+				</div>
+				
+				<div class="col-lg-2 col-md-4 col-6">
+					<div class="product__item" id="category_img">
+						<a href="${hContext}/store/store_category.do?category=30">
+							<img src="${hContext}/resources/store/img/category/03.JPG" class="img-fluid aos-init aos-animate" data-aos="flip-right">
+						</a>
+					</div>
+				</div>
+				
+				<div class="col-lg-2 col-md-4 col-6">
+					<div class="product__item" id="category_img">
+						<a href="${hContext}/store/store_category.do?category=40">
+							<img src="${hContext}/resources/store/img/category/04.JPG" class="img-fluid aos-init aos-animate" data-aos="flip-right">
+						</a>
+					</div>
+				</div>
+				
+				<div class="col-lg-2 col-md-4 col-6">
+					<div class="product__item" id="category_img">
+						<a href="${hContext}/store/store_category.do?category=50">
+							<img src="${hContext}/resources/store/img/category/05.JPG" class="img-fluid aos-init aos-animate" data-aos="flip-right">
+						</a>
+					</div>
+				</div>
+	         </div>                                                                                                                                           
+		</section>
+		<!-- //카테고리존 -->
+			
+		<section class="product spad"> 
+			 ${list }
 			 <!-- 상품존 -->
 	       	 <div class="container">
 	            <div class="row">
@@ -115,15 +164,11 @@
 	  	//jquery 객채생성이 완료
 		$(document).ready(function() {
 			console.log("1.document:최초수행!");
-			doRetrieveBest(1);
+			doRetrieve(1, "20");
 		});//--document ready
 		
-		//상품클릭
-		$("#productClick").on("click", function(e) {
-			console.log("상품상세페이지이동");
-		});
 		
-		//스크랩클릭
+		//스크랩클릭_아직구현x
 		$("#scrap").on("click", function(e) {
 			console.log("스크랩완료");
 		});
@@ -132,17 +177,44 @@
 		//베스트 혹은 신상품 클릭
 		$("#newArrivals").on("click", function(e) {
 			console.log("신상품순클릭");
-			doRetrieveNew(1);
+			doRetrieve(1, "10");
 		});
 		
 		$("#bestSellers").on("click", function(e) {
 			console.log("베스트상품순클릭");
-			doRetrieveBest(1);
+			doRetrieve(1, "20");
 		});
 		
 		
+		//카테고리클릭
+		$("#category").on("click","#category",function(e){
+			e.preventDefault();
+			console.log("category click");
+	 	 	let tds = $(this).children();
+	 	 	console.log(tds);
+			var category = tds.eq(7).text();
+			console.log(category); 
+			
+			window.location.href = "${hContext}/store/store_category.do?category="+category;
 		
-		function doRetrieveBest(page) {
+		});
+		
+		
+		//상품클릭
+		$("#MixItUp666159").on("click","#productItem",function(e){
+			e.preventDefault();
+			console.log("product click");
+	 	 	let tds = $(this).children();
+	 	 	console.log(tds);
+			var productSeq = tds.eq(1).text();
+			console.log(productSeq); 
+			
+			window.location.href = "${hContext}/store/store_detail.do?productSeq="+productSeq;
+
+		}); 
+		
+		
+		function doRetrieve(page,div) {
 			
 			$.ajax({
 	    		type: "GET",
@@ -150,15 +222,15 @@
 	    		asyn:"true",
 	    		dataType:"html",
 	    		data:{
-	    			pageSize: $("#pageSize").val(),
+	    			pageSize: "10",
 	    			searchDiv: "",
 	    			searchWord: "",
-	    			orderDiv: "20",
+	    			orderDiv: div,
 	    			pageNum: page
 	    		},
 	    		
 	    		success:function(data){//통신 성공
-	        		console.log("success data:"+data);
+	        		console.log("success data load");
 	        		var parseData = JSON.parse(data);
 	    
 	    			//기존 데이터 삭제
@@ -166,17 +238,14 @@
 	    			console.log("parseData.length:"+parseData.length);
 	    			$("#MixItUp666159").empty();
 	    			
-	    			
     				//data가 있는 경우
 	    			if(parseData.length>0){
 	    				
 	    				$.each(parseData, function(i, value) {
-	    					console.log("value");
-	    					
 	    					html += " <div class='col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals'>                                                                            ";
-	    					html += " 	<div class='product__item'>                                                                                                                                            ";
+	    					html += " 	<div class='product__item' id='productItem'>                                                                                                                                            ";
 	    					html += " 		<div class='product__item__pic set-bg'> ";
-	    					html += "			<img src='${hContext}/resources/store/img/"+value.imgId+".jpg'> ";
+	    					html += "			<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><img src='${hContext}/resources/store/img/"+value.imgId+".jpg'></a> ";
 	    					html += " 			<ul class='product__hover' id='scrap'>                                                                                                                                    ";
 	    					html += " 				<li><a href='#'><img src='${hContext}/resources/store/img/icon/bookmark.png' alt=''><span>scrap</span></a></li>                                                     ";
 	    					html += " 			</ul>                                                                                                                                                          ";
@@ -184,100 +253,18 @@
 	    					html += " 		<div class='product__item__text' id='productItem'>                                                                                                                 ";
 	    					html +=  			"<h6>"+value.company+"</h6>";                                                                                                                                  
 	    					html +=  			"<h5>"+value.title+"</h5>";                                                                                                                                    
-	    					html +=  			"<h6>가격 "+value.price+"</h5>";                                                                                                                                
-	    					html += 			"<h6>리뷰 "+value.totalReview+"</h6>";                                                                                                                          
+	    					html +=  			"<h4>가격 "+value.price+"</h4>";                                                                                                                                
+	    					html += 			"<h3>리뷰 "+value.totalReview+"</h3>";                                                                                                                          
 	    					html += " 		</div>                                                                                                                                                             ";
 	    					html += " 	</div>                                                                                                                                                                 ";
 	    					html += " </div>                                                                                                                                                                   ";
-
-	    				});
 	    				
-	    			}else{ //data가 없는 경우
-	    				html+= " <div class='col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals'>                                                                                          ";
-	    				html+= "    <div class='product__item'>                                                                                                                                       ";
-	    				html+= " 	   <div class='product__item__pic set-bg' data-setbg='${hContext}/resources/store/img/img01.JPG' style='background-image: url('${hContext}/resources/img/img01.JPG');'>  ";
-	    				html+= " 		   <ul class='product__hover' id='scrap'>                                                                                                                                 ";
-	    				html+= " 			   <li><a href='#'><img src='${hContext}/resources/store/img/icon/bookmark.png' alt=''><span>scrap</span></a></li>                                                  ";
-	    				html+= " 		   </ul>                                                                                                                                                       ";
-	    				html+= " 	   </div>                                                                                                                                                          ";
-	    				html+= " 	   <div class='product__item__text' id='productItem'>                                                                                                              ";
-	    				html+= " 			<h6>제조사없음</h6>                                                                                                                                           ";
-	    				html+= " 			<h5>상품명없음</h5>                                                                                                                                           ";
-	    				html+= " 			<h6>가격없음</h5>                                                                                                                                            ";
-	    				html+= " 			<h6>리뷰 0</h6>                                                                                                                                             ";
-	    				html+= " 	   </div>                                                                                                                                                          ";
-	    				html+= "    </div>                                                                                                                                                            ";
-	    				html+= " </div>                                                                                                                                                               ";
-	    			}
-    				
-	    			//tbody에 데이터 추가
-	    			$("#MixItUp666159").append(html);
-	    		
-	        	},
-	        	error:function(data){//실패시 처리
-	        		console.log("error:"+data);
-	        	},
-	        	complete:function(data){//성공/실패와 관계없이 수행!
-	        		console.log("complete:"+data);
-	        	}
-	    	});
-		}
- 		
-		
-		
-		
-		function doRetrieveNew(page) {
-			
-			$.ajax({
-	    		type: "GET",
-	    		url:"${hContext}/product/do_retrieve.do",
-	    		asyn:"true",
-	    		dataType:"html",
-	    		data:{
-	    			pageSize: $("#pageSize").val(),
-	    			searchDiv: "",
-	    			searchWord: "",
-	    			orderDiv: "10",
-	    			pageNum: page
-	    		},
-	    		
-	    		success:function(data){//통신 성공
-	        		console.log("success data:"+data);
-	        		var parseData = JSON.parse(data);
-	    
-	    			//기존 데이터 삭제
-	    			var html="";
-	    			console.log("parseData.length:"+parseData.length);
-	    			$("#MixItUp666159").empty();
-	    			
-	    			
-    				//data가 있는 경우
-	    			if(parseData.length>0){
-	    				
-	    				$.each(parseData, function(i, value) {
-	    					console.log("value");
 	    					
-	    					html += " <div class='col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals'>                                                                            ";
-	    					html += " 	<div class='product__item'>                                                                                                                                            ";
-	    					html += " 		<div class='product__item__pic set-bg' data-setbg='이미지주소' style='background-image: url(\'img_girl.jpg\');' >  ";
-	    					html += " 			<ul class='product__hover' id='scrap'>                                                                                                                                    ";
-	    					html += " 				<li><a href='#'><img src='${hContext}/resources/store/img/icon/bookmark.png' alt=''><span>scrap</span></a></li>                                                     ";
-	    					html += " 			</ul>                                                                                                                                                          ";
-	    					html += " 		</div>                                                                                                                                                             ";
-	    					html += " 		<div class='product__item__text' id='productItem'>                                                                                                                 ";
-	    					html +=  			"<h6>"+value.company+"</h6>";                                                                                                                                  
-	    					html +=  			"<h5>"+value.title+"</h5>";                                                                                                                                    
-	    					html +=  			"<h6>가격 "+value.price+"</h5>";                                                                                                                                
-	    					html += 			"<h6>리뷰 "+value.totalReview+"</h6>";                                                                                                                          
-	    					html += " 		</div>                                                                                                                                                             ";
-	    					html += " 	</div>                                                                                                                                                                 ";
-	    					html += " </div>                                                                                                                                                                   ";
-
 	    				});
 	    				
 	    			}else{ //data가 없는 경우
 	    				html+= " <div class='col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals'>                                                                                          ";
-	    				html+= "    <div class='product__item'>                                                                                                                                       ";
+	    				html+= "    <div class='product__item' id='productItem'>                                                                                                                                       ";
 	    				html+= " 	   <div class='product__item__pic set-bg' data-setbg='${hContext}/resources/store/img/img01.JPG' style='background-image: url('${hContext}/resources/img/img01.JPG');'>  ";
 	    				html+= " 		   <ul class='product__hover' id='scrap'>                                                                                                                                 ";
 	    				html+= " 			   <li><a href='#'><img src='${hContext}/resources/store/img/icon/bookmark.png' alt=''><span>scrap</span></a></li>                                                  ";

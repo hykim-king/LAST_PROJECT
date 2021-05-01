@@ -20,7 +20,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8"> 
+	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
@@ -69,8 +69,8 @@
         </div>
     </header>
 	<!-- //header -->
-	
-	<!-- body --> 
+
+
 	<section class="shop spad">
         <div class="container">
             <div class="row">
@@ -98,12 +98,12 @@
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
                                                 <ul id="categoryNum" class="nice-scroll" tabindex="1" style="overflow-y: hidden; outline: none;">
-                                                    <li  id="category0"><a href="#">전체보기</a></li>
-                                                    <li  id="category10"><a href="#">가구(10)</a></li>
-                                                    <li  id="category20"><a href="#">주방(20)</a></li>
-                                                    <li  id="category30"><a href="#">가전(30)</a></li>
-                                                    <li  id="category40"><a href="#">생활(40)</a></li>
-                                                    <li  id="category50"><a href="#">DIY/공구(50)</a></li>
+                                                    <li id="category"><a href="#">전체보기</li></a>
+                                                    <li id="category"><a href="#">가구(10)</li></a>
+                                                    <li id="category"><a href="#">주방(20)</li></a>
+                                                    <li id="category"><a href="#">가전(30)</li></a>
+                                                    <li id="category"><a href="#">생활(40)</li></a>
+                                                    <li id="category"><a href="#">DIY/공구(50)</li></a>
                                                 </ul>
                                             </div>
                                         </div>
@@ -178,8 +178,6 @@
             </div>
         </div>
     </section>
-    <!-- //body -->
-    
     
 	<script type="text/javascript">
     
@@ -192,37 +190,26 @@
 		
 		
 		//카테고리별 조회
-		$("#category0").on("click", function(e) {
+		$("#category").on("click", function(e) {
 			console.log("category0 클릭");
-			doRetrieveBest(1,"");
-			doRetrieveNew(1,"");
+			var div = $("#category").val();
+			doRetrieveBest(1,div);
+			doRetrieveNew(1,div);
 		});
-		$("#category10").on("click", function(e) {
-			console.log("category10 클릭");
-			doRetrieveBest(1,"10");
-			doRetrieveNew(1,"10");
+		
+		//카테고리클릭
+		$("#category").on("click","#category",function(e){
+			e.preventDefault();
+			console.log("category click");
+	 	 	let tds = $(this).children();
+	 	 	console.log(tds);
+			var category = tds.eq(7).text();
+			console.log(category); 
+			
+			window.location.href = "${hContext}/store/store_category.do?category="+category;
+		
 		});
-		$("#category20").on("click", function(e) {
-			console.log("category20 클릭");
-			doRetrieveBest(1,"20");
-			doRetrieveNew(1,"20");
-		});
-		$("#category30").on("click", function(e) {
-			console.log("category30 클릭");
-			doRetrieveBest(1,"30");
-			doRetrieveNew(1,"30");
-		});
-		$("#category40").on("click", function(e) {
-			console.log("category40 클릭");
-			doRetrieveBest(1,"40");
-			doRetrieveNew(1,"40");
-		});
-		$("#category50").on("click", function(e) {
-			console.log("category50 클릭");
-			doRetrieveBest(1,"50");
-			doRetrieveNew(1,"50");
-		});
-
+		
 		
 		
 		function doRetrieveBest(page,div) {
@@ -234,8 +221,8 @@
 	    		dataType:"html",
 	    		data:{
 	    			pageSize: $("#pageSize").val(),
-	    			searchDiv: div,
-	    			searchWord: "",
+	    			searchDiv: $("#category").val(),
+	    			searchWord: $("#searchWord").val(),
 	    			orderDiv: "20",
 	    			pageNum: page
 	    		},
@@ -267,8 +254,8 @@
 	    					html += " 		<div class='product__item__text' id='productItem'>                                                                                                                 ";
 	    					html +=  			"<h6>"+value.company+"</h6>";                                                                                                                                  
 	    					html +=  			"<h5>"+value.title+"</h5>";                                                                                                                                    
-	    					html +=  			"<h6>가격 "+value.price+"</h5>";                                                                                                                                
-	    					html += 			"<h6>리뷰 "+value.totalReview+"</h6>";                                                                                                                          
+	    					html +=  			"<h4>가격 "+value.price+"</h4>";                                                                                                                                
+	    					html += 			"<h3>리뷰 "+value.totalReview+"</h3>";                                                                                                                          
 	    					html += " 		</div>                                                                                                                                                             ";
 	    					html += " 	</div>                                                                                                                                                                 ";
 	    					html += " </div>                                                                                                                                                                   ";
