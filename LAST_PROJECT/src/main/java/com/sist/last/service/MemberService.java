@@ -9,6 +9,14 @@ import com.sist.last.vo.Member;
 
 public interface MemberService {
 	
+	public int doLoginCnt(DTO dto) throws SQLException;
+	
+	/**
+	 * 비밀번호 찾기 메일 전송
+	 * @param email
+	 * @return
+	 * @throws SQLException
+	 */
 	public String sendPasswdEmail(String email) throws SQLException;
 	
 	/**
@@ -84,7 +92,7 @@ public interface MemberService {
 	// -SILVER 레벨이면서 30번 이상 추천을 받으면 GOLD로 레벨 up
 	// -사용자 레벨의 변경 작업은 일정한 주기를 가지고 일괄처리(트랜잭션 관리)
 	//등업 대상이면 : 해당 레벨로 등업한다.
-	void upgradeGrades() throws SQLException, IllegalAccessException;//--upgradeLevels
+	void upgradeGrades(DTO dto) throws SQLException, IllegalAccessException;//--upgradeLevels
 
 	
 }

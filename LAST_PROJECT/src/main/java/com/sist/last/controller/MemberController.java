@@ -204,11 +204,12 @@ public class MemberController {
 	 * @param session
 	 * @return
 	 * @throws SQLException
+	 * @throws IllegalAccessException 
 	 */
 	@RequestMapping(value = "/do_kakao_login.do",method = RequestMethod.POST
 			,produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public Message doKakaoLogin(Member member, HttpSession session) throws SQLException {
+	public Message doKakaoLogin(Member member, HttpSession session) throws SQLException, IllegalAccessException {
 		LOG.debug("===================================");
 		LOG.debug("=param:"+member);
 		LOG.debug("===================================");
@@ -225,9 +226,10 @@ public class MemberController {
 			
 			if(null !=loginMember) {
 				loginMessage.setMsgContents(loginMember.getMemberId()+"님 로그인 되었습니다.");
-				loginMember.setLogin(loginMember.getLogin()+1);
 				LOG.debug("loginMember:"+loginMember);
-				memberService.doUpdate(loginMember);
+				int flag = memberService.doLoginCnt(loginMember);
+				LOG.debug("doLoginCnt() flag:"+flag);
+				memberService.upgradeGrades(loginMember);
 			}
 			
 		} else {
@@ -247,11 +249,12 @@ public class MemberController {
 	 * @param session
 	 * @return
 	 * @throws SQLException
+	 * @throws IllegalAccessException 
 	 */
 	@RequestMapping(value = "/do_login.do",method = RequestMethod.POST
 			,produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public Message doLogin(Member member, HttpSession session) throws SQLException {
+	public Message doLogin(Member member, HttpSession session) throws SQLException, IllegalAccessException {
 		LOG.debug("===================================");
 		LOG.debug("=param:"+member);
 		LOG.debug("===================================");
@@ -271,9 +274,10 @@ public class MemberController {
 			
 			if(null !=loginMember) {
 				loginMessage.setMsgContents(loginMember.getMemberId()+"님 로그인 되었습니다.");
-				loginMember.setLogin(loginMember.getLogin()+1);
 				LOG.debug("loginMember:"+loginMember);
-				memberService.doUpdate(loginMember);
+				int flag = memberService.doLoginCnt(loginMember);
+				LOG.debug("doLoginCnt() flag:"+flag);
+				memberService.upgradeGrades(loginMember);
 			}
 			
 			session.setAttribute("member", loginMember);

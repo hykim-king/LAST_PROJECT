@@ -30,6 +30,26 @@ public class MemberDaoImpl {
 	
 	public MemberDaoImpl() {}
 	
+	/**
+	 * 로그인 횟수
+	 * @param dto
+	 * @return
+	 * @throws SQLException
+	 */
+	public int doLoginCnt(DTO dto) throws SQLException {
+		int flag = 0;
+		Member member = (Member) dto;
+		String statement = this.NAMESPACE+".doLoginCnt";
+		LOG.debug("==================================");
+		LOG.debug("=member="+member);
+		LOG.debug("=statement="+statement);
+		flag = this.sqlSessionTemplate.update(statement, member);
+		LOG.debug("=flag="+flag);
+		LOG.debug("==================================");
+		
+		return flag;
+	}
+	
 	/*
 	 * 1. id존재 유무
 	 * 2. 비번존재 유무

@@ -123,7 +123,7 @@ public class JTestMemberService {
 		assertThat(flag, is(5));
 		
 		//등업
-		this.memberService.upgradeGrades();
+		//this.memberService.upgradeGrades();
 		
 		//등업 로직 check
 		checkGrade(members.get(0), Grade.NEW);
@@ -166,18 +166,18 @@ public class JTestMemberService {
 		
 		assertThat(flag, is(5));
 		
-		try {
-			memberService.upgradeGrades();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch(RuntimeException e) {
-			LOG.debug("=========================");
-			LOG.debug("=RuntimeException="+e.getMessage());
-			LOG.debug("=========================");
-			//e.printStackTrace();
-		}
+//		try {
+//			memberService.upgradeGrades();
+//		} catch (IllegalAccessException e) {
+//			e.printStackTrace();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} catch(RuntimeException e) {
+//			LOG.debug("=========================");
+//			LOG.debug("=RuntimeException="+e.getMessage());
+//			LOG.debug("=========================");
+//			//e.printStackTrace();
+//		}
 		
 		//강제 예외 발생 코드를 제외하였으므로, 정상 등업 된다.
 		checkGrade(members.get(1),Grade.SILVER); //Transaction 처리 되면 Rollback->

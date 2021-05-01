@@ -85,16 +85,12 @@ public class MemberServiceImpl implements MemberService {
 	// -사용자 등급의 변경 작업은 일정한 주기를 가지고 일괄처리(트랜잭션 관리)
 	//등업 대상이면 : 해당 등급으로 등업한다.
 	@Override
-	public void upgradeGrades() throws SQLException, IllegalAccessException {
+	public void upgradeGrades(DTO dto) throws SQLException, IllegalAccessException {
 
-		Member memberSearch  = new Member();
-		memberSearch.setMemberId("L_100");
-		List<Member> members = memberDao.getAll(memberSearch);
-		for(Member member: members) {
-			//1. upgrade 대상 선정
-			if(canUpgradeGrade(member)==true) {
+		Member member = (Member) dto;
+
+		if(canUpgradeGrade(member)==true) {
 				upgradeGrade(member);
-			}
 		}
 		
 	}//--upgradeLevels
@@ -140,7 +136,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		String from = "morningstar_0921@naver.com";  //from. 무조건 Naver아이디
 		String title = "Intery 회원가입 인증번호 안내"; //제목
-		String contents = "인증번호는 "+auth+" 입니다."; //내용
+		String contents = "본인확인 인증번호 ["+auth+"]를 화면에 입력하세요."; //내용
 		String recAddr = email; //받는 사람
 		SimpleMailMessage simpleMessage = new SimpleMailMessage();
 		
@@ -226,6 +222,12 @@ public class MemberServiceImpl implements MemberService {
 		mailSender.send(simpleMessage);
 		
 		return outVO.getPasswd();
+	}
+
+	@Override
+	public int doLoginCnt(DTO dto) throws SQLException {
+
+		return this.memberDao.doLoginCnt(dto);
 	}
 
 }
