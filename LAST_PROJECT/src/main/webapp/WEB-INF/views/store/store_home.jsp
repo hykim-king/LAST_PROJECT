@@ -48,7 +48,7 @@
 </head>
 <body>
 	<!-- header -->
-	<%@ include file="../cmn/header.jsp"%>
+	<%-- <%@ include file="../cmn/header.jsp"%> --%>
 	
 	<header class="header">
         <div class="container">
@@ -89,7 +89,7 @@
 			 <div class="row text-center" id="category">
 			 	<div class="col-lg-2 col-md-4 col-6">
 					<div class="product__item" id="category_img">
-						<a href="${hContext}/store/store_category.do">
+						<a href="${hContext}/store/store_category.do?searchDiv=0">
 							<img src="${hContext}/resources/store/img/category/00.JPG" class="img-fluid aos-init aos-animate" data-aos="flip-right">
 						</a>
 					</div>
@@ -97,7 +97,7 @@
 			 
 				<div class="col-lg-2 col-md-4 col-6">
 					<div class="product__item" id="category_img">
-						<a href="${hContext}/store/store_category.do?category=10">
+						<a href="${hContext}/store/store_category.do?searchDiv=10">
 							<img src="${hContext}/resources/store/img/category/01.JPG" class="img-fluid aos-init aos-animate" data-aos="flip-right">
 						</a>
 					</div>
@@ -105,7 +105,7 @@
 				
 				<div class="col-lg-2 col-md-4 col-6">
 					<div class="product__item" id="category_img">
-						<a href="${hContext}/store/store_category.do?category=20">
+						<a href="${hContext}/store/store_category.do?searchDiv=20">
 							<img src="${hContext}/resources/store/img/category/02.JPG" class="img-fluid aos-init aos-animate" data-aos="flip-right">
 						</a>
 					</div>
@@ -113,7 +113,7 @@
 				
 				<div class="col-lg-2 col-md-4 col-6">
 					<div class="product__item" id="category_img">
-						<a href="${hContext}/store/store_category.do?category=30">
+						<a href="${hContext}/store/store_category.do?searchDiv=30">
 							<img src="${hContext}/resources/store/img/category/03.JPG" class="img-fluid aos-init aos-animate" data-aos="flip-right">
 						</a>
 					</div>
@@ -121,7 +121,7 @@
 				
 				<div class="col-lg-2 col-md-4 col-6">
 					<div class="product__item" id="category_img">
-						<a href="${hContext}/store/store_category.do?category=40">
+						<a href="${hContext}/store/store_category.do?searchDiv=40">
 							<img src="${hContext}/resources/store/img/category/04.JPG" class="img-fluid aos-init aos-animate" data-aos="flip-right">
 						</a>
 					</div>
@@ -129,7 +129,7 @@
 				
 				<div class="col-lg-2 col-md-4 col-6">
 					<div class="product__item" id="category_img">
-						<a href="${hContext}/store/store_category.do?category=50">
+						<a href="${hContext}/store/store_category.do?searchDiv=50">
 							<img src="${hContext}/resources/store/img/category/05.JPG" class="img-fluid aos-init aos-animate" data-aos="flip-right">
 						</a>
 					</div>
@@ -176,28 +176,17 @@
 		
 		//베스트 혹은 신상품 클릭
 		$("#newArrivals").on("click", function(e) {
+			e.preventDefault();
 			console.log("신상품순클릭");
 			doRetrieve(1, "10");
 		});
 		
 		$("#bestSellers").on("click", function(e) {
+			e.preventDefault();
 			console.log("베스트상품순클릭");
 			doRetrieve(1, "20");
 		});
 		
-		
-		//카테고리클릭
-		$("#category").on("click","#category",function(e){
-			e.preventDefault();
-			console.log("category click");
-	 	 	let tds = $(this).children();
-	 	 	console.log(tds);
-			var category = tds.eq(7).text();
-			console.log(category); 
-			
-			window.location.href = "${hContext}/store/store_category.do?category="+category;
-		
-		});
 		
 		
 		//상품클릭
@@ -271,10 +260,10 @@
 	    				html+= " 		   </ul>                                                                                                                                                       ";
 	    				html+= " 	   </div>                                                                                                                                                          ";
 	    				html+= " 	   <div class='product__item__text' id='productItem'>                                                                                                              ";
-	    				html+= " 			<h6>제조사없음</h6>                                                                                                                                           ";
-	    				html+= " 			<h5>상품명없음</h5>                                                                                                                                           ";
-	    				html+= " 			<h6>가격없음</h5>                                                                                                                                            ";
-	    				html+= " 			<h6>리뷰 0</h6>                                                                                                                                             ";
+	    				html+= " 			<h6>제조사 없음</h6>                                                                                                                                           ";
+	    				html+= " 			<h5>상품명 없음</h5>                                                                                                                                           ";
+	    				html+= " 			<h4>가격 없음</h4>                                                                                                                                            ";
+	    				html+= " 			<h3>리뷰 0</h3>                                                                                                                                             ";
 	    				html+= " 	   </div>                                                                                                                                                          ";
 	    				html+= "    </div>                                                                                                                                                            ";
 	    				html+= " </div>                                                                                                                                                               ";

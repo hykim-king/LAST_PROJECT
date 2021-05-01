@@ -48,7 +48,7 @@
 </head>
 <body>
 	<!-- header -->
-	<%@ include file="../cmn/header.jsp"%>
+	<%-- <%@ include file="../cmn/header.jsp"%> --%>
 	
 	<header class="header">
         <div class="container">
@@ -82,7 +82,7 @@
                         <div class="shop__sidebar__search">
                             <form action="#">
                                 <input type="text" name="searchWord" id="searchWord" placeholder="Search..." >
-                                <button type="submit"  id="doRetrieve"><span class="icon_search"></span></button>
+								<button type="button" id="searchBtn"><span class="icon_search"></span></button>
                             </form>
                         </div>
                         <!-- //검색 -->
@@ -97,14 +97,14 @@
                                     <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
-                                                <ul id="categoryNum" class="nice-scroll" tabindex="1" style="overflow-y: hidden; outline: none;">
-                                                    <li id="category"><a href="#">전체보기</li></a>
-                                                    <li id="category"><a href="#">가구(10)</li></a>
-                                                    <li id="category"><a href="#">주방(20)</li></a>
-                                                    <li id="category"><a href="#">가전(30)</li></a>
-                                                    <li id="category"><a href="#">생활(40)</li></a>
-                                                    <li id="category"><a href="#">DIY/공구(50)</li></a>
-                                                </ul>
+                                              	<select name="searchDiv" id="searchDiv">
+													<option value="0" <c:if test="${searchDiv=='0'}">selected</c:if>>전체보기</option>
+													<option value="10" <c:if test="${searchDiv=='10'}">selected</c:if>>가구</option>
+													<option value="20" <c:if test="${searchDiv=='20'}">selected</c:if>>주방</option>
+													<option value="30" <c:if test="${searchDiv=='30'}">selected</c:if>>가전</option>
+													<option value="40" <c:if test="${searchDiv=='40'}">selected</c:if>>생활</option>                      
+													<option value="50" <c:if test="${searchDiv=='50'}">selected</c:if>>DIY/공구</option>
+												</select>
                                             </div>
                                         </div>
                                     </div>
@@ -184,7 +184,7 @@
 	  	//jquery 객채생성이 완료
 		$(document).ready(function() {
 			console.log("1.document:최초수행!");
-			doRetrieveBest(1,"");
+			doRetrieveBest(1);
 			doRetrieveNew(1,"");
 		});//--document ready
 		
@@ -193,26 +193,23 @@
 		$("#category").on("click", function(e) {
 			console.log("category0 클릭");
 			var div = $("#category").val();
-			doRetrieveBest(1,div);
+			doRetrieveBest(1);
 			doRetrieveNew(1,div);
 		});
 		
-		//카테고리클릭
-		$("#category").on("click","#category",function(e){
-			e.preventDefault();
-			console.log("category click");
-	 	 	let tds = $(this).children();
-	 	 	console.log(tds);
-			var category = tds.eq(7).text();
-			console.log(category); 
-			
-			window.location.href = "${hContext}/store/store_category.do?category="+category;
 		
+		$("#searchBtn").on("click", function(e) {
+			doRetrieveBest(1);
+			doRetrieveNew(1,div);
 		});
 		
+
+		$("#searchDiv").on("change", function(){
+     		console.log("searchDiv");
+     		location.href = "${hContext}/store/store_category.do?searchDiv="+$("#searchDiv").val();
+     	});	
 		
-		
-		function doRetrieveBest(page,div) {
+		function doRetrieveBest(page) {
 			
 			$.ajax({
 	    		type: "GET",
@@ -221,7 +218,7 @@
 	    		dataType:"html",
 	    		data:{
 	    			pageSize: $("#pageSize").val(),
-	    			searchDiv: $("#category").val(),
+	    			searchDiv: $("#searchDiv").val(),
 	    			searchWord: $("#searchWord").val(),
 	    			orderDiv: "20",
 	    			pageNum: page
@@ -241,12 +238,10 @@
 	    			if(parseData.length>0){
 	    				
 	    				$.each(parseData, function(i, value) {
-	    					console.log("value");
-	    					
-	    					html += " <div class='col-lg-4 col-md-6 col-sm-6'>                                                                            ";
-	    					html += " 	<div class='product__item'>                                                                                                                                            ";
+	    					html += " <div class='col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals'>                                                                            ";
+	    					html += " 	<div class='product__item' id='productItem'>                                                                                                                                            ";
 	    					html += " 		<div class='product__item__pic set-bg'> ";
-	    					html += "			<img src='${hContext}/resources/store/img/"+value.imgId+".jpg'> ";
+	    					html += "			<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><img src='${hContext}/resources/store/img/"+value.imgId+".jpg'></a> ";
 	    					html += " 			<ul class='product__hover' id='scrap'>                                                                                                                                    ";
 	    					html += " 				<li><a href='#'><img src='${hContext}/resources/store/img/icon/bookmark.png' alt=''><span>scrap</span></a></li>                                                     ";
 	    					html += " 			</ul>                                                                                                                                                          ";
@@ -259,7 +254,8 @@
 	    					html += " 		</div>                                                                                                                                                             ";
 	    					html += " 	</div>                                                                                                                                                                 ";
 	    					html += " </div>                                                                                                                                                                   ";
-
+	    				
+	    					
 	    				});
 	    				
 	    			}else{ //data가 없는 경우
