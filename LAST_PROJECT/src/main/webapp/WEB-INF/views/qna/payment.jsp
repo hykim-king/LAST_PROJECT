@@ -27,10 +27,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
 
-	<title>PAYMENT</title>
+	<title>결제</title>
 	
 	  <!-- 부트스트랩 -->
-    <link href="${hContext }/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${hContext}/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${hContext}/resources/css/store-cart.style.css" rel="stylesheet">
+    <link href="${hContext}/resources/css/themify-icons.css" rel="stylesheet">
+    <link href="${hContext}/resources/css/elegant-icons.css" rel="stylesheet">
 
     <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
     <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
@@ -46,383 +49,236 @@
 	
 </head>
 <body>
-<!-- div container -->
-	<div class="wrap container">
-	
-		<!--장바구니 데이터 가져오기  -->
+<!-- 결제 데이터 가져오기 -->
 		<!-- 제목 -->
 	 	<div class="page-header">
 	 		<h2>결제</h2>
 	 	</div>
 	    <!--// 제목 -->
 	    
-	 <!-- 페이지 검색영역 -->
-		<div class="row col-lg-12">
-			<div class="col-xs-8 col-sm-9 col-md-8 col-lg-2 text-right ">
-	 			 <select class="form-control input-sm " name="pageSize" id="pageSize">				
-	    		  		<option value="3">3개씩 보기</option>	    		  		
-						<option value="5">5개씩 보기</option>
-	    		  </select> 
-		    </div>
-		  </div>
-	<!-- //페이지 검색영역 --> 
-	    
-        <!-- table -->
-		<div class="table-responsive">
-		    <!-- table -->
-			<table id="BasketTable" class="table table-striped table-bordered table-hover table-condensed">
-				<thead class="bg-primary">  
-					<th class="text-center col-lg-3 col-md-1  col-xs-3">상품 이미지</th>
-					<th class="text-center col-lg-3 col-md-3  col-xs-3">상품명</th>
-					<th class="text-center col-lg-2 col-md-2  col-xs-2">가격</th>  
-					<th class="text-center col-lg-2 col-md-2  col-xs-2">수량</th>
-					<th class="text-center col-lg-2 col-md-2  col-xs-2">합계</th>
-				</thead>
-			    <tbody>
-			    </tbody>
-			</table>
-		</div>
-        <!--// table -->
-        
-        <!-- pagenation -->
-		<div class="text-center">
-			<div id="page-selection" class="text-center page"></div>
-		</div>
-	    <!--// pagenation -->	
-        
-        <!--//장바구니 데이터 가져오기  -->
-        
-        
-        <!-- 주문내역 -->
-        <!-- 주문내역 제목 -->
-	 	<div class="page-header">
-	 		<h2>주문내역</h2>
-	 	</div>
-	    <!--// 주문내역 제목 -->
-	    
-	   <!-- table -->
-		<div class="table-responsive">
-		    <!-- table -->
-			<table id="OrderTable" class="table table-striped table-bordered table-hover table-condensed">
-				<thead class="bg-primary">  
-					<th class="text-center col-lg-3 col-md-3  col-xs-3">총 주문금액</th>
-				</thead>
-			    <tbody>
-			    </tbody>
-			</table>
-		</div>
-        <!--// table -->
-	    <!-- //주문내역 -->
-	    	
-        <!--상세정보입력  -->
-		<!-- 제목 -->
-	 	<div class="page-header">
-	 		<h2>상세정보입력</h2>
-	 	</div>
-	    <!--// 제목 -->	
-	    
-	    <!-- form --> 
-	    <form action="" class="form-horizontal">
-		  <div class="form-group">
-		    <div class="col-xs-8 col-sm-9 col-md-12 col-lg-12">
-		      <input type="text" class="form-control" id="uId" name="uId"  placeholder="주문하시는 분" maxlength="20">
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <div class="col-xs-8 col-sm-9 col-md-12 col-lg-8">
-		      <input type="text" class="form-control" id="name" name="name"  placeholder="우편번호" maxlength="50">
-		      <input type="button" class="btn btn-primary btn-sm"  value="주소찾기" id="postBtn"/>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		   <div class="col-xs-8 col-sm-9 col-md-12 col-lg-12">
-		      <input type="password" class="form-control" id="passwd" name="passwd"  placeholder="주소" maxlength="50">
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <div class="col-xs-8 col-sm-9 col-md-12 col-lg-12">
-		      <input type="text" numberonly class="form-control" id="login" name="login"  placeholder="나머지주소" maxlength="7">
-		    </div>
-		  </div>			    	    	
-	    </form>
-	    <!--// form --> 
-	    <!--//상세정보입력  -->
-	    
-	    <!-- 버튼 -->
-	    <div class="row text-right">
-	        <div   class="col-xs-8 col-sm-9 col-md-12 col-lg-12">
-	        	<input type="button" class="btn btn-primary btn-lg"  value="결제" id="paymentBtn"/>
-	        	<input type="button" class="btn btn-primary btn-lg"  value="취소" id="cancelBtn"/>
-	        </div>
-	    </div>
-	    <!--// 버튼 -->    
-	</div>
-<!-- //div container -->
+	 <!-- Shopping Payment Section Begin -->
+    <section class="shopping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="cart-table">
+                        <table id="cartTable">
+                            <thead>
+                                <tr>
+                                	<th style="visibility:hidden;position:absolute;">basketSeq</th>
+                                    <th>이미지</th>
+                                    <th>상품명</th>
+                                    <th>옵션 1</th>
+                                    <th>옵션 2</th>
+                                    <th>가격</th>
+                                    <th>수량</th>
+                                    <th>합계</th>
+                                    <th><i class="ti-close"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>  
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 offset-lg-4 pull-right">
+                            <div class="proceed-checkout">
+                                <ul>
+                                    <li class="subtotal text-left">총 상품금액 <span id="totalPrice"></span></li>
+                                    <li class="subtotal text-left">총 배송비 <span id="totalShip"></span></li>
+                                    <li class="cart-total text-left">결제금액 <span id="totalPay"></span></li>
+                                </ul>
+                                <a href="#" class="proceed-btn" id="paymentBtn">결제</a>
+                                <a href="#" class="proceed-btn" id="cancelBtn">취소</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shopping Payment Section End -->
 
 	<!-- javascript -->
 	<script type="text/javascript">
-//	//jquery 객체생성이 완료
-//	$(document).ready(function() {
-//		console.log("document ready");
-//		
-//		//화면 로딩시 보여줄 데이터 
-//		doRetrieve();
-//		//doPayment();
-//	});//--document ready	
-//	
-//
-//	//조회버튼 실행시 
-//	function doRetrieve(page){
-//		console.log("page:"+page);
-//		$.ajax({
-//    		type: "GET",
-//    		url:"${hContext}/payment/do_retrieve.do",
-//    		asyn:"true",
-//    		dataType:"html",
-//    		data:{
-//    			pageSize:$("#pageSize").val(),
-//    			//memberId:$("#memberId").val(),
-//    			pageNum:page
-//    		},
-//    		success:function(data){//통신 성공
-//        		console.log("success data:"+data);
-//        		var parseData = JSON.parse(data);
-//        		
-//        		//기존데이터 삭제
-//        		$("#BasketTable>tbody").empty();
-//        		var html = "";
-//        		
-//        		//페이징 변수
-//        		let totalCount = 0;//총 글수
-//        		let pageTotal = 1;//총 페이지수
-//        		
-//        		//합계(하나의 상품 총 가격) 변수
-//        		let productTotal = 0;
-//        		
-//        		console.log("parseData.length:"+parseData.length);
-//        		console.log("totalCount:"+parseData[0].totalCount);
-//        		
-//				//data가 있는 경우
-//				if(parseData.length>0){
-//					
-//					totalCount = parseData[0].totalCount;
-//					pageTotal  = totalCount/$("#pageSize").val();//42/10->4.2
-//					pageTotal = Math.ceil(pageTotal);//42/10->4.2->5
-//					
-//					//하나의 상품 총 가격
-//					productTotal = price * quantity;
-//					
-//					$.each(parseData,function(i,value){
-//						console.log(i+","+value.name);
-//						html += "<tr>";
-//						html += "	<td class='text-center'><img src='${hContext}/resources/../..' alt='Image placeholder'></td>";
-//						html += "	<td class='text-center'>"+value.title+"</td>";//상품명
-//						html += "	<td class='text-center'>"+value.price+"</td>";//가격
-//						html += "	<td class='text-center'>"+value.quantity+"</td>";//수량
-//						html += "	<td class='text-center'>"+value.productTotal+"</td>";//합계(하나의 상품 총 가격)
-//						html += "</tr>";
-//					});
-//					
-//				}else{//data가 없는 경우
-//    				html +="<tr>";
-//    				html +="	<td class='text-center' colspan='99'>장바구니에 상품을 담아주세요</td>";    		
-//    				html +="</tr>";   
-//				}
-//				
-//				//tbody에 데이터 추가
-//				$("#BasketTable>tbody").append(html);	
-//				
-//				//페이징처리
-//				console.log(pageTotal+","+page);
-//				renderingPage(pageTotal,page);
-//	
-//        	},
-//        	error:function(data){//실패시 처리
-//        		console.log("error:"+data);
-//        	},
-//        	complete:function(data){//성공/실패와 관계없이 수행!
-//        		console.log("complete:"+data);
-//        	}
-//    	});
-//	}//--doRetrieve
-//	
-//	
-//	//주문내역(총 주문금액)
-//	function doPayment(){
-//		console.log("doPayment");
-//		
-//		$.ajax({
-//    		type: "GET",
-//    		//url:"${hContext}/payment/do_retrieve.do",만들어야함
-//    		asyn:"true",
-//    		dataType:"html",
-//    		data:{
-//					//data 넣기
-//    		},
-//    		success:function(data){//통신 성공
-//        		console.log("success data:"+data);
-//        		var parseData = JSON.parse(data);
-//        		
-//        		//기존데이터 삭제
-//        		$("#OrderTable>tbody").empty();
-//        		var html = "";
-//        		
-//        		//합계(하나의 상품 총 가격) 변수
-//        		let productTotal = 0;
-//        		//총 주문금액
-//        		let totalPayment = 0;
-//        	
-//        		console.log("parseData.length:"+parseData.length);
-//
-//				if(parseData.length>0){//data가 있는 경우
-//					
-//					//하나의 상품 총 가격
-//					productTotal = price * quantity;
-//					//총 주문금액
-//					totalPayment += productTotal;
-//					
-//					$.each(parseData,function(i,value){
-//						console.log(i+","+value.name);
-//						html += "<tr>";
-//						html += "	<td class='text-center'>"+value.totalPayment+"</td>";//총 주문금액
-//						html += "</tr>";
-//					});
-//					
-//				}else{//data가 없는 경우
-//    				html +="<tr>";
-//    				html +="	<td class='text-center' colspan='99'>장바구니에 상품을 담아주세요</td>";    		
-//    				html +="</tr>";   
-//				}
-//				
-//				//tbody에 데이터 추가
-//				$("#OrderTable>tbody").append(html);	
-//
-//        	},
-//        	error:function(data){//실패시 처리
-//        		console.log("error:"+data);
-//        	},
-//        	complete:function(data){//성공/실패와 관계없이 수행!
-//        		console.log("complete:"+data);
-//        	}
-//    	});			
-//	}//--doPayment
-//	
-//	
-//	
-//	//paging
-//	//pageTotal:총 페이지수= 총글수/페이지사이즈(10)
-//	//page:현재페이지
-//	//maxVisible:bottom 페이지
-//	function renderingPage(pageTotal,page){
-//		//이전 연결된 Event 핸들러 요소에서 제거
-//		$("#page-selection").unbind('page');
-//		
-//		$("#page-selection").bootpag({
-//		    total: pageTotal,
-//		    page: page,//시작
-//		    maxVisible: 3,
-//		    leaps: true,
-//		    firstLastUse: true,
-//		    first: '←',
-//		    last: '→',
-//		    wrapClass: 'pagination',
-//		    activeClass: 'active',
-//		    disabledClass: 'disabled',
-//		    nextClass: 'next',
-//		    prevClass: 'prev',
-//		    lastClass: 'last',
-//		    firstClass: 'first' 
-//		}).on("page", function(event, num){
-//			doRetrieve(num);//ajax 서버 호출
-//		}); 
-//	}//--renderingPage
-//	
-//	
-//	
-//	//주소찾기
-//
-//	
-//	
-//	//결제버튼
-//	$("#paymentBtn").on("click",function(e){
-//		console.log("paymentBtn");
-//		e.preventDefault();//한번만 호출
-//		
-//	 	let tds = $(this).children();
-// 	 	console.log(tds);
-// 	 	
-// 	 	var memberId = tds.eq(0).text();
-//		var paySeq = tds.eq(1).text();
-//		
-//		console.log("memberId:"+memberId); 
-//		console.log("paySeq:"+paySeq); 
-//
-//		let url = "${hContext}/payment/do_insert.do"
-//			let parameters = {
-//				"paySeq" : paySeq,
-//				"memberId" :memberId,//세션
-//				"storeSeq" :storeSeq,
-//				"modId":memberId//세션
-//				};
-//			let method = "POST";
-//			let async = true;	
-//			
-//			console.log(parameters);
-//			console.log(url);
-//			
-//		if(confirm("결제하시겠습니까?")==false) return;
-//			
-// 		EClass.callAjax(url , parameters, method ,async, function(data){
-//			console.log("data"+data.memberId);
-//			console.log("data"+data.paySeq);
-//			
-//			if("1"==data.msgId) {//결제 성공
-//				alert(data.msgContents);
-//				//doRetrieve(1);
-//			}else {//결제 실패
-//				alert(data.msgId+"\n"+data.msgContents);
-//			}
-//
-//		}); 		
-//	});//--paymentBtn
-//	
-//	
-//	
-//	//취소버튼
-//	$("#cancelBtn").on("click",function(e){
-//		console.log("cancelBtn");
-//		e.preventDefault();//한번만 호출
-//		
-//		 let url = "${hContext}/payment/do_delete.do";
-//		 let parameter = {
-//				 			"paySeq" : paySeq};
-//		 let method = "POST";
-//		 let async = true;	
-//		 
-//		console.log(parameters);
-//		console.log(url);
-//		 
-//		 if(confirm("결제를 취소하시겠습니까?")==false) return;
-//		 
-//		 EClass.callAjax(url, parameter, method, async, function(data) {
-//				 console.log("data:"+data);
-//				 console.log("data:"+data.paySeq);
-//				 
-//				 //성공/실패 여부 메세지 출력
-//				 console.log("data.msgContents:"+data.msgContents);
-//				 
-//				 if("1"==data.msgId){//취소성공
-//					 alert(data.msgContents);
-//				 	 //doRetrieve(1);
-//				 }else{//취소실패
-//					 alert(data.msgId+"\n"+data.msgContents); 
-//				 }
-//				 
-//			 });
-//		
-//	});	//--cancelBtn	
-//	
+	//jquery 객체생성이 완료
+	$(document).ready(function() {
+		console.log("document ready");
 		
+		//화면 로딩시 보여줄 데이터 
+		doSelctOne();
+	});//--document ready	
+	
+
+	//화면 로딩 시 보여줄 결제 데이터 
+	function doSelctOne(){
+		console.log("doSelctOne");
+		
+		var paySeqData ="20210416";
+		
+		$.ajax({
+    		type: "GET",
+    		url:"${hContext}/payment/do_selectone.do",
+    		asyn:"true",
+    		dataType:"html",
+    		data:{
+					"paySeq":paySeqData
+    		},
+    		success:function(data){//통신 성공
+        		console.log("success data : " + data);//여기까지는 들어와있음
+    		
+        		var parseData = JSON.parse(data);//여기에 데이터 안들어옴
+        		
+        		//기존 데이터 삭제
+        		$("#cartTable>tbody").empty();
+        		var html = "";
+        		
+        		console.log("parseData.length : " + parseData.length);
+
+
+        		//데이터가 있는 경우
+        		if(parseData.length > 0) {
+
+        			$.each(parseData, function(i, value) {
+        				console.log(i+","+value.title);
+        				html += "<tr>                                                                                                           ";
+        				html += "    <td style='visibility:hidden;position:absolute;'>"+value.basketSeq+"</td>                                            ";
+        				html += "    <td class='cart-pic first-row'><img src='${hContext}/resources/img/cart-page/product-1.jpg' alt=''></td>   ";
+        				html += "    <td class='cart-title first-row' id='title'>"+value.title+"</td>                                           ";
+        				html += "    <td class='cart-option first-row' id='optone'>"+value.optone+"</td>                                        ";
+        				html += "    <td class='cart-option first-row' id='opttwo'>"+value.opttwo+"</td>                                        ";
+        				html += "    <td class='p-price first-row' id='price'>"+numberWithCommas(value.price)+"원</td>                           ";
+        				html += "    <td class='qua-col first-row'>                                                                             ";
+        				html += "        <div class='quantity'>                                                                                 ";
+        				html += "            <div class='pro-qty'>                                                                              ";
+        				html += "            	 <span class='dec qtybtn'>-</span>                                                              ";
+        				html += "                <input type='text' id='quantity' value="+value.quantity+">                                     ";
+        				html += "            	 <span class='inc qtybtn'>+</span>                                                              ";
+        				html += "            </div>                                                                                             ";
+        				html += "        </div>                                                                                                 ";
+        				html += "    </td>                                                                                                      ";
+        				html += "    <td class='p-price first-row'>"+numberWithCommas(value.quantity*value.price)+"원</td>                       ";
+        				html += "    <td class='close-td first-row'><i class='ti-close'></i></td>                             ";
+        				html += "</tr>                                                                                                          ";
+        			});
+        			
+        		} else { //데이터가 없는 경우
+        			html += "<tr>                                                           ";
+        			html += "	<td class='text-center' colspan='99'>결제 해당 상품이 없습니다.</td>  ";
+        			html += "</tr>                                                          ";
+        		}
+        		
+        		$("#cartTable>tbody").append(html); //데이터 추가
+    				
+        	},
+        	error:function(data){//실패시 처리
+        		console.log("error:"+data);
+        	},
+        	complete:function(data){//성공/실패와 관계없이 수행!
+        		console.log("complete:"+data);
+        	}
+    	});
+	}//--doSelctOne
+	
+	
+	//결제버튼
+	$("#paymentBtn").on("click",function(e){
+		console.log("paymentBtn");
+		e.preventDefault();//한번만 호출
+		
+	 	let tds = $(this).children();
+	 	console.log(tds);
+	 	
+	 	var memberId = tds.eq(0).text();
+		var paySeq = tds.eq(1).text();
+		
+		console.log("memberId:"+memberId); 
+		console.log("paySeq:"+paySeq); 
+
+ 		let url = "${hContext}/payment/do_insert.do"
+			let parameters = {
+				"paySeq" : paySeq,
+				"memberId" :memberId,//세션
+				"storeSeq" :storeSeq,
+				"modId":memberId//세션
+				};
+			let method = "POST";
+			let async = true;	
+			
+			console.log(parameters);
+			console.log(url);
+			
+		if(confirm("결제하시겠습니까?")==false) return;
+			
+		EClass.callAjax(url , parameters, method ,async, function(data){
+			console.log("data"+data.memberId);
+			console.log("data"+data.paySeq);
+			
+			if("1"==data.msgId) {//결제 성공
+				alert(data.msgContents);
+				//결제성공시 화면이동
+				//moveTomain();
+			}else {//결제 실패
+				alert(data.msgId+"\n"+data.msgContents);
+			}
+
+		}); 	 
+	});//--paymentBtn
+	
+	
+	//결제 성공시 화면이동(해창님-Community_Home으로 이동)
+	function moveTomain(){
+		console.log("moveTomain");
+		
+		window.location.href = "${hContext}/houses/home_view.do?memberId=memberId" ;
+	}
+	
+	//결제 취소
+	//확인완료
+		$("#cancelBtn").on("click",function(e){
+			console.log("cancelBtn");
+
+			e.preventDefault(); //지정했는데 여러번 클릭됨...
+			
+			var paySeqData ="20210416";
+			
+			 let url = "${hContext}/payment/do_delete.do";
+			 let parameter = {
+					 			"paySeq" : paySeqData};
+			 let method = "POST";
+			 let async = true;	
+			 
+			console.log("parameter:"+parameter);
+			console.log("url:"+url);
+			 
+			 if(confirm("결제를 취소하시겠습니까?")==false) return;
+			 
+			 EClass.callAjax(url, parameter, method, async, function(data) {
+					 console.log("data:"+data);
+					 console.log("data:"+data.paySeq);
+					 
+					 //성공/실패 여부 메세지 출력
+					 console.log("data.msgContents:"+data.msgContents);
+					 
+					 if("1"==data.msgId){//취소성공
+						 alert(data.msgContents);
+							//취소성공시 화면이동
+							//moveTomain();
+					 }else{//취소실패
+						 alert(data.msgId+"\n"+data.msgContents); 
+					 }
+					 
+				 });
+			
+		});	//--cancelBtn
+
+			
+	/* 숫자 3자리 콤마찍기 */
+	function numberWithCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}		
+	
+
 	</script>
 	<!-- //javascript -->
 </body>

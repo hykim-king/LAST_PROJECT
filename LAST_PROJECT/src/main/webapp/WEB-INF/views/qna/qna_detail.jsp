@@ -48,7 +48,8 @@
 	<script src="${hContext}/resources/js/jquery.bootpag.js"></script>
 </head>
 	<body>
-	
+	${vo }
+   
 	<!-- QnA 단건조회 -->
 	<section class="ftco-section ftco-degree-bg">
       <div class="container">
@@ -58,56 +59,63 @@
 	
 	       	</div>
 	     	<!-- //단건조회 데이터 -->	
-     			
-     		<!-- 리뷰 관련 -->       
-              <!-- Leave a comment -->
-              <div class="comment-form-wrap pt-5">
-                <h3 class="mb-5">Leave a comment</h3>
-                <form action="#" class="p-5 bg-light">
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="QnaReviewContents">
-                  </div>
+	     
+	    <!-- 버튼 -->	
+	    <div class="col-xs-12">
+	        <div class="btn-group btn-group-sm" role="group" style="float:right;">
+	          <input type="button" class="btn btn-default"  value="목록" id="moveToQnaList"/>
+	          <input type="button" class="btn btn-default"  value="삭제" id="doDeleteQna"/>
+	          <input type="button" class="btn btn-default"  value="수정" id="doUpdateQna"/>
+	        </div>
+	    </div>
+		<!--// 버튼 -->	
+ 			
+ 	    <!--  댓글  -->
+	    <div class="container">
+	        <label for="content">comment</label>
 
-                  <div class="form-group">
-                    <input type="submit" value="Post Comment" class="btn py-3 px-4 btn-primary" id="QnaReviewInsert">
-                  </div>
+	        <form name="commentInsertForm">
+	            <div class="input-group">
+	               <input type="hidden" name="bno" value=""/>
+	               <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
+	               <span class="input-group-btn">
+	                    <button class="btn btn-default" type="button" id="commentInsertBtn">등록</button>
+	               </span>
+	            </div>
+	        </form>
+    	</div> 
+    	
+    	<!-- 페이징 선택 -->	        
+	   <div class="col-xs-8 col-sm-9 col-md-8 col-lg-2">
+    		<select class="form-control input-sm" name="pageSize" id="pageSize" >
+	    		<option value="4">4개씩 보기</option>	    		  		
+				<option value="8">8개씩 보기</option>
+				<option value="12">12개씩 보기</option>
+	    	</select>
+	    </div>	
+	    <!-- //페이징 선택 -->
+	    <br/>
+	    <br/>
+	       
+    	
+    <div class="container">
+        <div id="commentList" class="commentList">
 
-                </form>
-              </div>
-              <!-- //Leave a comment -->
-			
-			
-            <div class="pt-5 mt-5">
-	           <h3 class="mb-5">Comments</h3>
-	           <!-- 페이징 개수선택 --> 
-	              	<div class="row col-lg-12">
-						<div class="col-xs-8 col-sm-9 col-md-8 col-lg-2 text-right ">
-						 		<select class="form-control input-sm " name="pageSize" id="pageSize">				
-						    		  <option value="4">4개씩 보기</option>	    		  		
-									  <option value="8">8개씩 보기</option>
-									  <option value="12">12개씩 보기</option>
-						    	</select> 
-						</div>
-					 </div>
-				 <!--// 페이징 개수선택 --> 
-	              <ul class="comment-list" id="qnaReviewList"><!-- start comment-list -->
-	                <li class="comment">
-		                  
-	                </li>
-	              </ul><!-- END comment-list -->
+    	</div>
 
-	              	 <!-- pagenation -->
-						<div class="text-center">
-							<div id="page-selection" class="text-center page"></div>
-						</div>
-					 <!--// pagenation -->	
-            </div>
-            <!-- //리뷰 관련-->
+    	<!-- pagenation -->
+		<div class="row col-lg-12">
+			<div id="page-selection" class="text-right page">
+				
+			</div>
+		</div>
+		<!--// pagenation -->
+    </div>
+    <!-- // 댓글  -->		
             
             
           </div> <!-- .col-md-8 -->
         </div><!--  <div class="row"> -->
-      </div><!-- container -->
     </section> <!-- //QnA 단건조회 -->
     
     
@@ -120,12 +128,16 @@
 	
 			//화면 로딩시 보여줄 데이터
 			doSelectOne();//게시물 단건조회
-			doRetrieveReview();//리뷰 목록조회
+			commentList();//리뷰 목록조회
 		});
 		
+		$("#pageSize").on("change", function(e){
+	    	console.log("pageSize change");
+	     	commentList();
+		});
 		
-		
-		//단건조회 페이지 화면 로딩 시 실행
+//게시물 관련--------------------------------------------------
+//단건조회 페이지 화면 로딩 시 실행
 		function doSelectOne(){
 			console.log("function doSelectOne-QnA");
 			
@@ -160,54 +172,105 @@
 			 });
 
 		}//--doSelectOne
-		
-		
-		
-		//리뷰 작성 
-		$("#QnaReviewInsert").on("click",function(e){
-			console.log("QnaReviewInsert");
+
+//게시물 관련 버튼 이벤트
+//1)목록화면으로 이동 
+		$("#moveToQnaList").on("click",function(e){
+			console.log("moveToQnaList");
 			
-			var reviewSeqData = "";
+			window.location.href = "${hContext}/qna/qna_view.do?";
+		});//--moveToQnaList
+	
+//2)게시물 수정버튼
+		$("#doUpdateQna").on("click",function(e){
+			console.log("doUpdateQna");
+			e.preventDefault();//기능 안먹음..여러번 클릭됨 ㅜ
+			
+
+		});//--doUpdateQna
+	
+//3)게시물 삭제버튼 
+		$("#doDeleteQna").on("click",function(e){
+			console.log("doDeleteQna");
+			e.preventDefault();//기능 안먹음..여러번 클릭됨 ㅜ
+	
+		});//--doDeleteQna
+	
+
+		
+//리뷰 등록버튼
+		$("#commentInsertBtn").on("click",function(e){
+			console.log("commentInsertBtn");
+			
+	        if(eUtil.ISEmpty($("#content").val()) == true){
+	        	alert("내용을 입력 해주세요.");
+	        	$("#content").focus();
+	        	return;            	
+	        }
+		
+			var insertData = $("#content").val(); //commentInsertForm의 내용을 가져옴
+			console.log("insertData:"+insertData);
+			
+		    commentInsert(insertData); //댓글등록 함수호출
+		    
+			commentList(1);
+		    
+			$("#content").val("");			
+			
+		});//--QnaReviewInsert	
+//게시물 관련--------------------------------------------------
+		
+		
+//댓글--------------------------------------------------
+//댓글 등록 
+		function commentInsert(insertData){
+			
+			var reviewSeqData = "2021/04/30b1e848aa39b74d508a27e1d4615340f2";
 			var memberIdData = "haram";
 			var qnaSeqData = "qnaSeqTest03";
 			var divData = "2";
 			// div 리뷰 구분(q&a:2)
 			
 			 let url = "${hContext}/review/do_insert.do";
-			 let parameter = {
+			 let parameters = {
 								"reviewSeq" : reviewSeqData,
 								"memberId"  : memberIdData,
 								"reviewFk"  : qnaSeqData,
 								"div"       : divData,
-								"contents"  : $("#QnaReviewContents").val(),
+								"contents"  : $("#content").val(),
 								"modId"     : memberIdData
 					 		 };
 			 let method = "POST";
 			 let async = true;
-			 
-			 if(confirm("리뷰를 등록하시겠습니까?")==false) return;
-			 
-			 EClass.callAjax(url, parameter, method, async, function(data) {
-				 console.log("data:"+data.msgContents);
-				 
-					if("1"==data.msgId) {//등록 성공
-						alert(data.msgContents);
-					}else {//등록 실패
-						alert(data.msgId+"\n"+data.msgContents);
-					}
-			 });	
-			 
-			 doRetrieveReview();//리뷰 목록조회
-			 
-		});//--QnaReviewInsert
+			
+			console.log("parameters:"+parameters);
+			console.log("url:"+url);
+			
+			if(confirm("댓글을 등록하시겠습니까?")==false) return;
+			
+			EClass.callAjax(url , parameters, method ,async, function(data){
+				console.log("data"+data.memberId);
+				console.log("data"+data.reviewSeq);
+				
+				if("1"==data.msgId) {//등록 성공
+					alert(data.msgContents);
+					commentList();//리뷰 목록조회
+				}else {//등록 실패
+					alert(data.msgId+"\n"+data.msgContents);
+				}
+			}); 
+			
+				
+		}//--commentInsert	
 		
 		
-		//리뷰 목록 - 단건조회 페이지 화면 로딩 시 실행
-		function doRetrieveReview(page){
-			console.log("doRetrieveReview-QnA");
+		
+//댓글 목록 - 단건조회 페이지 화면 로딩 시 실행
+		function commentList(page){
+			console.log("commentList-QnA");
 			
 			//해당 게시물에 작성된 리뷰 
-			var reviewFkData = "qnaSeqTest03";
+			var reviewFkData = "qnaSeqTest03";	
 			
 	      	$.ajax({
 	    		type: "POST",
@@ -218,22 +281,20 @@
 						"reviewFk" :reviewFkData
 	    			  },
 	    		success:function(data){//통신 성공
+	    			
 	        		console.log("success data:"+data);
-	    		
 	        		var parseData = JSON.parse(data);
 	        		
 	        		//기존데이터 삭제
-	        		$("#qnaReviewList").empty();
+	        		$("#commentList").empty();
 	        		
 	        		var html = "";
 	        		
-	        		console.log("parseData.length:"+parseData.length);
 	        		
 	        		//페이징 변수
 	        		let totalCount = 0;
 	        		let pageTotal = 1;
 	        		
-	        		console.log("totalCount:"+parseData[0].totalCnt);
 	        		
 	        		//data가 있는 경우
 	        		if(parseData.length>0){
@@ -251,24 +312,25 @@
 	        			$.each(parseData,function(i,value){
 	        				//console.log(i+","+value.name);
 	        				<!-- 문자: 왼쪽, 숫자: 오른쪽, 같으면: 가운데 -->
-	        				html+= "<li class='comment'>";
-	        				html+= "	<div class='comment-body'>";
-	        				html+= "  		<h3>"+value.memberId+"</h3>";
-	        				html+= "  		<div class='meta'>"+value.regDt+"</div>";
-	        				html+= "  		<p>"+value.contents+"</p>";
-	        				html+= "  		<p><a href='#' class='reply'>Reply</a></p>";
-	        				html+= "	</div>";
-	        				html+= "</li>";
+    			        	html += "<div class='commentArea' style='border-bottom:1px solid darkgray; margin-bottom: 15px;'>";
+    			            html += "<div class='commentInfo'><p>"+value.memberId+"</p>";
+    			            html += "<div class='commentContent'><p>"+value.contents+"</p>";
+    			            html += "<input type='button' class='btn btn-default'  value='수정' id='replyUpdate'/>";
+    			            //html += "<input type='button' class='btn btn-default'  value='삭제' id='replyDelete'/></div>";
+    			             //a += '<a onclick="commentDelete('+value.cno+');"> 삭제 </a> </div>';
+    			            html += "<a onclick='commentDelete("+value.reviewSeq+");'>삭제</a></div>";
+    			            html += "<br/>";
+    			            html += "</div></div>";
 	        			});
 	        			
 	        		}else{//data가 없는 경우
 	        			html += "<tr>";
-	        			html += 	"<td class='text-center' colspan'99>등록된 리뷰가 없습니다.</td>";
+	        			html += 	"<td class='text-center' colspan'99>등록된 댓글이 없습니다.</td>";
 	        			html += "</tr>";
 	        		}
 	        		
 	        		//tbody data add
-	        		$("#qnaReviewList").append(html);
+	        		$("#commentList").append(html);
 	        		
 	        		//페이징처리 :총페이지,현재글
 	        		console.log(pageTotal+","+page);
@@ -283,7 +345,40 @@
 	        	}
 	    	});
 	      	
-		}//--doRetrieveReview
+		}//--doRetrieveReview	
+		
+//댓글 버튼 이벤트 
+//1) 댓글 삭제
+		function commentDelete(reviewSeq){
+			console.log("commentDelete");
+	
+/* 			 let url = "${hContext}/review/do_delete.do";
+			 let parameters = {
+								"reviewSeq" : reviewSeqData
+					 		 };
+			 let method = "POST";
+			 let async = true;
+			
+			console.log("parameters:"+parameters);
+			console.log("url:"+url);
+			
+			if(confirm("댓글을 삭제하시겠습니까?")==false) return;
+			
+			EClass.callAjax(url , parameters, method ,async, function(data){
+				console.log("data"+data.memberId);
+				console.log("data"+data.reviewSeq);
+				
+				if("1"==data.msgId) {//등록 성공
+					alert(data.msgContents);
+					commentList();//리뷰 목록조회
+				}else {//등록 실패
+					alert(data.msgId+"\n"+data.msgContents);
+				}
+			}); 
+			 */
+		}//--commentDelete
+
+		
 		
 		//paging
 		//pageTotal:총 페이지수= 총글수/페이지사이즈(10)
@@ -309,9 +404,12 @@
 			    lastClass: 'last',
 			    firstClass: 'first' 
 			}).on("page", function(event, num){
-				doRetrieveReview(num);//ajax 서버 호출
+				commentList(num);//ajax 서버 호출
 			}); 
-		}//--renderingPage
+		}//--renderingPage	
+		
+//댓글--------------------------------------------------
+
 
     </script>
     <!-- //javascript -->
