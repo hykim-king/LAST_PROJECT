@@ -8,12 +8,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Untitled</title>
+    <title>Intery_당신의 집에 가치를 더하다</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="${hContext }/resources/css/login.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script src="${hContext}/resources/js/eclass.js"></script>
 </head>
 <body>
@@ -33,6 +34,7 @@
             <div class="form-group">
 	            <input type="button" value="로그인" id="login_btn" class="btn btn-primary btn-block" />
 				<input type="button" value="회원가입" id="reg_btn" class="btn btn-primary btn-block" />
+				<a href="javascript:kakaoLogin();"><img src="https://gb.go.kr/Main/Images/ko/member/certi_kakao_login.png" style="width:240px;align:center;margin-top:10px;"></a>
             </div>
             <a id="findPasswdBtn" class="forgot">비밀번호 찾기</a>
         </form>
@@ -45,16 +47,63 @@
     		console.log("document ready");
     	});
     	
+    	window.Kakao.init("54131d3569613dce759403ac3bb3bfa6");
+
+    	//카카오톡 계정 연동 API
+    	function kakaoLogin(){
+    		window.Kakao.Auth.login({
+    			scope: 'profile, account_email',
+    			success: function(authObj){
+    				console.log(authObj);
+    				window.Kakao.API.request({
+    					url:'/v2/user/me',
+    					success: res => {
+    						const kakao_account= res.kakao_account;
+    						console.log(kakao_account);
+    						console.log(kakao_account.profile.nickname);
+    						console.log(kakao_account.email);
+    						doLogin(kakao_account.email,kakao_account.profile.nickname);
+    					}
+    				});
+    			}
+    		});
+    	}
+    	
+    	//카카오톡으로 로그인하기
+    	function doLogin(email,nickname){
+    		let url = "${hContext}/member/do_kakao_login.do";
+    		let parameters = {"memberId" :email,
+    						  "nickname" :nickname
+    						  };
+    		let method = "POST";
+    		let async  = true; 
+    		
+    		EClass.callAjax(url, parameters, method, async, function(data) {
+    			console.log(data);
+    			
+    			if(null!=data && "20"==data.msgId){
+    				alert(data.msgContents);
+    				window.location.href = "${hContext}/houses/home_view.do";
+    			} else { 
+    				alert("등록되지 않은 회원입니다.\n회원가입 창으로 이동합니다");
+    				window.location.href = "${hContext}/member/reg_view.do";
+    			}
+    		});  
+    	}
+    	
+    	//비밀번호 찾기 화면으로 이동
     	$("#findPasswdBtn").on("click",function(e){
     		console.log("findPasswdBtn click");
     		window.location.href = "${hContext}/member/passwd_view.do";
     	});
     	
+    	//회원가입 화면으로 이동
     	$("#reg_btn").on("click",function(e){
     		console.log("reg_btn click");
     		window.location.href = "${hContext}/member/reg_view.do";
     	});
     	
+    	//로그인 수행
     	$("#login_btn").on("click",function(e){
     		console.log("login_btn click");
     		e.preventDefault();
@@ -65,10 +114,7 @@
 							  };
 			let method = "POST";
 			let async  = true; 
-			
-			//console.log("parameters:"+parameters);
-			//console.log("url:"+url);
-			
+
   			EClass.callAjax(url, parameters, method, async, function(data) {
  				console.log(data);
  				

@@ -139,7 +139,7 @@ public class MemberController {
 	/**
 	 * jackson : Message to json으로 변환
 	 * http://localhost:8080/last/member/do_login.do?memberId=L_100_01&passwd=1234
-	 * @param user
+	 * @param member
 	 * @param session
 	 * @return
 	 * @throws SQLException
@@ -182,10 +182,68 @@ public class MemberController {
 		
 	}
 	
+	@RequestMapping(value = "/do_logoff.do",method = RequestMethod.GET)
+	public String doLogOff(HttpSession session) {
+		String returnUrl = "houses/Community_Home";
+		
+		LOG.debug("===================================");
+		LOG.debug("=doLogOff:");
+		LOG.debug("===================================");
+		
+		if(null != session.getAttribute("member")) {
+			session.removeAttribute("member");
+			session.invalidate();
+		}
+		
+		return returnUrl;
+	}
+	
+	/**
+	 * jackson : Message to json으로 변환
+	 * @param member
+	 * @param session
+	 * @return
+	 * @throws SQLException
+	 */
+	@RequestMapping(value = "/do_kakao_login.do",method = RequestMethod.POST
+			,produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Message doKakaoLogin(Member member, HttpSession session) throws SQLException {
+		LOG.debug("===================================");
+		LOG.debug("=param:"+member);
+		LOG.debug("===================================");
+		
+		Message loginMessage = memberService.loginCheck(member);
+		Member loginMember = new Member();
+		
+		//아이디 존재 확인
+		if("20".equals(loginMessage.getMsgId())) {
+			
+			//1.
+			loginMember = (Member) memberService.doSelectOne(member);
+			LOG.debug("loginMember:"+loginMember);
+			
+			if(null !=loginMember) {
+				loginMessage.setMsgContents(loginMember.getMemberId()+"님 로그인 되었습니다.");
+				loginMember.setLogin(loginMember.getLogin()+1);
+				LOG.debug("loginMember:"+loginMember);
+				memberService.doUpdate(loginMember);
+			}
+			
+		} else {
+			loginMember.setMemberId(member.getMemberId());
+			loginMember.setNickname(member.getNickname());
+		}
+		
+		session.setAttribute("member", loginMember);
+		
+		return loginMessage;
+	}
+	
 	/**
 	 * jackson : Message to json으로 변환
 	 * http://localhost:8080/last/member/do_login.do?memberId=L_100_01&passwd=1234
-	 * @param user
+	 * @param member
 	 * @param session
 	 * @return
 	 * @throws SQLException
@@ -204,7 +262,7 @@ public class MemberController {
 		if("30".equals(loginMessage.getMsgId())) {
 			
 			//1. 단건조회
-			//2. session에 User
+			//2. session에 member
 			
 			//1.
 			Member loginMember = (Member) memberService.doSelectOne(member);
@@ -228,7 +286,7 @@ public class MemberController {
 	/**
 	 * 회원 단건 조회
 	 * @param dto
-	 * @return JSON(User)
+	 * @return JSON(member)
 	 * @throws RuntimeException
 	 * @throws SQLException
 	 */

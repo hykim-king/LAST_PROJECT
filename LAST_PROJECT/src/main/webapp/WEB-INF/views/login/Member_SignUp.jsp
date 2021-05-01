@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Untitled</title>
+    <title>Intery_회원가입</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="${hContext }/resources/css/login.css">
@@ -30,14 +30,14 @@
             	<i class="icon ion-ios-person-outline"></i>
             </div>
             <div class="form-group" id="memberIdAuth">
-            	<input class="form-control" type="text" id="memberId" name="memberId" placeholder="이메일">
+            	<input class="form-control" type="text" id="memberId" name="memberId" placeholder="이메일" value='<c:if test="${null != sessionScope.member  }">${sessionScope.member.memberId }</c:if>'>
             	<a id="idCheckBtn" class="sub-button">이메일 확인</a>
             </div>
             <div class="form-group">
             	<input class="form-control" type="password" id="passwd" name="passwd" placeholder="비밀번호">
             </div>
             <div class="form-group">
-            	<input class="form-control" type="text" id="nickname" name="nickname" placeholder="닉네임">
+            	<input class="form-control" type="text" id="nickname" name="nickname" placeholder="닉네임" value='<c:if test="${null != sessionScope.member  }">${sessionScope.member.nickname }</c:if>'>
             	<a id="nickCheckBtn" class="sub-button">닉네임 확인</a>
             </div>
             <div class="form-group">
@@ -63,6 +63,7 @@
 			window.location.href = "${hContext}/member/login_view.do";
 		});
 		
+		//인증번호 입력 input 추가
 		const add_auth = () => {
 	            const box = document.getElementById("memberIdAuth");
 	            const newP = document.createElement('p');
@@ -70,6 +71,7 @@
 	            memberIdAuth.appendChild(newP);
 	    }
 		
+		//인증번호 check
 		$(document).on("click","#checkAuthBtn",function(e){ 
 			console.log("checkAuthBtn");
 			e.preventDefault();
@@ -85,7 +87,8 @@
 				alert("인증번호를 다시 입력해주세요.");
 			} 
 		});
-
+		
+		//인증번호 메일 발송
 		function sendAuthEmail(email){
 			$.ajax({
 	    		type: "POST",
@@ -109,6 +112,7 @@
 	    	});
 		}
 		
+		//아이디 check
 		$("#idCheckBtn").on("click", function(e){
 			console.log("idCheckBtn");
 			e.preventDefault();
@@ -123,16 +127,24 @@
 			let method = "POST";
 			let async  =  true;
 			
- 			EClass.callAjax(url, parameter, method, async, function(data) {
+			EClass.callAjax(url, parameter, method, async, function(data) {
  				console.log("data:"+data);
 				console.log("data.msgContents:"+data.msgContents);
 				
+				let member = '<%=session.getAttribute("member")%>';
+				console.log(member);
+					
 				//"msgId":"1","msgContents"
 				if("0"==data.msgId){//사용할 수 있음
 					$("#memberIdStatus").val("1");//사용할 수 있음
-					alert("인증번호가 전송되었습니다.");
-					sendAuthEmail($("#memberId").val());
-					add_auth();
+					if(null==member){
+						alert("인증번호가 전송되었습니다.");
+						sendAuthEmail($("#memberId").val());
+						add_auth();
+					}else{
+						$("#memberAuthStatus").val("1");
+						alert(data.msgContents);
+					}
 				}else{//사용할 수 없음
 					$("#memberIdStatus").val("0");//사용할 수 없음
 					alert(data.msgContents);
@@ -140,6 +152,7 @@
 			});
 		});
 		
+		//닉네임 check
 		$("#nickCheckBtn").on("click", function(e){
 			console.log("nickCheckBtn");
 			e.preventDefault();
