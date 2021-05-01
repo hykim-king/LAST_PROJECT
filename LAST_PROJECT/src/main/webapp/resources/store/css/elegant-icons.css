@@ -195,7 +195,7 @@ you can use the generic selector below, but it's slower:
 	content: "\54";
 }
 .icon_search:before {
-	content: url("/resources/store/img/icon/search.png");
+	content: url("../img/icon/search.PNG");
 }
 .icon_box-empty:before {
 	content: "\56";

@@ -117,13 +117,13 @@
                                     <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__tags">
-                                                <a href="#">Product</a>
-                                                <a href="#">Bags</a>
-                                                <a href="#">Shoes</a>
-                                                <a href="#">Fashion</a>
-                                                <a href="#">Clothing</a>
-                                                <a href="#">Hats</a>
-                                                <a href="#">Accessories</a>
+                                                <a>Product</a>
+                                                <a>Bags</a>
+                                                <a>Shoes</a>
+                                                <a>Fashion</a>
+                                                <a>Clothing</a>
+                                                <a>Hats</a>
+                                                <a href="">Accessories</a>
                                             </div>
                                         </div>
                                     </div>
@@ -133,47 +133,40 @@
                     </div>
                 </div>
                 
+                <!-- data load total Cnt -->
                 <div class="col-lg-9">
                     <div class="shop__product__option">
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="shop__product__option__left">
-                                    <p>Showing 1–12 of 126 results</p>
-                                </div>
+                                <div class="shop__product__option__left"></div>
                             </div>
                         </div>
                     </div>
+                    
                     
                     <!-- 인기순 -->
                     <div class="container">
 					 	<div class="row">
 			                <div class="col-lg-12">
 			                    <ul class="filter__controls">
-			                        <li class="active" >Best Sellers</li>
+			                        <li class="active" id="orderDiv" value="20" >Best Sellers</li>
 			                    </ul>
 			                </div>
-			            </div>
-			            
+			            </div>  
 					 </div>
-					 <div class="row" id="MixItUp666159">
-                    </div>
-					 
-                    
+					 <div class="row" id="MixItUp666159"></div>
                     
                     <!-- 신상순 -->
                     <div class="container">
 					 	<div class="row">
 			                <div class="col-lg-12">
 			                    <ul class="filter__controls">
-			                        <li class="active" >New Arrivals</li>
+			                        <li class="active" id="orderDiv" value="10" >New Arrivals</li>
 			                    </ul>
 			                </div>
 			            </div>
-			            
 					 </div>
-					 <div class="row" id="MixItUp666160">
-                    </div>
-					 
+					 <div class="row" id="MixItUp666160"></div> 
                 </div>
             </div>
         </div>
@@ -184,33 +177,27 @@
 	  	//jquery 객채생성이 완료
 		$(document).ready(function() {
 			console.log("1.document:최초수행!");
-			doRetrieveBest(1);
-			doRetrieveNew(1,"");
+			doRetrieveBest(1,"20");
+			doRetrieveBest(1,"10");
+			//doRetrieveNew(1);
 		});//--document ready
 		
+
+		//검색버튼 클릭시
+		$("#searchBtn").on("click", function(e) {
+			doRetrieveBest(1,"20");
+			doRetrieveBest(1,"10");
+			//doRetrieveNew(1);
+		});
 		
 		//카테고리별 조회
-		$("#category").on("click", function(e) {
-			console.log("category0 클릭");
-			var div = $("#category").val();
-			doRetrieveBest(1);
-			doRetrieveNew(1,div);
-		});
-		
-		
-		$("#searchBtn").on("click", function(e) {
-			doRetrieveBest(1);
-			doRetrieveNew(1,div);
-		});
-		
-
 		$("#searchDiv").on("change", function(){
      		console.log("searchDiv");
      		location.href = "${hContext}/store/store_category.do?searchDiv="+$("#searchDiv").val();
      	});	
 		
-		function doRetrieveBest(page) {
-			
+		
+		function doRetrieveBest(page,div) {
 			$.ajax({
 	    		type: "GET",
 	    		url:"${hContext}/product/do_retrieve.do",
@@ -220,25 +207,31 @@
 	    			pageSize: $("#pageSize").val(),
 	    			searchDiv: $("#searchDiv").val(),
 	    			searchWord: $("#searchWord").val(),
-	    			orderDiv: "20",
+	    			orderDiv: div,
 	    			pageNum: page
 	    		},
 	    		
 	    		success:function(data){//통신 성공
 	        		console.log("success data:"+data);
 	        		var parseData = JSON.parse(data);
-	    
+	        		console.log("parseData.length:"+parseData.length);
+	        		
+	        		
 	    			//기존 데이터 삭제
 	    			var html="";
-	    			console.log("parseData.length:"+parseData.length);
-	    			$("#MixItUp666159").empty();
-	    			
+	    			var html2="";
+	    			if(div == "20"){
+	    				$("#MixItUp666159").empty();
+					}else if(div == "10"){
+						$("#MixItUp666160").empty();
+					}
+	    			$(".shop__product__option__left").empty();
 	    			
     				//data가 있는 경우
 	    			if(parseData.length>0){
 	    				
 	    				$.each(parseData, function(i, value) {
-	    					html += " <div class='col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals'>                                                                            ";
+	    					html += " <div class='col-lg-4 col-md-6 col-sm-6'>                                                                            ";
 	    					html += " 	<div class='product__item' id='productItem'>                                                                                                                                            ";
 	    					html += " 		<div class='product__item__pic set-bg'> ";
 	    					html += "			<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><img src='${hContext}/resources/store/img/"+value.imgId+".jpg'></a> ";
@@ -256,10 +249,12 @@
 	    					html += " </div>                                                                                                                                                                   ";
 	    				
 	    					
+	    					html2 ="<p>Showing 1-"+parseData.length+" of "+parseData.length+" results</p>";
+	    					
 	    				});
 	    				
 	    			}else{ //data가 없는 경우
-	    				html+= " <div class='col-lg-4 col-md-6 col-sm-6'>                                                                                          ";
+	    				html+= " <div class='col-lg-4 col-md-6 col-sm-6'>                                                                                         ";
 	    				html+= "    <div class='product__item'>                                                                                                                                       ";
 	    				html+= " 	   <div class='product__item__pic set-bg' data-setbg='${hContext}/resources/store/img/img01.JPG' style='background-image: url('${hContext}/resources/store/img/img01.JPG');'>  ";
 	    				html+= " 		   <ul class='product__hover' id='scrap'>                                                                                                                                 ";
@@ -276,9 +271,17 @@
 	    				html+= " </div>                                                                                                                                                               ";
 	    			}
     				
-	    			//tbody에 데이터 추가
-	    			$("#MixItUp666159").append(html);
-	    		
+					//데이터 추가
+					if(div == "20"){
+						$("#MixItUp666159").append(html);
+					}else if(div == "10"){
+						$("#MixItUp666160").append(html);
+					}
+	    			
+	    			
+	    			//결과개수출력
+	    			$(".shop__product__option__left").append(html2);
+	    			
 	        	},
 	        	error:function(data){//실패시 처리
 	        		console.log("error:"+data);
@@ -290,85 +293,7 @@
 		}
 		
 		
-		function doRetrieveNew(page,div) {
-			
-			$.ajax({
-				type: "GET",
-				url:"${hContext}/product/do_retrieve.do",
-				asyn:"true",
-				dataType:"html",
-				data:{
-					pageSize: $("#pageSize").val(),
-					searchDiv: div,
-					searchWord: "",
-					orderDiv: "10",
-					pageNum: page
-				},
-				
-				success:function(data){//통신 성공
-		    		console.log("success data:"+data);
-		    		var parseData = JSON.parse(data);
 		
-					//기존 데이터 삭제
-					var html="";
-					console.log("parseData.length:"+parseData.length);
-					$("#MixItUp666160").empty();
-					
-					
-					//data가 있는 경우
-					if(parseData.length>0){
-						
-						$.each(parseData, function(i, value) {
-							console.log("value");
-							
-							html += " <div class='col-lg-4 col-md-6 col-sm-6'>                                                                            ";
-							html += " 	<div class='product__item'>                                                                                                                                            ";
-							html += " 		<div class='product__item__pic set-bg' data-setbg='이미지주소' style='background-image: url(\'img_girl.jpg\');' >  ";
-							html += " 			<ul class='product__hover' id='scrap'>                                                                                                                                    ";
-							html += " 				<li><a href='#'><img src='${hContext}/resources/store/img/icon/bookmark.png' alt=''><span>scrap</span></a></li>                                                     ";
-							html += " 			</ul>                                                                                                                                                          ";
-							html += " 		</div>                                                                                                                                                             ";
-							html += " 		<div class='product__item__text' id='productItem'>                                                                                                                 ";
-							html +=  			"<h6>"+value.company+"</h6>";                                                                                                                                  
-							html +=  			"<h5>"+value.title+"</h5>";                                                                                                                                    
-							html +=  			"<h6>가격 "+value.price+"</h5>";                                                                                                                                
-							html += 			"<h6>리뷰 "+value.totalReview+"</h6>";                                                                                                                          
-							html += " 		</div>                                                                                                                                                             ";
-							html += " 	</div>                                                                                                                                                                 ";
-							html += " </div>                                                                                                                                                                   ";
-		
-						});
-						
-					}else{ //data가 없는 경우
-						html+= " <div class='col-lg-4 col-md-6 col-sm-6'>                                                                                          ";
-						html+= "    <div class='product__item'>                                                                                                                                       ";
-						html+= " 	   <div class='product__item__pic set-bg' data-setbg='${hContext}/resources/store/img/img01.JPG' style='background-image: url('${hContext}/resources/store/img/img01.JPG');'>  ";
-						html+= " 		   <ul class='product__hover' id='scrap'>                                                                                                                                 ";
-						html+= " 			   <li><a href='#'><img src='${hContext}/resources/store/img/icon/bookmark.png' alt=''><span>scrap</span></a></li>                                                  ";
-						html+= " 		   </ul>                                                                                                                                                       ";
-						html+= " 	   </div>                                                                                                                                                          ";
-						html+= " 	   <div class='product__item__text' id='productItem'>                                                                                                              ";
-						html+= " 			<h6>제조사없음</h6>                                                                                                                                           ";
-						html+= " 			<h5>상품명없음</h5>                                                                                                                                           ";
-						html+= " 			<h6>가격없음</h5>                                                                                                                                            ";
-						html+= " 			<h6>리뷰 0</h6>                                                                                                                                             ";
-						html+= " 	   </div>                                                                                                                                                          ";
-						html+= "    </div>                                                                                                                                                            ";
-						html+= " </div>                                                                                                                                                               ";
-					}
-					
-					//tbody에 데이터 추가
-					$("#MixItUp666160").append(html);
-				
-		    	},
-		    	error:function(data){//실패시 처리
-		    		console.log("error:"+data);
-		    	},
-		    	complete:function(data){//성공/실패와 관계없이 수행!
-		    		console.log("complete:"+data);
-		    	}
-			});
-		}
 		
 		
 		

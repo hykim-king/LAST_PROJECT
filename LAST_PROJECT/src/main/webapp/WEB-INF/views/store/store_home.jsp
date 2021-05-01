@@ -73,7 +73,6 @@
 	<!-- body -->
 	<div class="wrap container">
 		<section class="product spad">
-		
 			<!-- 카테고리존 -->
 			 <div class="container">
 			 	<div class="row">
@@ -84,8 +83,6 @@
 	                </div>
 	            </div>
 			 </div>
-			 
-			 
 			 <div class="row text-center" id="category">
 			 	<div class="col-lg-2 col-md-4 col-6">
 					<div class="product__item" id="category_img">
@@ -94,7 +91,6 @@
 						</a>
 					</div>
 				</div>
-			 
 				<div class="col-lg-2 col-md-4 col-6">
 					<div class="product__item" id="category_img">
 						<a href="${hContext}/store/store_category.do?searchDiv=10">
@@ -102,7 +98,6 @@
 						</a>
 					</div>
 				</div>
-				
 				<div class="col-lg-2 col-md-4 col-6">
 					<div class="product__item" id="category_img">
 						<a href="${hContext}/store/store_category.do?searchDiv=20">
@@ -110,7 +105,6 @@
 						</a>
 					</div>
 				</div>
-				
 				<div class="col-lg-2 col-md-4 col-6">
 					<div class="product__item" id="category_img">
 						<a href="${hContext}/store/store_category.do?searchDiv=30">
@@ -118,7 +112,6 @@
 						</a>
 					</div>
 				</div>
-				
 				<div class="col-lg-2 col-md-4 col-6">
 					<div class="product__item" id="category_img">
 						<a href="${hContext}/store/store_category.do?searchDiv=40">
@@ -126,7 +119,6 @@
 						</a>
 					</div>
 				</div>
-				
 				<div class="col-lg-2 col-md-4 col-6">
 					<div class="product__item" id="category_img">
 						<a href="${hContext}/store/store_category.do?searchDiv=50">
@@ -150,8 +142,7 @@
 	                    </ul>
 	                </div>
 	            </div>
-	            <div class="row product__filter" id="MixItUp666159">
-	            </div>
+	            <div class="row product__filter" id="MixItUp666159"></div>
 	        </div>
 	        <!-- //상품존 -->
 	        
@@ -186,21 +177,6 @@
 			console.log("베스트상품순클릭");
 			doRetrieve(1, "20");
 		});
-		
-		
-		
-		//상품클릭
-		$("#MixItUp666159").on("click","#productItem",function(e){
-			e.preventDefault();
-			console.log("product click");
-	 	 	let tds = $(this).children();
-	 	 	console.log(tds);
-			var productSeq = tds.eq(1).text();
-			console.log(productSeq); 
-			
-			window.location.href = "${hContext}/store/store_detail.do?productSeq="+productSeq;
-
-		}); 
 		
 		
 		function doRetrieve(page,div) {
@@ -281,6 +257,7 @@
 	        	}
 	    	});
 		}
+		
 		
 
 	    
