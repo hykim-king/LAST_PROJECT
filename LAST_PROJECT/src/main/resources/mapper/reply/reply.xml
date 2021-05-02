@@ -16,7 +16,7 @@
 
 
 	<!-- doRetrieve -->
-	<select id="doRetrieve" parameterType="Search" resultType="Reply">
+	<select id="doRetrieve" parameterType="SearchReview" resultType="Reply">
 		SELECT A.*, B.*                                                                              
 		FROM(                                                                                        
 			SELECT t2.rnum AS num,                                                                          
@@ -35,9 +35,10 @@
 				SELECT ROWNUM rnum, t1.*                                                             
 				FROM(                                                                                
 					SELECT *                                                                         
-					FROM reply                                                                      
+					FROM reply
+					WHERE review_seq = #{reviewFk}                                                             
 					ORDER BY reg_dt DESC 
-					                                                           
+					                                                       
 				)t1
 				<![CDATA[
 				WHERE ROWNUM <= (#{pageSize} * (#{pageNum} - 1) + #{pageSize})                                                                                
@@ -47,7 +48,8 @@
 		)A                                                                                           
 		CROSS JOIN                                                                                   
 		(	SELECT COUNT(*) totalCnt                                                            
-			FROM reply                                                                       
+			FROM reply
+			WHERE review_seq = #{reviewFk}                                                                       
 		)B                    
 	</select>
 	
