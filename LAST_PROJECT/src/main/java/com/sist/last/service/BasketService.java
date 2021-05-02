@@ -45,4 +45,14 @@ public interface BasketService {
 	 * @throws SQLException
 	 */
 	int doInsert(DTO dto) throws SQLException;
+	
+	
+	/**
+	 * 장바구니 상품 중복 체크
+	 * @param dto
+	 * @return
+	 * @throws SQLException
+	 */
+	int basketCheck(DTO dto) throws SQLException;
+	
 }

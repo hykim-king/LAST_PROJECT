@@ -52,4 +52,10 @@ public class BasketServiceImpl implements BasketService {
 		return this.basketDao.doInsert(basket);
 	}
 
+	@Override
+	public int basketCheck(DTO dto) throws SQLException {
+
+		return this.basketDao.basketCheck(dto);
+	}
+
 }
