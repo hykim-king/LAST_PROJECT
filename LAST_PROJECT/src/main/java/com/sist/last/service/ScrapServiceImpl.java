@@ -68,5 +68,8 @@ public class ScrapServiceImpl {
 
 	}
 	
+	public List<?> doRetrieveById(DTO dto) throws SQLException {
+		return this.scrapDao.doRetrieveById(dto);
+	}
 
 }

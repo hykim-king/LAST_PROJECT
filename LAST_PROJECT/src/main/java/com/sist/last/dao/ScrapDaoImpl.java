@@ -172,5 +172,25 @@ public class ScrapDaoImpl extends DTO {
 		
 		
 	}
+	
+	public List<?> doRetrieveById(DTO dto) throws SQLException {
+
+		Search param = (Search) dto;
+		
+		LOG.debug("1=param====="+param);
+
+		String statement = this.NAMESPACE + ".doRetrieveById";
+		
+		LOG.debug("====statement=====" + statement);
+		LOG.debug("=======================================");
+		
+		List<Scrap> list = sqlSessionTemplate.selectList(statement, param);
+		
+		for (Scrap vo : list) {
+			LOG.debug(vo.toString());
+		}
+
+		return list;
+	}
 
 }

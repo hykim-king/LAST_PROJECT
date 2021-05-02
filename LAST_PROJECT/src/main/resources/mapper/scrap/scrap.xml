@@ -20,6 +20,8 @@
 		</where>
 	</sql>
 	
+	
+	
 	<select id="doRetrieve" parameterType="Search" resultType="Scrap" resultMap="scrapResult">
 		
 		 SELECT A.*,B.*                                                                                      
@@ -111,6 +113,43 @@
 		FROM scrap
 		WHERE scrap_seq = #{scrapSeq}
 	</select>
+
+	<select id="doRetrieveById" parameterType="Search" resultType="Scrap" resultMap="scrapResult">
+		
+		 SELECT A.*,B.*                                                                                      
+		 FROM(                                                                                               
+		     SELECT t2.rnum,                                                                                 
+		            t2.scrap_seq,                                                                                 
+		            t2.houses_seq,                                                                                 
+		            t2.member_id,                                                                                 
+		       CASE WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD')=TO_CHAR(t2.reg_dt,'YYYY/MM/DD')             
+		       THEN TO_CHAR(t2.reg_dt,'HH24:MI')                                                   
+		 	   ELSE TO_CHAR(t2.reg_dt,'YYYY/MM/DD')                                               
+		 	   END reg_dt,                                                                       
+		 	   t2.mod_id,                                                                         
+		       CASE WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD')=TO_CHAR(t2.mod_dt,'YYYY/MM/DD')             
+		 	   THEN TO_CHAR(t2.mod_dt,'HH24:MI')                                                  
+		 	   ELSE TO_CHAR(t2.mod_dt,'YYYY/MM/DD')                                               
+		 	   END mod_dt                                                                      
+		     FROM(                                                                                           
+		         SELECT ROWNUM rnum,t1.*                                                                     
+		         FROM (                                                                                      
+		             SELECT *                                                                                
+		             FROM scrap                  
+					WHERE mod_id=#{searchWord}
+		             ORDER BY reg_dt desc                                                                    
+		         )t1                                                                                         
+		     )t2   
+		     WHERE rnum BETWEEN (#{pageSize} * (#{pageNum}-1) + 1) AND (#{pageSize} * (#{pageNum}-1) + #{pageSize})                                                                                                                                 
+		 )A CROSS JOIN                                                                                       
+		     (SELECT COUNT(*) total_cnt      
+				FROM scrap
+				WHERE mod_id=#{searchWord}					
+		     )B
+		
+	</select>
+
+
 
 </mapper>
 

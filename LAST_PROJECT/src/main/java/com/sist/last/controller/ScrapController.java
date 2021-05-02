@@ -170,4 +170,39 @@ public class ScrapController {
 		
 		return jsonStr;
 	}
+	
+	
+	/**
+	 * 목록조회
+	 * @param dto
+	 * @return JSON(1:성공, 0:실패)
+	 * @throws RuntimeException
+	 * @throws SQLException 
+	 */
+	@RequestMapping(value = "scrap/do_retrieveById.do",method = RequestMethod.GET
+			,produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String doRetrieveById(Search search) throws SQLException {
+		LOG.debug("===================================");
+		LOG.debug("=param:"+search);
+		LOG.debug("===================================");
+		
+		List<Scrap> list = (List<Scrap>)this.scrapService.doRetrieveById(search);
+		
+		for(Scrap vo:list) {
+			LOG.debug(vo.toString());
+		}
+		
+		//List to Json
+		Gson gson = new Gson();
+		
+		String jsonList = gson.toJson(list);
+		LOG.debug("===================================");
+		LOG.debug("=jsonList:"+jsonList);
+		LOG.debug("===================================");
+		
+		return jsonList;
+	}
+	
+	
 }
