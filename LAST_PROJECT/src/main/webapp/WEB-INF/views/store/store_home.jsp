@@ -16,6 +16,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>  
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="../cmn/header.jsp"%>
 <c:set var="hContext" value="${pageContext.request.contextPath }"> </c:set>
 <!DOCTYPE html>
 <html>
@@ -47,9 +48,6 @@
 	<script src="${hContext}/resources/store/js/main.js"></script>
 </head>
 <body>
-	<!-- header -->
-	<%-- <%@ include file="../cmn/header.jsp"%> --%>
-	
 	<header class="header">
         <div class="container">
         	<div class="row">
@@ -71,14 +69,15 @@
 	<!-- //header -->
 
 	<!-- body -->
+	
 	<div class="wrap container">
+		<!-- 카테고리존 -->
 		<section class="product spad">
-			<!-- 카테고리존 -->
 			 <div class="container">
 			 	<div class="row">
 	                <div class="col-lg-12">
-	                    <ul class="filter__controls">
-	                        <li class="active" >Categories</li>
+	                    <ul class="filter__controls_category">
+	                        <li>Categories</li>
 	                    </ul>
 	                </div>
 	            </div>
@@ -129,10 +128,10 @@
 	         </div>                                                                                                                                           
 		</section>
 		<!-- //카테고리존 -->
-			
+		
+		<!-- 상품존 -->
 		<section class="product spad"> 
 			 ${list }
-			 <!-- 상품존 -->
 	       	 <div class="container">
 	            <div class="row">
 	                <div class="col-lg-12">
@@ -144,11 +143,11 @@
 	            </div>
 	            <div class="row product__filter" id="MixItUp666159"></div>
 	        </div>
-	        <!-- //상품존 -->
-	        
 	    </section>
+	    <!-- //상품존 -->
+	    
     </div>
-    
+     
     
     <script type="text/javascript">
     
@@ -195,7 +194,7 @@
 	    		},
 	    		
 	    		success:function(data){//통신 성공
-	        		console.log("success data load");
+	        		console.log("success data load"+data);
 	        		var parseData = JSON.parse(data);
 	    
 	    			//기존 데이터 삭제
@@ -208,32 +207,26 @@
 	    				
 	    				$.each(parseData, function(i, value) {
 	    					html += " <div class='col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals'>                                                                            ";
-	    					html += " 	<div class='product__item' id='productItem'>                                                                                                                                            ";
+	    					html += " 	<div class='product__item'>                                                                                                                                            ";
 	    					html += " 		<div class='product__item__pic set-bg'> ";
-	    					html += "			<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><img src='${hContext}/resources/store/img/"+value.imgId+".jpg'></a> ";
-	    					html += " 			<ul class='product__hover' id='scrap'>                                                                                                                                    ";
-	    					html += " 				<li><a href='#'><img src='${hContext}/resources/store/img/icon/bookmark.png' alt=''><span>scrap</span></a></li>                                                     ";
-	    					html += " 			</ul>                                                                                                                                                          ";
+	    					html += "			<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><img class='product__item__pic set-bg' src='${hContext}/resources/store/img/"+value.imgId+".jpg'></a> ";
 	    					html += " 		</div>                                                                                                                                                             ";
 	    					html += " 		<div class='product__item__text' id='productItem'>                                                                                                                 ";
-	    					html +=  			"<h6>"+value.company+"</h6>";                                                                                                                                  
-	    					html +=  			"<h5>"+value.title+"</h5>";                                                                                                                                    
-	    					html +=  			"<h4>가격 "+value.price+"</h4>";                                                                                                                                
-	    					html += 			"<h3>리뷰 "+value.totalReview+"</h3>";                                                                                                                          
+	    					html +=  			"<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><h6>"+value.company+"</h6></a>";                                                                                                                                  
+	    					html +=  			"<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><h5>"+value.title+"</h5></a>";                                                                                                                                    
+	    					html +=  			"<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><h4>"+value.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"</h4></a>";                                                                                                                                
+	    					html += 			"<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><h3>리뷰 "+value.totalReview.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"</h3></a>";                                                                                                                          
 	    					html += " 		</div>                                                                                                                                                             ";
 	    					html += " 	</div>                                                                                                                                                                 ";
 	    					html += " </div>                                                                                                                                                                   ";
-	    				
 	    					
 	    				});
 	    				
 	    			}else{ //data가 없는 경우
 	    				html+= " <div class='col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals'>                                                                                          ";
-	    				html+= "    <div class='product__item' id='productItem'>                                                                                                                                       ";
-	    				html+= " 	   <div class='product__item__pic set-bg' data-setbg='${hContext}/resources/store/img/img01.JPG' style='background-image: url('${hContext}/resources/img/img01.JPG');'>  ";
-	    				html+= " 		   <ul class='product__hover' id='scrap'>                                                                                                                                 ";
-	    				html+= " 			   <li><a href='#'><img src='${hContext}/resources/store/img/icon/bookmark.png' alt=''><span>scrap</span></a></li>                                                  ";
-	    				html+= " 		   </ul>                                                                                                                                                       ";
+	    				html+= "    <div class='product__item'>                                                                                                                                       ";
+	    				html+= " 	   <div class='product__item__pic set-bg'>  ";
+	    				html += "			<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><img class='product__item__pic set-bg' src='${hContext}/resources/store/img/"+value.imgId+".jpg'></a> ";
 	    				html+= " 	   </div>                                                                                                                                                          ";
 	    				html+= " 	   <div class='product__item__text' id='productItem'>                                                                                                              ";
 	    				html+= " 			<h6>제조사 없음</h6>                                                                                                                                           ";
@@ -258,9 +251,6 @@
 	    	});
 		}
 		
-		
-
-	    
 	</script>
 			
 </body>

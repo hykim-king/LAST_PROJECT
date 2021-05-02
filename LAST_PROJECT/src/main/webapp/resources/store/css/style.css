@@ -935,14 +935,37 @@ ol {
 	margin-right: 0;
 }
 
+
+.filter__controls_category {
+	text-align: center;
+	margin-bottom: 45px;
+	margin-top: 45px;
+}
+
+.filter__controls_category li {
+	color: #111111;
+	font-size: 24px;
+	font-weight: 700;
+	list-style: none;
+	display: inline-block;
+	cursor: pointer;
+}
+
+
 .filter__controls li.active {
 	color: #111111;
 }
+
 
 .product__item {
 	overflow: hidden;
 	margin-bottom: 40px;
 }
+
+.product__item:hover img {
+	transform: scale(1.1);            /* 이미지 확대 */
+	transition: transform .4s; 	/*  시간 설정  */
+} 
 
 .product__item.sale .product__item__pic .label {
 	color: #ffffff;
@@ -968,8 +991,25 @@ ol {
 	visibility: visible;
 }
 
+/* 마우스 올렸을 때*/
 .product__item:hover .product__item__text h6 {
-	opacity: 0;
+	color: #111111;
+}
+
+.product__item:hover .product__item__text h5 {
+	color: #b7b7b7;
+}
+
+.product__item:hover .product__item__pic img {
+	transform: scale(1.1);            /* 이미지 확대 */
+	transition: transform .4s; 	/*  시간 설정  */
+	
+}
+/* 마우스 올렸을 때*/
+
+
+.product__item:hover img {
+	color: #b7b7b7;
 }
 
 .product__item:hover .product__item__text .product__color__select {
@@ -1055,32 +1095,8 @@ ol {
 
 .product__item__text {
 	padding-top: 25px;
-	position: relative;
 }
 
-.product__item__text a {
-	font-size: 15px;
-	color: #e53637;
-	font-weight: 700;
-	position: absolute;
-	left: 0;
-	top: 0;
-	opacity: 0;
-	visibility: hidden;
-	-webkit-transition: all, 0.3s;
-	-o-transition: all, 0.3s;
-	transition: all, 0.3s;
-}
-
-.product__item__text h6 {
-	color: #111111;
-	font-size: 15px;
-	font-weight: 600;
-	margin-bottom: 5px;
-	-webkit-transition: all, 0.3s;
-	-o-transition: all, 0.3s;
-	transition: all, 0.3s;
-}
 
 .product__item__text .rating {
 	margin-bottom: 6px;
@@ -1101,23 +1117,23 @@ ol {
 
 /* h5: title */
 .product__item__text h5 {
-	font-size: 17px;
+	font-size: 16px;
 	color: #0d0d0d;
-	font-weight: 600;
+	font-weight: 400;
 }
 
 /* h4: price */
 .product__item__text h4 {
 	font-size: 16px;
 	color: #46578A;
-	font-weight: 400;
+	font-weight: 600;
 }
 
 /* h3: review */
 .product__item__text h3 {
 	font-size: 14px;
 	color: #F8DC7F;
-	font-weight: 400;
+	font-weight: 600;
 }
 
 .product__item__text .product__color__select {
@@ -2103,7 +2119,7 @@ ol {
 	position: absolute;
 	right: -14px;
 	top: 0;
-	content: "";
+	content: ">";
 	font-family: "FontAwesome";
 }
 

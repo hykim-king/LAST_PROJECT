@@ -16,6 +16,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>  
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="../cmn/header.jsp"%>
 <c:set var="hContext" value="${pageContext.request.contextPath }"> </c:set>
 <!DOCTYPE html>
 <html>
@@ -47,9 +48,6 @@
 	<script src="${hContext}/resources/store/js/main.js"></script>
 </head>
 <body>
-	<!-- header -->
-	<%-- <%@ include file="../cmn/header.jsp"%> --%>
-	
 	<header class="header">
         <div class="container">
         	<div class="row">
@@ -69,8 +67,24 @@
         </div>
     </header>
 	<!-- //header -->
-
-
+	
+		
+	<section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h4>Store</h4>
+                        <div class="breadcrumb__links">
+                            <a href="${hContext}/store/store_view.do">Home</a>
+                            <span>Category</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+	
 	<section class="shop spad">
         <div class="container">
             <div class="row">
@@ -80,7 +94,7 @@
                     
                     	<!-- 검색 -->
                         <div class="shop__sidebar__search">
-                            <form action="#">
+                            <form action="">
                                 <input type="text" name="searchWord" id="searchWord" placeholder="Search..." >
 								<button type="button" id="searchBtn"><span class="icon_search"></span></button>
                             </form>
@@ -92,9 +106,9 @@
                             <div class="accordion" id="accordionExample">
                                 <div class="card">
                                     <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+                                        <a>Categories</a>
                                     </div>
-                                    <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                    <div>
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
                                               	<select name="searchDiv" id="searchDiv">
@@ -112,18 +126,21 @@
                                	<!-- 태그 -->
                                 <div class="card">
                                     <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseSix">Tags</a>
+                                        <a>Tags</a>
                                     </div>
-                                    <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
+                                    <div>
                                         <div class="card-body">
-                                            <div class="shop__sidebar__tags">
-                                                <a>Product</a>
-                                                <a>Bags</a>
-                                                <a>Shoes</a>
-                                                <a>Fashion</a>
-                                                <a>Clothing</a>
-                                                <a>Hats</a>
-                                                <a href="">Accessories</a>
+                                            <div class="shop__sidebar__tags" name="searchWord" id="searchWord">
+                                                <a href="" onclick="doRetrieve">우드</a>
+                                                <a>원목</a>
+                                                <a>화이트</a>
+                                                <a>led</a>
+                                                <a>패브릭</a>
+                                                <a>쉬폰</a>
+                                                <a>블라인드</a>
+                                                <a>소파</a>
+                                                <a>테이블</a>
+                                                <a>무드등</a>
                                             </div>
                                         </div>
                                     </div>
@@ -177,18 +194,17 @@
 	  	//jquery 객채생성이 완료
 		$(document).ready(function() {
 			console.log("1.document:최초수행!");
-			doRetrieveBest(1,"20");
-			doRetrieveBest(1,"10");
-			//doRetrieveNew(1);
+			doRetrieve(1,"20");
+			doRetrieve(1,"10");
 		});//--document ready
 		
 
 		//검색버튼 클릭시
 		$("#searchBtn").on("click", function(e) {
-			doRetrieveBest(1,"20");
-			doRetrieveBest(1,"10");
-			//doRetrieveNew(1);
+			doRetrieve(1,"20");
+			doRetrieve(1,"10");
 		});
+		
 		
 		//카테고리별 조회
 		$("#searchDiv").on("change", function(){
@@ -197,7 +213,7 @@
      	});	
 		
 		
-		function doRetrieveBest(page,div) {
+		function doRetrieve(page,div) {
 			$.ajax({
 	    		type: "GET",
 	    		url:"${hContext}/product/do_retrieve.do",
@@ -232,40 +248,33 @@
 	    				
 	    				$.each(parseData, function(i, value) {
 	    					html += " <div class='col-lg-4 col-md-6 col-sm-6'>                                                                            ";
-	    					html += " 	<div class='product__item' id='productItem'>                                                                                                                                            ";
+	    					html += " 	<div class='product__item' id='productItem'>                ";
 	    					html += " 		<div class='product__item__pic set-bg'> ";
-	    					html += "			<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><img src='${hContext}/resources/store/img/"+value.imgId+".jpg'></a> ";
-	    					html += " 			<ul class='product__hover' id='scrap'>                                                                                                                                    ";
-	    					html += " 				<li><a href='#'><img src='${hContext}/resources/store/img/icon/bookmark.png' alt=''><span>scrap</span></a></li>                                                     ";
-	    					html += " 			</ul>                                                                                                                                                          ";
+	    					html += "			<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><img class='product__item__pic set-bg' src='${hContext}/resources/store/img/"+value.imgId+".jpg'></a>";
 	    					html += " 		</div>                                                                                                                                                             ";
-	    					html += " 		<div class='product__item__text' id='productItem'>                                                                                                                 ";
-	    					html +=  			"<h6>"+value.company+"</h6>";                                                                                                                                  
-	    					html +=  			"<h5>"+value.title+"</h5>";                                                                                                                                    
-	    					html +=  			"<h4>가격 "+value.price+"</h4>";                                                                                                                                
-	    					html += 			"<h3>리뷰 "+value.totalReview+"</h3>";                                                                                                                          
+	    					html += " 		<div class='product__item__text'>                                                                                                                 ";
+	    					html +=  			"<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><h6>"+value.company+"</h6></a>";                                                                                                                                  
+	    					html +=  			"<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><h5>"+value.title+"</h5></a>";                                                                                                                                    
+	    					html +=  			"<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><h4>"+value.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"</h4></a>";                                                                                                                                
+	    					html += 			"<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><h3>리뷰 "+value.totalReview.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"</h3></a>";                                                                                                                          
 	    					html += " 		</div>                                                                                                                                                             ";
 	    					html += " 	</div>                                                                                                                                                                 ";
 	    					html += " </div>                                                                                                                                                                   ";
 	    				
-	    					
 	    					html2 ="<p>Showing 1-"+parseData.length+" of "+parseData.length+" results</p>";
-	    					
 	    				});
 	    				
 	    			}else{ //data가 없는 경우
 	    				html+= " <div class='col-lg-4 col-md-6 col-sm-6'>                                                                                         ";
 	    				html+= "    <div class='product__item'>                                                                                                                                       ";
-	    				html+= " 	   <div class='product__item__pic set-bg' data-setbg='${hContext}/resources/store/img/img01.JPG' style='background-image: url('${hContext}/resources/store/img/img01.JPG');'>  ";
-	    				html+= " 		   <ul class='product__hover' id='scrap'>                                                                                                                                 ";
-	    				html+= " 			   <li><a href='#'><img src='${hContext}/resources/store/img/icon/bookmark.png' alt=''><span>scrap</span></a></li>                                                  ";
-	    				html+= " 		   </ul>                                                                                                                                                       ";
+	    				html+= " 	   <div class='product__item__pic set-bg'>  ";
+	    				html += "			<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><img class='product__item__pic set-bg' src='${hContext}/resources/store/img/"+value.imgId+".jpg'></a> ";
 	    				html+= " 	   </div>                                                                                                                                                          ";
-	    				html+= " 	   <div class='product__item__text' id='productItem'>                                                                                                              ";
+	    				html+= " 	   <div class='product__item__text'>                                                                                                              ";
 	    				html+= " 			<h6>제조사없음</h6>                                                                                                                                           ";
 	    				html+= " 			<h5>상품명없음</h5>                                                                                                                                           ";
-	    				html+= " 			<h6>가격없음</h5>                                                                                                                                            ";
-	    				html+= " 			<h6>리뷰 0</h6>                                                                                                                                             ";
+	    				html+= " 			<h4>가격없음</h4>                                                                                                                                            ";
+	    				html+= " 			<h3>리뷰 0</h3>                                                                                                                                             ";
 	    				html+= " 	   </div>                                                                                                                                                          ";
 	    				html+= "    </div>                                                                                                                                                            ";
 	    				html+= " </div>                                                                                                                                                               ";
@@ -277,7 +286,6 @@
 					}else if(div == "10"){
 						$("#MixItUp666160").append(html);
 					}
-	    			
 	    			
 	    			//결과개수출력
 	    			$(".shop__product__option__left").append(html2);
