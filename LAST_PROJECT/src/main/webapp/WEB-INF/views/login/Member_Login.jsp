@@ -15,6 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script src="${hContext}/resources/js/eclass.js"></script>
 </head>
 <body>
@@ -31,10 +32,11 @@
             <div class="form-group">
             	<input class="form-control" type="password" id="passwd" name="passwd" placeholder="비밀번호">
             </div>
-            <div class="form-group">
+            <div class="form-group" align="center">
 	            <input type="button" value="로그인" id="login_btn" class="btn btn-primary btn-block" />
 				<input type="button" value="회원가입" id="reg_btn" class="btn btn-primary btn-block" />
 				<a href="javascript:kakaoLogin();"><img src="https://gb.go.kr/Main/Images/ko/member/certi_kakao_login.png" style="width:240px;align:center;margin-top:10px;"></a>
+				<div id="naver_id_login" style="margin-top:10px;"></div>
             </div>
             <a id="findPasswdBtn" class="forgot">비밀번호 찾기</a>
         </form>
@@ -47,9 +49,18 @@
     		console.log("document ready");
     	});
     	
+    	<!-- 네이버 아이디로 로그인 -->
+		var naver_id_login = new naver_id_login("7Tx_yEf8B2xRnpXcyFk2", "http://localhost:8080/last/member/callback_view.do");
+		var state = naver_id_login.getUniqState();
+		naver_id_login.setButton("green", 3,52);
+		naver_id_login.setDomain(".service.com");
+		naver_id_login.setState(state);
+		naver_id_login.init_naver_id_login();
+  		<!-- // 네이버 아이디 로로그인 -->
+    	
+    	<!-- 카카오톡 연동 API -->
     	window.Kakao.init("54131d3569613dce759403ac3bb3bfa6");
 
-    	//카카오톡 계정 연동 API
     	function kakaoLogin(){
     		window.Kakao.Auth.login({
     			scope: 'profile, account_email',
@@ -71,7 +82,7 @@
     	
     	//카카오톡으로 로그인하기
     	function doLogin(email,nickname){
-    		let url = "${hContext}/member/do_kakao_login.do";
+    		let url = "${hContext}/member/do_sns_login.do";
     		let parameters = {"memberId" :email,
     						  "nickname" :nickname
     						  };

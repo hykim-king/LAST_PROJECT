@@ -29,30 +29,6 @@ public class MemberController {
 	
 	public MemberController() {}
 	
-	@RequestMapping(value = "/mng_view.do",method = RequestMethod.GET)
-	public String memberMngView(Model model) throws SQLException {
-		LOG.debug("mng_view.do");
-		return "login/Member_Edit";
-	}
-	
-	@RequestMapping(value = "/passwd_view.do",method = RequestMethod.GET)
-	public String forgotPasswdView(Model model) throws SQLException {
-		LOG.debug("passwd_view.do");
-		return "login/Member_Forgot_Passwd";
-	}
-	
-	@RequestMapping(value = "/reg_view.do",method = RequestMethod.GET)
-	public String memberRegView(Model model) throws SQLException {
-		LOG.debug("reg_view.do");
-		return "login/Member_SignUp";
-	}
-	
-	@RequestMapping(value = "/login_view.do",method = RequestMethod.GET)
-	public String loginView(Model model) throws SQLException {
-		LOG.debug("login_view.do");
-		return "login/Member_Login";
-	}
-	
 	@RequestMapping(value = "/forgot_passwd.do",method = RequestMethod.POST
 			,produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -206,7 +182,7 @@ public class MemberController {
 	 * @throws SQLException
 	 * @throws IllegalAccessException 
 	 */
-	@RequestMapping(value = "/do_kakao_login.do",method = RequestMethod.POST
+	@RequestMapping(value = "/do_sns_login.do",method = RequestMethod.POST
 			,produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public Message doKakaoLogin(Member member, HttpSession session) throws SQLException, IllegalAccessException {
