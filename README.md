@@ -1,6 +1,6 @@
 
 # LAST_PROJECT
-<img src="https://user-images.githubusercontent.com/78997066/116799570-5e618d80-ab35-11eb-836e-a8367ebb06a8.png" width="40%">
+<img src="https://user-images.githubusercontent.com/78997066/116802169-cb801d80-ab4b-11eb-853b-0020a4b229e0.png" width="40%">
 
 ### 1. 프로젝트명
 ``` 
