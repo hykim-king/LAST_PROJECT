@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.sist.last.cmn.Message;
-import com.sist.last.cmn.Search;
-import com.sist.last.cmn.StringUtil;
-import com.sist.last.service.BasketService;
 import com.sist.last.service.BasketServiceImpl;
 import com.sist.last.vo.Basket;
 
@@ -24,14 +21,11 @@ import com.sist.last.vo.Basket;
 public class BasketController {
 	
 	final Logger LOG = LoggerFactory.getLogger(BasketController.class);
-	final String VIEW_NAME = "basket/basket_mng";
 	
 	@Autowired	
 	BasketServiceImpl basketService;
 	
-	
 	public BasketController() {}
-	
 	
 	/**
 	 * 장바구니 목록 조회
@@ -40,36 +34,16 @@ public class BasketController {
 	 * @throws RuntimeException
 	 * @throws SQLException
 	 */
-	@RequestMapping(value="basket/do_retrieve.do", method=RequestMethod.GET
-			,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value="basket/do_retrieve.do", method=RequestMethod.POST
+			,produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String doRetrieve(Search search)throws SQLException{
+	public String doRetrieve(Basket basket)throws SQLException{
 		LOG.debug("================================");
-		LOG.debug("=param:" + search);
+		LOG.debug("=param:" + basket);
 		LOG.debug("================================");
-		LOG.debug("================================");
-		
-		///NVL처리 
-		//검색구분
-		search.setSearchDiv(StringUtil.nvl(search.getSearchDiv(), ""));
-		//검색어
-		search.setSearchWord(StringUtil.nvl(search.getSearchWord(), ""));
-		
-		//pageNum
-		if(search.getPageNum()==0) {
-			search.setPageNum(1);
-		}
-		
-		//pageSize
-		if(search.getPageSize()==0) {
-			search.setPageSize(10);
-		}
-		
-		LOG.debug("================================");
-		LOG.debug("=param_init:" + search);
-		LOG.debug("================================");
-		
-		List<Basket> list = (List<Basket>) this.basketService.doRetrieve(search);
+
+		List<Basket> list = (List<Basket>) this.basketService.doRetrieve(basket);
+	
 		for(Basket vo: list) {
 			LOG.debug(vo.toString());
 		}
@@ -82,12 +56,8 @@ public class BasketController {
 		LOG.debug("=jsonList:" + jsonList);
 		LOG.debug("================================");
 		
-		
-		
 		return jsonList;
 	}
-	
-	
 	
 	/**
 	 * 장바구니 상품 수정
@@ -106,12 +76,16 @@ public class BasketController {
 		LOG.debug("================================");
 		
 		int flag = this.basketService.doUpdate(basket);
+		
 		String resultMsg = "";
+		
 		if(1==flag) {
 			resultMsg = basket.getTitle() + "가 장바구니에서 수정 되었습니다.";
+		
 		}else {
 			resultMsg = basket.getTitle() + " 수정 실패.";
 		}
+		
 		Message message = new Message();
 		message.setMsgId(flag+"");
 		message.setMsgContents(resultMsg);
@@ -146,16 +120,17 @@ public class BasketController {
 		LOG.debug("=outVO:" + outVO);
 		LOG.debug("================================");
 		
-		
 		Gson gson = new Gson();
 		String jsonStr = gson.toJson(outVO);  //vo를 json으로 
+		
 		LOG.debug("================================");
 		LOG.debug("=jsonStr:" + jsonStr);
 		LOG.debug("================================");
+		
 		return jsonStr;
+	
 	}
-	
-	
+
 	/**
 	 * 장바구니 상품 삭제
 	 * @param dto
@@ -170,19 +145,23 @@ public class BasketController {
 		LOG.debug("================================");
 		LOG.debug("=param:" + basket);
 		LOG.debug("================================");
+		
 		int flag = this.basketService.doDelete(basket);
 		String resultMsg="";
+		
 		if(1==flag) {
 			resultMsg = basket.getBasketSeq() + "이(가) 장바구니에서 삭제되었습니다.";
 		}else {
 			resultMsg = "삭제 실패.";
 		}
+		
 		Message message = new Message();
 		message.setMsgId(flag+"");
 		message.setMsgContents(resultMsg);
 		
 		Gson gson = new Gson();
 		String jsonStr = gson.toJson(message);  //메세지를 json으로 
+		
 		LOG.debug("================================");
 		LOG.debug("=jsonStr:" + jsonStr);
 		LOG.debug("================================");
@@ -205,27 +184,32 @@ public class BasketController {
 		LOG.debug("=param:" + basket);
 		LOG.debug("================================");
 		
-		int flag = basketService.doInsert(basket);
-		
-		String resultMsg="";
-		if(1==flag) {
-			resultMsg = basket.getTitle() + "이(가) 장바구니에 등록되었습니다.";
-			
-		}else {
-			resultMsg = "장바구니 등록 실패"; 
-		}
-
 		Message message = new Message();
-		message.setMsgId(flag+"");
-		message.setMsgContents(resultMsg);
+		int flag = this.basketService.basketCheck(basket);
+		String resultMsg = "";
 		
+		if (flag == 0) {
+			
+			flag += this.basketService.doInsert(basket);
+			
+			if(1 == flag) {
+				resultMsg = "장바구니에 상품을 담았습니다.";
+				message.setMsgId(flag + "");
+			} else {
+				resultMsg = "장바구니에 상품을 담지 못했습니다.";
+				message.setMsgId(flag + "");
+			}
+		} else {
+			resultMsg = "장바구니에 이미 존재하는 상품입니다.";
+			message.setMsgId("1");
+		}
+		message.setMsgContents(resultMsg);
 		
 		Gson gson = new Gson();
 		String jsonStr = gson.toJson(message);  //메세지를 json으로 
 		LOG.debug("================================");
 		LOG.debug("=jsonStr:" + jsonStr);
 		LOG.debug("================================");
-		
 		
 		return jsonStr;
 		
