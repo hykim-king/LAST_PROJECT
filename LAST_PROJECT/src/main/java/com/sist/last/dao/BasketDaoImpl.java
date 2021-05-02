@@ -1,29 +1,21 @@
 package com.sist.last.dao;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.sql.DataSource;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.sist.last.cmn.DTO;
-import com.sist.last.cmn.Search;
-import com.sist.last.cmn.StringUtil;
 import com.sist.last.vo.Basket;
 
 
 @Repository
-public class BasketDaoImpl extends DTO implements BasketDao {
+public class BasketDaoImpl extends DTO {
 
 	final static Logger LOG = LoggerFactory.getLogger(BasketDaoImpl.class);
 	
@@ -35,7 +27,6 @@ public class BasketDaoImpl extends DTO implements BasketDao {
 	
 	public BasketDaoImpl() {}
 	
-	@Override
 	public int doDelete(DTO dto) throws SQLException {
 		int flag = 0;
 		Basket basket = (Basket) dto;
@@ -51,8 +42,6 @@ public class BasketDaoImpl extends DTO implements BasketDao {
 		return flag;
 	}
 
-	
-	@Override
 	public int doInsert(DTO dto) throws SQLException {
 		int flag = 0;
 		Basket basket = (Basket) dto;
@@ -67,8 +56,6 @@ public class BasketDaoImpl extends DTO implements BasketDao {
 		return flag;
 	}
 
-	
-	@Override
 	public DTO doSelectOne(DTO dto) throws SQLException {
 		Basket inVO = (Basket) dto;
 		Basket outVO = null;
@@ -88,8 +75,6 @@ public class BasketDaoImpl extends DTO implements BasketDao {
 		return outVO;
 	}
 
-	
-	@Override
 	public int doUpdate(DTO dto) throws SQLException {
 		int flag = 0;
 		Basket basket = (Basket) dto;
@@ -100,21 +85,22 @@ public class BasketDaoImpl extends DTO implements BasketDao {
 		LOG.debug("====basket=====" + basket);
 		LOG.debug("=======================================");
 		
-		 flag = this.sqlSessionTemplate.insert(statement, basket); //insert넣어도 되고 update넣어도됨 들어가서 보면 어차피 다 insert로 넣게됨.
+		flag = this.sqlSessionTemplate.insert(statement, basket); //insert넣어도 되고 update넣어도됨 들어가서 보면 어차피 다 insert로 넣게됨.
 
 		return flag;
 	}
 
-	@Override
 	public List<?> doRetrieve(DTO dto) throws SQLException {
-		Search param =  (Search) dto;
+		
+		Basket basket = (Basket) dto;
 		
 		String statement =this.NAMESPACE+".doRetrieve";
 		
-
-		LOG.debug("1=param=====");
+		LOG.debug("=======================================");
+		LOG.debug("====param=====" + basket);
+		LOG.debug("=======================================");
 		
-        List<Basket> list = this.sqlSessionTemplate.selectList(statement, param);
+        List<Basket> list = this.sqlSessionTemplate.selectList(statement, basket);
 
         for(Basket vo : list) {
         	LOG.debug("vo:" + vo);
@@ -123,4 +109,19 @@ public class BasketDaoImpl extends DTO implements BasketDao {
 		return list;	
 	}
 
+	public int basketCheck(DTO dto) throws SQLException {
+		int flag = 0;
+		Basket basket = (Basket) dto;
+		
+		String statement = this.NAMESPACE + ".basketCheck";
+
+		LOG.debug("=======================================");
+		LOG.debug("====basket=====" + basket);
+		LOG.debug("=======================================");
+		
+		flag = this.sqlSessionTemplate.selectOne(statement, basket);
+
+		return flag;
+	}
+	
 }
