@@ -24,6 +24,7 @@
 ```
 
 ### 4. 기획서
+[LAST_기획서.pdf](https://github.com/code-you-dream-with-me/LAST_PROJECT/files/6410604/LAST_.pdf)
 
 ### 9. 이미지 넣기
 ![e클래스 cafe](https://github.com/jji307/EX_MARKDOWN/blob/main/%EC%84%A4%EA%B3%84%EC%84%9C.png "e클래스의 cate 입니다.")
