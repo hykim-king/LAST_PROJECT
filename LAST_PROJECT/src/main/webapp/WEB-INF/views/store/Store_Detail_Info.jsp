@@ -45,6 +45,7 @@
     <script src="${hContext}/resources/js/bootstrap.min.js"></script>
     <script src="${hContext}/resources/js/eclass.js"></script>
     <script src="${hContext}/resources/js/eutil.js"></script>
+    <script src="${hContext}/resources/js/jquery.bootpag.js"></script>  
 </head>
 <body>
 
@@ -84,13 +85,15 @@
                 <div class="col-lg-6">
                     <div class="product__details__text">
                         <div class="product__label">category</div>
-                        <h4 id="title"></h4>
-                        <div class="star-rating"><span id="totalReview"></span> 개 리뷰 </div>
-                        <h5><span id="price"></span>원</h5>
+                        <h4 id="title">${vo.title}</h4>
+                        <h4 id="storeSeq" style="display: none;">${vo.storeSeq}</h4>
+                        <h4 id="memberId" style="display: none;">${vo.memberId}</h4>
+                        <div class="star-rating"><span>${vo.totalReview}</span> 개 리뷰 </div>
+                        <h5><span id="price">${vo.price}</span>원</h5>
                         <ul>
-                            <li>브랜드: <span id="company"></span></li>
-                            <li>카테고리: <span id="category"></span></li>
-                            <li>태그: <span id="tag"></span></li>
+                            <li>브랜드: <span>${vo.company}</span></li>
+                            <li>카테고리: <span>${vo.category}</span></li>
+                            <li>태그: <span></span>${vo.tag}</li>
                         </ul>
 						<div class="row mt-4">
 							<div class="col-md-6">
@@ -122,9 +125,8 @@
                         </div>
                         <div class="product__details__text">
                             <h5>주문금액 <span id="total"></span>원</h5>
-                            <input type="button" class="primary-btn" id="addCart" value="장바구니">
-                            <input type="button" class="primary-btn" id="buyNow" value="바로구매">
-                            <!-- <a href="#" class="primary-btn">바로구매</a> -->
+                            <a class="primary-btn" onClick="addBasket();">장바구니</a>
+                            <a class="primary-btn" onClick="buyNow();">바로구매</a>
                         </div>
                     </div>
                 </div>
@@ -149,36 +151,69 @@
                         <div class="tab-pane" id="descriptionTab" role="tabpanel">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
-                                <h5>상품 정보 <span id="contents"></span></h5>
+                                <h5>상품 정보 <span id="productContents">${vo.contents}</span></h5>
                                 </div>
                             </div>
                         </div>
                         <div class="tab-pane" id="reviewTab" role="tabpanel">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
-                                    <h5>리뷰 <span id="totalReview">리뷰</span></h5>
-                                    <h5>평점 <span id="avgStar">평점</span></h5>
+                                    <h5>리뷰 <span>리뷰</span>${vo.totalReview}</h5>
+                                    <h5>평점 <span>평점</span>${vo.avgStar}</h5>
                                 </div>
                             </div>
-                        <div class="contact__form">
-                        <form action="#">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <textarea id="reviewContents" placeholder="별점과 이용경험을 남겨주세요."></textarea>
-                                    <button type="submit" class="site-btn" id="reviewInsert">등록</button>
-                                </div>
-                            </div>
-                        </form>
-                      </div>
-                    <div class="blog__details__author">
-	                   <div class="blog__details__comment">         
-						  <h5>리뷰</h5>       
-						    <div class="blog__details__comment__item" id="reviewList">
-						    
-						    </div>                  
-					      </div>
-                       </div>
-                     </div>
+                            <div class="container">
+					        	<label for="content">comment</label>
+					        	<div class="rating">
+					                <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
+					                <input type="checkbox" name="rating" id="rating1" value="1" class="rate_radio" title="1점" onclick='getCheckboxValue(event)'>
+					                <label for="rating1"></label>
+					                <input type="checkbox" name="rating" id="rating2" value="2" class="rate_radio" title="2점" onclick='getCheckboxValue(event)'>
+					                <label for="rating2"></label>
+					                <input type="checkbox" name="rating" id="rating3" value="3" class="rate_radio" title="3점" onclick='getCheckboxValue(event)'>
+					                <label for="rating3"></label>
+					                <input type="checkbox" name="rating" id="rating4" value="4" class="rate_radio" title="4점" onclick='getCheckboxValue(event)'>
+					                <label for="rating4"></label>
+					                <input type="checkbox" name="rating" id="rating5" value="5" class="rate_radio" title="5점" onclick='getCheckboxValue(event)'>
+					                <label for="rating5"></label>
+				           		</div>
+				            	<input type="hidden" id="starRating">
+						        <form name="commentInsertForm">
+						            <div class="input-group">
+						               <%-- <input type="hidden" name="bno" value="${detail.bno}"/> --%>
+						               <input type="text" class="form-control" id="reviewContents" name="reviewContents" placeholder="평점과 이용경험을 남겨주세요.">
+						               <span class="input-group-btn">
+						                    <button class="btn btn-default" type="button" id="reviewInsert">등록</button>
+						               </span>
+						              </div>
+						        </form>
+						   </div>
+						   <br/>
+						   <!-- 페이징 선택 -->	        
+						   <div class="col-xs-8 col-sm-9 col-md-8 col-lg-2 pull-right">
+					    		<select class="form-control input-sm" name="pageSize" id="pageSize">
+						    		<option value="4">4개씩 보기</option>	    		  		
+									<option value="8">8개씩 보기</option>
+									<option value="12">12개씩 보기</option>
+						    	</select>
+						    </div>	
+						    <!-- //페이징 선택 -->
+						    <br/>
+						    <br/>
+						    <div class="container">
+						        <div id="reviewList" class="reviewList">
+						    	
+						    	</div>
+						    	<!-- pagenation -->
+								<div class="text center">
+									<div id="page-selection" class="text-right page">
+									
+									</div>
+								</div>
+								<!--// pagenation -->
+						    </div>
+						    <!-- // 댓글  -->		
+                    	 </div>
                         <div class="tab-pane" id="qnaTab" role="tabpanel">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
@@ -189,7 +224,7 @@
                         <div class="tab-pane" id="refundTab" role="tabpanel">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
-                                	<h5>배송/환불 정책 <span id="refund"></span></h5>
+                                	<h5>배송/환불 정책 <span id="refund">${vo.refund}</span></h5>
                                 </div>
                             </div>
                         </div>
@@ -282,78 +317,58 @@
 	
 	<script type="text/javascript">
 
-	$(document).ready(function() {
+		$(document).ready(function() {
 			console.log("1.document:최초수행!");
-			storeSelectOne();
-			optionRetrieve();
+			//storeSelectOne(); //스토어 단건 조회
+			qtyChange();
+			optionRetrieve();	
 		});
 		
-		/* 스토어 단건 조회 */
-		function storeSelectOne() {
-			console.log("doSelectOne()");
-
-			var storeSeqData = "2021/04/2364420dadcc1e40648ecd785ec9fcc8a8";
+		$("#pageSize").on("change", function(e){//change: SelectBox의 이벤트
+	    	console.log("pageSize change");
+	    	reviewRetrieve(1);
+		});
+		
+		/* 수량, 주문 금액 변경 */
+		function qtyChange() {
+			console.log("qtyChange()");
 			
-			let url = "${hContext}/product/do_selectone.do";
-			let parameter = {"storeSeq":storeSeqData}; 
-			let method = "GET";
-			let async = true;
-			
-			EClass.callAjax(url, parameter, method, async, function(data) {
-				console.log("data:"+data);		
-				console.log("storeSeq:"+data.storeSeq);	
-				console.log("contents:"+data.contents);	
-				
-				//Product [storeSeq=2021/04/2364420dadcc1e40648ecd785ec9fcc8a8, memberId=test01, imgId=img01, title=title01, 
-				//contents=contents01, company=company01, category=10, tag=tag01, price=1, quantity=1, refund=refund01, regDt=2021/04/23, modId=null, modDt=null, toString()=DTO [num=0, totalCnt=0, totalScrap=0, totalReview=0, avgStar=0.0]]
-				
-				var total = data.price * $("#quantity").val(); //합계
-				console.log("total1:"+total);	
-				
-			    /* 수량 변경 */
-			    var proQty = $(".pro-qty");
-			    proQty.on("click", ".qtybtn", function () {
-			        var $button = $(this);
-			        var oldValue = $button.parent().find("input").val();
-			        if ($button.hasClass("inc")) {
-			            var newVal = parseFloat(oldValue) + 1;
+			var price = $("#price").text();
+			var total = price * $("#quantity").val(); //합계
+			//console.log("total1:"+total);	
+		
+			var proQty = $(".pro-qty");
+			proQty.on("click", ".qtybtn", function () {
+			    var $button = $(this);
+			    var oldValue = $button.parent().find("input").val();
+			    if ($button.hasClass("inc")) {
+			        var newVal = parseFloat(oldValue) + 1;
+			    } else {
+			        if (oldValue > 1) {
+			            var newVal = parseFloat(oldValue) - 1;
 			        } else {
-			            if (oldValue > 0) {
-			                var newVal = parseFloat(oldValue) - 1;
-			            } else {
-			                newVal = 0;
-			            }
+			            newVal = 1;
 			        }
-			        $button.parent().find("input").val(newVal);
-			        
-				    total = data.price * newVal; //수량 변경 후 합계
-					console.log("total2:"+total);	
-					
-	    			$("#total").text(numberWithCommas(total));
-
-			    });
+			    }
+			    $button.parent().find("input").val(newVal);
 			    
-    			$("#imgId").text(data.imgId);
-    			$("#title").text(data.title);
-    			$("#contents").val(data.contents);
-    			$("#company").text(data.company);
-    			$("#category").text(data.category);
-    			$("#tag").text(data.tag);
-    			$("#price").text(numberWithCommas(data.price));
-    			$("#quantity").text(data.quantity);
-    			$("#refund").text(data.refund);
-    			$("#total").text(numberWithCommas(total));
-    			$("#totalReview").text(data.totalReview);
-    			$("#avgStar").text(data.avgStar);
+			    total = price * newVal; //수량 변경 후 합계
+				console.log("sell total:"+total);	
+				
+		    	$("#total").text(numberWithCommas(total));
 
 			});
+			
+	    	$("#price").text(numberWithCommas(price));
+	    	$("#total").text(numberWithCommas(total));
+
 		}
 		
 		/* 옵션 선택 */
 		function optionRetrieve() {
 			console.log("optionRetrieve()");
 			
-			var storeSeqData = "12345";
+			var storeSeqData = "2021/04/2364420dadcc1e40648ecd785ec9fcc8a8";
 			var divData = "1";
 			
 	      	$.ajax({
@@ -402,18 +417,18 @@
 		}
 		
 	    /* 장바구니 */
-		$("#addCart").on("click", function(e) {
-			console.log("addCart btn click");
+		function addBasket() {
+			console.log("addBasket btn click");
 			
 			var basketSeqData = "2021/04/2664420dadcc1e40648ecdcc8a8785ec9f";
-			var storeSeqData = "2021/04/2364420dadcc1e40648ecd785ec9fcc8a8";
+			//var storeSeqData = "2021/04/2364420dadcc1e40648ecd785ec9fcc8a8";
 			var memberIdData = "test01";
 			var shipfeeData = "3000";
 			
 			let url = "${hContext}/basket/do_insert.do";
 			let parameter = {
 								"basketSeq" : basketSeqData,
-								"storeSeq"  : storeSeqData,
+								"storeSeq"  : $("#storeSeq").text(),
 								"memberId"  : memberIdData,
 								"title"     : $("#title").text(),
 								"optone"    : $("#optone option:selected").text(),
@@ -431,20 +446,23 @@
     			console.log("data:"+data.msgContents);	
     			if(data.msgId=="1") { //등록 성공
         			alert(data.msgContents);   
-        			
-    				window.location.href = "${hContext}/member/basket_list.do?storeSeq="+storeSeqData;
+    			
+        			if(confirm("장바구니로 이동하시겠습니까?")==false) return;
+    				window.location.href = "${hContext}/member/basket_list.do?memberId="+memberIdData;
     			
     			} else { //등록 실패
         			alert(data.msgId+ "\n" +data.msgContents);
     			}
 	    	});
-		});
+		}
 		
 		/* 바로구매 */
-		$("#buyNow").on("click", function(e) {
+		function buyNow() {
 			console.log("buyNow btn click");
-
-		});
+			
+			//window.location.href = "${hContext}/qna/payment.do?basketSeq="basketSeq;
+			
+		}
 		
 		/* 탭 전환 */
 		$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
@@ -458,7 +476,7 @@
 		         if (contentId=="#descriptionTab") { 
 		        	 $("#reviewList").empty();
 		         } else if (contentId=="#reviewTab") { 
-		 		    reviewRetrieve();
+		 		    reviewRetrieve(1);
 		         } else if (contentId=="#qnaTab") {
 		        	 qnaRetrieve();
 		        	 $("#reviewList").empty();
@@ -471,13 +489,69 @@
 
 		});
 		
-		/* 리뷰 쓰기 */
+		/* 별점 */
+		function Rating(){};
+		Rating.prototype.rate = 0;
+		Rating.prototype.setRate = function(newrate){
+		    //별점 마킹 - 클릭한 별 이하 모든 별 체크 처리
+		    this.rate = newrate;
+		    let items = document.querySelectorAll('.rate_radio');
+		    items.forEach(function(item, idx){
+		        if(idx < newrate){
+		            item.checked = true;
+		        }else{
+		            item.checked = false;
+		        }
+		    });
+		}
+		
+		let rating = new Rating();
+
+		document.addEventListener('DOMContentLoaded', function(){
+		    //별점 선택 이벤트 리스너
+		    document.querySelector('.rating').addEventListener('click',function(e){
+		        let elem = e.target;
+		        if(elem.classList.contains('rate_radio')){
+		            rating.setRate(parseInt(elem.value));
+		            
+					console.log("star rating : "+elem.value);
+					
+
+		        }
+		    })
+		});
+
+		/* 별점 value */
+		function getCheckboxValue(event)  {
+			let result = '';
+			if (event.target.checked)  {
+				result = event.target.value;
+			} else {
+				result = '';
+			}
+			  
+			document.getElementById('starRating').innerText = result;
+			console.log("starRating : "+result);
+
+		}
+		
+		/* 리뷰 등록 */
 		$("#reviewInsert").on("click", function(e) {
 			console.log("reviewInsert()");
 			
+			if(eUtil.ISEmpty($("#reviewContents").val())==true) {
+				alert("내용을 입력하세요.");
+				$("#reviewContents").focus();
+				return;
+			}
+			
+			var star = $("#starRating").text();
+			console.log("star : " + star);
+			
 			var reviewSeqData = "12345";
+			var starSeqData = "1234567890";
 			var storeSeqData = "2021/04/2364420dadcc1e40648ecd785ec9fcc8a8"; // reviewFk 상품/집들이/q&a fk값
-			var memberIdData = "yeonsu_review_test";
+			var memberIdData = "test01";
 			var divData = "0";        // div 리뷰 구분(상품:0, 집들이:1, q&a:2)
 			
 			let url = "${hContext}/review/do_insert.do";
@@ -487,7 +561,10 @@
 								"reviewFk"  : storeSeqData,
 								"div"       : divData,
 								"contents"  : $("#reviewContents").val(),
-								"modId"     : memberIdData
+								"storeSeq"     : storeSeqData,
+								"starScore"     : star,
+								"starSeq"     : starSeqData
+								
 							};
 			let method = "POST";
 			let async = true;
@@ -498,29 +575,33 @@
     			console.log("data:"+data.msgContents);	
     			if(data.msgId=="1") { //등록 성공
         			alert(data.msgContents);   
+        			reviewRetrieve(1);
     			} else { //등록 실패
         			alert(data.msgId+ "\n" +data.msgContents);
     			}
 	    	});
 			
-			reviewRetrieve();
+			$("#reviewContents").val(""); //text 초기화
+			reviewRetrieve(1);
 			
 		});
-		
-		/* 리뷰 */
-		function reviewRetrieve() {
+
+		/* 리뷰 목록 조회 */
+		function reviewRetrieve(page) {
 			console.log("reviewRetrieve()");
 			
 			var reviewFkData = "2021/04/2364420dadcc1e40648ecd785ec9fcc8a8";
 			
 	      	$.ajax({
-	    		type: "POST",
-	    		url:"${hContext}/review/do_retrieve.do",
+	    		type: "GET",
+	    		url:"${hContext}/review/review_star_list.do",
 	    		asyn:"true",
 	    		dataType:"html",
 	    		data:{
-		    			"reviewFk" : reviewFkData
-	    		},
+	    			    "pageSize" : $("#pageSize").val(),
+	    			    "pageNum"  : page,
+	    				"reviewFk" : reviewFkData
+	    			},
 	    		success:function(data){//통신 성공
 	        		console.log("success data : " + data);
 	    		
@@ -533,33 +614,59 @@
 	        		
 	        		console.log("parseData.length : " + parseData.length);
 
+	        		let totalCount = parseData.length;
+	    			let pageTotal = 1;
+
 	        		//데이터가 있는 경우
 	        		if(parseData.length > 0) {
-
+	        			console.log("totalCount:"+totalCount);
+		    			
+	        			pageTotal = (totalCount/$("#pageSize").val());//42/10->4.2
+	        			console.log("pageTotal:"+pageTotal);
+	        			
+	        			pageTotal = Math.ceil(pageTotal);//42/10->4.2->5
+	        			console.log("pageTotal:"+pageTotal);
+	        			
 	        			$.each(parseData, function(i, value) {
-	        				console.log(i+","+value.contents);
+	        				//console.log(i+","+value.contents);
+	        				console.log(i+","+value.reviewSeq);
+	        				console.log(i+","+value.starScore);
+	        				console.log(i+","+value.totalReviews);
+	        				console.log(i+","+value.avgStars);
 	        				
 	        				//{"reviewSeq":"1","memberId":"tjdus","reviewFk":"1","div":"0","contents":"test1_up","regDt":"2021/04/23",
 	        				//"modId":"tjdus1","modDt":"2021/04/23","num":1,"totalCnt":3,"totalScrap":0,"totalReview":0,"avgStar":0.0}
 	        				// reviewFk 상품/집들이/q&a fk값
 							// div 리뷰 구분(상품:0, 집들이:1, q&a:2)
-
-	        				html += "<div class='blog__details__comment__item'>              ";
-	        				html += "    <div class='blog__details__comment__item__pic'>     ";
-	        				html += "        <img src='' alt=''>                             ";
-	        				html += "    </div>                                              ";
-	        				html += "    <div class='blog__details__comment__item__text'>    ";
-	        				html += "        <h6>"+value.memberId+"</h6>                     ";
-	        				html += "        <span>"+value.regDt+"</span>                    ";
-	        				html += "        <span>"+value.contents+"</span>                 ";
-	        				html += "    </div>                                              ";
-	        				html += "</div>                                                  ";
+                                                                                                               
+	        				html += " <div class='row'>                                                                   ";
+	        				html += "    <div class='blog__details__comment__item__text'>                                 ";
+	        				html += "        <h6>"+value.memberId+"</h6>                                                  ";
+	        				html += "        <span>"+value.modDt+"</span>                                                 ";
+	        				html += "        <span id='contents'>"+value.contents+"</span>                                ";
+	        				html += "    </div>                                                                           ";
+	        				html += "	<div class='blog__details__comment__btns '>                                       ";
+	        				html += "        <span id='star'>("+value.starScore+"점)</span>                               ";
+	        				html += "        <a href='javascript:reviewUpdate(&quot;"+value.reviewSeq+"&quot;);'>수정</a>  ";
+	        				html += "        <a href='javascript:reviewDelete(&quot;"+value.reviewSeq+"&quot;);'>삭제</a>  ";
+	        				html += "    </div>                                                                           ";
+	        				html += " </div>                                                                              ";
             
 	        			});
+	        	} else {//data가 없는 경우
+        			html += "	<div class='blog__details__comment__item__text'>           ";
+        			html += "        <span>등록된 리뷰가 없습니다. 리뷰를 등록해주세요 :)</span>       ";
+        			html += "    </div>                                                    ";
+           				
+	        	}
 	        			
-	        			 $("#reviewList").append(html);
+	        		$("#reviewList").append(html);
 	        			
-	        		}
+		    		console.log("pageTotal:"+pageTotal);
+		    		console.log("page:"+page);
+		    			
+		    		//페이징 처리: 총 페이지, 현재글
+		    		renderingPage(pageTotal,page);
 	        		
 	        	},
 	        	error:function(data){//실패시 처리
@@ -568,6 +675,91 @@
 	        	complete:function(data){//성공/실패와 관계없이 수행!
 	        		console.log("complete:"+data);
 	        	}
+	    	});
+		}
+		
+		//paging
+		//pageTotal:총 페이지수= 총글수/페이지사이즈(10)
+		//page:현재페이지
+		//maxVisible:bottom 페이지
+		function renderingPage(pageTotal,page){
+			//이전 연결된 Event 핸들러 요소에서 제거
+			$("#page-selection").unbind('page');
+			$("#page-selection").bootpag({
+			    total: pageTotal,
+			    page: page,//시작
+			    maxVisible: 10,
+			    leaps: true,
+			    firstLastUse: true,
+			    first: '←',
+			    last: '→',
+			    wrapClass: 'pagination',
+			    activeClass: 'active',
+			    disabledClass: 'disabled',
+			    nextClass: 'next',
+			    prevClass: 'prev',
+			    lastClass: 'last',
+			    firstClass: 'first' 
+			}).on("page", function(event, num){
+				reviewRetrieve(num);//ajax 서버 호출
+			}); 
+		}//--renderingPage	
+			      	
+		/* 리뷰 수정 */
+		function reviewUpdate(reviewSeq) {
+			console.log("reviewUpdate()");
+			
+			var modIdData = "yeonsu_review_test_U";
+			
+			let url = "${hContext}/review/do_update.do";
+			let parameter = {
+								"reviewSeq" : reviewSeq,
+								"contents"  : $("#contents").val(),
+								"modId"     : modIdData
+							};
+			let method = "POST";
+			let async = true;
+			
+			if(confirm("리뷰를 수정하시겠습니까?")==false) return;
+
+ 			EClass.callAjax(url, parameter, method, async, function(data) {
+    			console.log("data:"+data);
+    			console.log("data:"+data.msgContents);	
+    			if(data.msgId=="1") { //수정 성공
+        			alert(data.msgContents);   
+        			doRetrieve(1);
+    			} else { //수정 실패
+        			alert(data.msgId+ "\n" +data.msgContents);
+    			}
+	    	});
+			
+		}
+		
+		/* 리뷰 삭제 */
+		function reviewDelete(reviewSeq) {
+			console.log("reviewDelete()");
+			
+			var starSeqData = "1234567890";
+			
+			let url = "${hContext}/review/do_delete.do";
+			let parameter = {
+								"reviewSeq" : reviewSeq,
+								"starSeq"     : starSeqData
+							};
+			let method = "POST";
+			let async = true;
+			
+			if(confirm("리뷰를 삭제하시겠습니까?")==false) return;
+			
+			EClass.callAjax(url, parameter, method, async, function(data) {
+    			console.log("data:"+data);	
+    			console.log("data:"+data.msgContents);	
+    			if(data.msgId=="1") { //삭제 성공
+        			alert(data.msgContents);   
+        			reviewRetrieve(1);
+    			} else { //삭제 실패
+        			alert(data.msgId+ "\n" +data.msgContents);
+    			}
 	    	});
 		}
 		
@@ -594,7 +786,7 @@
 		    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		}
 		
-
+		
 	</script>
 </body>
 </html>
