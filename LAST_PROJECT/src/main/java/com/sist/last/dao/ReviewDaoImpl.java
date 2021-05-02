@@ -19,6 +19,8 @@ import org.springframework.stereotype.Repository;
 import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.SearchReview;
 import com.sist.last.vo.Review;
+import com.sist.last.vo.ReviewStar;
+import com.sist.last.vo.Star;
 
 @Repository
 public class ReviewDaoImpl {
@@ -34,6 +36,28 @@ public class ReviewDaoImpl {
 
 	}
 
+	public List<?> reviewStarList(DTO dto) throws SQLException {		
+
+		SearchReview param = (SearchReview) dto;
+		
+		//mybatis sql: NAMESPACE+.+id;
+		String statement = this.NAMESPACE+".reviewStarList";                                
+		
+		LOG.debug("========================");
+		LOG.debug("param: " + param);
+		LOG.debug("statement: " + statement);
+		LOG.debug("========================");
+		
+		List<ReviewStar> list = sqlSessionTemplate.selectList(statement, param);
+		
+		for (ReviewStar vo : list) {
+			LOG.debug(vo.toString());
+		}
+
+		return list;
+	}
+	
+	
 	public List<?> doRetrieve(DTO dto) throws SQLException {		
 
 		SearchReview param = (SearchReview) dto;
