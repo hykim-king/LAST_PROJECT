@@ -97,14 +97,14 @@
                                        <li><a href="${hContext}/store/store_category.do">카테고리</a></li>
                                     </ul>
                  </li>
-                 <li><a href="#">스크랩</a></li>
-                 <li class="dropdown">
+               	 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">글쓰기</a>
                                     <ul class="dropdown-menu animated fadeInDownShort go">
                                        <li><a href="${hContext}/houses/houses_regist.do">집들이 등록</a></li>
                                        <li><a href="${hContext}/store/product_regist.do">상품등록</a></li>
                                     </ul>
                  </li>
+                 <li><a href="${hContext}/qna/qna_view.do">질문과 답변</a></li>
               </ul>
             </nav>
           </div>
