@@ -75,9 +75,9 @@
 			<div class="form-group">
 				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">사진추가</label>
 				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
-					<input type="file" class="form-control" id="image" name="image" placeholder="사진">
+					<input multiple="multiple" type="file" class="form-control" id="image" name="image" placeholder="사진">
 				</div>
-			</div>			
+			</div>								
 			
 			<div class="form-group">
 				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">태그</label>
@@ -91,9 +91,11 @@
 				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10 form-inline">
 					<input type="text" class="form-control" id="link" name="link" placeholder="URL은 최대 3개까지 입력할 수 있습니다." >
 					<input type="button" class="btn btn-primary btn-sm"  value="추가" id="addLink">
-					<input type="hidden" class="form-control" id="div" name="div" value="1">
+					<input type="hidden" class="form-control" id="div" name="div" value="1"> 
 				</div>
-			</div>			
+			</div>	
+			
+					
 
 		</form>
 		<!--// form -->
@@ -103,9 +105,6 @@
 					<input type="button" class="btn btn-primary btn-sm" value="등록" placeholder="등록" id="doInsert">
 				</div>
 			</div>
-			
-			<!-- 값 임의 설정 -->
-			<input type="hidden" class="form-control" id="memberId" name="memberId" value="tjdus">
 
 	</div>
 	<!--// div container -->
@@ -140,7 +139,7 @@
 			}	
 			
 			if(eUtil.ISEmpty($("#image").val()) == true){
-				alert("내용을 image.");
+				alert("이미지를 첨부해주세요.");
 				$("#image").focus();
 				return;
 			}	
@@ -155,61 +154,34 @@
 				alert("링크를 입력하세요.");
 				$("#link").focus();
 				return;
-			}	
+			}	 
 				
 			if(confirm("등록하시겠습니까?")==false)return;
 			
 			document.getElementById('regFrm').submit();
-			
-/* 			let url = "${hContext}/houses/do_insert.do";
-			let parameter = {
-								"housesSeq"      : $("#housesSeq").val(),
-								"memberId"     : $("#memberId").val(),
-								"imgId"   : $("#imgId").val(),
-								"title"     : $("#title").val(),
-								"contents"   : $("#contents").val(),
-								"tag"    : $("#tag").val(),
-								"regDt"     : $("#regDt").val(),
-								"modId"   : $("#modId").val(),
-								"modDt"   : $("#modDt").val()
-							};
-			let method = "POST";
-			let async = true;
-			
-			EClass.callAjax(url, parameter, method, async, function(data) {
-				console.log("data: "+data);
-				//console.log("data.msgContents: "+data.msgContents);
-				
-				if("1"==data.msgId){//등록성공
-					alert(data.msgContents);
-				}else{//등록실패
-					alert(data.msgId+"\n"+data.msgContents);
-				}
-		
-			});
- */
+
 		});
 		// house doInsert ------------------------------	
 	
 		// 링크 html ------------------------------
 		var maxAppend = 1; // 버튼누른 횟수 저장
-		//var div = 2;
 	
 		$("#addLink").on("click",function(){
 			console.log("addLink");  					
 			
-			if (maxAppend >= 3) return; // 4번째부터는 append 안되고 return 시키기
+			if (maxAppend >= 3) return; // 4번째부터는 append 안되고 return 시키기	
 			
-    		var html =  "<div class='form-group' id='linkFrm'>                                                                            ";
-    			html += "	<label class='col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label'></label>                     		  	  ";
-    			html += "	<div class='col-xs-8 col-sm-9 col-md-10 col-lg-10 form-inline'>                                               ";
-    			html += "		<input type='text' class='form-control' id='tag' name='tag' placeholder='URL은 최대 3개까지 입력할 수 있습니다.'> ";
-    			html += "		<input type='button' class='btn-del btn btn-primary btn-sm'  value='삭제'>									";
-   				//html +=	"		<input type='hidden' class='form-control' id='div' name='div' value=''>									";
-    			html += "	</div>                                                                                                        ";
-    			html += "</div>																										      ";
-    		
-			$("#uploadFrm").append(html);   	
+			// div 값 임의로 2로 넣음 -> 수정 필요
+			var html =  "<div class='form-group' id='linkFrm'>                                                                        	  ";
+				html += "	<label class='col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label'></label>                     		  	  	  ";
+				html += "	<div class='col-xs-8 col-sm-9 col-md-10 col-lg-10 form-inline'>                                               ";
+				html += "		<input type='text' class='form-control' id='tag' name='tag' placeholder='URL은 최대 3개까지 입력할 수 있습니다.'> ";
+				html += "		<input type='button' class='btn-del btn btn-primary btn-sm'  value='삭제'>							  	  ";
+				html += "		<input type='hidden' class='form-control' id='div' name='div' value='2'> 								  ";
+				html += "	</div>                                                                                                    	  ";
+				html += "</div>				                                                                                          	  ";
+			
+			$("#regFrm").append(html);   	
 			maxAppend++;
 			
 			}); 

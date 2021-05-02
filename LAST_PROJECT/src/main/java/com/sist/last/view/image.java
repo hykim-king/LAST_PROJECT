@@ -31,10 +31,6 @@ import com.sist.last.vo.Qna;
 public class image {
 
 	final Logger LOG = LoggerFactory.getLogger(image.class);
-
-	// 절대 경로 상수로 올리기
-	// qna
-	final String UPLOAD_IMG_DIR = "C:\\Users\\SIST\\git\\LAST_PROJECT\\LAST_PROJECT\\src\\main\\webapp\\resources\\img";
 	
 	@Autowired
 	QnaService qnaService;
@@ -43,6 +39,13 @@ public class image {
 
 	}
 	
+	@RequestMapping(value = "qna/qna_mng.do")
+	public String update(Model model) throws SQLException {
+
+		LOG.debug("registView");
+
+		return "regist/qna_mng";
+	}
 
 	
 	// 화면 띄우기
@@ -52,7 +55,21 @@ public class image {
 		LOG.debug("registView");
 
 		return "regist/product_upload";
-	}		
+	}
+	
+	@RequestMapping(value = "store/product_upload.do", method = RequestMethod.POST)
+	public String productUpload(MultipartHttpServletRequest mReg, ModelAndView modelAndView)
+			throws IllegalStateException, IOException {
+		
+		LOG.debug("------------------------");
+		LOG.debug("-----productUpload()-----");
+		LOG.debug("------------------------");	
+	
+
+		
+		return "store/store_home";
+		
+	}
 	
 	// 화면 띄우기
 	@RequestMapping(value = "houses/houses_regist.do")
@@ -94,10 +111,10 @@ public class image {
 		LOG.debug("-----upload()-----");
 		LOG.debug("------------------");
 
-		
-
 		return "qna/qna_list";
 
 	}
+	
+
 
 }

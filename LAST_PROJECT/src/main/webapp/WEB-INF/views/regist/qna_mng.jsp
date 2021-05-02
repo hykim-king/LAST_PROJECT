@@ -16,6 +16,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../cmn/common.jsp"%>
 <c:set var="hContext" value="${pageContext.request.contextPath }"></c:set>
 <!DOCTYPE html>
 <html>
@@ -27,7 +28,7 @@
 <title>Intery</title>
 
 <!-- 부트스트랩 -->
-<link href="${hContext }/resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="${hContext}/resources/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
 <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
@@ -40,6 +41,7 @@
 <script src="${hContext}/resources/js/eclass.js"></script>
 <script src="${hContext}/resources/js/eutil.js"></script>
 <script src="${hContext}/resources/js/jquery.bootpag.js"></script>
+
 </head>
 <body>
 
@@ -48,21 +50,19 @@
 
 		<!-- 제목 -->
 		<div class="page-header">
-			<h2>상품 등록</h2>
+			<h2>Q&A 수정</h2>
 		</div>
 		<!--// 제목 -->
 
-		${list }
-
 		<!-- form -->
-		<form id="regFrm" action="${hContext}/image/product_upload.do" method="POST" enctype="multipart/form-data" class="form-horizontal">
-			<input type="hidden" class="form-control" id="memberId" name="memberId" value="tjdus">
-			<input type="hidden" class="form-control" id="category" name="category" value="10">
-
+		<form id="updateFrm" action="${hContext}/image/qna_upload.do" method="POST" enctype="multipart/form-data" class="form-horizontal">
+			<input type="hidden" class="form-control" id="memberId" name="memberId" value="tjdus"> 	
+			<input type="hidden" class="form-control" id="qnaSeq" name="qnaSeq" value="2021043024295712cc91b00cd4405794aee9f0b981d3c4"> 	
+						
 			<div class="form-group">
-				<label for="title" class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">상품명</label>
+				<label for="title" class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">제목</label>
 				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
-					<input type="text" class="form-control" id="title" name="title" placeholder="상품명">
+					<input type="text" class="form-control" id="title" name="title" placeholder="제목">
 				</div>
 			</div>
 
@@ -72,45 +72,9 @@
 					<input type="file" class="form-control" id="image" name="image" placeholder="사진">
 				</div>
 			</div>
-			
+
 			<div class="form-group">
-				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">제조사</label>
-				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
-					<input type="text" class="form-control" id="company" name="company" placeholder="제조사">
-				</div>
-			</div>	
-					
-			<div class="form-group">
-				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">옵션</label>
-				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
-					<input type="text" class="form-control" id="opt1" name="opt1" placeholder="옵션1">
-					<!-- <input type="text" class="form-control" id="opt2" name="opt2" placeholder="옵션2"> -->
-				</div>
-			</div>	
-			
-			<div class="form-group">
-				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">환불배송지</label>
-				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
-					<input type="text" class="form-control" id="refund" name="refund" placeholder="환불배송지">
-				</div>
-			</div>			
-			
-			<div class="form-group">
-				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">가격</label>
-				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
-					<input type="text" class="form-control" id="price" name="price" placeholder="가격">
-				</div>
-			</div>		
-			
-			<div class="form-group">
-				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">수량</label>
-				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
-					<input type="text" class="form-control" id="quantity" name="quantity" placeholder="수량">
-				</div>
-			</div>						
-						
-			<div class="form-group">
-				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">상품 소개</label>
+				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">내용</label>
 				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
 					<textarea rows="5" cols="20" name="contents" id="contents" class="form-control" placeholder="내용을 입력하세요."></textarea>
 				</div>
@@ -123,77 +87,91 @@
 				</div>
 			</div>
 
+			<div class="row text-right">
+				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+					<button type="submit" class="btn btn-primary btn-sm" id="doUpdate">수정</button>
+					<input type="button" class="btn btn-primary btn-sm"  value="목록" id="move_to_list"/>
+				</div>
+			</div>
+
 		</form>
 		<!--// form -->
 
-			<div class="row text-right">
-				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
-					<input type="button" class="btn btn-primary btn-sm" value="등록" placeholder="등록" id="doInsert">
-				</div>
-			</div>
-			
 	</div>
 	<!--// div container -->
-	
+
+
 	<script type="text/javascript">
 	
 		//jquery 객채생성이 완료
-		$(document).ready(function() {
+		$(document).ready(function() {			
 			console.log("document 최초수행");
-	
+			selectQnaSeq();
+
 		});//--document ready
 		
-		$("#doInsert").on("click", function(e){
-			console.log("doInsert");
+		//목록으로 이동--------------------------------------
+		$("#move_to_list").on("click", function(e){
+			console.log("moveToList");
+			e.preventDefault();	
+			moveToList();
+		
+		});
+				
+	    function moveToList(){
+	    	window.location.href = "${hContext}/qna/qna_view.do";
+	    }
+	    
+	    //목록으로 이동--------------------------------------
+		
+		function selectQnaSeq(){
+			console.log("selectQnaSeq()");	
+			
+			$.ajax({
+		  		type: "GET",
+		  		url:"${hContext}/qna/do_selectone.do",
+		  		asyn:"true",
+		  		dataType:"html",
+		  		data:{
+		  				qnaSeq : $("#qnaSeq").val()
+		  			},
+		  		success:function(data){//통신 성공
+		  			console.log("data:"+data);	  		    
+		      	},
+		      	error:function(data){//실패시 처리
+		      		console.log("error:"+data);
+		      	}
+		      	
+		  	 });
+		  }  
+
+ 		$("#doUpdate").on("click", function(e){
+			console.log("doUpdate");
 			e.preventDefault();
 			
 			if(eUtil.ISEmpty($("#title").val()) == true){
-				alert("상품명을 입력하세요.");
+				alert("제목을 입력하세요.");
 				$("#title").focus();
 				return;
 			}			
 			
-			if(eUtil.ISEmpty($("#image").val()) == true){
-				alert("이미지를 첨부해주세요.");
-				$("#image").focus();
-				return;
-			}	
-			
-			if(eUtil.ISEmpty($("#company").val()) == true){
-				alert("제조사를 입력하세요.");
-				$("#company").focus();
-				return;
-			}			
-					
-			if(eUtil.ISEmpty($("#price").val()) == true){
-				alert("가격을 입력하세요.");
-				$("#price").focus();
-				return;
-			}
-			
-			if(eUtil.ISEmpty($("#quantity").val()) == true){
-				alert("수량을 입력하세요.");
-				$("#quantity").focus();
-				return;
-			}	
-			
 			if(eUtil.ISEmpty($("#contents").val()) == true){
-				alert("상품 소개를 입력하세요.");
+				alert("내용을 입력하세요.");
 				$("#contents").focus();
 				return;
-			}
+			}	
 					
 			if(eUtil.ISEmpty($("#tag").val()) == true){
 				alert("태그를 입력하세요.");
 				$("#tag").focus();
 				return;
-			}
+			}				
 			
 			if(confirm("등록하시겠습니까?")==false)return;
 			
-			document.getElementById('regFrm').submit();
-			
-		});
+			document.getElementById('updateFrm').submit();			
+				
+			});
 	
 	</script>
 

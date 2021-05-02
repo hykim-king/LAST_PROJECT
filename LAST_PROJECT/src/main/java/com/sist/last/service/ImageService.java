@@ -24,7 +24,9 @@ public interface ImageService {
 	 * @return
 	 * @throws SQLException
 	 */
-	public int doInsertQnaImg(DTO image, DTO qna) throws SQLException;
+	int doInsertQnaImg(DTO image, DTO qna) throws SQLException;
+	
+	int doUpdateQnaImg(DTO image, DTO qna) throws SQLException;
 	
 	/**
 	 * 집들이 사진 업로드
@@ -33,8 +35,19 @@ public interface ImageService {
 	 * @return
 	 * @throws SQLException
 	 */
-	public int doInsertHousesImg(DTO image, DTO houses, DTO housesLink) throws SQLException;	
+	int doInsertHousesImg(DTO image, DTO houses, DTO housesLink) throws SQLException;	
 
+	/**
+	 * 상품 사진 업로드
+	 * 옵션 잠시 지워놓음..
+	 * @param image
+	 * @param product
+	 * @param opt
+	 * @return
+	 * @throws SQLException
+	 */
+	int doInsertProductImg(DTO image, DTO product) throws SQLException;
+	
 	/**
 	 * 목록조회
 	 * 

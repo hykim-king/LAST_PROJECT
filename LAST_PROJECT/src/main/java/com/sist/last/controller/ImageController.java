@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -27,6 +29,8 @@ import com.sist.last.vo.Houses;
 import com.sist.last.vo.HousesLink;
 import com.sist.last.vo.Image;
 import com.sist.last.vo.Member;
+import com.sist.last.vo.Opt;
+import com.sist.last.vo.Product;
 import com.sist.last.vo.Qna;
 
 @Controller
@@ -36,6 +40,7 @@ public class ImageController {
 	
 	final String UPLOAD_QNA_IMG_DIR = "C:\\Users\\SIST\\git\\LAST_PROJECT\\LAST_PROJECT\\src\\main\\webapp\\resources\\img\\qna";
 	final String UPLOAD_HOUSES_IMG_DIR = "C:\\Users\\SIST\\git\\LAST_PROJECT\\LAST_PROJECT\\src\\main\\webapp\\resources\\img\\houses";
+	final String UPLOAD_PRODUCT_IMG_DIR = "C:\\Users\\SIST\\git\\LAST_PROJECT\\LAST_PROJECT\\src\\main\\webapp\\resources\\img\\product";
 	
 	final String UPLOAD_MEMBER_IMG_DIR = "C:\\20201123_eClass\\04_SPRING\\workspace\\LAST_PROJECT\\LAST_PROJECT\\src\\main\\webapp\\resources\\img\\member";
 	final String VIEW_NAME = "image/image_mng";
@@ -45,6 +50,133 @@ public class ImageController {
 
 	public ImageController() {
 
+	}
+	
+	@RequestMapping(value = "image/product_upload.do", method = RequestMethod.POST)
+	public ModelAndView productImgUpload(MultipartHttpServletRequest mReg, ModelAndView modelAndView) throws IllegalStateException, IOException, SQLException {
+		
+		File fileRootDir = new File(UPLOAD_PRODUCT_IMG_DIR);
+		if (fileRootDir.isDirectory() == false) {
+			boolean flag = fileRootDir.mkdir();
+			LOG.debug("upload() 생성여부: " + flag);
+		}	
+		
+		// 년도
+		String year = StringUtil.formatDate("yyyy");
+		// 월
+		String month = StringUtil.formatDate("MM");
+		LOG.debug("year: " + year);
+		LOG.debug("month: " + month);	
+		
+		String datePath = UPLOAD_PRODUCT_IMG_DIR + File.separator + year+File.separator + month;
+		
+		File dateImgPath = new File(datePath);
+		if(dateImgPath.isDirectory() == false) {
+			boolean flag = dateImgPath.mkdirs();
+			
+			LOG.debug("upload() dateFilePath: " + flag);  
+		}
+		
+		List<Image> list = new ArrayList<Image>();
+		
+		Image imageVO = new Image();
+
+		Iterator<String> image = mReg.getFileNames();
+		
+		while (image.hasNext()) {
+			
+			String upImgNm = image.next();
+			LOG.debug("upImgNm: " + upImgNm);			
+			
+			// file 정보
+			MultipartFile mFile = mReg.getFile(upImgNm);
+
+			// 원본 파일
+			String orgName = mFile.getOriginalFilename();
+			LOG.debug("orgName: " + orgName);			
+			
+			if (null == orgName || "".equals(orgName))
+				continue;
+
+			imageVO.setOrgName(orgName);
+			imageVO.setImgSize(mFile.getSize());// bytes			
+			
+			// 2021042314241453c8dc1edb95784a98b249b5fd9ce4edf3
+			String saveName = StringUtil.getPK("yyyyMMddHH24mmss");
+			LOG.debug("saveName: " + saveName);
+
+			String ext = "";
+			if (orgName.indexOf(".") > -1) {
+				ext = orgName.substring(orgName.indexOf(".") + 1);
+				saveName += "." + ext;
+			}			
+
+			LOG.debug("ext: " + ext);
+			
+			imageVO.setSaveName(saveName);
+			imageVO.setImgExt(ext);	
+			
+			// server에 저장(저장파일명으로 저장)
+			File renameImg = new File(datePath, imageVO.getSaveName());			
+			LOG.debug("renameFile.getAbsolutePath(): " + renameImg.getAbsolutePath());// 파일 절대경로
+			// fileVO.setSaveFileNm(renameFile.getAbsolutePath());// savePath FileVO 추가 전
+			datePath = datePath.replaceAll("\\\\", "/");
+			imageVO.setSavePath(datePath);// 파일경로			
+			
+			// file을 server에 저장
+			mFile.transferTo(new File(imageVO.getSavePath() + File.separator + imageVO.getSaveName()));
+			LOG.debug("mFile: " + mFile);
+			
+			imageVO.setSavePath(datePath);
+			LOG.debug("datePath: " + datePath);		
+		
+		}// --while
+		
+		String savePath;
+		String saveName;
+		
+		if(null == imageVO.getSavePath() || imageVO.getSavePath().equals("")) {
+			savePath = mReg.getParameter("savePath");
+			saveName = mReg.getParameter("saveName");
+		} else {
+			savePath = imageVO.getSavePath();
+			saveName = imageVO.getSaveName();
+		}	
+		
+		String housstoreSeqesSeq = mReg.getParameter("storeSeq");
+		String memberId = mReg.getParameter("memberId");
+		String imgId = mReg.getParameter("imgId");    
+		String title = mReg.getParameter("title");
+		String contents = mReg.getParameter("contents");
+		String company = mReg.getParameter("company");
+		String category = mReg.getParameter("category");
+		String tag = mReg.getParameter("tag"); 
+		int price = Integer.parseInt(mReg.getParameter("price"));
+		int quantity = Integer.parseInt(mReg.getParameter("quantity"));
+		String refund = mReg.getParameter("refund");
+		String regDt = mReg.getParameter("regDt");
+		String modId = mReg.getParameter("modId") ;
+		String modDt = mReg.getParameter("modDt");   
+		
+		Product product = new Product(housstoreSeqesSeq, memberId, imgId, title, contents, company, category, tag, price, quantity, refund, regDt, modId, modDt);
+		
+		//String optSeq = mReg.getParameter("regoptSeqDt");
+		//int div = Integer.parseInt(mReg.getParameter("div"));
+
+		//Opt opt = new Opt(optSeq, housstoreSeqesSeq, memberId, title, price, div, regDt, modId, modDt);
+		
+		int flag = imageService.doInsertProductImg(imageVO, product);
+		
+		list.add(imageVO);
+		
+		modelAndView.addObject("list", list);
+		modelAndView.addObject("product", product);
+		//modelAndView.addObject("opt");
+		
+		modelAndView.setViewName("store/store_home");
+		
+		return modelAndView;	
+	
 	}
 	
 	@RequestMapping(value = "image/houses_upload.do", method = RequestMethod.POST)
@@ -71,6 +203,8 @@ public class ImageController {
 			
 			LOG.debug("upload() dateFilePath: " + flag);  
 		}
+		
+		List<Image> list = new ArrayList<Image>();
 		
 		Image imageVO = new Image();
 
@@ -122,7 +256,8 @@ public class ImageController {
 			
 			imageVO.setSavePath(datePath);
 			LOG.debug("datePath: " + datePath);
-
+			
+			
 		} // --while
 		
 		String savePath;
@@ -156,10 +291,126 @@ public class ImageController {
 		
 		int flag = imageService.doInsertHousesImg(imageVO, houses, housesLink);
 		
-		modelAndView.addObject("imageVO", imageVO);
+		list.add(imageVO);
+		
+		modelAndView.addObject("list", list);
 		modelAndView.addObject("houses", houses);		
 		modelAndView.addObject("housesLink", housesLink);	
 		modelAndView.setViewName("houses/Community_List");
+		
+		return modelAndView;
+		
+	}
+	
+	@RequestMapping(value = "image/qna_mng.do", method = RequestMethod.POST)
+	public ModelAndView qnaImgUpdate(MultipartHttpServletRequest mReg, ModelAndView modelAndView) throws IllegalStateException, IOException, SQLException {
+		
+		File fileRootDir = new File(UPLOAD_QNA_IMG_DIR);
+		if (fileRootDir.isDirectory() == false) {
+			boolean flag = fileRootDir.mkdir();
+			LOG.debug("upload() 생성여부: " + flag);
+		}
+		
+		// 년도
+		String year = StringUtil.formatDate("yyyy");
+		// 월
+		String month = StringUtil.formatDate("MM");
+		LOG.debug("year: " + year);
+		LOG.debug("month: " + month);
+	
+		String datePath = UPLOAD_QNA_IMG_DIR+File.separator+year+File.separator+month;
+		
+		File dateImgPath = new File(datePath);
+		if(dateImgPath.isDirectory() == false) {
+			boolean flag = dateImgPath.mkdirs();
+			
+			LOG.debug("upload() dateFilePath: " + flag);  
+		}
+		
+		Image imageVO = new Image();
+		
+		Iterator<String> image = mReg.getFileNames();
+
+		while (image.hasNext()) {
+			
+			String upImgNm = image.next();
+			LOG.debug("upImgNm: " + upImgNm);
+
+			// file 정보
+			MultipartFile mFile = mReg.getFile(upImgNm);
+
+			// 원본 파일
+			String orgName = mFile.getOriginalFilename();
+			LOG.debug("orgName: " + orgName);
+
+			if (null == orgName || "".equals(orgName))
+				continue;
+
+			imageVO.setOrgName(orgName);
+			imageVO.setImgSize(mFile.getSize());// bytes
+
+			// 2021042314241453c8dc1edb95784a98b249b5fd9ce4edf3
+			String saveName = StringUtil.getPK("yyyyMMddHH24mmss");
+			LOG.debug("saveName: " + saveName);
+
+			String ext = "";
+			if (orgName.indexOf(".") > -1) {
+				ext = orgName.substring(orgName.indexOf(".") + 1);
+				saveName += "." + ext;
+			}
+
+			LOG.debug("ext: " + ext);
+			
+			imageVO.setSaveName(saveName);
+			imageVO.setImgExt(ext);		
+			
+			// server에 저장(저장파일명으로 저장)
+			File renameImg = new File(datePath, imageVO.getSaveName());			
+			LOG.debug("renameFile.getAbsolutePath(): " + renameImg.getAbsolutePath());// 파일 절대경로
+			// fileVO.setSaveFileNm(renameFile.getAbsolutePath());// savePath FileVO 추가 전
+			datePath = datePath.replaceAll("\\\\", "/");
+			imageVO.setSavePath(datePath);// 파일경로
+			
+			LOG.debug("imageVO: " + imageVO);
+			
+			// file을 server에 저장
+			mFile.transferTo(new File(imageVO.getSavePath() + File.separator + imageVO.getSaveName()));
+			LOG.debug("mFile: " + mFile);
+			
+			imageVO.setSavePath(datePath);
+			LOG.debug("datePath: " + datePath);
+
+		} // --while
+		
+		String savePath;
+		String saveName;
+		
+		if(null == imageVO.getSavePath() || imageVO.getSavePath().equals("")) {
+			savePath = mReg.getParameter("savePath");
+			saveName = mReg.getParameter("saveName");
+		} else {
+			savePath = imageVO.getSavePath();
+			saveName = imageVO.getSaveName();
+		}		
+		
+		String qnaSeq = mReg.getParameter("qnaSeq");
+		String memberId = mReg.getParameter("memberId");
+		String imgId = mReg.getParameter("imgId");
+		String title = mReg.getParameter("title");
+		String contents = mReg.getParameter("contents");
+		String tag = mReg.getParameter("tag");
+		String regDt = mReg.getParameter("regDt");
+		String modId = mReg.getParameter("modId");
+		String modDt = mReg.getParameter("modDt");
+		
+		Qna qna = new Qna(qnaSeq, memberId, imgId, title, contents, tag, regDt, modId, modDt);
+		
+		int flag = imageService.doUpdateQnaImg(imageVO, qna);
+		
+		modelAndView.addObject("imageVO", imageVO);
+		modelAndView.addObject("qna", qna);
+		
+		modelAndView.setViewName("qna/qna_list");
 		
 		return modelAndView;
 		

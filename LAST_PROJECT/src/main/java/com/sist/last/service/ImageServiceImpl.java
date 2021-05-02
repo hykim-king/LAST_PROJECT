@@ -15,11 +15,15 @@ import com.sist.last.dao.HousesDaoImpl;
 import com.sist.last.dao.HousesLinkDaoImpl;
 import com.sist.last.dao.ImageDaoImpl;
 import com.sist.last.dao.MemberDaoImpl;
+import com.sist.last.dao.OptDaoImpl;
+import com.sist.last.dao.ProductDaoImpl;
 import com.sist.last.dao.QnaDaoImpl;
 import com.sist.last.vo.Houses;
 import com.sist.last.vo.HousesLink;
 import com.sist.last.vo.Image;
 import com.sist.last.vo.Member;
+import com.sist.last.vo.Opt;
+import com.sist.last.vo.Product;
 import com.sist.last.vo.Qna;
 
 @Service
@@ -41,6 +45,12 @@ public class ImageServiceImpl implements ImageService {
 	
 	@Autowired
 	private HousesLinkDaoImpl housesLinkDao;
+	
+	@Autowired
+	private ProductDaoImpl productDao;
+	
+	@Autowired
+	private OptDaoImpl optDao;
 
 	public ImageServiceImpl() {
 
@@ -167,14 +177,20 @@ public class ImageServiceImpl implements ImageService {
 		
 		imageVO.setImgId(imgId);
 		housesVO.setImgId(imgId);
+		
+		// 이미지 넘버---------------------------------------------
+		Random random = new Random();
+		int pk = random.nextInt(8) + 1;
+		
+		imageVO.setImgNum(pk);
 				
-		// 집들이 seq 값--------------------------------------------
+		// 집들이 seq------------------------------------------
 		String housesSeq = StringUtil.getPK("yyyyMMddHHmmss");
 		
 		housesVO.setHousesSeq(housesSeq);
 		housesLinkVO.setHousesSeq(housesSeq);
 		
-		// 집들이링크 seq 값--------------------------------------------
+		// 집들이링크 seq---------------------------------------
 		housesLinkVO.setLinkSeq(StringUtil.getPK("")); 
 		
 		LOG.debug("imageVO: " + imageVO);		
@@ -188,6 +204,74 @@ public class ImageServiceImpl implements ImageService {
 		return flag;
 		
 		}
+
+	@Override
+	public int doUpdateQnaImg(DTO image, DTO qna) throws SQLException {
+
+		int flag = 0;
+		
+		Image imageVO = (Image) image;
+		Qna qnaVO = (Qna) qna;
+		
+		Random random = new Random();
+		int pk = random.nextInt(8) + 1;
+		LOG.debug("pk: "+pk);
+		
+		// 파일아이디(pk값)
+		String imgId = StringUtil.getPK("yyyyMMddHHmmss");
+		LOG.debug("imgId: " + imgId);
+		
+		qnaVO.setQnaSeq(StringUtil.getPK("yyyyMMdd24mmss"));
+		
+		imageVO.setImgNum(pk);
+		imageVO.setImgId(imgId);
+		qnaVO.setImgId(imgId);
+		
+		LOG.debug("imageVO: "+imageVO);
+		LOG.debug("qnaVO: "+qnaVO);
+
+		flag = this.imageDao.doInsert(imageVO);
+		flag += this.qnaDao.doUpdate(qnaVO);
+
+		return flag;
+	}
+
+	@Override
+	public int doInsertProductImg(DTO image, DTO product) throws SQLException {
+		
+		Image imageVO = (Image) image;
+		Product productVO = (Product) product;
+		//Opt optVO = (Opt) opt;
+		
+		// 이미지 넘버---------------------------------------------
+		Random random = new Random();
+		int pk = random.nextInt(8) + 1;
+		imageVO.setImgNum(pk);
+		
+		
+		// 이미지 아이디--------------------------------------------
+		String imgId = StringUtil.getPK("yyyyMMddHHmmss");
+		imageVO.setImgId(imgId);
+		productVO.setImgId(imgId);
+		
+		// 상품 seq--------------------------------------------
+		String storeSeq = StringUtil.getPK("yyyyMMddHHmmss");
+		productVO.setStoreSeq(storeSeq);
+		//optVO.setStoreSeq(storeSeq);
+		
+		// 옵션 seq--------------------------------------------
+		//optVO.setOptSeq(StringUtil.getPK("yyyyMMddHHmmss"));
+		
+		LOG.debug("imageVO: " + imageVO);
+		LOG.debug("productVO: " + productVO);
+		//LOG.debug("optVO: " + optVO);
+		
+		int flag = imageDao.doInsert(imageVO);
+		flag += productDao.doInsert(productVO);
+		//flag += optDao.doInsert(optVO);	
+		
+		return flag;
+	}
 
 	
 	}
