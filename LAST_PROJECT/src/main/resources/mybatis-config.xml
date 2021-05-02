@@ -27,6 +27,7 @@
 		<typeAlias type="com.sist.last.vo.Star" alias="Star"/> 
 		<typeAlias type="com.sist.last.vo.Scrap" alias="Scrap"/> 
 		<typeAlias type="com.sist.last.vo.Review" alias="Review"/>
+		<typeAlias type="com.sist.last.vo.ReviewStar" alias="ReviewStar"/>
 		<typeAlias type="com.sist.last.vo.Image" alias="Image"/> 
 		<typeAlias type="com.sist.last.vo.Basket" alias="Basket"/> 
 		<typeAlias type="com.sist.last.vo.Qna" alias="Qna"/> 
