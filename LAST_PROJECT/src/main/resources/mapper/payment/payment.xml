@@ -65,7 +65,9 @@
         	price,                                       
         	shipfee,                                     
         	status,                                      
-        	TO_CHAR(reg_dt,'YYYY/MM/DD HH24MISS') reg_dt                            
+        	TO_CHAR(reg_dt,'YYYY/MM/DD HH24MISS') reg_dt,
+			mod_id,
+			TO_CHAR(mod_dt,'YYYY/MM/DD HH24MISS') mod_dt                            
 		FROM payment                                        
 		WHERE pay_seq = #{paySeq} 
 	</select>
