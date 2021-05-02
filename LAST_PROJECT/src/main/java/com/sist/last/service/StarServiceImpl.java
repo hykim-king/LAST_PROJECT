@@ -1,6 +1,7 @@
 package com.sist.last.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,7 @@ import com.sist.last.cmn.DTO;
 import com.sist.last.dao.StarDaoImpl;
 
 @Service
-public class StarServiceImpl {
+public class StarServiceImpl implements StarService {
 	
 	final Logger LOG = LoggerFactory.getLogger(StarServiceImpl.class);
 	
@@ -36,6 +37,13 @@ public class StarServiceImpl {
 	
 	public int doInsert(DTO dto) throws SQLException {
 		return this.starDao.doInsert(dto);
+	}
+
+
+
+	@Override
+	public List<?> doRetrieve(DTO dto) throws SQLException {
+		return this.starDao.doRetrieve(dto);
 	}
 
 }

@@ -1,10 +1,20 @@
 package com.sist.last.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.sist.last.cmn.DTO;
 
 public interface StarService {
+	
+	/**
+	 * 목록조회
+	 * 
+	 * @param review
+	 * @return List<Review>
+	 * @throws SQLException
+	 */
+	public List<?> doRetrieve(DTO dto) throws SQLException;
 	
 	/**
 	 * 수정
