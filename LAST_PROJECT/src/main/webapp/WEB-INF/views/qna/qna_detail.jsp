@@ -8,7 +8,7 @@
     -----   -----  -------------------------------------------
     2021. 4. 26.       	임하람 
     
-    author eclass 개발팀
+    author eclass 개발팀////
     since 2020.11.23
     Copyright (C) by KandJang All right reserved.---------
 */
@@ -187,7 +187,7 @@
 			e.preventDefault();//기능 안먹음..여러번 클릭됨 ㅜ
 			
 
-		});//--doUpdateQna
+		});//--doUpdateQna///
 	
 //3)게시물 삭제버튼 
 		$("#doDeleteQna").on("click",function(e){
