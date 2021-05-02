@@ -30,7 +30,5 @@
 		    star_score = #{starScore}
 		WHERE star_seq = #{starSeq}
 	</select>
-
-
+	
 </mapper>
-
