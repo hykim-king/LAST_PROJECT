@@ -167,7 +167,7 @@
 				return;
 			}				
 			
-			if(confirm("등록하시겠습니까?")==false)return;
+			if(confirm("수정하시겠습니까?")==false)return;
 			
 			document.getElementById('updateFrm').submit();			
 				

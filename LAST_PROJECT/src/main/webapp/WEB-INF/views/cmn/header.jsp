@@ -101,8 +101,8 @@
                  <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">글쓰기</a>
                                     <ul class="dropdown-menu animated fadeInDownShort go">
-                                       <li><a href="#">집들이 등록</a></li>
-                                       <li><a href="#">상품등록</a></li>
+                                       <li><a href="${hContext}/houses/houses_regist.do">집들이 등록</a></li>
+                                       <li><a href="${hContext}/store/product_regist.do">상품등록</a></li>
                                     </ul>
                  </li>
               </ul>
