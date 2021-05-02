@@ -1,29 +1,22 @@
 package com.sist.last.dao;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.sql.DataSource;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.Search;
-import com.sist.last.cmn.StringUtil;
-import com.sist.last.vo.Basket;
 import com.sist.last.vo.Qna;
 
 @Repository
-public class QnaDaoImpl implements QnaDao {
+public class QnaDaoImpl {
 
 	final static Logger LOG = LoggerFactory.getLogger(QnaDaoImpl.class);
 	
@@ -32,32 +25,10 @@ public class QnaDaoImpl implements QnaDao {
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 	
-
-	RowMapper<Qna> row =  new RowMapper<Qna>() {
-		public Qna mapRow(ResultSet rs, int rowNum) throws SQLException {
-			
-			Qna qnaVO = new Qna();
-			qnaVO.setQnaSeq(rs.getString("qna_seq"));
-			qnaVO.setMemberId(rs.getString("member_id"));
-			qnaVO.setImgId(rs.getString("img_id"));
-			qnaVO.setTitle(rs.getString("title"));
-			qnaVO.setContents(rs.getString("contents"));
-			qnaVO.setTag(rs.getString("tag"));
-			qnaVO.setRegDt(rs.getString("reg_dt"));
-//			qnaVO.setModId(rs.getString("mod_id"));
-//			qnaVO.setModDt(rs.getString("mod_dt"));
-			
-			qnaVO.setNum(rs.getInt("rnum"));
-			qnaVO.setTotalCnt(rs.getInt("total_cnt"));
-			
-			return qnaVO;
-			
-		}
-	};
 	
 	public QnaDaoImpl() {}
 	
-	@Override
+
 	public int doDelete(DTO dto) throws SQLException {
 		int flag = 0;
 		Qna qna =  (Qna) dto;
@@ -79,7 +50,7 @@ public class QnaDaoImpl implements QnaDao {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	@Override
+
 	public int doInsert(DTO dto) throws SQLException {
 		int flag = 0;
 		Qna qna =  (Qna) dto;
@@ -94,12 +65,16 @@ public class QnaDaoImpl implements QnaDao {
 		return flag;
 	}
 
-	@Override
+
 	public DTO doSelectOne(DTO dto) throws SQLException {
 		Qna inVO = (Qna) dto;
 		Qna outVO = null;
 		
 		String statement = this.NAMESPACE+".doSelectOne";
+		LOG.debug("=======================================");
+		LOG.debug("=qna inVO=" + inVO);
+		LOG.debug("=statement=" + statement);
+		LOG.debug("=======================================");
 		
 		outVO = this.sqlSessionTemplate.selectOne(statement, inVO);
 			
@@ -108,13 +83,15 @@ public class QnaDaoImpl implements QnaDao {
 		LOG.debug("=======================================");
 
 		if (outVO == null) {
+			LOG.debug("=======================================");
+			LOG.debug("=null outVO=" + outVO);
+			LOG.debug("=======================================");
 			throw new EmptyResultDataAccessException(1);
 		}
 		
 		return outVO;
 	}
 
-	@Override
 	public int doUpdate(DTO dto) throws SQLException {
 		int flag = 0;
 		Qna qna =  (Qna) dto;
@@ -131,7 +108,7 @@ public class QnaDaoImpl implements QnaDao {
 		return flag;
 	}
 
-	@Override
+
 	public List<?> doRetrieve(DTO dto) throws SQLException {
 		
 		Search param =  (Search) dto;
