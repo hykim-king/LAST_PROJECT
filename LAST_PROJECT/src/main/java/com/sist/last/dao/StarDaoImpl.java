@@ -1,8 +1,7 @@
 package com.sist.last.dao;
 
 import java.sql.SQLException;
-
-import javax.sql.DataSource;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -12,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.sist.last.cmn.DTO;
+import com.sist.last.cmn.SearchReview;
 import com.sist.last.vo.Star;
 
 @Repository
@@ -28,8 +28,39 @@ public class StarDaoImpl extends DTO {
 	
 	public StarDaoImpl() {}
 	
+	
+	/**
+	 * 별점 목록 조회
+	 * @param dto
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<?> doRetrieve(DTO dto) throws SQLException {
 
+		SearchReview param = (SearchReview) dto;
 
+		String statement = this.NAMESPACE+".doRetrieve";
+
+		LOG.debug("=================");
+		LOG.debug("=param="+param);
+		LOG.debug("=statement="+statement);
+		LOG.debug("=================");
+		
+		List<Star> list = sqlSessionTemplate.selectList(statement, param);
+		
+		for(Star vo : list) {
+			LOG.debug("=vo="+vo);
+		}
+		
+		return list;
+	}
+
+	/**
+	 * 별점 등록
+	 * @param dto
+	 * @return
+	 * @throws SQLException
+	 */
 	public int doInsert(DTO dto) throws SQLException {
 		int flag = 0;
 		Star user = (Star) dto;
@@ -46,7 +77,12 @@ public class StarDaoImpl extends DTO {
 		return flag;
 	}
 
-
+	/**
+	 * 별점 삭제
+	 * @param dto
+	 * @return
+	 * @throws SQLException
+	 */
 	public int doDelete(DTO dto) throws SQLException {
 		int flag = 0;
 		Star   user = (Star)dto;
@@ -67,7 +103,12 @@ public class StarDaoImpl extends DTO {
 		return flag;
 	}
 
-
+	/**
+	 * 별점 수정
+	 * @param dto
+	 * @return
+	 * @throws SQLException
+	 */
 	public int doUpdate(DTO dto) throws SQLException {
 		int flag = 0;
 		Star star = (Star) dto;
