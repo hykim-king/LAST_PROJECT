@@ -6,6 +6,14 @@ import java.util.List;
 import com.sist.last.cmn.DTO;
 
 public interface ReviewService {
+	
+	/**
+	 * 리뷰 + 별점
+	 * @param dto
+	 * @return
+	 * @throws SQLException
+	 */
+	List<?> reviewStarList(DTO dto) throws SQLException;
 
 	/**
 	 * 목록조회
@@ -14,7 +22,7 @@ public interface ReviewService {
 	 * @return List<Review>
 	 * @throws SQLException
 	 */
-	public List<?> doRetrieve(DTO dto) throws SQLException;
+	List<?> doRetrieve(DTO dto) throws SQLException;
 
 	/**
 	 * 단건조회
@@ -41,7 +49,7 @@ public interface ReviewService {
 	 * @return int(성공:1, 실패:0)
 	 * @throws SQLException
 	 */
-	int doDelete(DTO dto) throws SQLException;
+	int doDelete(DTO dto, DTO dto2) throws SQLException;
 
 	/**
 	 * 리뷰 등록
@@ -50,6 +58,6 @@ public interface ReviewService {
 	 * @return int(성공:1, 실패:0)
 	 * @throws SQLException
 	 */
-	int doInsert(DTO dto) throws SQLException;
+	int doInsert(DTO dto, DTO dto2) throws SQLException;
 
 }

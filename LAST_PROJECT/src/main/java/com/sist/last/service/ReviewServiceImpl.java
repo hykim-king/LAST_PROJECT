@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.StringUtil;
 import com.sist.last.dao.ReviewDaoImpl;
+import com.sist.last.dao.StarDaoImpl;
 import com.sist.last.vo.Review;
 
 @Service
@@ -21,6 +22,9 @@ public class ReviewServiceImpl implements ReviewService {
 	@Autowired
 	private ReviewDaoImpl reviewDao;
 
+	@Autowired
+	private StarDaoImpl starDao;
+
 	public ReviewServiceImpl() {
 
 	}
@@ -29,10 +33,16 @@ public class ReviewServiceImpl implements ReviewService {
 	public void setReviewDao(ReviewDaoImpl reviewDao) {
 		this.reviewDao = reviewDao;
 	}
-
+	
+	@Override
+	public List<?> reviewStarList(DTO dto) throws SQLException {
+		
+		return this.reviewDao.reviewStarList(dto);
+	}
+	
 	@Override
 	public List<?> doRetrieve(DTO dto) throws SQLException {
-
+				
 		return this.reviewDao.doRetrieve(dto);
 	}
 
@@ -49,16 +59,20 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public int doDelete(DTO dto) throws SQLException {
+	public int doDelete(DTO dto, DTO dto2) throws SQLException {
 
+		starDao.doDelete(dto2);
+		
 		return this.reviewDao.doDelete(dto);
 	}
 
 	@Override
-	public int doInsert(DTO dto) throws SQLException {
-		
+	public int doInsert(DTO dto, DTO dto2) throws SQLException {
+
 		Review review = (Review) dto;
 		review.setReviewSeq(StringUtil.getPK(""));
+
+		starDao.doInsert(dto2);
 
 		return this.reviewDao.doInsert(review);
 	}
