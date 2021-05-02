@@ -130,8 +130,8 @@
                                     </div>
                                     <div>
                                         <div class="card-body">
-                                            <div class="shop__sidebar__tags" name="searchWord" id="searchWord">
-                                                <a href="" onclick="doRetrieve">우드</a>
+                                            <div class="shop__sidebar__tags">
+                                                <a href="">우드</a>
                                                 <a>원목</a>
                                                 <a>화이트</a>
                                                 <a>led</a>
@@ -248,7 +248,7 @@
 	    				
 	    				$.each(parseData, function(i, value) {
 	    					html += " <div class='col-lg-4 col-md-6 col-sm-6'>                                                                            ";
-	    					html += " 	<div class='product__item' id='productItem'>                ";
+	    					html += " 	<div class='product__item'>                ";
 	    					html += " 		<div class='product__item__pic set-bg'> ";
 	    					html += "			<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><img class='product__item__pic set-bg' src='${hContext}/resources/store/img/"+value.imgId+".jpg'></a>";
 	    					html += " 		</div>                                                                                                                                                             ";
@@ -301,15 +301,8 @@
 		}
 		
 		
-		
-		
-		
-		
 	</script>
     
-    
-    
-    
-    
+
 </body>
 </html>

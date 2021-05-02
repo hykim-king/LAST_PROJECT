@@ -158,22 +158,14 @@
 		});//--document ready
 		
 		
-		//스크랩클릭_아직구현x
-		$("#scrap").on("click", function(e) {
-			console.log("스크랩완료");
-		});
-		
-		
 		//베스트 혹은 신상품 클릭
 		$("#newArrivals").on("click", function(e) {
 			e.preventDefault();
-			console.log("신상품순클릭");
 			doRetrieve(1, "10");
 		});
 		
 		$("#bestSellers").on("click", function(e) {
 			e.preventDefault();
-			console.log("베스트상품순클릭");
 			doRetrieve(1, "20");
 		});
 		
@@ -194,7 +186,7 @@
 	    		},
 	    		
 	    		success:function(data){//통신 성공
-	        		console.log("success data load"+data);
+	        		console.log("success data load");
 	        		var parseData = JSON.parse(data);
 	    
 	    			//기존 데이터 삭제

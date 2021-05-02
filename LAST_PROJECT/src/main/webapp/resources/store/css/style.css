@@ -963,7 +963,7 @@ ol {
 }
 
 .product__item:hover img {
-	transform: scale(1.1);            /* 이미지 확대 */
+	transform: scale(1.1);       /* 이미지 확대 */
 	transition: transform .4s; 	/*  시간 설정  */
 } 
 
