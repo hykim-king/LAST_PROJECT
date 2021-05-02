@@ -5,7 +5,7 @@
 	Modification information
 	
 	수정일     수정자      수정내용
-    -----   -----  -------------------------------------------
+    -----   -----  ------------------------------------
     2021. 4. 26.        임하람 
     
     author eclass 개발팀
@@ -28,11 +28,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
 
-<title>QNA LIST</title>
+<title>QNA 목록조회</title>
 
   <!-- 부트스트랩 -->
-   <link href="${hContext}/resources/css/bootstrap.min.css" rel="stylesheet"> 
-
+   <%-- <link href="${hContext}/resources/css/bootstrap.min.css" rel="stylesheet"> --%>
     <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
     <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
     <!--[if lt IE 9]>
@@ -42,16 +41,26 @@
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="${hContext}/resources/js/jquery.min.js"></script>
-    <script src="${hContext}/resources/css/bootstrap.min.css"></script>
+    <%-- <script src="${hContext}/resources/css/bootstrap.min.css"></script> --%>
     <script src="${hContext}/resources/js/eclass.js"></script>
 	<script src="${hContext}/resources/js/eutil.js"></script>
 	<script src="${hContext}/resources/js/jquery.bootpag.js"></script>
+	
+	<!-- Bootstrap core CSS -->
+  <link href="${hContext}/resources/lhc/bootstrap_lhc.css" rel="stylesheet"> 
+
+  <!-- Custom styles for this template -->
+  <link href="${hContext}/resources/lhc/shop-homepage.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/lhc/base.css">
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/lhc/normalize.css">
+  
 
 </head>
 <body>
 
 <!-- div container -->
 	<div class="wrap container">
+	
 
 	<!-- Jumbotron -->
 	<!-- 수평선 긋기 -->
@@ -70,55 +79,57 @@
 			</h2>
 			<!--// ~를 위한 추천 메세지 띄우기 -->
 	        <p class="lead">인테리어 고수들에게 조언을 받으세요</p>
-	        <input type="button" class="btn btn-lg btn-success"  value="질문 등록하기" id="doRegistBtn"/>
+	        <div class="col-xs-8 col-sm-9 col-md-12 col-lg-2">
+	        	<input type="button" class="btn btn-lg btn-success"  value="질문 등록하기" id="doRegistBtn"/>
+	      	</div>
 	     </div>
 	<hr class="my-2">
 	<!-- 수평선 긋기 -->
 	<!--// Jumbotron -->
 
 	<!-- 검색영역 --><!--  -->
+	<br/>
 		<div class="row col-lg-12">
-			<div class="col-xs-8 col-sm-9 col-md-8 col-lg-2 text-right ">
-	 				<select class="form-control input-sm " name="pageSize" id="pageSize">				
-	    		  		<option value="6">6개씩 보기</option>	    		  		
+			<div class="col-xs-8 col-sm-9 col-md-8 col-lg-2">
+	 				<select class="form-control input-md " name="pageSize" id="pageSize">				    		  		
+						<option value="6">6개씩 보기</option>
 						<option value="9">9개씩 보기</option>
-						<option value="12">12개씩 보기</option>
 	    		  </select> 
 		    </div>
 		  </div>
+		  <br/>
+		  <br/>
 	   <div class="row col-lg-12">
 		    <div class="col-xs-8 col-sm-9 col-md-8 col-lg-2">
-	 				<select class="form-control input-sm" name="searchDiv" id="searchDiv">			
+	 				<select class="form-control input-md" name="searchDiv" id="searchDiv">			
 	    		  		<option value="10">제목</option>	    		  		
 						<option value="20">태그</option>
 						<option value="30">제목+태그</option>
 	    		  </select> 
 		    </div>
-		   	<div class="col-xs-8 col-sm-9 col-md-6 col-lg-4">
-	   			<input type = "text" size = "40" name = "searchWord" id = "searchWord" placeholder = "검색어를 입력해주세요" />
+		   	<div class="col-xs-8 col-sm-9 col-md-6 col-lg-6">
+	   			<input type = "text" size = "20" name = "searchWord" id = "searchWord" placeholder = "검색어를 입력해주세요" />
 			</div>
-			<div class="col-xs-8 col-sm-9 col-md-12 col-lg-4">
-					<input type="button" class="btn btn-primary btn-sm"  value="조회" id="doRetrieveBtn"/>
+			<div class="col-xs-8 col-sm-9 col-md-12 col-lg-2">
+					<input type="button" class="btn btn-primary btn-md"  value="조회" id="doRetrieveBtn"/>
 			</div>
 		 </div>  
-	<!-- //검색영역 -->       
-         
-            <div class="pt-5 mt-5">
-	           <h3 class="mb-5">최근 Q&A를 확인해보세요!</h3>
-	              <ul class="comment-list" id="qnaList"><!-- start comment-list -->
-	                <li class="comment">
-		                  
-	                </li>
-	              </ul><!-- END comment-list -->
-            </div>
-            
-            <!-- pagenation -->
-				<div class="text-center">
-					<div id="page-selection" class="text-center page"></div>
-				</div>
-			<!--// pagenation -->	
+	<!-- //검색영역 --> 
+	    <br/><br/><br/>  
+	   <!-- qna 출력 -->
+		<h4>최근 Q&A를 확인해보세요!</h4><br/>
+		<div id="rowQnaCard" class="row">
+		
+		</div>	
+		<!-- //qna 출력 -->	
+		
+		<!-- pagenation -->
+			<div class="text-center">
+				<div id="page-selection" class="text-center page"></div>
+			</div>
+		<!--// pagenation -->	
 
-
+     
 	</div>
 	<!-- /container -->
 	
@@ -129,7 +140,7 @@
 			console.log("document ready");
 			
 			//화면 로딩시 보여줄 데이터
-			doRetrieve();
+			doRetrieve(1);
 		});
 		
 		//paging
@@ -143,7 +154,7 @@
 			$("#page-selection").bootpag({
 			    total: pageTotal,
 			    page: page,//시작
-			    maxVisible: 10,
+			    maxVisible: 5,
 			    leaps: true,
 			    firstLastUse: true,
 			    first: '←',
@@ -177,7 +188,7 @@
 			var qnaSeq = tds.eq(1).text();
 			console.log("qnaSeq:"+qnaSeq);
 			
-			window.location.href = "${hContext}/qna/qna_regist.do?memberId=memberId+&qnaSeq=qnaSeq" ;
+			window.location.href = "${hContext}/qna/qna_regist.do?memberId="+memberId+"&qnaSeq="+qnaSeq ;
 
 		});	//--doRegistBtn
 		
@@ -209,7 +220,7 @@
 	        		var parseData = JSON.parse(data);
 	        		
 	        		//기존데이터 삭제
-	        		$("#qnaList").empty();
+	        		$("#rowQnaCard").empty();
 	        		var html = "";
 	        		
 	        		//페이징 변수
@@ -229,17 +240,20 @@
 						
 						$.each(parseData,function(i,value){
 							console.log(i+","+value.name);
-							html+= "<li class='comment'>";
-							html+= "<div class='vcard bio'>";
-							html+= "  <img src='${hContext}/resources/img/qna/2021/04' >";
-							html+= "</div>";
-							html+= "	<div class='comment-body'>";
-							html+= "  		<h3>"+value.title+"</h3>";
-							html+= "  		<div class='meta'>"+value.regDt+"</div>";
-							html+= "  		<p>"+value.tag+"</p>";
-							html+= "  		<p><a href='#' class='reply'>read more</a></p>";
-							html+= "	</div>";
-							html+= "</li>";
+	    					html+="<div  class='col-lg-4 col-md-6 mb-4'>";
+	    					html+="	<div class='card h-100'>";
+	    					html +=			"<a href='${hContext}/qna/qna_detail.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/resources/lhc/ignore.PNG' ></a>";
+	    					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
+	    					html+="		<div id='buttonClick' class='row col-lg-12'>";
+	    					html+="			<h5 class='card-title col-lg-8'>"+value.memberId+"</h5>";
+	    					html+="			<small class = 'gotta' style = 'display:none;''>"+value.qnaSeq+"</small>";
+	    					html+="		</div>";
+	    					html+="		<div id='rowQnaCardClick' class='text-center'>";
+	    					html+="			<h5 class='text-muted'>"+value.title+"</h5>";
+	    					html+="			<small class = 'gotta' style = 'display:none;''>"+value.qnaSeq+"</small>";
+	    					html+="		</div>";	
+	    					html+="	</div>";	
+	    					html+="</div>";	
 						});
 						
 					}else{//data가 없는 경우
@@ -249,7 +263,7 @@
 					}
 					
 					//body에 데이터 추가
-					$("#qnaList").append(html);	
+					$("#rowQnaCard").append(html);	
 					
 					//페이징처리
 					console.log(pageTotal+","+page);
@@ -268,10 +282,9 @@
 		
 		
 		//data click -> doSelectOne(단건조회)로 이동
-		//확인완료
-		$("#qnaList").on("click",function(e){
+		$("#rowQnaCard").on("click","#rowQnaCardClick",function(e){
 			e.preventDefault();
-			console.log("qnaList");
+			console.log("rowQnaCard");
 			
 			let tds = $(this).children();
 			console.log("tds:"+tds);
