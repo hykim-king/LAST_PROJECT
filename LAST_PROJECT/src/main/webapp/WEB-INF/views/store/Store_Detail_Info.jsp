@@ -720,6 +720,7 @@
 			}); 
 		}//--renderingPage	
 			      	
+		
 		/* 리뷰 수정 */
 		function reviewUpdate(reviewSeq) {
 			console.log("reviewUpdate()");
