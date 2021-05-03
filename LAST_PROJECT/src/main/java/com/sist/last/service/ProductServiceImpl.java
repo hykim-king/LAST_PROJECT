@@ -23,11 +23,6 @@ public class ProductServiceImpl  {
 	
 	public ProductServiceImpl() {}
 	
-	
-
-
-
-	
 	public DTO doSelectOne(DTO dto) throws SQLException {
 		
 		return this.productDao.doSelectOne(dto);
@@ -55,7 +50,7 @@ public class ProductServiceImpl  {
 	public int doInsert(DTO dto) throws SQLException {
 		
 		Product product = (Product) dto;
-		product.setStoreSeq(StringUtil.getPK(""));
+		product.setStoreSeq(StringUtil.getPK("yyyyMMddHHmmss"));
 		
 		return this.productDao.doInsert(product);
 	}

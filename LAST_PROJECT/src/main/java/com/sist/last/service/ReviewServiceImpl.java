@@ -70,7 +70,7 @@ public class ReviewServiceImpl implements ReviewService {
 	public int doInsert(DTO dto, DTO dto2) throws SQLException {
 
 		Review review = (Review) dto;
-		review.setReviewSeq(StringUtil.getPK(""));
+		review.setReviewSeq(StringUtil.getPK("yyyyMMddHHmmss"));
 
 		starDao.doInsert(dto2);
 

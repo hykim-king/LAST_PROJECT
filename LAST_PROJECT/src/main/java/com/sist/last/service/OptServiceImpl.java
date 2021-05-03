@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sist.last.cmn.DTO;
+import com.sist.last.cmn.StringUtil;
 import com.sist.last.dao.OptDaoImpl;
 import com.sist.last.vo.Opt;
 
@@ -43,6 +44,9 @@ public class OptServiceImpl implements OptService {
 	@Override
 	public int doInsert(DTO dto) throws SQLException {
 
+		Opt opt= (Opt) dto;
+		opt.setOptSeq(StringUtil.getPK("yyyyMMddHHmmss"));
+				
 		return this.optDao.doInsert(dto);
 	}
 

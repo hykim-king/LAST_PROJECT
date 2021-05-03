@@ -47,7 +47,7 @@ public class BasketServiceImpl implements BasketService {
 	public int doInsert(DTO dto) throws SQLException {
 		
 		Basket basket= (Basket) dto;
-		basket.setBasketSeq(StringUtil.getPK(""));
+		basket.setBasketSeq(StringUtil.getPK("yyyyMMddHHmmss"));
 		
 		return this.basketDao.doInsert(basket);
 	}

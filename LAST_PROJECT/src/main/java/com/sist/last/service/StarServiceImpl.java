@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sist.last.cmn.DTO;
+import com.sist.last.cmn.StringUtil;
 import com.sist.last.dao.StarDaoImpl;
+import com.sist.last.vo.Star;
 
 @Service
 public class StarServiceImpl implements StarService {
@@ -23,23 +25,21 @@ public class StarServiceImpl implements StarService {
 		
 	}
 	
-
-	
 	public int doUpdate(DTO dto) throws SQLException {
 		return this.starDao.doUpdate(dto);
 	}
-
 	
 	public int doDelete(DTO dto) throws SQLException {
 		return this.starDao.doDelete(dto);
 	}
-
 	
 	public int doInsert(DTO dto) throws SQLException {
+		
+		Star star = (Star) dto;
+		star.setStarSeq(StringUtil.getPK("yyyyMMdd24mmss")); 
+		
 		return this.starDao.doInsert(dto);
 	}
-
-
 
 	@Override
 	public List<?> doRetrieve(DTO dto) throws SQLException {
