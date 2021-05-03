@@ -16,6 +16,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../cmn/common.jsp" %>
 <%@ include file="../cmn/header.jsp" %>
 <c:set var="hContext" value="${pageContext.request.contextPath }"></c:set>
@@ -50,7 +51,7 @@
 </head>
 <body>
 ${vo}
-<input type="text" name="storeSeq"   id="storeSeq" value="${vo.storeSeq}" />
+${payment}
 <!-- 결제 데이터 가져오기 -->
 		<!-- 제목 -->
 	 	<div class="page-header">
@@ -67,9 +68,9 @@ ${vo}
                         <table id="cartTable">
                             <thead>
                                 <tr>
-                                	<th style="visibility:hidden;position:absolute;">paySeq</th>
-                                	<th style="visibility:hidden;position:absolute;">storeSeq</th>
-                                	<th style="visibility:hidden;position:absolute;">memberId</th>
+                                	<th style="visibility:hidden;position:absolute;">${payment.paySeq}</th>
+                                	<th style="visibility:hidden;position:absolute;">${vo.storeSeq}</th>
+                                	<th style="visibility:hidden;position:absolute;">${member.memberId}</th>
                                     <th>상품명</th>
                                     <th>옵션 1</th>
                                     <th>옵션 2</th>
@@ -77,14 +78,36 @@ ${vo}
                                     <th>가격</th>
                                     <th>배송비</th>
                                     <th>합계</th>
-                                    <th>결제상태</th>
-                                    <th style="visibility:hidden;position:absolute;">modId</th>
-                                    <th style="visibility:hidden;position:absolute;">regDt</th>
-                                    <th style="visibility:hidden;position:absolute;">modDt</th>
+                                    <!--<th>결제상태</th>  -->
+                                    <th style="visibility:hidden;position:absolute;">${member.memberId}</th>
+                                    <th style="visibility:hidden;position:absolute;">${vo.regDt}</th>
+                                    <th style="visibility:hidden;position:absolute;">${vo.modDt}</th>
                                    
                                 </tr>
                             </thead>
-                            <tbody>  
+                            <tbody>
+                            	<tr>                                                                                                       
+								    <td style='visibility:hidden;position:absolute;'>${payment.paySeq}</td>                                  
+								    <td style='visibility:hidden;position:absolute;'>${vo.storeSeq}</td>                                
+								    <td style='visibility:hidden;position:absolute;'>${member.memberId}</td>                                
+								    <td class='cart-title first-row' id='title'>${vo.title}</td>                                        
+								    <td class='cart-option first-row' id='optone'>${vo.optone}</td>                                     
+								    <td class='cart-option first-row' id='opttwo'>${vo.opttwo}</td>                                     
+								    <td class='qua-col first-row'>                                                                         
+								        <div class='quantity'>                                                                             
+								            <div class='pro-qty'>                                                                          
+								                <input type='text' id='quantity' value="${vo.quantity}">                                  
+								            </div>                                                                                         
+								        </div>                                                                                             
+								    </td>                                                                                                  
+								    <td class='p-price first-row'>${vo.quantity}*${vo.price}원</td>                     
+								    <td class='p-shipfee first-row' id='shipfee'>${vo.shipfee}원</td>                  
+								    <td class='p-price first-row' id='price'>${vo.price}원</td>                        
+								    <!--<td class='p-status first-row' id='status'>status</td>-->                       				
+								    <td style='visibility:hidden;position:absolute;'>${member.memberId}</td>                                   
+								    <td style='visibility:hidden;position:absolute;'>${vo.regDt}</td>                                   
+								    <td style='visibility:hidden;position:absolute;'>${vo.modDt}</td>                                   
+								</tr>   
                             </tbody>
                         </table>
                     </div>
@@ -108,60 +131,8 @@ ${vo}
 	$(document).ready(function() {
 		console.log("document ready");
 		
-		//화면 로딩시 보여줄 데이터 
-		doSelctOne(1);
 	});//--document ready	
 	
-
-	//화면 로딩 시 보여줄 결제 데이터 
-	function doSelctOne(){
-		console.log("doSelctOne");
-		
-		var paySeqData ="2021041666";
-		
-		 let url = "${hContext}/payment/do_selectone.do";
-		 let parameters = {"paySeq":paySeqData};
-		 let method = "GET";
-		 let async = true;
-		 
-		 console.log("url:"+url);
-		 console.log("parameters:"+parameters);
-		 
-		 EClass.callAjax(url, parameters, method, async, function(data) {
-			 console.log("data:"+data);
-			 console.log("data.paySeq:"+data.paySeq);
-			 
-				$("#cartTable>tbody").empty();
-			 	var html = "";
-			 	
-			 	html += "<tr>                                                                                                           ";
-				html += "    <td style='visibility:hidden;position:absolute;'>"+data.paySeq+"</td>                                     ";
-				html += "    <td style='visibility:hidden;position:absolute;'>"+data.storeSeq+"</td>                                    ";
-				html += "    <td style='visibility:hidden;position:absolute;'>"+data.memberId+"</td>                                     ";
-				html += "    <td class='cart-title first-row' id='title'>"+data.title+"</td>                                           ";
-				html += "    <td class='cart-option first-row' id='optone'>"+data.optone+"</td>                                        ";
-				html += "    <td class='cart-option first-row' id='opttwo'>"+data.opttwo+"</td>                                        ";
-				html += "    <td class='qua-col first-row'>                                                                             ";
-				html += "        <div class='quantity'>                                                                                 ";
-				html += "            <div class='pro-qty'>                                                                              ";
-				html += "                <input type='text' id='quantity' value="+data.quantity+">                                     ";
-				html += "            </div>                                                                                             ";
-				html += "        </div>                                                                                                 ";
-				html += "    </td>                                                                                                      ";
-				html += "    <td class='p-price first-row'>"+numberWithCommas(data.quantity*data.price)+"원</td>                       ";
-				html += "    <td class='p-shipfee first-row' id='shipfee'>"+numberWithCommas(data.shipfee)+"원</td>                     ";
-				html += "    <td class='p-price first-row' id='price'>"+numberWithCommas(data.price)+"원</td>                           ";
-				html += "    <td class='p-status first-row' id='status'>"+data.status+"</td>                           				";
-				html += "    <td style='visibility:hidden;position:absolute;'>"+data.modId+"</td>                                     ";
-				html += "    <td style='visibility:hidden;position:absolute;'>"+data.regDt+"</td>                                     ";
-				html += "    <td style='visibility:hidden;position:absolute;'>"+data.modDt+"</td>                                     ";
-				html += "</tr>                                                                                                          ";
-
-			 
-				//body에 데이터 추가
-				$("#cartTable>tbody").append(html);	
-		 });
-	}//--doSelctOne
 	
 	
 	//결제버튼
@@ -169,21 +140,19 @@ ${vo}
 		console.log("paymentBtn");
 		e.preventDefault();//한번만 호출
 		
-/* 		
-		
 		 let url = "${hContext}/payment/do_insert.do";
 		 let parameters = {
-				 			"paySeq" 	: paySeq,
-							"storeSeq"  : $("#storeSeq").val(),
-							"memberId"  : memberId,
-							"title"     : $("#title").val(),
-							"optone"    : $("#optone").val(),
-							"opttwo"    : $("#opttwo").val(),
-							"quantity"  : $("#quantity").val(),
-							"price"     : $("#price").val(),
-							"shipfee"   : shipfee,
-							"status"	: status,
-							"modId"		: memberId
+				 			"paySeq" 	: "${payment.paySeq}",
+							"storeSeq"  : "${vo.storeSeq}",
+							"memberId"  : "${member.memberId}",
+							"title"     : "${vo.title}",
+							"optone"    : "${vo.optone}",
+							"opttwo"    : "${vo.opttwo}",
+							"quantity"  : "${vo.quantity}",
+							"price"     : "${vo.price}",
+							"shipfee"   : "${vo.shipfee}",
+							"status"	:  1,
+							"modId"		: "${member.memberId}"
 						};
 		 let method = "POST";
 		 let async = true;	
@@ -205,12 +174,12 @@ ${vo}
 				 if("1"==data.msgId){//결제성공
 					 alert(data.msgContents);
 						//결제성공시 화면이동
-						//moveTomain();
+						moveTomain();
 				 }else{//결제실패
 					 alert(data.msgId+"\n"+data.msgContents); 
 				 }
 				 
-			 }); */
+			 });
 	 	
 	});//--paymentBtn
 	
@@ -219,30 +188,29 @@ ${vo}
 	function moveTomain(){
 		console.log("moveTomain");
 		
-		window.location.href = "${hContext}/houses/home_view.do?memberId="+memberId ;
+		window.location.href = "${hContext}/houses/home_view.do?memberId="+${member.memberId} ;
 	}
 	
 	//결제 취소
-	//확인완료
 		$("#cancelBtn").on("click",function(e){
 			console.log("cancelBtn");
 
-			e.preventDefault(); //지정했는데 여러번 클릭됨...
+			e.preventDefault(); 
 			
-			var paySeqData ="20210416";
-			
+			 if(confirm("결제를 취소하시겠습니까?")==false) return;
+			 
+
 			 let url = "${hContext}/payment/do_delete.do";
-			 let parameter = {
-					 			"paySeq" : paySeqData};
+			 let parameters = {
+					 			"paySeq" : "${payment.paySeq}"};
 			 let method = "POST";
 			 let async = true;	
 			 
-			console.log("parameter:"+parameter);
+			console.log("parameters:"+parameters);
 			console.log("url:"+url);
 			 
-			 if(confirm("결제를 취소하시겠습니까?")==false) return;
 			 
-			 EClass.callAjax(url, parameter, method, async, function(data) {
+			 EClass.callAjax(url, parameters, method, async, function(data) {
 					 console.log("data:"+data);
 					 console.log("data:"+data.paySeq);
 					 
@@ -252,7 +220,7 @@ ${vo}
 					 if("1"==data.msgId){//취소성공
 						 alert(data.msgContents);
 							//취소성공시 화면이동
-							//moveTomain();
+							moveTomain();
 					 }else{//취소실패
 						 alert(data.msgId+"\n"+data.msgContents); 
 					 }
