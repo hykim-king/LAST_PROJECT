@@ -39,7 +39,6 @@ public class QnaController {
 	
 	public QnaController() {}
 	
-	
 	/**
 	 * Q&A 목록 조회
 	 * @param dto
