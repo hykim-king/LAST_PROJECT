@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.sist.last.cmn.Message;
 import com.sist.last.cmn.Search;
+import com.sist.last.cmn.SearchPay;
 import com.sist.last.cmn.StringUtil;
 import com.sist.last.service.PaymentServiceImpl;
 import com.sist.last.vo.Payment;
@@ -130,12 +131,12 @@ public class PaymentController {
 	@RequestMapping(value = "payment/do_retrieve.do", method = RequestMethod.GET
 			,produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String doRetrieve(Search search) throws SQLException {
+	public String doRetrieve(SearchPay search) throws SQLException {
 		//NVL처리
 		//검색구분
-		search.setSearchDiv(StringUtil.nvl(search.getSearchDiv(), ""));
+		//search.setSearchDiv(StringUtil.nvl(search.getSearchDiv(), ""));
 		//검색어
-		search.setSearchWord(StringUtil.nvl(search.getSearchWord(), ""));
+		//search.setSearchWord(StringUtil.nvl(search.getSearchWord(), ""));
 		
 		//페이지 넘
 		if(search.getPageNum()==0) {
