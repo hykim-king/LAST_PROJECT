@@ -195,7 +195,11 @@
 		});//--doDeleteQna
 	
 
+
+//게시물 관련--------------------------------------------------
 		
+		
+//댓글--------------------------------------------------
 //리뷰 등록버튼
 		$("#commentInsertBtn").on("click",function(e){
 			console.log("commentInsertBtn");
@@ -216,19 +220,16 @@
 			$("#content").val("");			
 			
 		});//--QnaReviewInsert	
-//게시물 관련--------------------------------------------------
 		
-		
-//댓글--------------------------------------------------
 //댓글 등록 
 		function commentInsert(insertData){
 			
 			let url = "${hContext}/reply/do_insert.do";
 			let parameters = {
-								"memberId"  : "asdfg",     //임시 아이디
+								"memberId"  : "haram",     //임시 아이디
 								"reviewSeq" : "${vo.qnaSeq}",    //housesSeq      //임시 seq
 								"contents"  : insertData,
-								"modId"     : "asdfg"      //임시 아이디
+								"modId"     : "haram"      //임시 아이디
 							};
 			let method = "POST";
 			let async  = true;
@@ -294,20 +295,17 @@
 	        			$.each(parseData,function(i,value){
 	        				//console.log(i+","+value.name);
 	        				<!-- 문자: 왼쪽, 숫자: 오른쪽, 같으면: 가운데 -->
-    			        	html += "<div class='commentArea' style='border-bottom:1px solid darkgray; margin-bottom: 15px;'>";
-    			            html += "<div class='commentInfo'><p>"+value.memberId+"</p>";
-    			            html += "<div class='commentContent'><p>"+value.contents+"</p>";
-    			            html += "<input type='button' class='btn btn-default'  value='수정' id='replyUpdate'/>";
-    			            //html += "<input type='button' class='btn btn-default'  value='삭제' id='replyDelete'/></div>";
-    			             //a += '<a onclick="commentDelete('+value.cno+');"> 삭제 </a> </div>';
-    			            html += "<a onclick='commentDelete("+value.reviewSeq+");'>삭제</a></div>";
-    			            html += "<br/>";
-    			            html += "</div></div>";
+			                html += "<div class='commentArea' style='border-bottom:1px solid darkgray; margin-bottom: 15px;'>";
+			                html += "	<div class='commentInfo"+value.cno+"'>"+" 작성자 : "+value.memberId;
+			                html += "		<a onclick='commentDelete(\""+value.replySeq+"\",\"" + value.reviewSeq + "\");'> 삭제 </a>";
+			                html += "		<p> 내용 : "+value.contents +"</p>";
+			                html += "	</div>"
+			                html += "</div>"  
 	        			});
 	        			
 	        		}else{//data가 없는 경우
 	        			html += "<tr>";
-	        			html += 	"<td class='text-center' colspan'99>등록된 댓글이 없습니다.</td>";
+	        			html += 	"<td class='text-center' colspan'99>첫 번째 댓글을 남겨보세요!</td>";
 	        			html += "</tr>";
 	        		}
 	        		
@@ -329,35 +327,37 @@
 	      	
 		}//--doRetrieveReview	
 		
-//댓글 버튼 이벤트 
+//댓글 이벤트 
 //1) 댓글 삭제
-		function commentDelete(reviewSeq){
+		function commentDelete(replySeq,reviewSeq){
 			console.log("commentDelete");
+			console.log("replySeq:"+replySeq);
+			
+			if(confirm("댓글을 삭제하시겠습니까?")==false) return;
 	
-/* 			 let url = "${hContext}/review/do_delete.do";
+ 			 let url = "${hContext}/reply/do_delete.do";
 			 let parameters = {
-								"reviewSeq" : reviewSeqData
+								"replySeq" : replySeq,
+								"reviewSeq" : reviewSeq
 					 		 };
 			 let method = "POST";
 			 let async = true;
 			
 			console.log("parameters:"+parameters);
 			console.log("url:"+url);
-			
-			if(confirm("댓글을 삭제하시겠습니까?")==false) return;
-			
+
 			EClass.callAjax(url , parameters, method ,async, function(data){
-				console.log("data"+data.memberId);
-				console.log("data"+data.reviewSeq);
+				console.log("data"+data);
 				
-				if("1"==data.msgId) {//등록 성공
+				if("1"==data.msgId) {//삭제 성공
 					alert(data.msgContents);
-					commentList();//리뷰 목록조회
-				}else {//등록 실패
+					commentList(1);//리뷰 목록조회
+				}else {//삭제 실패
 					alert(data.msgId+"\n"+data.msgContents);
-				}
+				}	
+				
 			}); 
-			 */
+			 
 		}//--commentDelete
 
 		

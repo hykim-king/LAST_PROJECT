@@ -50,7 +50,7 @@
   <link href="${hContext}/resources/lhc/bootstrap_lhc.css" rel="stylesheet"> 
 
   <!-- Custom styles for this template -->
-  <link href="${hContext}/resources/hr/shop-homepage.css" rel="stylesheet">
+  <link href="${hContext}/resources/lhc/shop-homepage.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="${hContext}/resources/hr/base.css">
   <link rel="stylesheet" type="text/css" href="${hContext}/resources/hr/normalize.css">
   
