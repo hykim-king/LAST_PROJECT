@@ -32,7 +32,7 @@ public class PaymentDaoImpl  {
 	public PaymentDaoImpl() {}
 	
 	/**
-	 * 결제 목록조회
+	 * 결제 목록조회//
 	 * @param dto
 	 * @return List<?>
 	 * @throws SQLException
