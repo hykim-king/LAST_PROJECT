@@ -17,6 +17,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../cmn/common.jsp"%>
+<%@ include file="../cmn/header.jsp" %>
 <c:set var="hContext" value="${pageContext.request.contextPath }"></c:set>
 <!DOCTYPE html>
 <html>
@@ -89,7 +90,7 @@
 			<div class="form-group">
 				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label"></label>
 				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
-					<input multiple="multiple" type="file" class="form-control" id="file03" name="file03" placeholder="사진">
+					<input multiple="multiple" type="file" class="form-control" id="file03" name="file03[]" placeholder="사진">
 				</div>
 			</div>													
 			
@@ -117,12 +118,19 @@
 					<input type="button" class="btn btn-primary btn-sm" value="등록" placeholder="등록" id="doInsert">
 				</div>
 			</div>
+			
+			<button type="button" class="btn btn-primary btn-form-submit">다중이미지 테스트</button>
 
 	</div>
 	<!--// div container -->
 
 
 	<script type="text/javascript">
+	
+	    $('.btn-form-submit').on('click', function() {
+	        $('#regFrm').submit();
+	    });
+    
 	
 		var count = 0;
 	
