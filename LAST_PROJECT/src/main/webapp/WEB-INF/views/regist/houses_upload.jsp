@@ -1,4 +1,4 @@
-<%--
+\<%--
 /**
 	Class Name:
 	Description:
@@ -48,6 +48,7 @@
 
 	<!-- div container -->
 	<div class="container">
+	${sessionScope.member }
 
 		<!-- 제목 -->
 		<div class="page-header">
@@ -57,7 +58,7 @@
 
 		<!-- form -->
 		<form id="regFrm" action="${hContext}/image/houses_upload.do" method="POST" enctype="multipart/form-data" class="form-horizontal" id="uploadFrm">
-		<input type="hidden" class="form-control" id="memberId" name="memberId" value="tjdus"> 	
+		<input type="hidden" class="form-control" id="memberId" name="memberId" value="${member.nickname }"> 	
 
 			<div class="form-group">
 				<label for="title" class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">제목</label>
@@ -87,12 +88,12 @@
 				</div>
 			</div>	
 			
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label"></label>
 				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
 					<input multiple="multiple" type="file" class="form-control" id="file03" name="file03[]" placeholder="사진">
 				</div>
-			</div>													
+			</div> -->													
 			
 			<div class="form-group">
 				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">태그</label>
