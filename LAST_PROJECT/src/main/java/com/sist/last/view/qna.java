@@ -101,7 +101,7 @@ public class qna {
 	 * @return qna/payment
 	 * @throws SQLException
 	 */
-	@RequestMapping(value = "member/payment.do", method = RequestMethod.GET)
+	@RequestMapping(value = "qna/payment.do", method = RequestMethod.GET)
 	public String paymentView(Model model,Product product,Payment payment) throws SQLException{
 		
 		LOG.debug("=================");
@@ -114,7 +114,7 @@ public class qna {
 		LOG.debug("=================");
 		model.addAttribute("vo", outVO);
 
-		return "cmn/payment";
+		return "qna/payment";
 	}//--paymentView
 	
 	
