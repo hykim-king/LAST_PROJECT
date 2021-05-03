@@ -96,7 +96,8 @@
                         <h4 id="title">${vo.title}</h4>
                         <h4 id="storeSeq" style="display: none;">${vo.storeSeq}</h4>
                         <h4 id="memberId" style="display: none;">${vo.memberId}</h4>
-                        <div class="star-rating"><span>${vo.totalReview}</span> 개 리뷰 </div>
+                        <h6><span id="totalReviews">${vo.totalReview}</span> 개 리뷰</h6>
+                        <br/>
                         <h5><span id="price">${vo.price}</span>원</h5>
                         <ul>
                             <li>브랜드: <span>${vo.company}</span></li>
@@ -105,14 +106,13 @@
                         </ul>
 						<div class="row mt-4">
 							<div class="col-md-6">
-								<div class="form-group d-flex">
 					              <div class="select-wrap">
 				                 	 <div class="icon"><span class="ion-ios-arrow-down"></span></div>
 				                 	 <select name="optone" id="optone" class="form-control">           
 				                  		<option value="1" disabled selected hidden>색상</option>
 	        				 		</select>                                                      
-	        				    </div>                                                       
-				                </div>
+	        				    </div>                                            
+	        				    <br/>        
 					            <div class="select-wrap">
 				                  <div class="icon"><span class="ion-ios-arrow-down"></span></div>
 				                  <select name="opttwo" id="opttwo" class="form-control">
@@ -122,6 +122,7 @@
 					    	</div>
 					    	</div>
 					    </div>
+					    <br/>
 			            <div class="product__details__option">
                         	<div class="quantity">
                                 <div class="pro-qty">
@@ -131,6 +132,7 @@
                                 </div>
                             </div>
                         </div>
+                        <br/>
                         <div class="product__details__text">
                             <h5>주문금액 <span id="total"></span>원</h5>
                             <a class="primary-btn" onClick="addBasket();">장바구니</a>
@@ -155,6 +157,7 @@
                             <a class="nav-link" data-toggle="tab" href="#refundTab" role="tab">배송/환불</a>
                         </li>
                     </ul>
+                    <br/>
                     <div class="tab-content">
                         <div class="tab-pane" id="descriptionTab" role="tabpanel">
                             <div class="row d-flex justify-content-center">
@@ -163,13 +166,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="reviewTab" role="tabpanel">
-                            <div class="row d-flex justify-content-center">
-                                <div class="col-lg-8">
-                                    <h5>리뷰 <span>리뷰</span>${vo.totalReview}</h5>
-                                    <h5>평점 <span>평점</span>${vo.avgStar}</h5>
-                                </div>
-                            </div>
+                        <br/>
+                    <div class="tab-pane" id="reviewTab" role="tabpanel">
+                		<div class="container">
+		                    <div class="row d-flex justify-content-center">
+		                        <div class="col-lg-4 col-md-7">
+		                            <div class="map__inner">
+		                                <h6>리뷰 <span id="totalReview">${vo.totalReview}</span></h6>
+		                                <h6>평점 <span id="avgStar">${vo.avgStar}</span></h6>
+		                            </div>
+		                        </div>
+		                    </div>
                             <div class="container">
 					        	<label for="content">comment</label>
 					        	<div class="rating">
@@ -222,6 +229,7 @@
 						    </div>
 						    <!-- // 댓글  -->		
                     	 </div>
+                    	 </div>
                         <div class="tab-pane" id="qnaTab" role="tabpanel">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
@@ -251,7 +259,7 @@
                         <h2>추천 상품</h2>
                 </div>
             </div>
-            <div class="row">
+            <div style="text-align: center;">
                 <div class="related__products__slider owl-carousel">
                     <div class="col-lg-3">
                         <div class="product__item">
@@ -664,7 +672,12 @@
 	        				html += "    </div>                                                                           ";
 	        				html += " </div>                                                                              ";
             
+	        				$("#totalReview").text(value.totalReviews);
+	        				$("#totalReviews").val(value.totalReviews);
+	        				$("#avgStar").text(value.avgStars);
+	        				
 	        			});
+	        			
 	        	} else {//data가 없는 경우
         			html += "	<div class='blog__details__comment__item__text'>           ";
         			html += "        <span>등록된 리뷰가 없습니다. 리뷰를 등록해주세요 :)</span>       ";
