@@ -13,6 +13,7 @@ import com.sist.last.cmn.StringUtil;
 import com.sist.last.dao.ReviewDaoImpl;
 import com.sist.last.dao.StarDaoImpl;
 import com.sist.last.vo.Review;
+import com.sist.last.vo.Star;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -71,6 +72,8 @@ public class ReviewServiceImpl implements ReviewService {
 		Review review = (Review) dto;
 		review.setReviewSeq(StringUtil.getPK("yyyyMMddHHmmss"));
 
+		Star star = (Star) dto2;
+		star.setStarSeq(StringUtil.getPK("yyyyMMddHHmmss"));
 		starDao.doInsert(dto2);
 
 		return this.reviewDao.doInsert(review);
