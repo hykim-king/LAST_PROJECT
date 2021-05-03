@@ -46,7 +46,7 @@
 </head>
 <body>
 
-    <form id = "optionFrm">
+    <form id = "option_pop_up_frame">
         <input type = "hidden" id = "storeSeq" value = "${vo.storeSeq}">
          <label>상품명 : </label> <span name="title" id="title"></span>
        <br>
@@ -106,22 +106,25 @@
     
 		$(document).ready(function() {
 			console.log("1.document:최초수행!");
-			setParentResult();
 			//optionRetrieve();
 		});	
 		
 		function setParentResult() {
-			console.log("부모 -> 자식 값 전달");
+			console.log("setParentResult");
 
 	    	if(typeof($("#title"))!="undefined") {
 	    		
-				var resultTitle = $("#title").text();
-				console.log("resultTitle:"+resultTitle);
+				window.opener.document.getElementById("title").value = $("#title").text();
+				window.opener.document.getElementById("optone").value = $("#optone").text();
+				window.opener.document.getElementById("opttwo").value = $("#opttwo").text();
+				window.opener.document.getElementById("quantity").value = $("#quantity").text();
+				console.log("sendToParent title:"+window.opener.document.getElementById("title").value);
+				console.log("sendToParent optone:"+window.opener.document.getElementById("optone").value);
+				console.log("sendToParent opttwo:"+window.opener.document.getElementById("opttwo").value);
+				console.log("sendToParent quantity:"+window.opener.document.getElementById("quantity").value);
 
 	    	}
 	    				
-			window.opener.document.getElementById("title").value = resultTitle;
-
 			//self.close();
 			
 		}
@@ -146,6 +149,9 @@
 	                self.close(); // 변경 후 자식 창을 받아줍니다.
 	            }
 	        });
+	        
+	        setParentResult();
+	        
  		} 
 		
 	    /* 수량 변경 */
