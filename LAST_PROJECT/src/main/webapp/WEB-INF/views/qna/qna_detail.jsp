@@ -226,7 +226,7 @@
 			let url = "${hContext}/reply/do_insert.do";
 			let parameters = {
 								"memberId"  : "asdfg",     //임시 아이디
-								"reviewSeq" : "1234",      //임시 seq
+								"reviewSeq" : "${vo.qnaSeq}",    //housesSeq      //임시 seq
 								"contents"  : insertData,
 								"modId"     : "asdfg"      //임시 아이디
 							};
@@ -241,7 +241,7 @@
 					
 					if("1"==data.msgId) {//등록 성공
 						alert(data.msgContents);
-						commentList();//리뷰 목록조회
+						commentList(1);//리뷰 목록조회
 					}else {//등록 실패
 						alert(data.msgId+"\n"+data.msgContents);
 					}	
@@ -261,9 +261,8 @@
 	    		dataType:"html",
 	    		data:{
 	    			pageSize: $("#pageSize").val(),
-	    			searchDiv: $("#searchDiv").val(),
-	    			searchWord: $("#searchWord").val(),
-	    			pageNum: page
+	    			pageNum: page,
+	    			reviewFk: "${vo.qnaSeq}"
 	    		},
 	    		success:function(data){//통신 성공
 	    			
