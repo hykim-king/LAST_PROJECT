@@ -126,7 +126,6 @@
 	    	}
 	    				
 			//self.close();
-			
 		}
 		
  		function optionUpdate() {

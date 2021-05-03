@@ -225,7 +225,6 @@
 
 					qty = $button.parent().find("input").val(newVal);
 				});
-
 				
 			});
 			
