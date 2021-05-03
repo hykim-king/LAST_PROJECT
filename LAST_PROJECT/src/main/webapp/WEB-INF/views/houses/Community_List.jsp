@@ -74,7 +74,7 @@
   <!--  컨테이너 -->
  <div class="container">
   <h4>집들이</h4><br/>
-					
+		<div class="row col-lg-12">			
 		<!-- 프로젝트 출력 -->	   	
 	   	  <div class="row col-lg-12">
 		   	<div class="col-xs-8 col-sm-9 col-md-8 col-lg-2">
@@ -98,19 +98,22 @@
 			</div>	  	
 		  </div>
 			<br/>
+			<br/>
 		  <!-- //row-->
 		  <div class="row col-lg-12">
 			<div class="col-lg-3 text-right ">
-	 				<select class="form-control input-sm " name="pageSize" id="pageSize">				
-	    		  		<option value="4">4개씩 보기</option>	    		  		
+	 				<select class="form-control input-sm " name="pageSize" id="pageSize">			
+	    		  		<option value="4">4개씩 보기</option>	  		  		
 						<option value="8">8개씩 보기</option>
 						<option value="12">12개씩 보기</option>
+
 	    		  </select> 
 		    </div>
 		  </div>
 		  <br/>
+		  <br/>
 		  <!-- row -->	
-		  <div id="rowCard" class="row">
+		  <div id="rowCard" class="row col-lg-12">
 
 		  </div>	
 		   <!-- //row -->	
@@ -121,6 +124,7 @@
 			</div>
 		</div>
 		<!--// pagenation -->
+		</div>
 </div>
 <!--  // 컨테이너 -->
 		
@@ -187,14 +191,14 @@
     					console.log("eachscrapBtn"+scrapBtn);
     					html+="<div  class='col-lg-3 col-md-6 mb-4'>";
     					html+="	<div class='card h-100'>";
-    					html+="		<a href='${hContext}/houses/houses_detail.do?housesSeq="+value.housesSeq+"'><img class='card-img-top' src='${hContext}/resources/lhc/ignore.PNG' ></a>";
+    					html+="		<a href='${hContext}/houses/houses_detail.do?housesSeq="+value.housesSeq+"'><img class='card-img-top' src='${hContext}/"+value.imgId+"' ></a>";
     					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
     					html+="		<div id='buttonClick' class='row col-lg-12'>";
     					html+="			<h6 class='card-title col-lg-8'>"+value.memberId+"</h6>";
     					html+="			<input type='button' class='btn btn-primary btn-sm col-lg-4'  value='스크랩' name='doScrapBtn' id='doScrapBtn'/>";
     					html+="			<small class = 'gotta' style = 'display:none;''>"+value.housesSeq+"</small>";
     					html+="		</div>";
-    					html+="		<div id='rowCardClick' class='text-center'>";
+    					html+="		<div id='rowCardClick' class='text-center col-lg-12'>";
     					html+="			<h4 class='text-muted'>"+value.title+"</h4>";
     					html+="			<small class = 'gotta' style = 'display:none;''>"+value.housesSeq+"</small>";
     					html+="		</div>";	
@@ -250,9 +254,9 @@
 		let url = "${hContext}/scrap/do_insert.do"
 			let parameters = {
 				"scrapSeq" :-1,
-				"memberId" :memberId,//이부분은 차후 세션에서 받을 예정
+				"memberId" :"${member.memberId}",//이부분은 차후 세션에서 받을 예정
 				"housesSeq" :housesSeq,
-				"modId":memberId//이부분은 차후 세션에서 받을 예정
+				"modId":"${member.memberId}"//이부분은 차후 세션에서 받을 예정
 				};
 			let method = "POST";
 			let async = true;	

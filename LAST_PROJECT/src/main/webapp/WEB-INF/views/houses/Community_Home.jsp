@@ -78,53 +78,7 @@
 		
   <!--  컨테이너 -->
  <div class="container">
-  	<div class="row">
-		<!-- 슬라이드 페이지 -->
-		<div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
-		      <ol class="carousel-indicators">
-		      	 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">
-		      	  	<c:if test = "${list.size() > 0 }">
-						<c:forEach var = "vo" items = "${list }"> 
-		           		   	<li data-target="#carouselExampleIndicators" data-slide-to="${vo.title }" ></li>
-		           	   </c:forEach>
-	       		   </c:if>
-		      </ol>
-			<div class="carousel-inner " role="listbox" >
-				<div class="carousel-item active" >
-					<h4> hot 리스트</h4>
-					<img class="d-block img-fluid" src="${hContext}/resources/lhc/ignore.PNG" >
-				</div>			
-	       		<c:if test = "${list.size() > 0 }">
-				  <c:forEach var = "vo" items = "${list }"> 
-									
-				<div class="carousel-item" >
-					<h4><c:out value = "${vo.title}" /></h4>	        		    
-						<small class = "yeah" style = "display:none;">
-	        		    	<c:out value = "${vo.housesSeq}" />
-						</small>
-				    <img class="d-block img-fluid" src="${hContext}/resources/lhc/ignore.PNG" >
-				   <%--  <img class="d-block img-fluid" src="/${vo.imgId}" > --%>
-				</div>
-								        
-			      </c:forEach>
-		    	</c:if>
-	        </div>
-		
-          
-          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          
-          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-          
-        </div> 
-        <!-- //슬라이드 -->
-		</div>
-		<!-- row -->
+
  
  
   <h2>집들이</h2><br/>
@@ -135,7 +89,7 @@
 				<c:forEach var = "vo" items = "${list }"> 
 					<div class="col-lg-3 col-md-6 mb-4">
 			            <div class="card h-100">
-			              <a href="${hContext}/houses/houses_detail.do?housesSeq=${vo.housesSeq}"><img class="card-img-top" src="${hContext}/resources/lhc/ignore.PNG" alt=""></a>
+			              <a href="${hContext}/houses/houses_detail.do?housesSeq=${vo.housesSeq}"><img class="card-img-top" src="${hContext }${vo.imgId }" alt=""></a>
 			              <h6  class="text-muted">${vo.tag}</h6 >
 			              <div  class="row col-lg-12">			              
 			               <h6  class="card-title col-lg-8">${vo.memberId}</h6 >	
@@ -235,7 +189,7 @@
     					
     					html+="<div  class='col-lg-3 col-md-6 mb-4'>";
     					html+="	<div class='card h-100'>";
-    					html+="		<a href='${hContext}/houses/houses_detail.do?housesSeq="+value.housesSeq+"'><img class='card-img-top' src='${hContext}/resources/lhc/ignore.PNG' ></a>";
+    					html+="		<a href='${hContext}/houses/houses_detail.do?housesSeq="+value.housesSeq+"'><img class='card-img-top' src='${hContext}/"+value.imgId+"' ></a>";
     					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
     					html+="		<div id='buttonClick' class='row col-lg-12'>";
     					html+="			<h6 class='card-title col-lg-8'>"+value.memberId+"</h6>";
@@ -318,7 +272,7 @@
     					
     					html+="<div  class='col-lg-3 col-md-6 mb-4'>";
     					html+="	<div class='card h-100'>";
-    					html +=			"<a href='${hContext}/qna/qna_detail.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/resources/lhc/ignore.PNG' ></a>";
+    					html +=			"<a href='${hContext}/qna/qna_detail.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/"+value.imgId+"' ></a>";
     					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
     					html+="		<div id='buttonClick' class='row col-lg-12'>";
     					html+="			<h6 class='card-title col-lg-8'>"+value.memberId+"</h6>";
@@ -378,9 +332,9 @@
 		let url = "${hContext}/scrap/do_insert.do"
 			let parameters = {
 				"scrapSeq" :-1,
-				"memberId" :memberId,//이부분은 차후 세션에서 받을 예정
+				"memberId" :"${member.memberId}",//이부분은 차후 세션에서 받을 예정
 				"housesSeq" :housesSeq,
-				"modId":memberId//이부분은 차후 세션에서 받을 예정
+				"modId":"${member.memberId}"//이부분은 차후 세션에서 받을 예정
 				};
 			let method = "POST";
 			let async = true;	
