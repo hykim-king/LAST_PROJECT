@@ -74,8 +74,6 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <button id = "test3" class="dropdown-item">주문배송내역 조회</button>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">상품문의내역</a>
-          <div class="dropdown-divider"></div>
           <button id = "test5" class="dropdown-item">등록상품내역</button>
         </div>
       </li>
@@ -84,15 +82,7 @@
           나의 리뷰
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <button id = "testtt" class="dropdown-item" >내가 작성한 리뷰</button>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          설정
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">회원정보수정</a>
+          <button id = "test6" class="dropdown-item" >내가 작성한 리뷰</button>
         </div>
       </li>
     </ul>
@@ -101,7 +91,7 @@
 
 			<div class="container">
     <div class="main-body">
-    
+    ${sessionScope.member }
           <div id="profile" class="row gutters-sm">
             <div class="col-md-4 mb-3">
               <div class="card">
@@ -109,11 +99,10 @@
                   <div class="d-flex flex-column align-items-center text-center">
                     <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5350%2F2020%2F12%2F11%2F0000097162_001_20201211110314106.jpg&type=sc960_832" width="150">
                     <div class="mt-3">
-                      <h4>쌍용</h4>
-                      <p class="text-secondary mb-1">개발자</p>
-                      <p class="text-muted font-size-sm">쌍용교육센터</p>
-                      <button class="btn btn-primary">스크랩북</button>
-                      <button class="btn btn-outline-primary">회원정보수정</button>
+                      <h4>${member.nickname}</h4>
+                      <p class="text-secondary mb-1">${member.introduce}</p>
+                      <button id="scrap_book_btn" class="btn btn-primary">스크랩북</button>
+                      <button id="mng_btn" class="btn btn-outline-primary">회원정보수정</button>
                     </div>
                   </div>
                 </div>
@@ -138,6 +127,16 @@
 </body>
 <script type="text/javascript">
 
+$("#scrap_book_btn").on("click",function(e){
+	console.log("scrap_book_btn click");
+	window.location.href = "${hContext}/mypage/scrap_list.do";
+});
+
+$("#mng_btn").on("click",function(e){
+	console.log("reg_btn click");
+	window.location.href = "${hContext}/member/mng_view.do";
+});
+
 $("#testt").on("click",function(e){//집들이
 	console.log("dotestBtn");
 	e.preventDefault();//한번만 호출
@@ -150,6 +149,7 @@ $("#testt").on("click",function(e){//집들이
     		asyn:"true",
     		dataType:"html",
     		data:{
+    			memberId:"${member.memberId }",
     			pageSize:3,
     			searchDiv: 10,
     			searchWord: "",
@@ -333,7 +333,7 @@ $("#test3").on("click",function(e){//주문배송내역 조회
     		dataType:"html",
     		data:{
     			pageSize:4,
-    			memberId:"solshine",
+    			memberId:"${member.memberId }",
     			pageNum:page
     		},
     		success:function(data){//통신 성공
@@ -417,7 +417,7 @@ $("#test5").on("click",function(e){//등록상품내역
     		dataType:"html",
     		data:{
     			pageSize:4,
-    			memberId:"test01",
+    			memberId:"${member.memberId }",
     			pageNum:page
     		},
     		success:function(data){//통신 성공
@@ -447,6 +447,88 @@ $("#test5").on("click",function(e){//등록상품내역
 					html += "		<th scope='col'>상품명</th>";
 					html += "		<th scope='col'>가격</th>";
 					html += "		<th scope='col'>등록일</th>";
+					html += "	</thead>";
+					html += "	<tbody>";
+				     					
+					$.each(parseData,function(i,value){
+						console.log(i+","+value.name);
+						html += "<tr>";
+						html += "   <th scope ='row'>"+(i+1)+"</th>";
+						html += "    <td>"+value.title+"</td>";
+						html += "    <td>"+value.price+"</td>";
+						html += "    <td>"+value.regDt+"</td>";
+						html += "</tr>";
+					});
+					html += "	</tbody>";
+					html += "</table>";
+					
+				}else{//data가 없는 경우
+    				html +="<tr>";
+    				html +="	<td class='text-center' colspan='99'>등록된 게시물이 없습니다.</td>";    		
+    				html +="</tr>";   
+				}
+				
+				//body에 데이터 추가
+				$("#content_box").append(html);	
+				
+				//페이징처리
+				console.log(pageTotal+","+page);
+				//renderingPage(pageTotal,page);
+	
+        	},
+        	error:function(data){//실패시 처리
+        		console.log("error:"+data);
+        	},
+        	complete:function(data){//성공/실패와 관계없이 수행!
+        		console.log("complete:"+data);
+        	}
+    	});
+	}//--doRetrieve
+});
+
+$("#test6").on("click",function(e){//나의 리뷰
+	console.log("test6");
+	e.preventDefault();//한번만 호출
+	doRetrieve(1);
+	function doRetrieve(page){
+		console.log("page:"+page);
+		$.ajax({
+    		type: "GET",
+    		url:"${hContext}/review/do_retrieve.do",
+    		asyn:"true",
+    		dataType:"html",
+    		data:{
+    			pageSize:4,
+    			memberId:"${member.memberId }",
+    			pageNum:page
+    		},
+    		success:function(data){//통신 성공
+        		console.log("success data:"+data);
+        		var parseData = JSON.parse(data);
+        		
+        		//기존데이터 삭제
+        		$("#content_box").empty();
+        		var html = "";
+        		
+        		//페이징 변수
+        		let totalCount = 0;//총 글수
+        		let pageTotal = 1;//총 페이지수
+        		
+        		console.log("parseData.length:"+parseData.length);
+        		
+				//data가 있는 경우
+				if(parseData.length>0){
+					
+					totalCount = parseData[0].totalCount;
+					pageTotal  = totalCount/4;//42/10->4.2
+					pageTotal = Math.ceil(pageTotal);//42/10->4.2->5
+					
+					html += "<table class ='table'>";
+					html += "	<thead>";
+					html += "		<th scope = 'col'>#</th>";
+					html += "		<th scope='col'>상품명</th>";
+					html += "		<th scope='col'>별점</th>";
+					html += "		<th scope='col'>작성날짜</th>";
 					html += "	</thead>";
 					html += "	<tbody>";
 				     					

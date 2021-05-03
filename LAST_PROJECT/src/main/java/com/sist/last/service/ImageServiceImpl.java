@@ -174,7 +174,7 @@ public class ImageServiceImpl implements ImageService {
 		// 이미지 아이디--------------------------------------------
 		String imgId = StringUtil.getPK("yyyyMMddHHmmss");
 		LOG.debug("imgId: " + imgId);
-		
+
 		imageVO.setImgId(imgId);
 		housesVO.setImgId(imgId);
 		

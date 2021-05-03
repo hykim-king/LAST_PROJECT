@@ -17,6 +17,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../cmn/common.jsp"%>
+<%@ include file="../cmn/header.jsp" %>
 <c:set var="hContext" value="${pageContext.request.contextPath }"></c:set>
 <!DOCTYPE html>
 <html>
@@ -75,9 +76,23 @@
 			<div class="form-group">
 				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">사진추가</label>
 				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
-					<input multiple="multiple" type="file" class="form-control" id="image" name="image" placeholder="사진">
+					<input type="file" class="form-control" id="file" name="file" placeholder="사진">
 				</div>
-			</div>								
+			</div>	
+			
+			<div class="form-group">
+				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label"></label>
+				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+					<input type="file" class="form-control" id="file02" name="file02" placeholder="사진">
+				</div>
+			</div>	
+			
+			<div class="form-group">
+				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label"></label>
+				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+					<input multiple="multiple" type="file" class="form-control" id="file03" name="file03[]" placeholder="사진">
+				</div>
+			</div>													
 			
 			<div class="form-group">
 				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">태그</label>
@@ -90,12 +105,10 @@
 				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">링크</label>
 				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10 form-inline">
 					<input type="text" class="form-control" id="link" name="link" placeholder="URL은 최대 3개까지 입력할 수 있습니다." >
-					<input type="button" class="btn btn-primary btn-sm"  value="추가" id="addLink">
+					<input type="button" class="btn btn-primary btn-sm" value="추가" id="addLink">
 					<input type="hidden" class="form-control" id="div" name="div" value="1"> 
 				</div>
 			</div>	
-			
-					
 
 		</form>
 		<!--// form -->
@@ -105,12 +118,19 @@
 					<input type="button" class="btn btn-primary btn-sm" value="등록" placeholder="등록" id="doInsert">
 				</div>
 			</div>
+			
+			<button type="button" class="btn btn-primary btn-form-submit">다중이미지 테스트</button>
 
 	</div>
 	<!--// div container -->
 
 
 	<script type="text/javascript">
+	
+	    $('.btn-form-submit').on('click', function() {
+	        $('#regFrm').submit();
+	    });
+    
 	
 		var count = 0;
 	
@@ -138,7 +158,7 @@
 				return;
 			}	
 			
-			if(eUtil.ISEmpty($("#image").val()) == true){
+			if(eUtil.ISEmpty($("#file").val()) == true){
 				alert("이미지를 첨부해주세요.");
 				$("#image").focus();
 				return;
@@ -188,6 +208,7 @@
 		
 		$(document).on("click",".btn-del",function(e){
 			console.log("btn_del_file");
+			maxAppend--;
 			$(this).parent().parent().remove();
 			
 		});

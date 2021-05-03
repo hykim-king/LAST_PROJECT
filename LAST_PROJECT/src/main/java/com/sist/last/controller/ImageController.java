@@ -12,13 +12,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.sist.last.cmn.Message;
@@ -51,7 +54,8 @@ public class ImageController {
 	public ImageController() {
 
 	}
-	
+
+		
 	@RequestMapping(value = "image/product_upload.do", method = RequestMethod.POST)
 	public ModelAndView productImgUpload(MultipartHttpServletRequest mReg, ModelAndView modelAndView) throws IllegalStateException, IOException, SQLException {
 		
@@ -257,6 +261,8 @@ public class ImageController {
 			imageVO.setSavePath(datePath);
 			LOG.debug("datePath: " + datePath);
 			
+			// file을 server에 저장
+			// mFile.transferTo(new File(imageVO.getSavePath() + File.separator + imageVO.getSaveName()));
 			
 		} // --while
 		
@@ -273,7 +279,7 @@ public class ImageController {
 		
 		String housesSeq = mReg.getParameter("housesSeq");
 		String memberId = mReg.getParameter("memberId");
-		String imgId = mReg.getParameter("imgId");    
+		String imgId = mReg.getParameter("imgId"); 
 		String title = mReg.getParameter("title");
 		String contents = mReg.getParameter("contents");
 		String tag = mReg.getParameter("tag");    
