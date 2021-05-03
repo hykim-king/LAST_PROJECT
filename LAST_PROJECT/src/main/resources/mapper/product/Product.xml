@@ -123,8 +123,7 @@
 	          ,t2.member_id AS memberId                                      
 	          ,t2.title                                           
 	          ,t2.company                                         
-			   ,t2.category 
-			   ,t2.contents                                      
+			   ,t2.category                                   
 	          ,t2.tag                                             
 			   ,t2.price                                          
 			   ,t2.refund                                         
@@ -133,13 +132,29 @@
 	         ,t2.avg_star AS avgStar                                        
 	         ,t2.total_review AS totalReview                                    
 	    from(                                                     
-	        select rownum rnum,t1.*                               
-	         ,(                                                   
+	        select rownum rnum,
+	       	t1.store_seq,
+	       	t1.member_id,
+	       	t1.title,
+	       	t1.company,
+	       	t1.category,
+	       	t1.tag,
+	       	t1.price,
+	       	t1.refund,
+	       	t1.reg_dt,
+	       	(
+                            SELECT save_path||'/'||save_name   
+                            FROM image
+                            WHERE img_id = t1.img_id
+                            AND img_num = '1'
+                        ) img_id,
+	       	                               
+	         (                                                   
 	             SELECT TRUNC(AVG(star_score),1)                  
 	             FROM star                                        
 	             WHERE store_seq = t1.store_seq                   
-	          ) avg_star                                          
-	           ,(			                                      
+	          ) avg_star ,                                         
+	           (			                                      
 				  select count(*)                                 
 				  from review                                     
 				  where review_fk = t1.store_seq 			      
