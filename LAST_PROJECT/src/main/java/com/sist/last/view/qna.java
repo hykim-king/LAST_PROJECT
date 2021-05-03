@@ -41,13 +41,10 @@ public class qna {
 	ImageServiceImpl imageService;
 	
 	@Autowired
-	ProductServiceImpl productService;
+	BasketServiceImpl basketService;
 	
 	@Autowired
 	PaymentServiceImpl paymentService;
-	
-	@Autowired
-	BasketServiceImpl basketService;
 	
 	public qna() { }
 	
@@ -63,10 +60,28 @@ public class qna {
 		LOG.debug("=qnaDetailView()=");
 		LOG.debug("=================");
 		
-
 		Qna outVO = (Qna) this.qnaService.doSelectOne(qna);
-		
 		model.addAttribute("vo", outVO);
+		
+		//이미지 가져오기
+		Image imageVO = new Image();
+		imageVO.setImgId(outVO.getImgId());
+		
+		List<Image> imageList = (List<Image>) this.imageService.doRetrieve(imageVO);
+		
+		for(Image image:imageList) {
+			LOG.debug("=image="+image.toString());
+			LOG.debug("=image="+image.getSaveName());
+			LOG.debug("=image="+image.getSavePath());
+			
+			String imagePath = image.getSavePath()+ "/"+image.getSaveName();
+			
+			LOG.debug("=imagePath=:"+imagePath);
+			
+			model.addAttribute("imagePath", imagePath);
+		}
+		
+		model.addAttribute("imageList", imageList);
 		
 		return "qna/qna_detail";
 		
@@ -86,13 +101,6 @@ public class qna {
 		LOG.debug("==qnaListView==");
 		LOG.debug("=================");
 		
-		//이미지 가져오기
-		Image imageVO = new Image();
-		imageVO.setImgId(qna.getImgId());
-		
-		List<Image> image = (List<Image>) this.imageService.doRetrieve(imageVO);
-		
-		model.addAttribute("image", image);
 
 		return "qna/qna_list";	
 	}//--qnaListView
@@ -106,7 +114,7 @@ public class qna {
 	 * @throws SQLException
 	 */
 	@RequestMapping(value = "qna/payment.do", method = RequestMethod.GET)
-	public String paymentView(Model model,Basket basket) throws SQLException{
+	public String paymentView(Model model,Basket basket,Payment payment) throws SQLException{
 		
 		LOG.debug("=================");
 		LOG.debug("==paymentView==");
@@ -114,9 +122,15 @@ public class qna {
 		
 		Basket outVO = (Basket) basketService.doSelectOne(basket);
 		LOG.debug("=================");
-		LOG.debug("==Product outVO:=="+outVO);
+		LOG.debug("==Basket outVO:=="+outVO);
 		LOG.debug("=================");
 		model.addAttribute("vo", outVO);
+		
+		//int payOutVO = paymentService.doInsert(basket);
+		//LOG.debug("=================");
+		//LOG.debug("==Payment payOutVO:=="+outVO);
+		//LOG.debug("=================");
+		//model.addAttribute("payment", payOutVO);
 
 		return "qna/payment";
 	}//--paymentView
