@@ -201,7 +201,7 @@
 	    					html += " <div class='col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals'>                                                                            ";
 	    					html += " 	<div class='product__item'>                                                                                                                                            ";
 	    					html += " 		<div class='product__item__pic set-bg'> ";
-	    					html += "			<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><img class='product__item__pic set-bg' src='${hContext}/resources/store/img/"+value.imgId+".jpg'></a> ";
+	    					html += "			<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><img class='product__item__pic set-bg' src='${hContext}/"+value.imgId+"'></a> ";
 	    					html += " 		</div>                                                                                                                                                             ";
 	    					html += " 		<div class='product__item__text' id='productItem'>                                                                                                                 ";
 	    					html +=  			"<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><h6>"+value.company+"</h6></a>";                                                                                                                                  
@@ -218,7 +218,7 @@
 	    				html+= " <div class='col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals'>                                                                                          ";
 	    				html+= "    <div class='product__item'>                                                                                                                                       ";
 	    				html+= " 	   <div class='product__item__pic set-bg'>  ";
-	    				html += "			<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><img class='product__item__pic set-bg' src='${hContext}/resources/store/img/"+value.imgId+".jpg'></a> ";
+	    				html += "			<a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'><img class='product__item__pic set-bg' src='${hContext}/"+value.imgId+"'></a> ";
 	    				html+= " 	   </div>                                                                                                                                                          ";
 	    				html+= " 	   <div class='product__item__text' id='productItem'>                                                                                                              ";
 	    				html+= " 			<h6>제조사 없음</h6>                                                                                                                                           ";
