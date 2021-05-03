@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sist.last.cmn.SearchOrder;
+import com.sist.last.service.ImageServiceImpl;
 import com.sist.last.service.OptServiceImpl;
 import com.sist.last.service.ProductServiceImpl;
+import com.sist.last.vo.Image;
 import com.sist.last.vo.Opt;
 import com.sist.last.vo.Product;
 
@@ -25,6 +27,9 @@ public class product {
 	
 	@Autowired
 	ProductServiceImpl productService;
+	
+	@Autowired
+	ImageServiceImpl imageService;
 	
 	@Autowired
 	OptServiceImpl optionService;
@@ -39,6 +44,26 @@ public class product {
 		LOG.debug("==============");
 		
 		model.addAttribute("vo", outVO);
+
+		Image imageVO = new Image();
+		imageVO.setImgId(outVO.getImgId());
+		
+		List<Image> imageList = (List<Image>) this.imageService.doRetrieve(imageVO);
+		
+		for(Image image : imageList) {
+			LOG.debug("=image="+image.toString());
+			LOG.debug("=image="+image.getSaveName());
+			LOG.debug("=image="+image.getSavePath());
+			
+			String imagePath = image.getSavePath() + "/" + image.getSaveName();
+			
+			LOG.debug("=imagePath="+imagePath);
+
+			model.addAttribute("imagePath", imagePath);
+	
+		}
+		
+		model.addAttribute("imageList", imageList);
 		
 		return "store/Store_Detail_Info";
 	}
