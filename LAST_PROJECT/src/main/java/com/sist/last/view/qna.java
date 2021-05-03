@@ -28,7 +28,6 @@ import com.sist.last.vo.Product;
 import com.sist.last.vo.Qna;
 
 @Controller
-@RequestMapping("qna")
 public class qna {
 	
 	final Logger LOG = LoggerFactory.getLogger(qna.class);
@@ -54,7 +53,7 @@ public class qna {
 	 * @return qna/qna_detail
 	 * @throws SQLException
 	 */
-	@RequestMapping(value = "/qna_detail.do")
+	@RequestMapping(value = "qna/qna_detail.do")
 	public String qnaDetailView(Model model,Qna qna) throws Exception{
 		LOG.debug("=================");
 		LOG.debug("=qnaDetailView()=");
@@ -76,7 +75,7 @@ public class qna {
 	 * @throws SQLException
 	 */
 	//http://localhost:8080/last/qna/qna_view.do
-	@RequestMapping(value = "/qna_view.do", method = RequestMethod.GET)
+	@RequestMapping(value = "qna/qna_view.do", method = RequestMethod.GET)
 	public String qnaListView(Model model,Qna qna) throws SQLException{
 		
 		LOG.debug("=================");
@@ -102,7 +101,7 @@ public class qna {
 	 * @return qna/payment
 	 * @throws SQLException
 	 */
-	@RequestMapping(value = "/payment.do", method = RequestMethod.GET)
+	@RequestMapping(value = "member/payment.do", method = RequestMethod.GET)
 	public String paymentView(Model model,Product product,Payment payment) throws SQLException{
 		
 		LOG.debug("=================");
@@ -115,7 +114,7 @@ public class qna {
 		LOG.debug("=================");
 		model.addAttribute("vo", outVO);
 
-		return "qna/payment";
+		return "cmn/payment";
 	}//--paymentView
 	
 	
