@@ -176,28 +176,27 @@
 		/* 팝업 창 */
 		/* 옵션, 수량 변경 */
 	    function openOption(storeSeq){
+			console.log("openOption()");
+
 	    	window.open(
-						  "option_pop_up.do?storeSeq=" + storeSeq,
+						  "option_pop_up.do?storeSeq="+storeSeq,
 						  "option_pop_up_frame",
 						  "width=500, height=350"
 					   );
 
-			sendToChild();
-
-	    }
-		
-	    function sendToChild() 
-	    { 
 	    	if(typeof($("#title"))!="undefined")
 	    	{
-	    		var sendTitle = $("#title").text();
-				console.log("sendTitle:"+sendTitle);
-
+	    		document.getElementById("title").value = $("#title").text();
+	    		document.getElementById("optone").value = $("#optone").text();
+	    		document.getElementById("opttwo").value = $("#opttwo").text();
+	    		document.getElementById("quantity").value = $("#quantity").text();
+				console.log("sendToChild title:"+document.getElementById("title").value);
+				console.log("sendToChild optone:"+document.getElementById("optone").value);
+				console.log("sendToChild opttwo:"+document.getElementById("opttwo").value);
+				console.log("sendToChild quantity:"+document.getElementById("quantity").value);
 	    	}
-	    	
-	    	document.getElementById("title").value = sendTitle;
-	    } 
-
+	    		    	
+	    }
 		
 		$("#cartTable>tbody").on("click", "tr", function(){
 			var basketSeqData =  $(this).find("td:eq(0)").text();
@@ -226,7 +225,6 @@
 
 					qty = $button.parent().find("input").val(newVal);
 				});
-
 				
 			});
 			
@@ -273,11 +271,11 @@
 		} */
 		
 		/* 바로구매 */
-		function buyNow(basketSeq) {
+		function buyNow(storeSeq) {
 			console.log("buyNow()");
 			
-			//window.location.href = "${hContext}/qna/payment.do?basketSeq="basketSeq;
-			
+			window.location.href = "${hContext}/qna/payment.do?storeSeq="+storeSeq;
+
 		}
 		
 		/* 쇼핑 계속하기 */
