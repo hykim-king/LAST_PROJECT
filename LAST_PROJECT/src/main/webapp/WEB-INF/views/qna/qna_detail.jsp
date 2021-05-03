@@ -241,7 +241,7 @@
 					
 					if("1"==data.msgId) {//등록 성공
 						alert(data.msgContents);
-						//commentList();//리뷰 목록조회
+						commentList();//리뷰 목록조회
 					}else {//등록 실패
 						alert(data.msgId+"\n"+data.msgContents);
 					}	
