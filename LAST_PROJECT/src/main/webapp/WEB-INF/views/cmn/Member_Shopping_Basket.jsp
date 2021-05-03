@@ -110,7 +110,7 @@
 		/* 장바구니 목록 조회 */
 		function doRetrieve() {
 			
-			var memberIdData = "test01";
+			var memberIdData = "${member.memberId}";
 			
 	      	$.ajax({
 	    		type: "POST",
