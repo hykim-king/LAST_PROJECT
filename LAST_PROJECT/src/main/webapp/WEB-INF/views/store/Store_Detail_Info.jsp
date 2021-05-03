@@ -546,6 +546,14 @@
 		$("#reviewInsert").on("click", function(e) {
 			console.log("reviewInsert()");
 			
+			if ($('input[name=rating]').is(":checked")) {
+
+			} else {
+				alert("평점을 선택하세요.");
+				$("#rating").focus();
+				return;
+			}
+			
 			if(eUtil.ISEmpty($("#reviewContents").val())==true) {
 				alert("내용을 입력하세요.");
 				$("#reviewContents").focus();
