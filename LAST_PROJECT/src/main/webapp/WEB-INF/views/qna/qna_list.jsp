@@ -21,7 +21,7 @@
 <%@ include file="../cmn/header.jsp" %>
 <c:set var="hContext" value="${pageContext.request.contextPath }" ></c:set>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -50,18 +50,17 @@
   <link href="${hContext}/resources/lhc/bootstrap_lhc.css" rel="stylesheet"> 
 
   <!-- Custom styles for this template -->
-  <link href="${hContext}/resources/lhc/shop-homepage.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="${hContext}/resources/hr/base.css">
-  <link rel="stylesheet" type="text/css" href="${hContext}/resources/hr/normalize.css">
+ <%--  <link href="${hContext}/resources/lhc/shop-homepage.css" rel="stylesheet"> --%>
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/lhc/base.css">
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/lhc/normalize.css">
   
 
 </head>
 <body>
 
 <!-- div container -->
-	<div class="wrap container">
+	<div class=" container">
 	
-
 	<!-- Jumbotron -->
 	<!-- 수평선 긋기 -->
 	 <hr class="my-2">
@@ -86,22 +85,13 @@
 	<hr class="my-2">
 	<!-- 수평선 긋기 -->
 	<!--// Jumbotron -->
-
-	<!-- 검색영역 --><!--  -->
-	<br/>
-		<div class="row col-lg-12">
-			<div class="col-xs-8 col-sm-9 col-md-8 col-lg-2">
-	 				<select class="form-control input-md " name="pageSize" id="pageSize">				    		  		
-						<option value="4">4개씩 보기</option>
-						<option value="8">8개씩 보기</option>
-	    		  </select> 
-		    </div>
-		  </div>
-		  <br/>
-		  <br/>
-	   <div class="row col-lg-12">
+	
+	 <h4>최근 Q&A를 확인해보세요!</h4><br/>
+		<div class="row col-lg-12">			
+		<!-- 프로젝트 출력 -->	   	
+	   	  <div class="row col-lg-12">
 		    <div class="col-xs-8 col-sm-9 col-md-8 col-lg-2">
-	 				<select class="form-control input-md" name="searchDiv" id="searchDiv">			
+	 				<select class="form-control input-sm" name="searchDiv" id="searchDiv">			
 	    		  		<option value="10">제목</option>	    		  		
 						<option value="20">태그</option>
 						<option value="30">제목+태그</option>
@@ -111,25 +101,38 @@
 	   			<input type = "text" size = "20" name = "searchWord" id = "searchWord" placeholder = "검색어를 입력해주세요" />
 			</div>
 			<div class="col-xs-8 col-sm-9 col-md-12 col-lg-2">
-					<input type="button" class="btn btn-primary btn-md"  value="조회" id="doRetrieveBtn"/>
-			</div>
-		 </div>  
-	<!-- //검색영역 --> 
-	    <br/><br/><br/>  
-	   <!-- qna 출력 -->
-		<h4>최근 Q&A를 확인해보세요!</h4><br/>
-		<div id="rowQnaCard" class="row">
-		
-		</div>	
-		<!-- //qna 출력 -->	
-		
-		<!-- pagenation -->
-			<div class="text-center">
-				<div id="page-selection" class="text-center page"></div>
-			</div>
-		<!--// pagenation -->	
+					<input type="button" class="btn btn-primary btn-sm"  value="조회" id="doRetrieveBtn"/>
+			</div>	  	
+		  </div>
+			<br/>
+			<br/>
+		  <!-- //row-->
+		  <div class="row col-lg-12">
+			<div class="col-lg-3 text-right ">
+	 				<select class="form-control input-sm " name="pageSize" id="pageSize">			
+	    		  		<option value="4">4개씩 보기</option>	  		  		
+						<option value="8">8개씩 보기</option>
+						<option value="12">12개씩 보기</option>
 
-     
+	    		  </select> 
+		    </div>
+		  </div>
+		  <br/>
+		  <br/>
+		  <!-- row -->	
+		  <div id="rowQnaCard" class="row col-lg-12">
+
+		  </div>	
+		   <!-- //row -->	
+		<!-- pagenation -->
+		<div class="row col-lg-12">
+			<div id="page-selection" class="text-right page">
+				
+			</div>
+		</div>
+		<!--// pagenation -->
+		</div>
+
 	</div>
 	<!-- /container -->
 	
@@ -140,6 +143,14 @@
 			console.log("document ready");
 			
 			//화면 로딩시 보여줄 데이터
+			doRetrieve(1);
+		});
+		
+		
+		//조회 버튼
+		$("#doRetrieveBtn").on("click",function(e){
+			console.log("doRetrieveBtn");
+			e.preventDefault();//한번만 호출
 			doRetrieve(1);
 		});
 		
@@ -193,17 +204,11 @@
 		});	//--doRegistBtn
 		
 		
-		
-		//조회 버튼
-		$("#doRetrieveBtn").on("click",function(e){
-			console.log("doRetrieveBtn");
-			e.preventDefault();//한번만 호출
-			doRetrieve(1);
-		});
+
 		
 		//조회버튼 실행시 
 		function doRetrieve(page){
-			console.log("page:"+page);
+			//console.log("page:"+page);
 			$.ajax({
 	    		type: "GET",
 	    		url:"${hContext}/qna/do_retrieve.do",
@@ -242,13 +247,13 @@
 							console.log(i+","+value.name);
 	    					html+="<div  class='col-lg-3 col-md-6 mb-4'>";
 	    					html+="	<div class='card h-100'>";
-	    					html +=			"<a href='${hContext}/qna/qna_detail.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/"+value.imgId+"' ></a>";
+	    					html +=			"<a href='${hContext}/qna/qna_detail.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top' src='${hContext}/"+value.imgId+"' ></a>";
 	    					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
 	    					html+="		<div id='buttonClick' class='row col-lg-12'>";
 	    					html+="			<h5 class='card-title col-lg-8'>"+value.memberId+"</h5>";
 	    					html+="			<small class = 'gotta' style = 'display:none;''>"+value.qnaSeq+"</small>";
 	    					html+="		</div>";
-	    					html+="		<div id='rowQnaCardClick' class='text-center'>";
+	    					html+="		<div id='rowQnaCardClick' class='text-center col-lg-12'>";
 	    					html+="			<h5 class='text-muted'>"+value.title+"</h5>";
 	    					html+="			<small class = 'gotta' style = 'display:none;''>"+value.qnaSeq+"</small>";
 	    					html+="		</div>";	
@@ -258,7 +263,7 @@
 						
 					}else{//data가 없는 경우
 	    				html +="<tr>";
-	    				html +="	<td class='text-center' colspan='99'>등록된 게시물이 없습니다.</td>";    		
+	    				html +="	<td class='text-center' colspan='99'>등록된 QnA가 없습니다.</td>";    		
 	    				html +="</tr>";   
 					}
 					
