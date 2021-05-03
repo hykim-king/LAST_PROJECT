@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+import com.sist.last.service.BasketServiceImpl;
 import com.sist.last.service.ImageServiceImpl;
 import com.sist.last.service.PaymentServiceImpl;
 import com.sist.last.service.ProductServiceImpl;
 import com.sist.last.service.QnaService;
 import com.sist.last.service.QnaServiceImpl;
+import com.sist.last.vo.Basket;
 import com.sist.last.vo.Image;
 import com.sist.last.vo.Payment;
 import com.sist.last.vo.Product;
@@ -44,6 +45,9 @@ public class qna {
 	
 	@Autowired
 	PaymentServiceImpl paymentService;
+	
+	@Autowired
+	BasketServiceImpl basketService;
 	
 	public qna() { }
 	
@@ -102,13 +106,13 @@ public class qna {
 	 * @throws SQLException
 	 */
 	@RequestMapping(value = "qna/payment.do", method = RequestMethod.GET)
-	public String paymentView(Model model,Product product,Payment payment) throws SQLException{
+	public String paymentView(Model model,Basket basket) throws SQLException{
 		
 		LOG.debug("=================");
 		LOG.debug("==paymentView==");
 		LOG.debug("=================");
 		
-		Product outVO = (Product) this.productService.doSelectOne(product);
+		Basket outVO = (Basket) basketService.doSelectOne(basket);
 		LOG.debug("=================");
 		LOG.debug("==Product outVO:=="+outVO);
 		LOG.debug("=================");
