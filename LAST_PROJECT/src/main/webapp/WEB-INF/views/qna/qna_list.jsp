@@ -57,7 +57,7 @@
 
 </head>
 <body>
-${image }
+
 <!-- div container -->
 	<div class="wrap container">
 	
@@ -242,7 +242,7 @@ ${image }
 							console.log(i+","+value.name);
 	    					html+="<div  class='col-lg-3 col-md-6 mb-4'>";
 	    					html+="	<div class='card h-100'>";
-	    					html +=			"<a href='${hContext}/qna/qna_detail.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/resources/lhc/ignore.PNG' ></a>";
+	    					html +=			"<a href='${hContext}/qna/qna_detail.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/"+value.imgId' ></a>";
 	    					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
 	    					html+="		<div id='buttonClick' class='row col-lg-12'>";
 	    					html+="			<h5 class='card-title col-lg-8'>"+value.memberId+"</h5>";
@@ -277,7 +277,7 @@ ${image }
 	        		console.log("complete:"+data);
 	        	}
 	    	});
-		}//--doRetrieve
+		}//--doRetrieve//
 		
 		
 		
