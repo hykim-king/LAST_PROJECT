@@ -48,7 +48,7 @@
     <script src="${hContext}/resources/js/jquery.bootpag.js"></script>  
 </head>
 <body>
-
+<%-- ${sessionScope.member } --%>
     <!-- 스토어 단건 조회 -->
     <section class="product-details spad">
         <div class="container">
@@ -56,7 +56,15 @@
                 <div class="col-lg-6">
                     <div class="product__details__img">
                         <div class="product__details__big__img">
-                            <img class="big_img" src="${hContext}/resources/img/shop/details/product-big-1.jpg" alt="">
+                        <c:choose>
+		            		<c:when test="${imageList.size() >0 }">
+		            			<c:forEach var="vo" items="${imageList}">
+		            				<c:if test="${vo.imgNum==1}">
+		            					<img class="big_img" src="${hContext}${imagePath}" alt="">
+		            				</c:if>
+		            			</c:forEach>
+		            		</c:when>
+		            	</c:choose>  
                         </div>
                         <div class="product__details__thumb">
                             <div class="pt__item active">
@@ -126,7 +134,7 @@
                         <div class="product__details__text">
                             <h5>주문금액 <span id="total"></span>원</h5>
                             <a class="primary-btn" onClick="addBasket();">장바구니</a>
-                            <a class="primary-btn" onClick="buyNow();">바로구매</a>
+                            <a class="primary-btn" onClick="buyNow('${vo.storeSeq}');">바로구매</a>
                         </div>
                     </div>
                 </div>
@@ -147,11 +155,11 @@
                             <a class="nav-link" data-toggle="tab" href="#refundTab" role="tab">배송/환불</a>
                         </li>
                     </ul>
-                    <div class="tab-content active">
+                    <div class="tab-content">
                         <div class="tab-pane" id="descriptionTab" role="tabpanel">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
-                                <h5>상품 정보 <span id="productContents">${vo.contents}</span></h5>
+                                <h5><span id="productContents">${vo.contents}</span></h5>
                                 </div>
                             </div>
                         </div>
@@ -183,7 +191,7 @@
 						               <%-- <input type="hidden" name="bno" value="${detail.bno}"/> --%>
 						               <input type="text" class="form-control" id="reviewContents" name="reviewContents" placeholder="평점과 이용경험을 남겨주세요.">
 						               <span class="input-group-btn">
-						                    <button class="btn btn-default" type="button" id="reviewInsert">등록</button>
+						                    <button class="btn btn-default" type="button" onClick="reviewInsert('${vo.storeSeq}');">등록</button>
 						               </span>
 						              </div>
 						        </form>
@@ -224,7 +232,7 @@
                         <div class="tab-pane" id="refundTab" role="tabpanel">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
-                                	<h5>배송/환불 정책 <span id="refund">${vo.refund}</span></h5>
+                                	<h5><span id="refund">${vo.refund}</span></h5>
                                 </div>
                             </div>
                         </div>
@@ -377,7 +385,7 @@
 	    		asyn:"true",
 	    		dataType:"html",
 	    		data:{
-		    			"storeSeq" : storeSeqData, 
+		    			"storeSeq" : $("#storeSeq").text(), 
 						"div"      : divData 
 	    		},
 	    		success:function(data){//통신 성공
@@ -427,14 +435,12 @@
 				return;
 			}
 			 */
-			var basketSeqData = "2021/04/2664420dadcc1e40648ecdcc8a8785ec9f";
-			//var storeSeqData = "2021/04/2364420dadcc1e40648ecd785ec9fcc8a8";
-			var memberIdData = "test01";
+
+			var memberIdData = "${member.memberId}";
 			var shipfeeData = "3000";
 			
 			let url = "${hContext}/basket/do_insert.do";
 			let parameter = {
-								"basketSeq" : basketSeqData,
 								"storeSeq"  : $("#storeSeq").text(),
 								"memberId"  : memberIdData,
 								"title"     : $("#title").text(),
@@ -464,10 +470,10 @@
 		}
 		
 		/* 바로구매 */
-		function buyNow() {
+		function buyNow(storeSeq) {
 			console.log("buyNow btn click");
 			
-			//window.location.href = "${hContext}/qna/payment.do?storeSeq="+storeSeq;
+			window.location.href = "${hContext}/qna/payment.do?storeSeq="+storeSeq;
 			
 		}
 		
@@ -543,7 +549,7 @@
 		}
 		
 		/* 리뷰 등록 */
-		$("#reviewInsert").on("click", function(e) {
+		function reviewInsert(storeSeq) {
 			console.log("reviewInsert()");
 			
 			if ($('input[name=rating]').is(":checked")) {
@@ -563,23 +569,16 @@
 			var star = $("#starRating").text();
 			console.log("star : " + star);
 			
-			var reviewSeqData = "12345";
-			var starSeqData = "1234567890";
-			var storeSeqData = "2021/04/2364420dadcc1e40648ecd785ec9fcc8a8"; // reviewFk 상품/집들이/q&a fk값
-			var memberIdData = "test01";
 			var divData = "0";        // div 리뷰 구분(상품:0, 집들이:1, q&a:2)
 			
 			let url = "${hContext}/review/do_insert.do";
 			let parameter = {
-								"reviewSeq" : reviewSeqData,
-								"memberId"  : memberIdData,
-								"reviewFk"  : storeSeqData,
+								"memberId"  : "${member.memberId}",
+								"reviewFk"  : storeSeq,
 								"div"       : divData,
 								"contents"  : $("#reviewContents").val(),
-								"storeSeq"     : storeSeqData,
-								"starScore"     : star,
-								"starSeq"     : starSeqData
-								
+								"storeSeq"  : storeSeq,
+								"starScore" : star
 							};
 			let method = "POST";
 			let async = true;
@@ -599,14 +598,12 @@
 			$("#reviewContents").val(""); //text 초기화
 			reviewRetrieve(1);
 			
-		});
+		}
 
 		/* 리뷰 목록 조회 */
 		function reviewRetrieve(page) {
 			console.log("reviewRetrieve()");
-			
-			var reviewFkData = "2021/04/2364420dadcc1e40648ecd785ec9fcc8a8";
-			
+						
 	      	$.ajax({
 	    		type: "GET",
 	    		url:"${hContext}/review/review_star_list.do",
@@ -615,7 +612,7 @@
 	    		data:{
 	    			    "pageSize" : $("#pageSize").val(),
 	    			    "pageNum"  : page,
-	    				"reviewFk" : reviewFkData
+	    				"reviewFk" : $("#storeSeq").text()
 	    			},
 	    		success:function(data){//통신 성공
 	        		console.log("success data : " + data);
@@ -723,14 +720,12 @@
 		/* 리뷰 수정 */
 		function reviewUpdate(reviewSeq) {
 			console.log("reviewUpdate()");
-			
-			var modIdData = "yeonsu_review_test_U";
-			
+						
 			let url = "${hContext}/review/do_update.do";
 			let parameter = {
 								"reviewSeq" : reviewSeq,
 								"contents"  : $("#contents").val(),
-								"modId"     : modIdData
+								"modId"     : "${member.memberId}"
 							};
 			let method = "POST";
 			let async = true;
@@ -759,7 +754,7 @@
 			let url = "${hContext}/review/do_delete.do";
 			let parameter = {
 								"reviewSeq" : reviewSeq,
-								"starSeq"     : starSeqData
+								"starSeq"   : starSeqData
 							};
 			let method = "POST";
 			let async = true;
@@ -801,6 +796,18 @@
 		    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		}
 		
+		/* 이미지 선택시 event */
+	    $('.product__details__thumb img').on('click', function () {
+	        $('.product__details__thumb .pt__item').removeClass('active');
+	        $(this).addClass('active');
+	        var imgurl = $(this).data('imgbigurl');
+	        var bigImg = $('.big_img').attr('src');
+	        if (imgurl != bigImg) {
+	            $('.big_img').attr({
+	                src: imgurl
+	            });
+	        }
+	    });
 		
 	</script>
 </body>
