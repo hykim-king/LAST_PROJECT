@@ -49,6 +49,8 @@
 	
 </head>
 <body>
+${vo}
+<input type="text" name="storeSeq"   id="storeSeq" value="${vo.storeSeq}" />
 <!-- 결제 데이터 가져오기 -->
 		<!-- 제목 -->
 	 	<div class="page-header">
@@ -65,15 +67,21 @@
                         <table id="cartTable">
                             <thead>
                                 <tr>
-                                	<th style="visibility:hidden;position:absolute;">basketSeq</th>
-                                    <th>이미지</th>
+                                	<th style="visibility:hidden;position:absolute;">paySeq</th>
+                                	<th style="visibility:hidden;position:absolute;">storeSeq</th>
+                                	<th style="visibility:hidden;position:absolute;">memberId</th>
                                     <th>상품명</th>
                                     <th>옵션 1</th>
                                     <th>옵션 2</th>
-                                    <th>가격</th>
                                     <th>수량</th>
+                                    <th>가격</th>
+                                    <th>배송비</th>
                                     <th>합계</th>
-                                    <th><i class="ti-close"></i></th>
+                                    <th>결제상태</th>
+                                    <th style="visibility:hidden;position:absolute;">modId</th>
+                                    <th style="visibility:hidden;position:absolute;">regDt</th>
+                                    <th style="visibility:hidden;position:absolute;">modDt</th>
+                                   
                                 </tr>
                             </thead>
                             <tbody>  
@@ -83,11 +91,6 @@
                     <div class="row">
                         <div class="col-lg-4 offset-lg-4 pull-right">
                             <div class="proceed-checkout">
-                                <ul>
-                                    <li class="subtotal text-left">총 상품금액 <span id="totalPrice"></span></li>
-                                    <li class="subtotal text-left">총 배송비 <span id="totalShip"></span></li>
-                                    <li class="cart-total text-left">결제금액 <span id="totalPay"></span></li>
-                                </ul>
                                 <a href="#" class="proceed-btn" id="paymentBtn">결제</a>
                                 <a href="#" class="proceed-btn" id="cancelBtn">취소</a>
                             </div>
@@ -106,7 +109,7 @@
 		console.log("document ready");
 		
 		//화면 로딩시 보여줄 데이터 
-		doSelctOne();
+		doSelctOne(1);
 	});//--document ready	
 	
 
@@ -114,70 +117,50 @@
 	function doSelctOne(){
 		console.log("doSelctOne");
 		
-		var paySeqData ="20210416";
+		var paySeqData ="2021041666";
 		
-		$.ajax({
-    		type: "GET",
-    		url:"${hContext}/payment/do_selectone.do",
-    		asyn:"true",
-    		dataType:"html",
-    		data:{
-					"paySeq":paySeqData
-    		},
-    		success:function(data){//통신 성공
-        		console.log("success data : " + data);//여기까지는 들어와있음
-    		
-        		var parseData = JSON.parse(data);//여기에 데이터 안들어옴
-        		
-        		//기존 데이터 삭제
-        		$("#cartTable>tbody").empty();
-        		var html = "";
-        		
-        		console.log("parseData.length : " + parseData.length);
+		 let url = "${hContext}/payment/do_selectone.do";
+		 let parameters = {"paySeq":paySeqData};
+		 let method = "GET";
+		 let async = true;
+		 
+		 console.log("url:"+url);
+		 console.log("parameters:"+parameters);
+		 
+		 EClass.callAjax(url, parameters, method, async, function(data) {
+			 console.log("data:"+data);
+			 console.log("data.paySeq:"+data.paySeq);
+			 
+				$("#cartTable>tbody").empty();
+			 	var html = "";
+			 	
+			 	html += "<tr>                                                                                                           ";
+				html += "    <td style='visibility:hidden;position:absolute;'>"+data.paySeq+"</td>                                     ";
+				html += "    <td style='visibility:hidden;position:absolute;'>"+data.storeSeq+"</td>                                    ";
+				html += "    <td style='visibility:hidden;position:absolute;'>"+data.memberId+"</td>                                     ";
+				html += "    <td class='cart-title first-row' id='title'>"+data.title+"</td>                                           ";
+				html += "    <td class='cart-option first-row' id='optone'>"+data.optone+"</td>                                        ";
+				html += "    <td class='cart-option first-row' id='opttwo'>"+data.opttwo+"</td>                                        ";
+				html += "    <td class='qua-col first-row'>                                                                             ";
+				html += "        <div class='quantity'>                                                                                 ";
+				html += "            <div class='pro-qty'>                                                                              ";
+				html += "                <input type='text' id='quantity' value="+data.quantity+">                                     ";
+				html += "            </div>                                                                                             ";
+				html += "        </div>                                                                                                 ";
+				html += "    </td>                                                                                                      ";
+				html += "    <td class='p-price first-row'>"+numberWithCommas(data.quantity*data.price)+"원</td>                       ";
+				html += "    <td class='p-shipfee first-row' id='shipfee'>"+numberWithCommas(data.shipfee)+"원</td>                     ";
+				html += "    <td class='p-price first-row' id='price'>"+numberWithCommas(data.price)+"원</td>                           ";
+				html += "    <td class='p-status first-row' id='status'>"+data.status+"</td>                           				";
+				html += "    <td style='visibility:hidden;position:absolute;'>"+data.modId+"</td>                                     ";
+				html += "    <td style='visibility:hidden;position:absolute;'>"+data.regDt+"</td>                                     ";
+				html += "    <td style='visibility:hidden;position:absolute;'>"+data.modDt+"</td>                                     ";
+				html += "</tr>                                                                                                          ";
 
-
-        		//데이터가 있는 경우
-        		if(parseData.length > 0) {
-
-        			$.each(parseData, function(i, value) {
-        				console.log(i+","+value.title);
-        				html += "<tr>                                                                                                           ";
-        				html += "    <td style='visibility:hidden;position:absolute;'>"+value.basketSeq+"</td>                                            ";
-        				html += "    <td class='cart-pic first-row'><img src='${hContext}/resources/img/cart-page/product-1.jpg' alt=''></td>   ";
-        				html += "    <td class='cart-title first-row' id='title'>"+value.title+"</td>                                           ";
-        				html += "    <td class='cart-option first-row' id='optone'>"+value.optone+"</td>                                        ";
-        				html += "    <td class='cart-option first-row' id='opttwo'>"+value.opttwo+"</td>                                        ";
-        				html += "    <td class='p-price first-row' id='price'>"+numberWithCommas(value.price)+"원</td>                           ";
-        				html += "    <td class='qua-col first-row'>                                                                             ";
-        				html += "        <div class='quantity'>                                                                                 ";
-        				html += "            <div class='pro-qty'>                                                                              ";
-        				html += "            	 <span class='dec qtybtn'>-</span>                                                              ";
-        				html += "                <input type='text' id='quantity' value="+value.quantity+">                                     ";
-        				html += "            	 <span class='inc qtybtn'>+</span>                                                              ";
-        				html += "            </div>                                                                                             ";
-        				html += "        </div>                                                                                                 ";
-        				html += "    </td>                                                                                                      ";
-        				html += "    <td class='p-price first-row'>"+numberWithCommas(value.quantity*value.price)+"원</td>                       ";
-        				html += "    <td class='close-td first-row'><i class='ti-close'></i></td>                             ";
-        				html += "</tr>                                                                                                          ";
-        			});
-        			
-        		} else { //데이터가 없는 경우
-        			html += "<tr>                                                           ";
-        			html += "	<td class='text-center' colspan='99'>결제 해당 상품이 없습니다.</td>  ";
-        			html += "</tr>                                                          ";
-        		}
-        		
-        		$("#cartTable>tbody").append(html); //데이터 추가
-    				
-        	},
-        	error:function(data){//실패시 처리
-        		console.log("error:"+data);
-        	},
-        	complete:function(data){//성공/실패와 관계없이 수행!
-        		console.log("complete:"+data);
-        	}
-    	});
+			 
+				//body에 데이터 추가
+				$("#cartTable>tbody").append(html);	
+		 });
 	}//--doSelctOne
 	
 	
@@ -186,43 +169,49 @@
 		console.log("paymentBtn");
 		e.preventDefault();//한번만 호출
 		
-	 	let tds = $(this).children();
-	 	console.log(tds);
-	 	
-	 	var memberId = tds.eq(0).text();
-		var paySeq = tds.eq(1).text();
+/* 		
 		
-		console.log("memberId:"+memberId); 
-		console.log("paySeq:"+paySeq); 
-
- 		let url = "${hContext}/payment/do_insert.do"
-			let parameters = {
-				"paySeq" : paySeq,
-				"memberId" :memberId,//세션
-				"storeSeq" :storeSeq,
-				"modId":memberId//세션
-				};
-			let method = "POST";
-			let async = true;	
-			
-			console.log(parameters);
-			console.log(url);
-			
-		if(confirm("결제하시겠습니까?")==false) return;
-			
-		EClass.callAjax(url , parameters, method ,async, function(data){
-			console.log("data"+data.memberId);
-			console.log("data"+data.paySeq);
-			
-			if("1"==data.msgId) {//결제 성공
-				alert(data.msgContents);
-				//결제성공시 화면이동
-				//moveTomain();
-			}else {//결제 실패
-				alert(data.msgId+"\n"+data.msgContents);
-			}
-
-		}); 	 
+		 let url = "${hContext}/payment/do_insert.do";
+		 let parameters = {
+				 			"paySeq" 	: paySeq,
+							"storeSeq"  : $("#storeSeq").val(),
+							"memberId"  : memberId,
+							"title"     : $("#title").val(),
+							"optone"    : $("#optone").val(),
+							"opttwo"    : $("#opttwo").val(),
+							"quantity"  : $("#quantity").val(),
+							"price"     : $("#price").val(),
+							"shipfee"   : shipfee,
+							"status"	: status,
+							"modId"		: memberId
+						};
+		 let method = "POST";
+		 let async = true;	
+		 
+		console.log("parameters:"+parameters);
+		console.log("url:"+url);
+		 
+		 if(confirm("결제 하시겠습니까?")==false) return;
+		 
+		 EClass.callAjax(url, parameters, method, async, function(data) {
+				 console.log("data:"+data);
+				 console.log("data:"+data.paySeq);
+				 console.log("data:"+data.storeSeq);
+				 console.log("data:"+data.memberId);
+				 
+				 //성공/실패 여부 메세지 출력
+				 console.log("data.msgContents:"+data.msgContents);
+				 
+				 if("1"==data.msgId){//결제성공
+					 alert(data.msgContents);
+						//결제성공시 화면이동
+						//moveTomain();
+				 }else{//결제실패
+					 alert(data.msgId+"\n"+data.msgContents); 
+				 }
+				 
+			 }); */
+	 	
 	});//--paymentBtn
 	
 	
@@ -230,7 +219,7 @@
 	function moveTomain(){
 		console.log("moveTomain");
 		
-		window.location.href = "${hContext}/houses/home_view.do?memberId=memberId" ;
+		window.location.href = "${hContext}/houses/home_view.do?memberId="+memberId ;
 	}
 	
 	//결제 취소

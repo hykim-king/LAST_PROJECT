@@ -8,7 +8,7 @@
     -----   -----  -------------------------------------------
     2021. 4. 26.       	임하람 
     
-    author eclass 개발팀////
+    author eclass 개발팀
     since 2020.11.23
     Copyright (C) by KandJang All right reserved.---------
 */
@@ -49,7 +49,7 @@
 </head>
 	<body>
 	${vo }
-   
+   <input type="hidden" name="qnaSeq"   id="qnaSeq" value="${vo.qnaSeq}" />
 	<!-- QnA 단건조회 -->
 	<section class="ftco-section ftco-degree-bg">
       <div class="container">
@@ -128,12 +128,12 @@
 	
 			//화면 로딩시 보여줄 데이터
 			doSelectOne();//게시물 단건조회
-			commentList();//리뷰 목록조회
+			commentList(1);//리뷰 목록조회
 		});
 		
 		$("#pageSize").on("change", function(e){
 	    	console.log("pageSize change");
-	     	commentList();
+	     	commentList(1);
 		});
 		
 //게시물 관련--------------------------------------------------
@@ -141,17 +141,15 @@
 		function doSelectOne(){
 			console.log("function doSelectOne-QnA");
 			
-			var qnaSeqData ="qnaSeqTest03";
-			
 			 let url = "${hContext}/qna/do_selectone.do";
-			 let parameter = {"qnaSeq":qnaSeqData};
+			 let parameters = {"qnaSeq":$("#qnaSeq").val()};
 			 let method = "GET";
 			 let async = true;
 			 
 			 console.log("url:"+url);
-			 console.log("parameter:"+parameter);
+			 console.log("parameters:"+parameters);
 			 
-			 EClass.callAjax(url, parameter, method, async, function(data) {
+			 EClass.callAjax(url, parameters, method, async, function(data) {
 				 console.log("data:"+data);
 				 console.log("data.qnaSeq:"+data.qnaSeq);
 
@@ -225,42 +223,29 @@
 //댓글 등록 
 		function commentInsert(insertData){
 			
-			var reviewSeqData = "2021/04/30b1e848aa39b74d508a27e1d4615340f2";
-			var memberIdData = "haram";
-			var qnaSeqData = "qnaSeqTest03";
-			var divData = "2";
-			// div 리뷰 구분(q&a:2)
-			
-			 let url = "${hContext}/review/do_insert.do";
-			 let parameters = {
-								"reviewSeq" : reviewSeqData,
-								"memberId"  : memberIdData,
-								"reviewFk"  : qnaSeqData,
-								"div"       : divData,
-								"contents"  : $("#content").val(),
-								"modId"     : memberIdData
-					 		 };
-			 let method = "POST";
-			 let async = true;
+			let url = "${hContext}/reply/do_insert.do";
+			let parameters = {
+								"memberId"  : "asdfg",     //임시 아이디
+								"reviewSeq" : "1234",      //임시 seq
+								"contents"  : insertData,
+								"modId"     : "asdfg"      //임시 아이디
+							};
+			let method = "POST";
+			let async  = true;
 			
 			console.log("parameters:"+parameters);
 			console.log("url:"+url);
 			
-			if(confirm("댓글을 등록하시겠습니까?")==false) return;
-			
-			EClass.callAjax(url , parameters, method ,async, function(data){
-				console.log("data"+data.memberId);
-				console.log("data"+data.reviewSeq);
-				
-				if("1"==data.msgId) {//등록 성공
-					alert(data.msgContents);
-					commentList();//리뷰 목록조회
-				}else {//등록 실패
-					alert(data.msgId+"\n"+data.msgContents);
-				}
-			}); 
-			
-				
+	  		EClass.callAjax(url, parameters, method, async, function(data) {
+					console.log("data:"+data); 
+					
+					if("1"==data.msgId) {//등록 성공
+						alert(data.msgContents);
+						//commentList();//리뷰 목록조회
+					}else {//등록 실패
+						alert(data.msgId+"\n"+data.msgContents);
+					}	
+			}); 		
 		}//--commentInsert	
 		
 		
@@ -268,18 +253,18 @@
 //댓글 목록 - 단건조회 페이지 화면 로딩 시 실행
 		function commentList(page){
 			console.log("commentList-QnA");
-			
-			//해당 게시물에 작성된 리뷰 
-			var reviewFkData = "qnaSeqTest03";	
-			
+
 	      	$.ajax({
-	    		type: "POST",
-	    		url:"${hContext}/review/do_retrieve.do",
-	    		asyn:"true",
+	    		type : "GET",
+	    		url  : "${hContext}/reply/do_retrieve.do",
+	    		asyn :"true",
 	    		dataType:"html",
 	    		data:{
-						"reviewFk" :reviewFkData
-	    			  },
+	    			pageSize: $("#pageSize").val(),
+	    			searchDiv: $("#searchDiv").val(),
+	    			searchWord: $("#searchWord").val(),
+	    			pageNum: page
+	    		},
 	    		success:function(data){//통신 성공
 	    			
 	        		console.log("success data:"+data);
@@ -290,11 +275,9 @@
 	        		
 	        		var html = "";
 	        		
-	        		
 	        		//페이징 변수
 	        		let totalCount = 0;
 	        		let pageTotal = 1;
-	        		
 	        		
 	        		//data가 있는 경우
 	        		if(parseData.length>0){

@@ -20,63 +20,24 @@ import com.sist.last.cmn.SearchPay;
 import com.sist.last.vo.Payment;
 
 @Repository
-public class PaymentDaoImpl extends DTO implements PaymentDao {
+public class PaymentDaoImpl  {
 	final static Logger LOG = LoggerFactory.getLogger(PaymentDaoImpl.class);
 
 	final String NAMESPACE = "com.sist.last.payment"; //com.sist.ehr.member.doDelete -> 점 붙어야 함
 	
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
+
 	
-	//Spring이 제공해주는 JdbcTemplate
-	JdbcTemplate jdbcTemplate;
+	public PaymentDaoImpl() {}
 	
-	//DataSource dataSource;
-	
-	//ResultSet이 들어가 있음. 조회해온 데이터를 넣음
-	RowMapper<Payment> row = new RowMapper<Payment>() {
-		@Override
-		public Payment mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Payment paymentVO = new Payment();
-			
-			paymentVO.setPaySeq(  rs.getString("pay_seq"));
-			paymentVO.setStoreSeq(rs.getString("store_seq"));
-			paymentVO.setMemberId(rs.getString("member_id"));
-			paymentVO.setTitle(   rs.getString("title"));
-			paymentVO.setOptone(  rs.getString("optone"));
-			paymentVO.setOpttwo(  rs.getString("opttwo"));
-			paymentVO.setQuantity(rs.getInt("quantity"));
-			paymentVO.setPrice(   rs.getInt("price"));
-			paymentVO.setShipfee( rs.getInt("shipfee"));
-			paymentVO.setStatus(  rs.getInt("status"));
-			paymentVO.setRegDt(   rs.getString("reg_dt"));
-			
-			paymentVO.setNum(rs.getInt("rnum"));
-			paymentVO.setTotalCnt(rs.getInt("total_cnt"));
-			
-			
-			return paymentVO;	
-		}
-	};
-	
-	public PaymentDaoImpl() {
-		
-	}
-	
-	//setter를 통한 주입
-//	public void setDataSource(DataSource dataSource) {
-//		this.dataSource = dataSource;
-//		this.jdbcTemplate = new JdbcTemplate(dataSource);
-//		
-//	}
-//	
 	/**
 	 * 결제 목록조회
 	 * @param dto
 	 * @return List<?>
 	 * @throws SQLException
 	 */
-	@Override
+
 	public List<?> doRetrieve(DTO dto) throws SQLException {
 		SearchPay param = (SearchPay) dto;
 		String statement = this.NAMESPACE+".doRetrieve";
@@ -100,7 +61,7 @@ public class PaymentDaoImpl extends DTO implements PaymentDao {
 	 * @return int(1:성공, 0:실패)
 	 * @throws SQLException
 	 */
-	@Override
+
 	public int doUpdate(DTO dto) throws SQLException {
 		int flag = 0;
 		Payment payment = (Payment) dto;
@@ -122,7 +83,6 @@ public class PaymentDaoImpl extends DTO implements PaymentDao {
 	 * @return int(1:성공, 0:실패)
 	 * @throws SQLException
 	 */
-	@Override
 	public int doDelete(DTO dto) throws SQLException {
 		int flag = 0;
 		Payment payment = (Payment) dto;
@@ -145,7 +105,6 @@ public class PaymentDaoImpl extends DTO implements PaymentDao {
 	 * @return int(1:성공, 0:실패)
 	 * @throws SQLException
 	 */
-	@Override
 	public int doInsert(DTO dto) throws SQLException {
 		int flag = 0;
 		Payment payment = (Payment) dto;
@@ -166,7 +125,6 @@ public class PaymentDaoImpl extends DTO implements PaymentDao {
 	 * @return DTO
 	 * @throws SQLException
 	 */
-	@Override
 	public DTO doSelectOne(DTO dto) throws SQLException {
 		Payment inVO = (Payment) dto;
 		Payment outVO = null;
