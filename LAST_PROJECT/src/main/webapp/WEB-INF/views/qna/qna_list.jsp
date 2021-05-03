@@ -188,7 +188,7 @@
 			var qnaSeq = tds.eq(1).text();
 			console.log("qnaSeq:"+qnaSeq);
 			
-			window.location.href = "${hContext}/qna/qna_regist.do?qnaSeq="+qnaSeq ;
+			window.location.href = "${hContext}/qna/qna_regist.do?memberId=${member.memberId}"+"qnaSeq="+qnaSeq ;
 
 		});	//--doRegistBtn
 		
