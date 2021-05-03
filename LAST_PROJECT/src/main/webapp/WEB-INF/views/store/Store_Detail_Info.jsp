@@ -421,12 +421,12 @@
 			console.log("addBasket btn click");
 			console.log("optone : "+$("#optone option:selected").val());
 			
-			if($("#optone option:selected").val()==1) {
+/* 			if($("#optone option:selected").val()==1) {
 				alert("옵션을 선택하세요.");
 				$("#optone").focus();
 				return;
 			}
-			
+			 */
 			var basketSeqData = "2021/04/2664420dadcc1e40648ecdcc8a8785ec9f";
 			//var storeSeqData = "2021/04/2364420dadcc1e40648ecd785ec9fcc8a8";
 			var memberIdData = "test01";
@@ -720,7 +720,6 @@
 			}); 
 		}//--renderingPage	
 			      	
-		
 		/* 리뷰 수정 */
 		function reviewUpdate(reviewSeq) {
 			console.log("reviewUpdate()");
