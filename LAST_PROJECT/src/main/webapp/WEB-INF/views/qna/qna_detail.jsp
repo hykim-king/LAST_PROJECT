@@ -56,7 +56,18 @@
         <div class="row">
 	        <!-- 단건조회 데이터 시작 -->	
 			<div class="row" id="qnaSelectOne">
-	
+				<div class="col-lg-8 ftco-animate">
+				 	<h2 class="mb-3">${vo.title}</h2>  
+				 		 <hr class="my-2">
+				 		 <br/> 
+				 	     <p><img src="${hContext}${imagePath}" class="img-fluid"></p>
+				 	     <br/> 
+				 	     <p>${vo.contents}</p>
+				 	 <div class="tag-widget post-tag-container mb-5 mt-5">
+				 	   <div class="tagcloud">
+				 	      <a href="#" class="tag-cloud-link">${vo.tag}</a>
+				 	 </div>
+				</div>
 	       	</div>
 	     	<!-- //단건조회 데이터 -->	
 	     
@@ -127,7 +138,6 @@
 			console.log("document ready");
 	
 			//화면 로딩시 보여줄 데이터
-			doSelectOne();//게시물 단건조회
 			commentList(1);//리뷰 목록조회
 		});
 		
@@ -137,39 +147,6 @@
 		});
 		
 //게시물 관련--------------------------------------------------
-//단건조회 페이지 화면 로딩 시 실행
-		function doSelectOne(){
-			console.log("function doSelectOne-QnA");
-			
-			 let url = "${hContext}/qna/do_selectone.do";
-			 let parameters = {"qnaSeq":$("#qnaSeq").val()};
-			 let method = "GET";
-			 let async = true;
-			 
-			 console.log("url:"+url);
-			 console.log("parameters:"+parameters);
-			 
-			 EClass.callAjax(url, parameters, method, async, function(data) {
-				 console.log("data:"+data);
-				 console.log("data.qnaSeq:"+data.qnaSeq);
-
-				 	var html = "";
-				 	
-				 	html+="  <div class='col-lg-8 ftco-animate'>";
-				 	html+="		<h2 class='mb-3'>"+data.title+"</h2>";     
-				 	html+="          <p><img src='' alt='Image placeholder' class='img-fluid'></p>";
-				 	html+="        <p>"+data.contents+"</p>"; 
-				 	html+="    <div class='tag-widget post-tag-container mb-5 mt-5'>";
-				 	html+="      <div class='tagcloud'>";
-				 	html+="        <a href='#' class='tag-cloud-link'>"+data.tag+"</a>";
-				 	html+="      </div>";
-				 	html+="   </div>";
-				 
-					//body에 데이터 추가
-					$("#qnaSelectOne").append(html);	
-			 });
-
-		}//--doSelectOne
 
 //게시물 관련 버튼 이벤트
 //1)목록화면으로 이동 
@@ -226,10 +203,10 @@
 			
 			let url = "${hContext}/reply/do_insert.do";
 			let parameters = {
-								"memberId"  : "haram",     //임시 아이디
-								"reviewSeq" : "${vo.qnaSeq}",    //housesSeq      //임시 seq
+								"memberId"  : "${member.memberId}",     
+								"reviewSeq" : "${vo.qnaSeq}",         
 								"contents"  : insertData,
-								"modId"     : "haram"      //임시 아이디
+								"modId"     : "${member.memberId}"      
 							};
 			let method = "POST";
 			let async  = true;
