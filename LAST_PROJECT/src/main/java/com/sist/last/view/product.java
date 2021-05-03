@@ -83,9 +83,7 @@ public class product {
 	@RequestMapping(value = "member/option_pop_up.do", method = RequestMethod.GET)
     public String optionPopUp(Opt opt, Model model) throws SQLException {
 
-
 		opt.setDiv(1);
-		
 		
 		List<Opt> list = this.optionService.doRetrieve(opt);
 		
