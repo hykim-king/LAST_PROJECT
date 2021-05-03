@@ -148,7 +148,7 @@
 	        				html += "    <td class='first-row' id='quantity'>"+value.quantity+"</td>                                                          ";
 	        				html += "    <td class='p-price first-row'>"+numberWithCommas(value.quantity*value.price)+"원</td>                                 ";
 	        				html += "    <td class='first-row'><a class='up-cart' onclick='openOption(&quot;"+value.storeSeq+"&quot;)'>옵션변경</a></td>         ";
-	        				html += "    <td class='first-row'><a class='primary-btn' onclick='buyNow(&quot;"+value.storeSeq+"&quot;)'>바로구매</a></td>         ";
+	        				html += "    <td class='first-row'><a class='primary-btn' onclick='buyNow(&quot;"+value.basketSeq+"&quot;)'>바로구매</a></td>         ";
 	        				html += "    <td class='close-td first-row' onClick='deleteBasket(&quot;"+value.basketSeq+"&quot;)'><i class='ti-close'></i></td> ";
 	        				html += "</tr>                                                                                                                    ";
 	        				
@@ -271,10 +271,10 @@
 		} */
 		
 		/* 바로구매 */
-		function buyNow(storeSeq) {
+		function buyNow(basketSeq) {
 			console.log("buyNow()");
 			
-			window.location.href = "${hContext}/qna/payment.do?storeSeq="+storeSeq;
+			window.location.href = "${hContext}/qna/payment.do?basketSeq="+basketSeq;
 
 		}
 		
