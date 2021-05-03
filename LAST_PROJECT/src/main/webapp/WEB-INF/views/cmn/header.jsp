@@ -94,7 +94,7 @@
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">스토어</a>
                                     <ul class="dropdown-menu animated fadeInDownShort go">
                                        <li><a href="${hContext}/store/store_view.do">스토어 홈</a></li>
-                                       <li><a href="${hContext}/store/store_category.do">카테고리</a></li>
+                                       <li><a href="${hContext}/store/store_category.do?searchDiv=0">카테고리</a></li>
                                     </ul>
                  </li>
                	 <li class="dropdown">
