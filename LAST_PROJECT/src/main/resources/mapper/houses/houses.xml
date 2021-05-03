@@ -58,25 +58,29 @@
 		      SELECT t2.rnum                                           
 		            ,t2.houses_seq AS housesSeq                                    
 		            ,t2.member_id  AS memberId                                  
-		            ,t2.title                                          
-		            ,t2.contents                                       
+		            ,t2.title                                                                            
 		            ,t2.tag                                            
 		            ,t2.reg_dt     AS regDt
 		            ,t2.img_id     AS imgId
-		            ,t2.mod_id     AS modId
-		            ,t2.mod_dt     AS modDt
-		            ,(                                                 
-		              SELECT COUNT(*)                                  
-		              FROM scrap                                       
-		              WHERE houses_seq = t2.houses_seq                 
-		            ) totalScrap                                                                                
+		            ,t2.total_scrap AS totalScrap                                                                                            
 		      FROM(                                                    
-		          SELECT rownum rnum,t1.*                              
+		          SELECT rownum rnum
+                        ,t1.houses_seq  
+                        ,t1.member_id
+                        ,t1.title
+                        ,t1.tag
+                        ,t1.reg_dt
+                        ,(
+                            SELECT save_path||'/'||save_name   
+                            FROM image
+                            WHERE img_id = t1.img_id
+                            AND img_num = '1'
+                        ) img_id
 		  				,(                                                  
 		              	SELECT COUNT(*)                                      
 		              	FROM scrap                                             
 		              	WHERE houses_seq = t1.houses_seq                       
-		            		) total_scrap                              
+		            		) total_scrap                                                    
 		          FROM(                                                
 		          SELECT *                                             
 		          FROM houses
