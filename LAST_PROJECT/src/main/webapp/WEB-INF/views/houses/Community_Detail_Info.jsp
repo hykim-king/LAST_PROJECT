@@ -34,7 +34,21 @@
     <%-- <link href="${hContext}/resources/css/bootstrap.min.css" rel="stylesheet"> --%>
   	<link href="${hContext}/resources/soeon/css/style.css" rel="stylesheet">
   	
+  	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i|Playfair+Display:400,400i,500,500i,600,600i,700,700i&subset=cyrillic" rel="stylesheet">
+
 	<!-- Vendor CSS Files -->
+	<link href="${hContext}/resources/soeon/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="${hContext}/resources/soeon/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="${hContext}/resources/soeon/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+	<link href="${hContext}/resources/soeon/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+	<link href="${hContext}/resources/soeon/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+	<!-- Template Main CSS File -->
+	<link href="${hContext}/resources/soeon/css/style.css" rel="stylesheet">
+	
+	
+	<%-- <!-- Vendor CSS Files -->
 	<link href="${hContext}/resources/soeon/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<script src="${hContext}/resources/soeon/vendor/glightbox/js/glightbox.min.js"></script>
 	<script src="${hContext}/resources/soeon/vendor/isotope-layout/isotope.pkgd.min.js"></script>
@@ -42,7 +56,7 @@
 	<script src="${hContext}/resources/soeon/vendor/purecounter/purecounter.js"></script>
 	<script src="${hContext}/resources/soeon/vendor/swiper/swiper-bundle.min.js"></script>
 	<script src="${hContext}/resources/soeon/vendor/waypoints/noframework.waypoints.js"></script>
-	<link href="${hContext}/resources/soeon/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+	<link href="${hContext}/resources/soeon/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"> --%>
   	
     <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
     <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
@@ -62,10 +76,10 @@
     
 </head>
 <body>
-	${vo }
+<%-- 	${vo }
 	${image}
 	${vo.housesSeq} 
-	
+	 --%>
 	<!-- div container -->
 	<div class="wrap container">
 
@@ -93,7 +107,7 @@
 		
 					<div class="col-lg-8">
 		            	<div class="portfolio-details-slider swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events">
-							<div class="swiper-wrapper align-items-center" id="swiper-wrapper-b72bbc63d015cdf4" aria-live="off" style="transform: translate3d(-1804px, 0px, 0px); transition-duration: 0ms;">
+							<div class="swiper-wrapper align-items-center" id="swiper-wrapper-b72bbc63d015cdf4" aria-live="off" style="transform: translate3d(-1804px, 0px, 0px); transition-duration: 2ms;">
 		              			
 		              			<div class="swiper-slide swiper-slide-duplicate swiper-slide-next swiper-slide-duplicate-prev" data-swiper-slide-index="2" role="group" aria-label="1 / 5" style="width: 451px;">
 		                  			<img src="${hContext}/resources/soeon/img/portfolio/portfolio-3.jpg" alt="">
@@ -132,14 +146,15 @@
 			                <li><strong>집 주인</strong>: ${vo.memberId}</li>
 			                <li><strong>태그</strong>: ${vo.tag}</li>
 			                <li><strong>게시일</strong>:${vo.regDt}</li>
-			                <li><strong>Project URL</strong>: <a href="#">www.example.com</a></li>
+			                <!-- <li><strong>Project URL</strong>: <a href="#">www.example.com</a></li> -->
 						</ul>
 					</div>
+					<div class="portfolio-description">
+						<p>${vo.contents}</p>
+		    		</div>
 				</div>
 		
-			<div class="portfolio-description">
-				<p>${vo.contents}</p>
-		    </div>
+
 		      </div>
 		    </div>
 		    
@@ -210,7 +225,6 @@
 		console.log("1.document:최초수행!");
 		commentList(1);
 		var houseSeq = "${vo.housesSeq}";
-		//doSelectOne(houseSeq);
 		
 	});//--document ready  
 
@@ -420,68 +434,24 @@
 	//게시물 수정 버튼 클릭 이벤트 처리
 	$("#update_btn").on("click", function(e){
 		console.log("update_btn click");
-		
-		//집들이 수정 화면으로 전환, houses_seq값 전달 어케함....
-		
-/* 		let url = "${hcontext}/houses/test_view.do";
-		let parameters = {	"housesSeq" : 1111
-					     };
-		let method     = "POST";
-		let async      = true;
-		console.log("url: " + url);
-		console.log("parameters: " + parameters);
-	 	
-		 EClass.callAjax(url, parameters, method, async, function(data){
-			console.log("data: " + data); */
 			window.location.href="${hcontext}/houses/test_view.do"; //화면이동
-			
-//		}); 
 
-		
 	
 	});
 	
-/* 	function doSelectOne(housesSeq){
-		
-			let url = "${hContext }/houses/do_selectone.do";
-			let parameters = {"housesSeq": housesSeq};
-			let method     = "GET";
-			let async      = true;
-			
-			console.log("parameters:"+parameters);
-			console.log("url:"+url);
-			
-  			EClass.callAjax(url, parameters, method, async, function(data) {
-				console.log("data:"+data);
-				console.log("data.housesSeq:"+data.housesSeq);
-				
-				var html = "";
-				html +="<tr>";
-				html +="	<td class='text-center'>"+data.title+"</td>";
-				html +="</tr>";
-				html +="<tr>";
-				html +="	<td class='text-center'>"+data.memberId+"</td>";
-				html +="	<td class='text-center'>"+data.regDt+"</td>";
-				html +="</tr>";
-				html +="<tr>";
-				html +="	<td class='text-center'>"+data.imgId+"</td>";
-				html +="</tr>";
-				html +="<tr>";
-				html +="	<td class='text-center'>"+data.contents+"</td>";
-				html +="</tr>";
-				
-				//tbody에 데이터 추가
-        		$("#housePost").append(html);   
-			});  
-	} */
-
-
-
-
-
-
 </script>
 <!--// javascript -->
 
+	<!-- Vendor JS Files -->
+	<script src="${hContext}/resources/soeon/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="${hContext}/resources/soeon/vendor/glightbox/js/glightbox.min.js"></script>
+	<script src="${hContext}/resources/soeon/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+	<script src="${hContext}/resources/soeon/vendor/php-email-form/validate.js"></script>
+	<script src="${hContext}/resources/soeon/vendor/purecounter/purecounter.js"></script>
+	<script src="${hContext}/resources/soeon/vendor/swiper/swiper-bundle.min.js"></script>
+	<script src="${hContext}/resources/soeon/vendor/waypoints/noframework.waypoints.js"></script>
+		
+	<!-- Template Main JS File -->
+	<script src="${hContext}/resources/soeon/js/main.js"></script>
 </body>
 </html>
