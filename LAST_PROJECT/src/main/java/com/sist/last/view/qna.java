@@ -18,8 +18,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import com.sist.last.service.ImageServiceImpl;
+import com.sist.last.service.PaymentServiceImpl;
+import com.sist.last.service.ProductServiceImpl;
 import com.sist.last.service.QnaService;
 import com.sist.last.service.QnaServiceImpl;
+import com.sist.last.vo.Image;
+import com.sist.last.vo.Payment;
+import com.sist.last.vo.Product;
 import com.sist.last.vo.Qna;
 
 @Controller
@@ -32,8 +37,14 @@ public class qna {
 	@Autowired
 	QnaServiceImpl qnaService;
 	
-	//@Autowired
-	//ImageServiceImpl imageService;
+	@Autowired
+	ImageServiceImpl imageService;
+	
+	@Autowired
+	ProductServiceImpl productService;
+	
+	@Autowired
+	PaymentServiceImpl paymentService;
 	
 	public qna() { }
 	
@@ -66,22 +77,24 @@ public class qna {
 	 */
 	//http://localhost:8080/last/qna/qna_view.do
 	@RequestMapping(value = "/qna_view.do", method = RequestMethod.GET)
-	public String qnaListView(Model model) throws SQLException{
+	public String qnaListView(Model model,Qna qna) throws SQLException{
 		
 		LOG.debug("=================");
 		LOG.debug("==qnaListView==");
 		LOG.debug("=================");
 		
+		//이미지 가져오기
+		Image imageVO = new Image();
+		imageVO.setImgId(qna.getImgId());
+		
+		List<Image> image = (List<Image>) this.imageService.doRetrieve(imageVO);
+		
+		model.addAttribute("image", image);
 
 		return "qna/qna_list";	
 	}//--qnaListView
 	
-	
-	
 
-	
-	
-	
 	
 	/**
 	 * 결제페이지
@@ -90,11 +103,18 @@ public class qna {
 	 * @throws SQLException
 	 */
 	@RequestMapping(value = "/payment.do", method = RequestMethod.GET)
-	public String paymentView(Model model) throws SQLException{
+	public String paymentView(Model model,Product product,Payment payment) throws SQLException{
+		
 		LOG.debug("=================");
 		LOG.debug("==paymentView==");
 		LOG.debug("=================");
 		
+		Product outVO = (Product) this.productService.doSelectOne(product);
+		LOG.debug("=================");
+		LOG.debug("==Product outVO:=="+outVO);
+		LOG.debug("=================");
+		model.addAttribute("vo", outVO);
+
 		return "qna/payment";
 	}//--paymentView
 	

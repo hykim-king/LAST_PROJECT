@@ -5,7 +5,7 @@
 	Modification information
 	
 	수정일     수정자      수정내용
-    -----   -----  ------------------------------------
+    -----   -----  -------------------------------------
     2021. 4. 26.        임하람 
     
     author eclass 개발팀
@@ -33,7 +33,7 @@
   <!-- 부트스트랩 -->
    <%-- <link href="${hContext}/resources/css/bootstrap.min.css" rel="stylesheet"> --%>
     <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
-    <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
+    <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. ------->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -50,14 +50,14 @@
   <link href="${hContext}/resources/lhc/bootstrap_lhc.css" rel="stylesheet"> 
 
   <!-- Custom styles for this template -->
-  <link href="${hContext}/resources/lhc/shop-homepage.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="${hContext}/resources/lhc/base.css">
-  <link rel="stylesheet" type="text/css" href="${hContext}/resources/lhc/normalize.css">
+  <link href="${hContext}/resources/hr/shop-homepage.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/hr/base.css">
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/hr/normalize.css">
   
 
 </head>
 <body>
-
+${image }
 <!-- div container -->
 	<div class="wrap container">
 	
@@ -92,8 +92,8 @@
 		<div class="row col-lg-12">
 			<div class="col-xs-8 col-sm-9 col-md-8 col-lg-2">
 	 				<select class="form-control input-md " name="pageSize" id="pageSize">				    		  		
-						<option value="6">6개씩 보기</option>
-						<option value="9">9개씩 보기</option>
+						<option value="4">4개씩 보기</option>
+						<option value="8">8개씩 보기</option>
 	    		  </select> 
 		    </div>
 		  </div>
@@ -240,7 +240,7 @@
 						
 						$.each(parseData,function(i,value){
 							console.log(i+","+value.name);
-	    					html+="<div  class='col-lg-4 col-md-6 mb-4'>";
+	    					html+="<div  class='col-lg-3 col-md-6 mb-4'>";
 	    					html+="	<div class='card h-100'>";
 	    					html +=			"<a href='${hContext}/qna/qna_detail.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/resources/lhc/ignore.PNG' ></a>";
 	    					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
