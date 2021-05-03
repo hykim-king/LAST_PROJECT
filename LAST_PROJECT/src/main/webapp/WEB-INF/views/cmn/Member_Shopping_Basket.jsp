@@ -270,6 +270,7 @@
 	    	});
 		} */
 		
+		
 		/* 바로구매 */
 		function buyNow(basketSeq) {
 			console.log("buyNow()");
