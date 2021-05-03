@@ -29,7 +29,6 @@ public class ReviewServiceImpl implements ReviewService {
 
 	}
 
-	// setter를 통한 DI
 	public void setReviewDao(ReviewDaoImpl reviewDao) {
 		this.reviewDao = reviewDao;
 	}

@@ -26,10 +26,12 @@ public class StarServiceImpl implements StarService {
 	}
 	
 	public int doUpdate(DTO dto) throws SQLException {
+		
 		return this.starDao.doUpdate(dto);
 	}
 	
 	public int doDelete(DTO dto) throws SQLException {
+		
 		return this.starDao.doDelete(dto);
 	}
 	
@@ -43,6 +45,7 @@ public class StarServiceImpl implements StarService {
 
 	@Override
 	public List<?> doRetrieve(DTO dto) throws SQLException {
+		
 		return this.starDao.doRetrieve(dto);
 	}
 

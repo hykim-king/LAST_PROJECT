@@ -46,7 +46,6 @@ public class ProductServiceImpl  {
 		return this.productDao.doDelete(dto);
 	}
 
-	
 	public int doInsert(DTO dto) throws SQLException {
 		
 		Product product = (Product) dto;

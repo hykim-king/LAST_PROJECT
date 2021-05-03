@@ -16,7 +16,7 @@ import com.sist.last.vo.Basket;
 @Service
 public class BasketServiceImpl implements BasketService {
 
-	final Logger LOG = LoggerFactory.getLogger(this.getClass());
+	final Logger LOG = LoggerFactory.getLogger(BasketServiceImpl.class);
 	
 	@Autowired
 	private BasketDaoImpl basketDao;

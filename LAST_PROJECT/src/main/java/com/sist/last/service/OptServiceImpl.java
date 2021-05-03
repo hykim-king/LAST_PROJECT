@@ -16,7 +16,7 @@ import com.sist.last.vo.Opt;
 @Service
 public class OptServiceImpl implements OptService {
 
-	final static Logger LOG = LoggerFactory.getLogger("OptServiceImpl");
+	final static Logger LOG = LoggerFactory.getLogger(OptServiceImpl.class);
 	
 	@Autowired
 	private OptDaoImpl optDao;
