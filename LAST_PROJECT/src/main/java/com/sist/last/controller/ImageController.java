@@ -131,6 +131,9 @@ public class ImageController {
 			mFile.transferTo(new File(imageVO.getSavePath() + File.separator + imageVO.getSaveName()));
 			LOG.debug("mFile: " + mFile);
 			
+			int idx = datePath.indexOf("/resources");
+			datePath = datePath.substring(idx);
+			
 			imageVO.setSavePath(datePath);
 			LOG.debug("datePath: " + datePath);		
 		
@@ -258,11 +261,12 @@ public class ImageController {
 			mFile.transferTo(new File(imageVO.getSavePath() + File.separator + imageVO.getSaveName()));
 			LOG.debug("mFile: " + mFile);
 			
+			int idx = datePath.indexOf("/resources");
+			datePath = datePath.substring(idx);			
+			
 			imageVO.setSavePath(datePath);
 			LOG.debug("datePath: " + datePath);
 			
-			// file을 server에 저장
-			// mFile.transferTo(new File(imageVO.getSavePath() + File.separator + imageVO.getSaveName()));
 			
 		} // --while
 		
@@ -375,13 +379,16 @@ public class ImageController {
 			LOG.debug("renameFile.getAbsolutePath(): " + renameImg.getAbsolutePath());// 파일 절대경로
 			// fileVO.setSaveFileNm(renameFile.getAbsolutePath());// savePath FileVO 추가 전
 			datePath = datePath.replaceAll("\\\\", "/");
-			imageVO.setSavePath(datePath);// 파일경로
+			imageVO.setSavePath(datePath);// 파일경로			
 			
 			LOG.debug("imageVO: " + imageVO);
 			
 			// file을 server에 저장
 			mFile.transferTo(new File(imageVO.getSavePath() + File.separator + imageVO.getSaveName()));
 			LOG.debug("mFile: " + mFile);
+			
+			int idx = datePath.indexOf("/resources");
+			datePath = datePath.substring(idx);
 			
 			imageVO.setSavePath(datePath);
 			LOG.debug("datePath: " + datePath);
@@ -497,6 +504,9 @@ public class ImageController {
 			// file을 server에 저장
 			mFile.transferTo(new File(imageVO.getSavePath() + File.separator + imageVO.getSaveName()));
 			LOG.debug("mFile: " + mFile);
+			
+			int idx = datePath.indexOf("/resources");
+			datePath = datePath.substring(idx);
 			
 			imageVO.setSavePath(datePath);
 			LOG.debug("datePath: " + datePath);

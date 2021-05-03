@@ -210,7 +210,7 @@
 		    					
 							html += '<div class="col-lg-4 col-md-6 portfolio-item filter-card">';
 							html += '	<div class="portfolio-wrap">';
-							html += '		<img src="${hContext}/resources/scrap/img/portfolio/portfolio-8.jpg" class="img-fluid" alt="">';
+							html += '		<img src="${hContext}/resources/soeon/img/portfolio/portfolio-8.jpg" class="img-fluid" alt="">';
 							html += '   	<div class="portfolio-info">';
 							html += '      		<h4>' + value.memberId + "님의 집에 놀러가보세요!" + '</h4>';
 							html += '    	</div>';

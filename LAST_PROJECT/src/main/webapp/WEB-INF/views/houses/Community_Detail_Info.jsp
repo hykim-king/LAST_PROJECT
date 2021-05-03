@@ -51,10 +51,10 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
 	<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 	<!-- 순서 중요함! jquery먼저 인식->bootstrap인식 -->
-	<!-- <script src="${hContext}/resources/js/jquery.min.js"></script>  --> <!-- 위에 url쳐서 나오는 내용 복사해서 js파일에 그대로 붙여넣기 한거!이거 인식 안되면 화면에서 버전 올릴 수 없다? -->
+	<script src="${hContext}/resources/js/jquery.min.js"></script><!-- 위에 url쳐서 나오는 내용 복사해서 js파일에 그대로 붙여넣기 한거!이거 인식 안되면 화면에서 버전 올릴 수 없다? -->
     <script src="${hContext}/resources/js/bootstrap.min.js"></script>
     <script src="${hContext}/resources/js/eclass.js"></script>
     <script src="${hContext}/resources/js/eutil.js"></script>

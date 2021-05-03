@@ -99,7 +99,7 @@ public class ReplyController {
 		int flag = this.replyService.doDelete(reply);
 		String resultMsg = "";
 		if(flag==1) {
-			resultMsg = reply.getMemberId() + "님 댓글 삭제 성공.";
+			resultMsg = " 댓글 삭제 성공.";
 		}else {
 			resultMsg = "댓글 삭제 실패.";
 		}
