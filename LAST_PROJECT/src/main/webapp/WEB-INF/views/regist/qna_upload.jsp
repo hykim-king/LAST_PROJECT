@@ -48,6 +48,7 @@
 
 	<!-- div container -->
 	<div class="container">
+	${sessionScope.member }
 
 		<!-- 제목 -->
 		<div class="page-header">
@@ -57,8 +58,7 @@
 
 		<!-- form -->
 		<form id="regFrm" action="${hContext}/image/qna_upload.do" method="POST" enctype="multipart/form-data" class="form-horizontal">
-			<input type="hidden" class="form-control" id="memberId" name="memberId" value="tjdus"> 	
-			<input type="hidden" name="qnaSeq" id="qnaSeq" value="${qna.qnaSeq}" />
+			<input type="hidden" class="form-control" id="memberId" name="memberId" value="${member.nickname }"> 	
 						
 			<div class="form-group">
 				<label for="title" class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">제목</label>

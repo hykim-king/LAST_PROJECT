@@ -352,7 +352,7 @@
 				if("1"==data.msgId) {//삭제 성공
 					alert(data.msgContents);
 					commentList(1);//리뷰 목록조회
-				}else {//삭제 실패
+				}else {//삭제 실패//
 					alert(data.msgId+"\n"+data.msgContents);
 				}	
 				

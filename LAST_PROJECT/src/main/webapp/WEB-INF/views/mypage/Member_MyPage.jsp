@@ -52,7 +52,7 @@
 
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
   
-
+${member.memberId }
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="nav justify-content-center">
     
@@ -149,10 +149,9 @@ $("#testt").on("click",function(e){//집들이
     		asyn:"true",
     		dataType:"html",
     		data:{
-    			memberId:"${member.memberId }",
     			pageSize:3,
-    			searchDiv: 10,
-    			searchWord: "",
+    			searchDiv: "40",
+    			searchWord: "${member.memberId }",
     			pageNum:page
     		},
     		success:function(data){//통신 성공
@@ -242,8 +241,8 @@ $("#test").on("click",function(e){//질문과답변
     		dataType:"html",
     		data:{
     			pageSize:3,
-    			searchDiv: 10,
-    			searchWord: "",
+    			searchDiv: "40",
+    			searchWord: "${member.memberId }",
     			pageNum:page
     		},
     		success:function(data){//통신 성공
@@ -417,7 +416,8 @@ $("#test5").on("click",function(e){//등록상품내역
     		dataType:"html",
     		data:{
     			pageSize:4,
-    			memberId:"${member.memberId }",
+    			searchDiv: "60",
+        		searchWord: "${member.memberId }",
     			pageNum:page
     		},
     		success:function(data){//통신 성공
