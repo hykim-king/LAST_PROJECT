@@ -367,7 +367,7 @@
 		/* 옵션 선택 */
 		function optionRetrieve() {
 			console.log("optionRetrieve()");
-			
+		
 			var storeSeqData = "2021/04/2364420dadcc1e40648ecd785ec9fcc8a8";
 			var divData = "1";
 			
@@ -419,6 +419,13 @@
 	    /* 장바구니 */
 		function addBasket() {
 			console.log("addBasket btn click");
+			console.log("optone : "+$("#optone option:selected").val());
+			
+			if($("#optone option:selected").val()==1) {
+				alert("옵션을 선택하세요.");
+				$("#optone").focus();
+				return;
+			}
 			
 			var basketSeqData = "2021/04/2664420dadcc1e40648ecdcc8a8785ec9f";
 			//var storeSeqData = "2021/04/2364420dadcc1e40648ecd785ec9fcc8a8";
@@ -460,7 +467,7 @@
 		function buyNow() {
 			console.log("buyNow btn click");
 			
-			//window.location.href = "${hContext}/qna/payment.do?basketSeq="basketSeq;
+			//window.location.href = "${hContext}/qna/payment.do?storeSeq="+storeSeq;
 			
 		}
 		
