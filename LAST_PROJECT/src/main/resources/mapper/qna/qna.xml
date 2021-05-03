@@ -26,6 +26,9 @@
 			  		title LIKE '%'|| #{searchWord} ||'%' 
 			  	   OR tag Like '%'|| #{searchWord} ||'%'
 			  	</when>
+			  	<when test=" '40' == searchDiv">
+			  		member_id = #{searchWord}
+			  	</when>
 			 </choose>  		
 		</where>
 	</sql>
