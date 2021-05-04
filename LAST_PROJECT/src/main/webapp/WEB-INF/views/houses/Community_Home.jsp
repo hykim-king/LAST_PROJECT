@@ -94,7 +94,7 @@
 			              <div id="pupularButtonClick"  class="row col-lg-12">			              
 			               <h6  class="card-title col-lg-8">${vo.memberId}</h6 >	
 			              	<input  type="button" class="btn btn-primary btn-sm col-lg-4"  value="스크랩" />
-			              	<small class="gotta" style="display:none;">${vo.housesSeq } </small>
+			              	<small class="gotta" style="display:none;">${vo.housesSeq }</small>
 				            </div>
 				            <div id="rowPopularCardClick" class="text-center">
 			                <a href="${hContext}/houses/houses_detail.do?housesSeq=${vo.housesSeq}">
