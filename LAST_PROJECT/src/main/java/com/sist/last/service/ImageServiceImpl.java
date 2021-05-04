@@ -1,6 +1,7 @@
 package com.sist.last.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -167,6 +168,8 @@ public class ImageServiceImpl implements ImageService {
 	@Override
 	public int doInsertHousesImg(DTO image, DTO houses, DTO housesLink) throws SQLException {
 
+		int flag = 0;
+		
 		Image imageVO = (Image) image;
 		Houses housesVO = (Houses) houses;
 		HousesLink housesLinkVO = (HousesLink) housesLink;
@@ -197,7 +200,17 @@ public class ImageServiceImpl implements ImageService {
 		LOG.debug("housesVO: " + housesVO);
 		LOG.debug("housesLinkVO: " + housesLinkVO);
 		
-		int flag = this.imageDao.doInsert(imageVO);
+//		List<Image> list = new ArrayList<Image>();
+//		list.add(imageVO);
+//		
+//		for(Image images : list) {
+//			flag = this.imageDao.doInsert(images);
+//			flag += this.housesDao.doInsert(housesVO);
+//			flag += this.housesLinkDao.doInsert(housesLinkVO);	
+//			
+//		}
+		
+		flag = this.imageDao.doInsert(imageVO);
 		flag += this.housesDao.doInsert(housesVO);
 		flag += this.housesLinkDao.doInsert(housesLinkVO);	
 		

@@ -124,6 +124,7 @@ public class ImageController {
 			File renameImg = new File(datePath, imageVO.getSaveName());			
 			LOG.debug("renameFile.getAbsolutePath(): " + renameImg.getAbsolutePath());// 파일 절대경로
 			// fileVO.setSaveFileNm(renameFile.getAbsolutePath());// savePath FileVO 추가 전
+
 			datePath = datePath.replaceAll("\\\\", "/");
 			imageVO.setSavePath(datePath);// 파일경로			
 			
@@ -187,7 +188,7 @@ public class ImageController {
 	}
 	
 	@RequestMapping(value = "image/houses_upload.do", method = RequestMethod.POST)
-	public ModelAndView housesImgUpload(MultipartHttpServletRequest mReg, ModelAndView modelAndView) throws IllegalStateException, IOException, SQLException {
+	public ModelAndView uploadHousesImg(MultipartHttpServletRequest mReg, ModelAndView modelAndView) throws IllegalStateException, IOException, SQLException {
 		
 		File fileRootDir = new File(UPLOAD_HOUSES_IMG_DIR);
 		if (fileRootDir.isDirectory() == false) {
@@ -254,8 +255,9 @@ public class ImageController {
 			File renameImg = new File(datePath, imageVO.getSaveName());			
 			LOG.debug("renameFile.getAbsolutePath(): " + renameImg.getAbsolutePath());// 파일 절대경로
 			// fileVO.setSaveFileNm(renameFile.getAbsolutePath());// savePath FileVO 추가 전
+			
 			datePath = datePath.replaceAll("\\\\", "/");
-			imageVO.setSavePath(datePath);// 파일경로			
+			imageVO.setSavePath(datePath);// 파일경로					
 			
 			// file을 server에 저장
 			mFile.transferTo(new File(imageVO.getSavePath() + File.separator + imageVO.getSaveName()));
@@ -267,6 +269,7 @@ public class ImageController {
 			imageVO.setSavePath(datePath);
 			LOG.debug("datePath: " + datePath);
 			
+			list.add(imageVO);		
 			
 		} // --while
 		
@@ -300,8 +303,8 @@ public class ImageController {
 		HousesLink housesLink = new HousesLink(linkSeq, housesSeq, memberId, link, div, regDt, modId, modDt);
 		
 		int flag = imageService.doInsertHousesImg(imageVO, houses, housesLink);
-		
-		list.add(imageVO);
+
+		// list.add(imageVO);
 		
 		modelAndView.addObject("list", list);
 		modelAndView.addObject("houses", houses);		
