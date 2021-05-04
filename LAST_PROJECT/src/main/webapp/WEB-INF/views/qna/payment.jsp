@@ -92,13 +92,7 @@ ${vo}
 								    <td class='cart-title first-row' id='title'>${vo.title}</td>                                        
 								    <td class='cart-option first-row' id='optone'>${vo.optone}</td>                                     
 								    <td class='cart-option first-row' id='opttwo'>${vo.opttwo}</td>                                     
-								    <td class='qua-col first-row'>                                                                         
-								        <div class='quantity'>                                                                             
-								            <div class='pro-qty'>                                                                          
-								                <input type='text' id='quantity' value="${vo.quantity}">                                  
-								            </div>                                                                                         
-								        </div>                                                                                             
-								    </td>                                                                                                  
+								    <td class='p-price first-row'>${vo.quantity}</td>                                                                                                  
 								    <td class='p-price first-row'>${vo.quantity*vo.price} 원</td>                     
 								    <td class='p-shipfee first-row' id='shipfee'>${vo.shipfee}원</td>                  
 								    <td class='p-price first-row' id='price'>${vo.price}원</td>                        
@@ -111,10 +105,14 @@ ${vo}
                         </table>
                     </div>
                     <div class="row">
-                        <div class="col-lg-4 offset-lg-4 pull-right">
+                           <div class="col-lg-4 offset-lg-4 pull-right">
                             <div class="proceed-checkout">
-                                <a href="#" class="proceed-btn" id="paymentBtn">결제</a>
-                                <!-- <a href="#" class="proceed-btn" id="cancelBtn">취소</a> -->
+                                <ul>
+                                    <li class="subtotal text-left">총 상품금액<span id="totalPrice">${vo.quantity*vo.price}</span></li>
+                                    <li class="subtotal text-left">총 배송비 <span id="totalShip">${vo.shipfee}</span></li>
+                                    <li class="cart-total text-left">결제금액 <span id="totalPay">${(vo.quantity*vo.price)+vo.shipfee}</span></li>
+                                </ul>
+                                <a href="#" class="proceed-btn" id="paymentBtn">상품 결제하기</a>
                             </div>
                         </div>
                     </div>
