@@ -136,7 +136,7 @@
 		         FROM (                                                                                      
 		             SELECT *                                                                                
 		             FROM scrap                  
-					 WHERE mod_id = #{loginId}
+					 WHERE member_id = #{loginId}
 		             ORDER BY reg_dt desc                                                                    
 		         )t1                                                                                         
 		     )t2   
@@ -144,7 +144,7 @@
 		 )A CROSS JOIN                                                                                       
 		     (SELECT COUNT(*) total_cnt      
 				FROM scrap
-				WHERE mod_id = #{loginId}		
+				WHERE member_id = #{loginId}		
 		     )B
 		
 	</select>

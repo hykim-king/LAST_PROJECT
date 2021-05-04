@@ -387,7 +387,7 @@ ${member.memberId} --%>
 		
 			let url = "${hContext}/scrap/do_insert.do";
 			let parameters = {
-								"memberId"  : "${vo.memberId}",     //집들이 등록아이디
+								"memberId"  : "${member.memberId}", //세션 아이디
 								"housesSeq" : "${vo.housesSeq}",   	//집들이seq
 								"modId"     : "${member.memberId}"  //세션 아이디
 							};

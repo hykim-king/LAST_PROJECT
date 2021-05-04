@@ -166,9 +166,9 @@
 							html += '	<div class="portfolio-wrap">';
 							html += '		<img src="${hContext}/resources/soeon/img/logo/INTERY_logo.png" class="img-fluid" alt="">';
 							html += '   	<div class="portfolio-info">';
-							html += '      		<h4>' + value.memberId + "님의 집에 놀러가보세요!" + '</h4>';
+							html += '      		<h4>' + "이웃의 집에 놀러가보세요!" + '</h4>';
 							html += '    	</div>';
-							html += '    	<br>';
+							html += '    	<hr>';
 							html += '    	<div class="portfolio-links">';
 							html += '     		<a href="${hContext}/houses/houses_detail.do?housesSeq='+value.housesSeq+'" title="구경가기">구경가기</a>  ';   
 							html += '    	<br>';
