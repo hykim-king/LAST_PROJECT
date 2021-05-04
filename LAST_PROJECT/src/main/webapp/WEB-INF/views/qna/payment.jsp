@@ -50,7 +50,7 @@
 	
 </head>
 <body>
-${vo}
+<%-- ${vo} --%>
 <!-- 결제 데이터 가져오기 -->
 		<!-- 제목 -->
 	 	<div class="page-header">
@@ -93,9 +93,9 @@ ${vo}
 								    <td class='cart-option first-row' id='optone'>${vo.optone}</td>                                     
 								    <td class='cart-option first-row' id='opttwo'>${vo.opttwo}</td>                                     
 								    <td class='p-price first-row'>${vo.quantity}</td>                                                                                                  
-								    <td class='p-price first-row' id='price'>${vo.price}원</td>                    
-								    <td class='p-shipfee first-row' id='shipfee'>${vo.shipfee}원</td>
-								    <td class='p-price first-row'>${vo.quantity*vo.price} 원</td>                                        
+								    <td class='p-price first-row' id='price'></td>                    
+								    <td class='p-shipfee first-row' id='shipfee'></td>
+								    <td class='p-price first-row' id='totalPrice'></td>                                        
 								    <!--<td class='p-status first-row' id='status'>status</td>-->                       				
 								    <td style='visibility:hidden;position:absolute;'>${member.memberId}</td>                                   
 								    <td style='visibility:hidden;position:absolute;'>${vo.regDt}</td>                                   
@@ -108,9 +108,9 @@ ${vo}
                            <div class="col-lg-4 offset-lg-4 pull-right">
                             <div class="proceed-checkout">
                                 <ul>
-                                    <li class="subtotal text-left">총 상품금액<span id="totalPrice">${vo.quantity*vo.price}</span></li>
-                                    <li class="subtotal text-left">총 배송비 <span id="totalShip">${vo.shipfee}</span></li>
-                                    <li class="cart-total text-left">결제금액 <span id="totalPay">${(vo.quantity*vo.price)+vo.shipfee}</span></li>
+                                    <li class="subtotal text-left">총 상품금액<span id="totalProduct"></span></li>
+                                    <li class="subtotal text-left">총 배송비 <span id="totalShip"></span></li>
+                                    <li class="cart-total text-left">결제금액 <span id="totalPay"></span></li>
                                 </ul>
                                 <a href="#" class="proceed-btn" id="paymentBtn">상품 결제하기</a>
                             </div>
@@ -127,10 +127,15 @@ ${vo}
 	//jquery 객체생성이 완료
 	$(document).ready(function() {
 		console.log("document ready");
-		
+	
+		$("#price").text(numberWithCommas("${vo.price}")+"원");
+		$("#shipfee").text(numberWithCommas("${vo.shipfee}")+"원");
+		$("#totalPrice").text(numberWithCommas("${vo.quantity*vo.price}")+"원");
+		$("#totalProduct").text(numberWithCommas("${vo.quantity*vo.price}")+"원");
+		$("#totalShip").text(numberWithCommas("${vo.shipfee}")+"원");
+		$("#totalPay").text(numberWithCommas("${(vo.quantity*vo.price)+vo.shipfee}")+"원");
+
 	});//--document ready	
-	
-	
 	
 	//결제버튼
 	$("#paymentBtn").on("click",function(e){
