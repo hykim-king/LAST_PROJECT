@@ -93,9 +93,9 @@ ${vo}
 								    <td class='cart-option first-row' id='optone'>${vo.optone}</td>                                     
 								    <td class='cart-option first-row' id='opttwo'>${vo.opttwo}</td>                                     
 								    <td class='p-price first-row'>${vo.quantity}</td>                                                                                                  
-								    <td class='p-price first-row'>${vo.quantity*vo.price} 원</td>                     
-								    <td class='p-shipfee first-row' id='shipfee'>${vo.shipfee}원</td>                  
-								    <td class='p-price first-row' id='price'>${vo.price}원</td>                        
+								    <td class='p-price first-row' id='price'>${vo.price}원</td>                    
+								    <td class='p-shipfee first-row' id='shipfee'>${vo.shipfee}원</td>
+								    <td class='p-price first-row'>${vo.quantity*vo.price} 원</td>                                        
 								    <!--<td class='p-status first-row' id='status'>status</td>-->                       				
 								    <td style='visibility:hidden;position:absolute;'>${member.memberId}</td>                                   
 								    <td style='visibility:hidden;position:absolute;'>${vo.regDt}</td>                                   
