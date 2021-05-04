@@ -99,7 +99,7 @@ ${vo}
 								            </div>                                                                                         
 								        </div>                                                                                             
 								    </td>                                                                                                  
-								    <td class='p-price first-row'>${vo.quantity}*${vo.price}원</td>                     
+								    <td class='p-price first-row'>${vo.quantity*vo.price} 원</td>                     
 								    <td class='p-shipfee first-row' id='shipfee'>${vo.shipfee}원</td>                  
 								    <td class='p-price first-row' id='price'>${vo.price}원</td>                        
 								    <!--<td class='p-status first-row' id='status'>status</td>-->                       				
