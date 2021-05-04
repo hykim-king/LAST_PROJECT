@@ -193,9 +193,9 @@
     					html+="	<div class='card h-100'>";
     					html+="		<a href='${hContext}/houses/houses_detail.do?housesSeq="+value.housesSeq+"'><img class='card-img-top' src='${hContext}/"+value.imgId+"' ></a>";
     					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
-    					html+="		<div id='buttonClick' class='row col-lg-12'>";
+    					html+="		<div id='buttonClick' class='row'>";
     					html+="			<h6 class='card-title col-lg-8'>"+value.memberId+"</h6>";
-    					html+="			<input type='button' class='btn btn-primary btn-sm col-lg-4'  value='스크랩' name='doScrapBtn' id='doScrapBtn'/>";
+    					html+="			<input type='button' class='btn btn-primary btn-sm col-lg-3'  value='스크랩' name='doScrapBtn' id='doScrapBtn'/>";
     					html+="			<small class = 'gotta' style = 'display:none;''>"+value.housesSeq+"</small>";
     					html+="		</div>";
     					html+="		<div id='rowCardClick' class='text-center col-lg-12'>";

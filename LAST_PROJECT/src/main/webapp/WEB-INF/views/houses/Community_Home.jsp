@@ -91,9 +91,9 @@
 			            <div class="card h-100">
 			              <a href="${hContext}/houses/houses_detail.do?housesSeq=${vo.housesSeq}"><img class="card-img-top" src="${hContext }${vo.imgId }" alt=""></a>
 			              <h6  class="text-muted">${vo.tag}</h6 >
-			              <div id="pupularButtonClick"  class="row col-lg-12">			              
+			              <div id="pupularButtonClick"  class="row">			              
 			               <h6  class="card-title col-lg-8">${vo.memberId}</h6 >	
-			              	<input  type="button" class="btn btn-primary btn-sm col-lg-4"  value="스크랩" />
+			              	<input  type="button" class="btn btn-primary btn-sm col-lg-3"  value="스크랩" />
 			              	<small class="gotta" style="display:none;">${vo.housesSeq }</small>
 				            </div>
 				            <div id="rowPopularCardClick" class="text-center">
@@ -191,9 +191,9 @@
     					html+="	<div class='card h-100'>";
     					html+="		<a href='${hContext}/houses/houses_detail.do?housesSeq="+value.housesSeq+"'><img class='card-img-top' src='${hContext}/"+value.imgId+"' ></a>";
     					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
-    					html+="		<div id='buttonClick' class='row col-lg-12'>";
+    					html+="		<div id='buttonClick' class='row '>";
     					html+="			<h6 class='card-title col-lg-8'>"+value.memberId+"</h6>";
-    					html+="			<input type='button' class='btn btn-primary btn-sm col-lg-4'  value='스크랩' name='doScrapBtn' id='doScrapBtn'/>";
+    					html+="			<input type='button' class='btn btn-primary btn-sm col-lg-3'  value='스크랩' name='doScrapBtn' id='doScrapBtn'/>";
     					html+="			<small class = 'gotta' style = 'display:none;''>"+value.housesSeq+"</small>";
     					html+="		</div>";
     					html+="		<div id='rowCardClick' class='text-center'>";
@@ -274,7 +274,7 @@
     					html+="	<div class='card h-100'>";
     					html +=			"<a href='${hContext}/qna/qna_detail.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/"+value.imgId+"' ></a>";
     					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
-    					html+="		<div id='buttonClick' class='row col-lg-12'>";
+    					html+="		<div id='buttonClick' class='row'>";
     					html+="			<h6 class='card-title col-lg-8'>"+value.memberId+"</h6>";
     					html+="			<small class = 'gotta' style = 'display:none;''>"+value.qnaSeq+"</small>";
     					html+="		</div>";
