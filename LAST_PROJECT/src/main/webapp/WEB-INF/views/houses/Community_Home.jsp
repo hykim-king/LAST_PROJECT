@@ -322,7 +322,7 @@
 		console.log("buttonClick");
  	 	let tds = $(this).children();
  	 	console.log(tds);
-
+		var memberId= tds.eq(0).text();
 		var button = tds.eq(1).text();
 		var housesSeq = tds.eq(2).text();
 		console.log("button"+button); 
@@ -339,7 +339,7 @@
 		let url = "${hContext}/scrap/do_insert.do"
 			let parameters = {
 				"scrapSeq" :-1,
-				"memberId" :"${member.memberId}",//이부분은 차후 세션에서 받을 예정
+				"memberId" :memberId,//이부분은 차후 세션에서 받을 예정
 				"housesSeq" :housesSeq,
 				"modId":"${member.memberId}"//이부분은 차후 세션에서 받을 예정
 				};
@@ -403,6 +403,7 @@
 		console.log("scrapPopular");
 		let tds = $(this).children();
 		console.log(tds);
+		var memberId= tds.eq(0).text();
 		var button = tds.eq(1).text();
 		var housesSeq = tds.eq(2).text();
 		
@@ -420,7 +421,7 @@
 		let url = "${hContext}/scrap/do_insert.do"
 			let parameters = {
 				"scrapSeq" :-1,
-				"memberId" :"${member.memberId}",//이부분은 차후 세션에서 받을 예정
+				"memberId" :memberId,//이부분은 차후 세션에서 받을 예정
 				"housesSeq" :housesSeq,
 				"modId":"${member.memberId}"//이부분은 차후 세션에서 받을 예정
 				};
