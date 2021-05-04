@@ -149,7 +149,7 @@ $("#testt").on("click",function(e){//집들이
     		asyn:"true",
     		dataType:"html",
     		data:{
-    			pageSize:3,
+    			pageSize:$("#pageSize").val(),
     			searchDiv: "40",
     			searchWord: "${member.memberId }",
     			pageNum:page
@@ -167,13 +167,13 @@ $("#testt").on("click",function(e){//집들이
         		let pageTotal = 1;//총 페이지수
         		
         		console.log("parseData.length:"+parseData.length);
-        		console.log("totalCount:"+parseData[0].totalCount);
+
         		
 				//data가 있는 경우
 				if(parseData.length>0){
 					
 					totalCount = parseData[0].totalCount;
-					pageTotal  = totalCount/4;//42/10->4.2
+					pageTotal  = totalCount/$("#pageSize").val();//42/10->4.2
 					pageTotal = Math.ceil(pageTotal);//42/10->4.2->5
 					
 					
@@ -184,7 +184,7 @@ $("#testt").on("click",function(e){//집들이
 						html += "    <img src='${hContext}/resources/../..' alt='Image placeholder'>";
 						html += "   <p>"+value.tag+"</p>";	
 						html += "	<div class='row col-lg-4'>";
-						html +=	"		<input type='button' class='btn btn-primary' value='Read more'/>";
+						html +=	"		<input type='button' class='btn btn-primary' value='삭제' onclick='deleteHouse(&quot;"+value.housesSeq+"&quot;)'/>";
 						html += "	</div>";
 						html += "</div>";
 					});
@@ -199,8 +199,8 @@ $("#testt").on("click",function(e){//집들이
 				$("#content_box").append(html);	
 				
 				//페이징처리
-				console.log(pageTotal+","+page);
-				//renderingPage(pageTotal,page);
+				//console.log(pageTotal+","+page);
+				renderingPage(pageTotal,page);
 	
         	},
         	error:function(data){//실패시 처리
@@ -211,19 +211,6 @@ $("#testt").on("click",function(e){//집들이
         	}
     	});
 	}//--doRetrieve
-	
-	$("#content_box").on("click",function(e){
-		e.preventDefault();
-		console.log("rowCol");
-		
-		let tds = $(this).children();
-		console.log("tds:"+tds);
-		
-		var qnaSeq = tds.eq(1).text();
-		console.log(qnaSeq);
-		
-		window.location.href = "${hContext}/qna/qna_detail.do?qnaSeq="+qnaSeq;	
-	});
 
 	
 });
@@ -258,7 +245,6 @@ $("#test").on("click",function(e){//질문과답변
         		let pageTotal = 1;//총 페이지수
         		
         		console.log("parseData.length:"+parseData.length);
-        		console.log("totalCount:"+parseData[0].totalCount);
         		
 				//data가 있는 경우
 				if(parseData.length>0){
@@ -275,7 +261,7 @@ $("#test").on("click",function(e){//질문과답변
 						html += "    <img src='${hContext}/resources/../..' alt='Image placeholder'>";
 						html += "   <p>"+value.tag+"</p>";	
 						html += "	<div class='row col-lg-4'>";
-						html +=	"		<input type='button' class='btn btn-primary' value='Read more'/>";
+						html +=	"		<input type='button' class='btn btn-primary' value='삭제' onclick='deleteQna(&quot;"+value.qnaSeq+"&quot;)'/>";
 						html += "	</div>";
 						html += "</div>";
 					});
@@ -302,19 +288,6 @@ $("#test").on("click",function(e){//질문과답변
         	}
     	});
 	}//--doRetrieve
-	
-	$("#content_box").on("click",function(e){
-		e.preventDefault();
-		console.log("rowCol");
-		
-		let tds = $(this).children();
-		console.log("tds:"+tds);
-		
-		var qnaSeq = tds.eq(1).text();
-		console.log(qnaSeq);
-		
-		window.location.href = "${hContext}/qna/qna_detail.do?qnaSeq="+qnaSeq;	
-	});
 
 	
 });
@@ -331,7 +304,7 @@ $("#test3").on("click",function(e){//주문배송내역 조회
     		asyn:"true",
     		dataType:"html",
     		data:{
-    			pageSize:4,
+    			pageSize:$("#pageSize").val(),
     			memberId:"${member.memberId }",
     			pageNum:page
     		},
@@ -353,7 +326,7 @@ $("#test3").on("click",function(e){//주문배송내역 조회
 				if(parseData.length>0){
 					
 					totalCount = parseData[0].totalCount;
-					pageTotal  = totalCount/4;//42/10->4.2
+					pageTotal  = totalCount/$("#pageSize").val();//42/10->4.2
 					pageTotal = Math.ceil(pageTotal);//42/10->4.2->5
 					
 					html += "<table class ='table'>";
@@ -381,7 +354,7 @@ $("#test3").on("click",function(e){//주문배송내역 조회
 					
 				}else{//data가 없는 경우
     				html +="<tr>";
-    				html +="	<td class='text-center' colspan='99'>등록된 게시물이 없습니다.</td>";    		
+    				html +="	<td class='text-center' colspan='99'>주문내역이 없습니다.</td>";    		
     				html +="</tr>";   
 				}
 				
@@ -464,7 +437,7 @@ $("#test5").on("click",function(e){//등록상품내역
 					
 				}else{//data가 없는 경우
     				html +="<tr>";
-    				html +="	<td class='text-center' colspan='99'>등록된 게시물이 없습니다.</td>";    		
+    				html +="	<td class='text-center' colspan='99'>등록된 상품이 없습니다.</td>";    		
     				html +="</tr>";   
 				}
 				
@@ -494,12 +467,12 @@ $("#test6").on("click",function(e){//나의 리뷰
 		console.log("page:"+page);
 		$.ajax({
     		type: "GET",
-    		url:"${hContext}/review/do_retrieve.do",
+    		url:"${hContext}/review/review_star_list.do",
     		asyn:"true",
     		dataType:"html",
     		data:{
     			pageSize:4,
-    			memberId:"${member.memberId }",
+    			memberId:"test01",
     			pageNum:page
     		},
     		success:function(data){//통신 성공
@@ -527,7 +500,6 @@ $("#test6").on("click",function(e){//나의 리뷰
 					html += "	<thead>";
 					html += "		<th scope = 'col'>#</th>";
 					html += "		<th scope='col'>상품명</th>";
-					html += "		<th scope='col'>별점</th>";
 					html += "		<th scope='col'>작성날짜</th>";
 					html += "	</thead>";
 					html += "	<tbody>";
@@ -536,8 +508,7 @@ $("#test6").on("click",function(e){//나의 리뷰
 						console.log(i+","+value.name);
 						html += "<tr>";
 						html += "   <th scope ='row'>"+(i+1)+"</th>";
-						html += "    <td>"+value.title+"</td>";
-						html += "    <td>"+value.price+"</td>";
+						html += "    <td>"+value.contents+"</td>";
 						html += "    <td>"+value.regDt+"</td>";
 						html += "</tr>";
 					});
@@ -546,7 +517,7 @@ $("#test6").on("click",function(e){//나의 리뷰
 					
 				}else{//data가 없는 경우
     				html +="<tr>";
-    				html +="	<td class='text-center' colspan='99'>등록된 게시물이 없습니다.</td>";    		
+    				html +="	<td class='text-center' colspan='99'>등록된 리뷰가 없습니다.</td>";    		
     				html +="</tr>";   
 				}
 				
@@ -567,6 +538,85 @@ $("#test6").on("click",function(e){//나의 리뷰
     	});
 	}//--doRetrieve
 });
+
+//paging
+//pageTotal : 총페이지 수 : 총글수/페이지 사이즈(10)
+//page : 현재페이지
+function renderingPage(pageTotal,page) {
+	//이전 연결된 Event 핸들러를 요소에서 제거
+	$("#page-selection").unbind('page');
+	
+	$("#page-selection").bootpag({
+	    total: pageTotal,  		
+	    page: page,			
+	    maxVisible: 5,	    
+	    leaps: true,
+	    firstLastUse: true, 
+	    first: '←',
+	    last: '→',
+	    wrapClass: 'pagination', 
+	    activeClass: 'active',
+	    disabledClass: 'disabled',
+	    nextClass: 'next',
+	    prevClass: 'prev',
+	    lastClass: 'last',
+	    firstClass: 'first'
+	}).on("page", function(event, num){
+	   doRetrieve(num);
+	}); 
+	
+}
+
+
+//집들이 삭제
+function deleteHouse(housesSeq) {
+	console.log("deleteHouses()");
+	
+	let url = "${hContext}/houses/do_delete.do";
+	let parameter = {
+						"housesSeq" : housesSeq
+					};
+	let method = "POST";
+	let async = true;
+	
+	if(confirm("게시글을 삭제하시겠습니까?")==false) return;
+	
+	EClass.callAjax(url, parameter, method, async, function(data) {
+		console.log("data:"+data);	
+		console.log("data:"+data.msgContents);	
+		if(data.msgId=="1") { //삭제 성공
+			alert(data.msgContents);   
+			doRetrieve();
+		} else { //삭제 실패
+			alert(data.msgId+ "\n" +data.msgContents);
+		}
+	});
+}
+
+//질문과답변 삭제
+function deleteQna(qnaSeq) {
+	console.log("deleteQna()");
+	
+	let url = "${hContext}/qna/do_delete.do";
+	let parameter = {
+						"qnaSeq" : qnaSeq
+					};
+	let method = "POST";
+	let async = true;
+	
+	if(confirm("게시글을 삭제하시겠습니까?")==false) return;
+	
+	EClass.callAjax(url, parameter, method, async, function(data) {
+		console.log("data:"+data);	
+		console.log("data:"+data.msgContents);	
+		if(data.msgId=="1") { //삭제 성공
+			alert(data.msgContents);   
+			doRetrieve();
+		} else { //삭제 실패
+			alert(data.msgId+ "\n" +data.msgContents);
+		}
+	});
+}
 </script>
 	
 </html>
