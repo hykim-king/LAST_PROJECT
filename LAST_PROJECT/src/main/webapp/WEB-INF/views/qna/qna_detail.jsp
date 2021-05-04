@@ -75,8 +75,6 @@
 	    <div class="col-xs-12">
 	        <div class="btn-group btn-group-sm" role="group" style="float:right;">
 	          <input type="button" class="btn btn-default"  value="목록" id="moveToQnaList"/>
-	          <input type="button" class="btn btn-default"  value="삭제" id="doDeleteQna"/>
-	          <input type="button" class="btn btn-default"  value="수정" id="doUpdateQna"/>
 	        </div>
 	    </div>
 		<!--// 버튼 -->	
@@ -153,25 +151,9 @@
 		$("#moveToQnaList").on("click",function(e){
 			console.log("moveToQnaList");
 			
-			window.location.href = "${hContext}/qna/qna_view.do?";
+			window.location.href = "${hContext}/qna/qna_view.do?memberId=${member.memberId}";
 		});//--moveToQnaList
 	
-//2)게시물 수정버튼
-		$("#doUpdateQna").on("click",function(e){
-			console.log("doUpdateQna");
-			e.preventDefault();//기능 안먹음..여러번 클릭됨 ㅜ
-			
-
-		});//--doUpdateQna///
-	
-//3)게시물 삭제버튼 
-		$("#doDeleteQna").on("click",function(e){
-			console.log("doDeleteQna");
-			e.preventDefault();//기능 안먹음..여러번 클릭됨 ㅜ
-	
-		});//--doDeleteQna
-	
-
 
 //게시물 관련--------------------------------------------------
 		
