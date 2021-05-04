@@ -244,12 +244,19 @@
 		console.log("buttonClick");
  	 	let tds = $(this).children();
  	 	console.log(tds);
- 	 	var memberId = tds.eq(0).text();
+
 		var button = tds.eq(1).text();
 		var housesSeq = tds.eq(2).text();
 		console.log("button"+button); 
-		console.log("memberId"+memberId); 
+
 		console.log("housesSeq"+housesSeq); 
+		
+		var memberNull = "${member.memberId}";
+		console.log("memberNull"+memberNull); 
+		if(memberNull==""){
+			alert("로그인 하십시오");
+			return;
+		}
 
 		let url = "${hContext}/scrap/do_insert.do"
 			let parameters = {

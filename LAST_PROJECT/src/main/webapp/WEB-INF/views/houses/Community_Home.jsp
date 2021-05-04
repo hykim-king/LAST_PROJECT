@@ -91,9 +91,9 @@
 			            <div class="card h-100">
 			              <a href="${hContext}/houses/houses_detail.do?housesSeq=${vo.housesSeq}"><img class="card-img-top" src="${hContext }${vo.imgId }" alt=""></a>
 			              <h6  class="text-muted">${vo.tag}</h6 >
-			              <div  class="row col-lg-12">			              
+			              <div id="pupularButtonClick"  class="row col-lg-12">			              
 			               <h6  class="card-title col-lg-8">${vo.memberId}</h6 >	
-			              	<input id="buttonPopularClick" type="button" class="btn btn-primary btn-sm col-lg-4"  value="스크랩" name="doScrapBtn" id="doScrapBtn"/>
+			              	<input  type="button" class="btn btn-primary btn-sm col-lg-4"  value="스크랩" />
 			              	<small class="gotta" style="display:none;">${vo.housesSeq } </small>
 				            </div>
 				            <div id="rowPopularCardClick" class="text-center">
@@ -322,12 +322,19 @@
 		console.log("buttonClick");
  	 	let tds = $(this).children();
  	 	console.log(tds);
- 	 	var memberId = tds.eq(0).text();
+
 		var button = tds.eq(1).text();
 		var housesSeq = tds.eq(2).text();
 		console.log("button"+button); 
-		console.log("memberId"+memberId); 
+
 		console.log("housesSeq"+housesSeq); 
+		
+		var memberNull = "${member.memberId}";
+		console.log("memberNull"+memberNull); 
+		if(memberNull==""){
+			alert("로그인 하십시오");
+			return;
+		}
 
 		let url = "${hContext}/scrap/do_insert.do"
 			let parameters = {
@@ -390,6 +397,53 @@
 			 
 		}); 
     
+ 	
+  	//인기순 scrap 클릭시
+	$("#rowPopularCard").on("click","#pupularButtonClick",function(e){
+		console.log("scrapPopular");
+		let tds = $(this).children();
+		console.log(tds);
+		var button = tds.eq(1).text();
+		var housesSeq = tds.eq(2).text();
+		
+		
+		console.log("button"+button); 
+		console.log("housesSeq"+housesSeq);
+		var memberNull = "${member.memberId}";
+		console.log("memberNull"+memberNull); 
+		if(memberNull==""){
+			alert("로그인 하십시오");
+			return;
+		}
+		
+		
+		let url = "${hContext}/scrap/do_insert.do"
+			let parameters = {
+				"scrapSeq" :-1,
+				"memberId" :"${member.memberId}",//이부분은 차후 세션에서 받을 예정
+				"housesSeq" :housesSeq,
+				"modId":"${member.memberId}"//이부분은 차후 세션에서 받을 예정
+				};
+			let method = "POST";
+			let async = true;	
+			console.log(parameters);
+			console.log(url);
+ 		EClass.callAjax(url , parameters, method ,async, function(data){
+			console.log("data"+data.memberId);
+			console.log("data"+data.housesSeq);
+			if("1"==data.msgId) {//등록 성공
+				alert(data.msgContents);
+				//doRetrieve(1);
+			}else {//등록 실패
+				alert(data.msgId+"\n"+data.msgContents);
+			}
+			
+
+			
+				
+			}); 
+		
+	}); 
 	
 		
 		
