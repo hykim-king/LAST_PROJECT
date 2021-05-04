@@ -228,7 +228,7 @@ $("#test").on("click",function(e){//질문과답변
     		asyn:"true",
     		dataType:"html",
     		data:{
-    			pageSize:3,
+    			pageSize:$("#pageSize").val(),
     			searchDiv: "40",
     			searchWord: "${member.memberId }",
     			pageNum:page
@@ -389,7 +389,7 @@ $("#test5").on("click",function(e){//등록상품내역
     		asyn:"true",
     		dataType:"html",
     		data:{
-    			pageSize:4,
+    			pageSize:$("#pageSize").val(),
     			searchDiv: "60",
         		searchWord: "${member.memberId }",
     			pageNum:page
@@ -472,7 +472,7 @@ $("#test6").on("click",function(e){//나의 리뷰
     		asyn:"true",
     		dataType:"html",
     		data:{
-    			pageSize:4,
+    			pageSize:$("#pageSize").val(),
     			memberId:"test01",
     			pageNum:page
     		},
