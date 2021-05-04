@@ -95,7 +95,7 @@
 				"memberId" : "${member.memberId}",    //housesSeq
 				"title"  : title,
 				"price"     : price,
-				"div": 2
+				"div": 1
 						};
 		let method = "POST";
 		let async  = true;
