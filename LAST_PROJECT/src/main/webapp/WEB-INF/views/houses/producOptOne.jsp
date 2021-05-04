@@ -54,7 +54,8 @@
 		<div class="row col-lg-12">	
 		<h6>옵션1</h6>	
 			<div class="col-xs-8 col-sm-9 col-md-6 col-lg-6">
-	   			<input type = "text" size = "20" name = "optOneOne" id = "optOneOne" value="" placeholder = "1" />
+	   			<input type = "text" size = "20" name = "optOneOne" id = "optOneOne" value="" placeholder = "옵션1 이름 들어갑니다" />
+	   			<input type = "number" size = "20" name = "priceOne" id = "priceOne" value="" placeholder = "옵션1 가격 들어갑니다" />
 				<input type="button" class="btn btn-primary btn-sm"  value="등록" id="oneOne"/>
 			</div>		
 		</div>
@@ -62,7 +63,8 @@
 	<div class="row col-lg-12">	
 		<h6>옵션2</h6>	
 			<div class="col-xs-8 col-sm-9 col-md-6 col-lg-6">
-	   			<input type = "text" size = "20" name = "optTwoOne" id = "optTwoOne" value="" placeholder = "1" />
+	   			<input type = "text" size = "20" name = "optTwoOne" id = "optTwoOne" value="" placeholder = "옵션2 이름 들어갑니다" />
+	   			<input type = "number" size = "20" name = "priceTwo" id = "priceTwo" value="" placeholder = "옵션2 가격 들어갑니다" />
 				<input type="button" class="btn btn-primary btn-sm"  value="등록" id="oneTwo"/>
 			</div>
 	</div>
@@ -85,13 +87,14 @@
 	//옵션1 1버튼
 	$("#oneOne").on("click",function(e) {
 		var title = $("#optOneOne").val();
+		var price = $("#priceOne").val();
 		console.log("title"+title);
 		let url = "${hContext}/opt/do_insert.do";
 		let parameters = {
 				"storeSeq"  : "${vo.storeSeq}", 
 				"memberId" : "${member.memberId}",    //housesSeq
 				"title"  : title,
-				"price"     : 3000,
+				"price"     : price,
 				"div": 2
 						};
 		let method = "POST";
@@ -113,13 +116,14 @@
 	
 	$("#oneTwo").on("click",function(e) {
 		var title = $("#optTwoOne").val();
+		var price = $("#priceTwo").val();
 		console.log("title"+title);
 		let url = "${hContext}/opt/do_insert.do";
 		let parameters = {
 							"storeSeq"  : "${vo.storeSeq}", 
 							"memberId" : "${member.memberId}",    //housesSeq
 							"title"  : title,
-							"price"     : 3000,
+							"price"     : price,
 							"div": 2
 						};
 		let method = "POST";
