@@ -803,8 +803,8 @@ section {
 
 .portfolio .portfolio-wrap .portfolio-links a {
   color: #fff;
-  margin: 0 2px;
-  font-size: 28px;
+  margin: 0 5px;
+  font-size: 18px;
   display: inline-block;
   transition: 0.3s;
 }
