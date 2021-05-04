@@ -131,7 +131,6 @@
 		
 		<!-- 상품존 -->
 		<section class="product spad"> 
-			 ${list }
 	       	 <div class="container">
 	            <div class="row">
 	                <div class="col-lg-12">
