@@ -190,7 +190,6 @@ $("#testt").on("click",function(e){//집들이
 						console.log(i+","+value.name);
 						html += "<div class='col-lg-4'>";
 						html += "   <h2>"+value.title+"</h2>";
-						html += "    <img src='${hContext}/resources/../..' alt='Image placeholder'>";
 						html += "   <p>"+value.tag+"</p>";	
 						html += "	<div class='row col-lg-4'>";
 						html +=	"		<input type='button' class='btn btn-primary' value='삭제' onclick='deleteHouse(&quot;"+value.housesSeq+"&quot;)'/>";
@@ -267,7 +266,6 @@ $("#test").on("click",function(e){//질문과답변
 						console.log(i+","+value.name);
 						html += "<div class='col-lg-4'>";
 						html += "   <h2>"+value.title+"</h2>";
-						html += "    <img src='${hContext}/resources/../..' alt='Image placeholder'>";
 						html += "   <p>"+value.tag+"</p>";	
 						html += "	<div class='row col-lg-4'>";
 						html +=	"		<input type='button' class='btn btn-primary' value='삭제' onclick='deleteQna(&quot;"+value.qnaSeq+"&quot;)'/>";
@@ -482,12 +480,12 @@ $("#test6").on("click",function(e){//나의 리뷰
 		console.log("page:"+page);
 		$.ajax({
     		type: "GET",
-    		url:"${hContext}/review/review_star_list.do",
+    		url:"${hContext}/review/review_list.do",
     		asyn:"true",
     		dataType:"html",
     		data:{
     			pageSize:$("#pageSize").val(),
-    			memberId:"test01",
+    			memberId:"${member.memberId }",
     			pageNum:page
     		},
     		success:function(data){//통신 성공
@@ -514,7 +512,7 @@ $("#test6").on("click",function(e){//나의 리뷰
 					html += "<table class ='table'>";
 					html += "	<thead>";
 					html += "		<th scope = 'col'>#</th>";
-					html += "		<th scope='col'>상품명</th>";
+					html += "		<th scope='col'>내용</th>";
 					html += "		<th scope='col'>작성날짜</th>";
 					html += "	</thead>";
 					html += "	<tbody>";
