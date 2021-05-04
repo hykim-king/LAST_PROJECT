@@ -356,6 +356,7 @@
 			reviewRetrieve(1);
 			qtyChange();
 			optionRetrieve();	
+			optionRetrieveTwo();	
 		});
 		
 		$("#pageSize").on("change", function(e){//change: SelectBox의 이벤트
@@ -495,6 +496,8 @@
 	    	});
 		}
 		
+	    
+	    
 		/* 바로구매 */
 		function buyNow(storeSeq) {
 			console.log("buyNow btn click");
@@ -774,6 +777,52 @@
     			}
 	    	});
 			
+		}
+		
+		/* 옵션 2선택 */
+		function optionRetrieveTwo() {
+			console.log("optionRetrieve()");
+		
+			var storeSeqData = "2021/04/2364420dadcc1e40648ecd785ec9fcc8a8";
+			var divData = "2";
+			
+	      	$.ajax({
+	    		type: "GET",
+	    		url:"${hContext}/opt/do_retrieve.do",
+	    		asyn:"true",
+	    		dataType:"html",
+	    		data:{
+		    			"storeSeq" : $("#storeSeq").text(), 
+						"div"      : divData 
+	    		},
+	    		success:function(data){//통신 성공
+	        		console.log("success data : " + data);
+	    		
+	        		var parseData = JSON.parse(data);
+	        		
+	        		var html = "";
+	        		
+	        		console.log("parseData.length : " + parseData.length);
+
+	        		//데이터가 있는 경우
+	        		if(parseData.length > 0) {
+
+	        			$.each(parseData, function(i, value) {
+	        				console.log(i+","+value.title);
+	        				
+	        				html +=" <option value=''>"+value.title+"</option> ";
+	        				
+	        			});
+	        			$("#opttwo").append(html); //데이터 추가
+	        		}
+	        	},
+	        	error:function(data){//실패시 처리
+	        		console.log("error:"+data);
+	        	},
+	        	complete:function(data){//성공/실패와 관계없이 수행!
+	        		console.log("complete:"+data);
+	        	}
+	    	});
 		}
 		
 		/* 리뷰 삭제 */

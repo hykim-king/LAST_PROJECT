@@ -99,11 +99,24 @@ public class product {
 		
 		List<Opt> list = this.optionService.doRetrieve(opt);
 		
+		Opt optTwo = new Opt();
+		
+		optTwo.setStoreSeq(opt.getStoreSeq());
+		
+		optTwo.setDiv(2);
+		
+		List<Opt> listTwo = this.optionService.doRetrieve(optTwo);
+		
 		for(Opt vo : list) {
 			LOG.debug(vo.toString());
 		}
+		for(Opt vo : listTwo) {
+			LOG.debug(vo.toString());
+		}
+		
 		
 		model.addAttribute("list", list);
+		model.addAttribute("listTwo", listTwo);
 		
         return "cmn/Member_Shopping_Basket_Edit";
     }

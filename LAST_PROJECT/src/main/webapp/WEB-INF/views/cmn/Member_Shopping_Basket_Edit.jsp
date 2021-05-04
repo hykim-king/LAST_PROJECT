@@ -78,8 +78,8 @@
 			   	 		<select name="opttwo" id="opttwo" class="form-control">           
 			    			<option value="2">사이즈</option>
 			    				<c:choose>
-									<c:when test="${list.size() >0 }">
-										<c:forEach var="vo" items="${list}">
+									<c:when test="${listTwo.size() >0 }">
+										<c:forEach var="vo" items="${listTwo}">
 			    							<c:if test="${vo.getDiv()==2}">
 												<option value='' id="opt2"><c:out value="${vo.title}"/></option>
 											</c:if>
