@@ -29,7 +29,7 @@
 [LAST_기획서.pdf](https://github.com/code-you-dream-with-me/LAST_PROJECT/files/6410604/LAST_.pdf)
 
 ### 5. 요구사항정의서
-[LAST_기획서.xlsx] (2조_LAST_요구사항정의서(20210325).xlsx)
+
 ### 6. WBS
 
 ### 7. 개발아키텍쳐 : Spring MVC
