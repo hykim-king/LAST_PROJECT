@@ -138,8 +138,6 @@
 	        var frm = $("#optionFrm").serialize(); // 해당하는 frm을 serialize를 해줍니다. ajax로 데이터를 보내기위해서 하는 작업입니다.
 
 			var memberIdData = $("#memberId").text();
-			var optoneData = "화이트";
-			var opttwoData = "S";
 			var shipfeeData = "3000";
 			
 			let url = "${hContext}/basket/do_update.do";
@@ -148,8 +146,8 @@
 								"storeSeq"  : $("#storeSeq").val(),
 								"memberId"  : memberIdData,
 								"title"     : $("#title").text(),
-								"optone"    : optoneData,
-								"opttwo"    : opttwoData,
+								"optone"    : $("#optone option:selected").text(),
+								"opttwo"    : $("#opttwo option:selected").text(),
 								"quantity"  : $("#quantity").val(),
 								"shipfee"   : shipfeeData,
 								"price"     : $("#price").val(),
