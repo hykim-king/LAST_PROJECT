@@ -39,19 +39,15 @@
 ### 🔗 WBS
 
 ### 🔗 개발아키텍쳐 : Spring MVC
-![SpringMvcFlow](https://user-images.githubusercontent.com/78997066/116799348-8ea82c80-ab33-11eb-8d9c-b852c1fe0f96.png)
+<img src="https://user-images.githubusercontent.com/78997066/116967283-ea69e580-acec-11eb-9654-49fbd947bd20.png" width=70%>
 
 ### 🔗 개발 기술
 
 ### 🔗 개발 목록
 
 ### 🔗 단위테스트
-
+- [JUnit Test](https://github.com/code-you-dream-with-me/LAST_PROJECT/tree/main/LAST_PROJECT/src/test/java/com/sist/last)
 ### 🔗 통합테스트
-
-### 🔗 이행
-
-### 🔗 개발 URL
 
 ### 🔗 사용 오픈 API
 
