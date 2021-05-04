@@ -67,7 +67,9 @@
     
 </head>
 <body>
-<%-- ${vo } --%>
+<%-- ${vo }
+${vo.memberId}
+${member.memberId} --%>
 
 	<!-- div container -->
 	<div class="wrap container">
@@ -189,10 +191,9 @@
 				
 				</div>
 			</div>
-
-
 		</div>
 		<!--// pagenation -->
+		
     </div>
 	
 
@@ -378,18 +379,17 @@
 	//스크랩 버튼 클릭 이벤트 처리
 	$("#scrap_btn").on("click", function(e){
 		console.log("scrap_btn click");
-		//해당 게시물 스크랩 유무별 처리 로직 
+		var memberLogin= "${member.memberId}";
+		if(memberLogin==""){
+			alert("로그인 후 이용 가능합니다.");
+			return;
+		}else{
 		
-		//if(로그인유무false){
-		//	alert("로그인 후 이용가능합니다.");
-		//}
-		//else{
-			
 			let url = "${hContext}/scrap/do_insert.do";
 			let parameters = {
-								"memberId"  : "soeon",  			//임시 아이디
+								"memberId"  : "${vo.memberId}",     //집들이 등록아이디
 								"housesSeq" : "${vo.housesSeq}",   	//집들이seq
-								"modId"     : "soeon"   			//임시 아이디
+								"modId"     : "${member.memberId}"  //세션 아이디
 							};
 			let method = "POST";
 			let async  = true;
@@ -405,8 +405,8 @@
 					}else {//등록 실패
 						alert(data.msgContents);
 					}	
-			}); 
-		//}
+			});
+		}
 	});
 	
 /* 	//게시물 수정 버튼 클릭 이벤트 처리

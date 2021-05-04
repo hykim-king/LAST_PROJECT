@@ -14,7 +14,7 @@ body {
 }
 
 a {
-  color: #d43076;
+  color: #000000;
   text-decoration: none;
 }
 
@@ -170,7 +170,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar .dropdown ul a:hover, .navbar .dropdown ul .active:hover, .navbar .dropdown ul li:hover > a {
-  color: #d43076;
+  color: #000000;
 }
 
 .navbar .dropdown:hover > ul {
@@ -296,7 +296,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar-mobile .dropdown ul a:hover, .navbar-mobile .dropdown ul .active:hover, .navbar-mobile .dropdown ul li:hover > a {
-  color: #d43076;
+  color: #000000;
 }
 
 .navbar-mobile .dropdown > .dropdown-active {
@@ -339,7 +339,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #hero .btn-get-started:hover {
   padding-top: 10px;
-  color: #d43076;
+  color: #000000;
 }
 
 @media (min-width: 1024px) {
@@ -409,8 +409,8 @@ section {
 }
 
 .breadcrumbs h2 {
-  font-size: 24px;
-  font-weight: 300;
+  font-size: 35px;
+  font-weight: 600;
 }
 
 .breadcrumbs ol {
@@ -865,7 +865,7 @@ section {
 }
 
 .portfolio-details .portfolio-info h3 {
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 600;
   margin-bottom: 20px;
   padding-bottom: 20px;
