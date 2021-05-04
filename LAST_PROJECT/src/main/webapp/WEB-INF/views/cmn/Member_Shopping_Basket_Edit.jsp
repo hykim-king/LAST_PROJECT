@@ -43,12 +43,17 @@
     <script src="${hContext}/resources/js/jquery.min.js"></script>
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="${hContext}/resources/js/bootstrap.min.js"></script>
+    <script src="${hContext}/resources/js/eclass.js"></script>
+    <script src="${hContext}/resources/js/eutil.js"></script>
 </head>
 <body>
 
     <form id = "option_pop_up_frame">
         <input type = "hidden" id = "storeSeq" value = "${vo.storeSeq}">
-         <label>상품명 : </label> <span name="title" id="title"></span>
+        <input type = "hidden" id = "memberId" value = "${vo.memberId}">
+        <input type = "hidden" id = "basketSeq" value = "${basketVO.basketSeq}">
+        <input type = "hidden" id = "price" value = "${basketVO.price}">
+        <label>상품명 : </label> <span name="title" id="title">${basketVO.title}</span>
        <br>
 			<label>옵션 1 : </label>
 				<div class="select-wrap">
@@ -59,7 +64,7 @@
 									<c:when test="${list.size() >0 }">
 										<c:forEach var="vo" items="${list}">
 			    							<c:if test="${vo.getDiv()==1}">
-												<option value=''><c:out value="${vo.title}"/></option>
+												<option value='' id="opt1"><c:out value="${vo.title}"/></option>
 											</c:if>
 										</c:forEach>
 									</c:when>
@@ -76,7 +81,7 @@
 									<c:when test="${list.size() >0 }">
 										<c:forEach var="vo" items="${list}">
 			    							<c:if test="${vo.getDiv()==2}">
-												<option value=''><c:out value="${vo.title}"/></option>
+												<option value='' id="opt2"><c:out value="${vo.title}"/></option>
 											</c:if>
 										</c:forEach>
 									</c:when>
@@ -90,7 +95,7 @@
 				<div class="quantity">
 					<div class="pro-qty">
 						<span class="dec qtybtn">-</span>                                                
-							<input type="text" value="1" id="quantity">                                                
+							<input type="text" value="${basketVO.quantity}" id="quantity">                                                
 						<span class="inc qtybtn">+</span>
 					</div>
 				</div>
@@ -106,7 +111,6 @@
     
 		$(document).ready(function() {
 			console.log("1.document:최초수행!");
-			//optionRetrieve();
 		});	
 		
 		function setParentResult() {
@@ -132,27 +136,49 @@
 			console.log("optionUpdate()");
 			
 	        var frm = $("#optionFrm").serialize(); // 해당하는 frm을 serialize를 해줍니다. ajax로 데이터를 보내기위해서 하는 작업입니다.
-	        var storeSeq = $("#storeSeq").val(); // id값은 기본키이자 바뀌면안되는것이고 id값으로 조건을 줄꺼라서 고유 id 값을 받아옵니다.
 
-	        $.ajax({
-	            type : "post", // post방식으로 전송
-	            url : "${hContext}/basket/do_update.do", // controller로 보낼 url
-	            data : frm, // data로는 위에서 serialize한 frm을 보냅니다.
-	            async : false, // 전역변수 사용을 위해서 설정해준다
-	            dataType : "json", // serialize하면 json형태로 값을 보내줘야합니다.
-	            contentType: "application/x-www-form-urlencoded; charset=UTF-8", // 인코딩 설정
-	            success : function(data){
-	                $(opener.document).find("tr[storeSeq=" + storeSeq + "]>td[id=storeSeq]").text(data.storeSeq); // 보모창에서 현재 변경될 td를 찾은 후 값을 변경해줍니다.
-	                $(opener.document).find("tr[storeSeq=" + storeSeq + "]>td[id=optone]").text(data.optone); // 보모창에서 현재 변경될 td를 찾은 후 값을 변경해줍니다.
-	                $(opener.document).find("tr[storeSeq=" + storeSeq + "]>td[id=opttwo]").text(data.opttwo); // 보모창에서 현재 변경될 td를 찾은 후 값을 변경해줍니다.
-	                self.close(); // 변경 후 자식 창을 받아줍니다.
-	            }
-	        });
-	        
-	        setParentResult();
+			var memberIdData = $("#memberId").text();
+			var optoneData = "화이트";
+			var opttwoData = "S";
+			var shipfeeData = "3000";
+			
+			let url = "${hContext}/basket/do_update.do";
+			let parameter = {
+								"basketSeq" : $("#basketSeq").val(),
+								"storeSeq"  : $("#storeSeq").val(),
+								"memberId"  : memberIdData,
+								"title"     : $("#title").text(),
+								"optone"    : optoneData,
+								"opttwo"    : opttwoData,
+								"quantity"  : $("#quantity").val(),
+								"shipfee"   : shipfeeData,
+								"price"     : $("#price").val(),
+								"modId"     : $("#memberId").text()
+							};
+			let method = "POST";
+			let async = true;
+			
+			if(confirm("옵션을 변경하시겠습니까?")==false) return;
+
+ 			EClass.callAjax(url, parameter, method, async, function(data) {
+    			console.log("data:"+data);
+    			console.log("data:"+data.msgContents);	
+    			if(data.msgId=="1") { //수정 성공
+        			alert(data.msgContents);  
+        			
+        			window.opener.location.href = "${hContext}/member/basket_list.do?memberId="+memberIdData;
+        			
+        			window.self.close();
+        			
+    			} else { //수정 실패
+        			alert(data.msgId+ "\n" +data.msgContents);
+    			}
+	    	});
+ 			
+	        //setParentResult();
 	        
  		} 
-		
+ 		
 	    /* 수량 변경 */
 	    var proQty = $(".pro-qty");
 	    proQty.on("click", ".qtybtn", function () {

@@ -83,7 +83,7 @@
                                 <!-- <input type="button" class="primary-btn up-cart" value="수량 변경하기" id="addUpdate"> -->
                             </div>
                         </div>
-                        <div class="col-lg-4 offset-lg-4 pull-right">
+<!--                         <div class="col-lg-4 offset-lg-4 pull-right">
                             <div class="proceed-checkout">
                                 <ul>
                                     <li class="subtotal text-left">총 상품금액 <span id="totalPrice"></span></li>
@@ -92,7 +92,7 @@
                                 </ul>
                                 <a href="#" class="proceed-btn">상품 구매하기</a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -137,6 +137,7 @@
 	        			$.each(parseData, function(i, value) {
 	        				console.log(i+","+value.title);
 	        				console.log(i+","+value.storeSeq);
+	        				console.log(i+","+value.basketSeq);
 	        				
 	        				html += "<tr>                                                                                                                     ";
 	        				html += "    <td style='visibility:hidden;position:absolute;'>"+value.basketSeq+"</td>                                            ";
@@ -147,7 +148,7 @@
 	        				html += "    <td class='p-price first-row' id='price'>"+numberWithCommas(value.price)+"원</td>                                     ";
 	        				html += "    <td class='first-row' id='quantity'>"+value.quantity+"</td>                                                          ";
 	        				html += "    <td class='p-price first-row'>"+numberWithCommas(value.quantity*value.price)+"원</td>                                 ";
-	        				html += "    <td class='first-row'><a class='up-cart' onclick='openOption(&quot;"+value.storeSeq+"&quot;)'>옵션변경</a></td>         ";
+	        				html += "    <td class='first-row'><a class='up-cart' onclick='openOption(\""+value.storeSeq+"\",\"" + value.basketSeq + "\");'>옵션변경</a></td>         ";
 	        				html += "    <td class='first-row'><a class='primary-btn' onclick='buyNow(&quot;"+value.basketSeq+"&quot;)'>바로구매</a></td>         ";
 	        				html += "    <td class='close-td first-row' onClick='deleteBasket(&quot;"+value.basketSeq+"&quot;)'><i class='ti-close'></i></td> ";
 	        				html += "</tr>                                                                                                                    ";
@@ -161,7 +162,6 @@
 	        		}
 	        		
 	        		$("#cartTable>tbody").append(html); //데이터 추가
-
 	        			        		
 	        	},
 	        	error:function(data){//실패시 처리
@@ -175,11 +175,13 @@
 		
 		/* 팝업 창 */
 		/* 옵션, 수량 변경 */
-	    function openOption(storeSeq){
+	    function openOption(storeSeq, basketSeq){
 			console.log("openOption()");
+			console.log("storeSeq : "+storeSeq);
+			console.log("basketSeq : "+basketSeq);
 
 	    	window.open(
-						  "option_pop_up.do?storeSeq="+storeSeq,
+						  "option_pop_up.do?storeSeq="+storeSeq+"&basketSeq="+basketSeq,
 						  "option_pop_up_frame",
 						  "width=500, height=350"
 					   );
@@ -198,78 +200,18 @@
 	    		    	
 	    }
 		
+	    /* 상품명 클릭시 상세 페이지로 이동 */
 		$("#cartTable>tbody").on("click", "tr", function(){
-			var basketSeqData =  $(this).find("td:eq(0)").text();
-			console.log("basketSeqData:"+basketSeqData);
+			var storeSeqData =  $(this).find("td:eq(1)").text();
+			console.log("storeSeqData:"+storeSeqData);
 
-			$(this).find("td:eq(6)").on("click", function(e) { /* 수량 변경 */
-				var qty = $("#quantity").val();
-				console.log("qty:"+qty);
-
-			    var proQty = $(".pro-qty");
-				proQty.on("click", ".qtybtn", function () {
-					var $button = $(this);
-					var oldValue = $button.parent().find("input").val();
-					console.log("oldValue:"+oldValue);
-
-					if ($button.hasClass("inc")) {
-						var newVal = parseFloat(oldValue) + 1;
-					} else {
-						if (oldValue > 0) {
-							var newVal = parseFloat(oldValue) - 1;
-						} else {
-							newVal = 0;
-						}
-					}
-					console.log("newVal:"+newVal);
-
-					qty = $button.parent().find("input").val(newVal);
-				});
+			$(this).find("td:eq(2)").on("click", function(e) { 
+				
+				window.location.href = "${hContext}/store/store_detail.do?storeSeq="+storeSeqData;
 				
 			});
-			
-			
-		});
-		
-		/* 옵션, 수량 변경 */
-/* 		function updateBasket(basketSeq) {
-			console.log("updateBasket()");
-			
-			var storeSeqData = "2021/04/2364420dadcc1e40648ecd785ec9fcc8a8";
-			var memberIdData = "test01";
-			var modIdData = "test01";
-			var shipfeeData = "3000";
-			
-			let url = "${hContext}/basket/do_update.do";
-			let parameter = {
-								"basketSeq" : basketSeq,
-								"storeSeq"  : storeSeqData,
-								"memberId"  : memberIdData,
-								"title"     : $("#title").text(),
-								"optone"    : $("#optone").text(),
-								"opttwo"    : $("#opttwo").text(),
-								"quantity"  : $("#quantity").text(),
-								"shipfee"   : shipfeeData,
-								"price"     : $("#total").val(),
-								"modId"     : modIdData
-							};
-			let method = "POST";
-			let async = true;
-			
-			if(confirm("옵션을 변경하시겠습니까?")==false) return;
 
- 			EClass.callAjax(url, parameter, method, async, function(data) {
-    			console.log("data:"+data);
-    			console.log("data:"+data.msgContents);	
-    			if(data.msgId=="1") { //수정 성공
-        			alert(data.msgContents);   
-        			doRetrieve(1);
-    			} else { //수정 실패
-        			alert(data.msgId+ "\n" +data.msgContents);
-    			}
-	    	});
-		} */
-		
+		});
 		
 		/* 바로구매 */
 		function buyNow(basketSeq) {

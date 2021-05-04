@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sist.last.cmn.SearchOrder;
+import com.sist.last.service.BasketServiceImpl;
 import com.sist.last.service.ImageServiceImpl;
 import com.sist.last.service.OptServiceImpl;
 import com.sist.last.service.ProductServiceImpl;
+import com.sist.last.vo.Basket;
 import com.sist.last.vo.Image;
 import com.sist.last.vo.Opt;
 import com.sist.last.vo.Product;
@@ -33,6 +35,9 @@ public class product {
 	
 	@Autowired
 	OptServiceImpl optionService;
+	
+	@Autowired
+	BasketServiceImpl basketService;
 	
 	@RequestMapping(value="store/store_detail.do",method= RequestMethod.GET)
 	public String productView(Product product, Model model) throws SQLException {
@@ -81,8 +86,15 @@ public class product {
 	}
 	
 	@RequestMapping(value = "member/option_pop_up.do", method = RequestMethod.GET)
-    public String optionPopUp(Opt opt, Model model) throws SQLException {
+    public String optionPopUp(Basket basket, Opt opt, Model model) throws SQLException {
 
+		Basket basketVO = (Basket) this.basketService.doSelectOne(basket);
+		LOG.debug("==============");
+		LOG.debug("=basketVO="+basketVO);
+		LOG.debug("==============");
+		
+		model.addAttribute("basketVO", basketVO);
+		
 		opt.setDiv(1);
 		
 		List<Opt> list = this.optionService.doRetrieve(opt);
