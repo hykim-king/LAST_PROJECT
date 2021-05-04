@@ -131,7 +131,7 @@
                                     <div>
                                         <div class="card-body">
                                             <div class="shop__sidebar__tags">
-                                                <a href="">우드</a>
+                                                <a>우드</a>
                                                 <a>원목</a>
                                                 <a>화이트</a>
                                                 <a>led</a>
@@ -211,6 +211,13 @@
      		console.log("searchDiv");
      		location.href = "${hContext}/store/store_category.do?searchDiv="+$("#searchDiv").val();
      	});	
+		
+		//Enter키 막기
+		$('input[type="text"]').keydown(function() {
+			  if (event.keyCode === 13) {
+			    event.preventDefault();
+			  };
+		});
 		
 		
 		function doRetrieve(page,div) {
