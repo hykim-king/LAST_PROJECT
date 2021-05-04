@@ -204,6 +204,7 @@ public class ImageController {
 		LOG.debug("month: " + month);		
 		
 		String datePath = UPLOAD_HOUSES_IMG_DIR+File.separator+year+File.separator+month;
+		LOG.debug("datePath: " + datePath);	
 		
 		File dateImgPath = new File(datePath);
 		if(dateImgPath.isDirectory() == false) {
@@ -230,6 +231,7 @@ public class ImageController {
 			String orgName = mFile.getOriginalFilename();
 			LOG.debug("orgName: " + orgName);			
 			
+			// 파일 중복 걸러주기
 			if (null == orgName || "".equals(orgName))
 				continue;
 
@@ -248,41 +250,42 @@ public class ImageController {
 
 			LOG.debug("ext: " + ext);
 			
-			imageVO.setSaveName(saveName);
+			imageVO.setSaveName(saveName);//2021050318242648508f3f075c9f4b0b9d01a003efb31d59.JPG
 			imageVO.setImgExt(ext);	
 			
 			// server에 저장(저장파일명으로 저장)
-			File renameImg = new File(datePath, imageVO.getSaveName());			
+			File renameImg = new File(datePath, imageVO.getSaveName());	
 			LOG.debug("renameFile.getAbsolutePath(): " + renameImg.getAbsolutePath());// 파일 절대경로
 			// fileVO.setSaveFileNm(renameFile.getAbsolutePath());// savePath FileVO 추가 전
 			
 			datePath = datePath.replaceAll("\\\\", "/");
-			imageVO.setSavePath(datePath);// 파일경로					
+			imageVO.setSavePath(datePath);// 파일경로								
 			
 			// file을 server에 저장
 			mFile.transferTo(new File(imageVO.getSavePath() + File.separator + imageVO.getSaveName()));
-			LOG.debug("mFile: " + mFile);
-			
-			int idx = datePath.indexOf("/resources");
-			datePath = datePath.substring(idx);			
-			
-			imageVO.setSavePath(datePath);
-			LOG.debug("datePath: " + datePath);
-			
-			list.add(imageVO);		
+			LOG.debug("mFile: " + mFile);			
 			
 		} // --while
+		
+		int idx = datePath.indexOf("/resources");
+		datePath = datePath.substring(idx);			
+		
+		imageVO.setSavePath(datePath);
+		LOG.debug("datePath: " + datePath);		
 		
 		String savePath;
 		String saveName;
 		
-		if(null == imageVO.getSavePath() || imageVO.getSavePath().equals("")) {
-			savePath = mReg.getParameter("savePath");
-			saveName = mReg.getParameter("saveName");
-		} else {
-			savePath = imageVO.getSavePath();
-			saveName = imageVO.getSaveName();
-		}			
+		
+		  if(null == imageVO.getSavePath() || imageVO.getSavePath().equals("")) {
+			  savePath = mReg.getParameter("savePath"); 
+			  saveName = mReg.getParameter("saveName"); 
+		  } else { 
+			 savePath = imageVO.getSavePath();
+			 saveName = imageVO.getSaveName(); 
+		  }	 
+		  
+		  list.add(imageVO);
 		
 		String housesSeq = mReg.getParameter("housesSeq");
 		String memberId = mReg.getParameter("memberId");
@@ -306,7 +309,7 @@ public class ImageController {
 
 		// list.add(imageVO);
 		
-		modelAndView.addObject("list", list);
+		modelAndView.addObject("imageVO", imageVO);
 		modelAndView.addObject("houses", houses);		
 		modelAndView.addObject("housesLink", housesLink);	
 		modelAndView.setViewName("houses/Community_List");

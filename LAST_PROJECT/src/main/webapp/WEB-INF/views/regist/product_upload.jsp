@@ -93,13 +93,19 @@
 	        	</div>
 	        </div>			
 					
-			<div class="form-group">
-				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">옵션</label>
+<!-- 			<div class="form-group">
+				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">옵션1</label>
 				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
-					<input type="text" class="form-control" id="opt1" name="opt1" placeholder="옵션">
-					<!-- <input type="text" class="form-control" id="opt2" name="opt2" placeholder="옵션2"> -->
+					<input type="text" class="form-control" id="opt1" name="opt1" placeholder="옵션1">
 				</div>
 			</div>	
+			
+			<div class="form-group">
+				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">옵션2</label>
+				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+					<input type="text" class="form-control" id="opt2" name="opt2" placeholder="옵션2">
+				</div>
+			</div> -->				
 			
 			<div class="form-group">
 				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">환불배송지</label>
