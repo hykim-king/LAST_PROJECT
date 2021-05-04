@@ -45,6 +45,7 @@
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- <script scr="hContext/resources/js/jquery.min.js"></script> -->
 <script src="${hContext}/resources/js/bootstrap.min.js"></script>
+<script src="${hContext}/resources/js/eclass.js"></script>
 </head>
 <body>
 	<div class="container">
