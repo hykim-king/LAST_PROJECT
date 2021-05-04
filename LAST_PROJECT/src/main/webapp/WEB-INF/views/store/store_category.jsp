@@ -227,7 +227,7 @@
 	    		asyn:"true",
 	    		dataType:"html",
 	    		data:{
-	    			pageSize: $("#pageSize").val(),
+	    			pageSize: "100",
 	    			searchDiv: $("#searchDiv").val(),
 	    			searchWord: $("#searchWord").val(),
 	    			orderDiv: div,

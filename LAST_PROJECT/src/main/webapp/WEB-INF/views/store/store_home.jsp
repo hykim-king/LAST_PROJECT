@@ -177,7 +177,7 @@
 	    		asyn:"true",
 	    		dataType:"html",
 	    		data:{
-	    			pageSize: "10",
+	    			pageSize: "100",
 	    			searchDiv: "",
 	    			searchWord: "",
 	    			orderDiv: div,
