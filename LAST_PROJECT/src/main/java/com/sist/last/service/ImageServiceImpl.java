@@ -140,9 +140,10 @@ public class ImageServiceImpl implements ImageService {
 		Image imageVO = (Image) image;
 		Qna qnaVO = (Qna) qna;
 		
-		Random random = new Random();
-		int pk = random.nextInt(8) + 1;
-		LOG.debug("pk: "+pk);
+//		Random random = new Random();
+//		int pk = random.nextInt(8) + 1;
+//		LOG.debug("pk: "+pk);
+		int pk = 1;
 		
 		// 파일아이디(pk값)
 		String imgId = StringUtil.getPK("yyyyMMddHHmmss");
@@ -192,8 +193,10 @@ public class ImageServiceImpl implements ImageService {
 		housesVO.setImgId(imgId);
 		
 		// 이미지 넘버---------------------------------------------
-		Random random = new Random();
-		int pk = random.nextInt(8) + 1;
+//		Random random = new Random();
+//		int pk = random.nextInt(8) + 1;
+//		LOG.debug("pk: "+pk);
+		int pk = 1;
 		
 		imageVO.setImgNum(pk);
 				
@@ -233,9 +236,10 @@ public class ImageServiceImpl implements ImageService {
 		Image imageVO = (Image) image;
 		Qna qnaVO = (Qna) qna;
 		
-		Random random = new Random();
-		int pk = random.nextInt(8) + 1;
-		LOG.debug("pk: "+pk);
+//		Random random = new Random();
+//		int pk = random.nextInt(8) + 1;
+//		LOG.debug("pk: "+pk);
+		int pk = 1;
 		
 		// 파일아이디(pk값)
 		String imgId = StringUtil.getPK("yyyyMMddHHmmss");
@@ -264,8 +268,10 @@ public class ImageServiceImpl implements ImageService {
 		//Opt optVO = (Opt) opt;
 		
 		// 이미지 넘버---------------------------------------------
-		Random random = new Random();
-		int pk = random.nextInt(8) + 1;
+//		Random random = new Random();
+//		int pk = random.nextInt(8) + 1;
+//		LOG.debug("pk: "+pk);
+		int pk = 1;
 		imageVO.setImgNum(pk);
 		
 		
