@@ -307,9 +307,9 @@ public class ImageController {
 		
 		int flag = imageService.doInsertHousesImg(imageVO, houses, housesLink);
 
-		// list.add(imageVO);
+		list.add(imageVO);
 		
-		modelAndView.addObject("imageVO", imageVO);
+		modelAndView.addObject("list", list);
 		modelAndView.addObject("houses", houses);		
 		modelAndView.addObject("housesLink", housesLink);	
 		modelAndView.setViewName("houses/Community_List");

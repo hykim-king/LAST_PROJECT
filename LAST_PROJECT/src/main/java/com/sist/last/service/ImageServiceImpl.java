@@ -1,9 +1,13 @@
 package com.sist.last.service;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.StringUtil;
+import com.sist.last.controller.ImageController;
 import com.sist.last.dao.HousesDaoImpl;
 import com.sist.last.dao.HousesLinkDaoImpl;
 import com.sist.last.dao.ImageDaoImpl;
@@ -52,6 +57,9 @@ public class ImageServiceImpl implements ImageService {
 	
 	@Autowired
 	private OptDaoImpl optDao;
+	
+	@Autowired
+	private ImageController imageController;
 
 	public ImageServiceImpl() {
 
@@ -166,18 +174,20 @@ public class ImageServiceImpl implements ImageService {
 		}
 
 	@Override
-	public int doInsertHousesImg(DTO image, DTO houses, DTO housesLink) throws SQLException {
+	public int doInsertHousesImg(DTO image, DTO houses, DTO housesLink) throws SQLException{
 
 		int flag = 0;
 		
+		//List<Image> list = new ArrayList<Image>();
 		Image imageVO = (Image) image;
+		//list.add(imageVO);
 		Houses housesVO = (Houses) houses;
 		HousesLink housesLinkVO = (HousesLink) housesLink;
 		
 		// 이미지 아이디--------------------------------------------
 		String imgId = StringUtil.getPK("yyyyMMddHHmmss");
 		LOG.debug("imgId: " + imgId);
-
+		
 		imageVO.setImgId(imgId);
 		housesVO.setImgId(imgId);
 		
@@ -199,19 +209,16 @@ public class ImageServiceImpl implements ImageService {
 		LOG.debug("imageVO: " + imageVO);		
 		LOG.debug("housesVO: " + housesVO);
 		LOG.debug("housesLinkVO: " + housesLinkVO);
-		
-//		List<Image> list = new ArrayList<Image>();
+			
 //		list.add(imageVO);
-//		
-//		for(Image images : list) {
-//			flag = this.imageDao.doInsert(images);
-//			flag += this.housesDao.doInsert(housesVO);
-//			flag += this.housesLinkDao.doInsert(housesLinkVO);	
-//			
-//		}
+//		LOG.debug("list: " + list);	
+		
+//		for(int i=0; i<list.size(); i++) {
+//			flag = imageDao.doInsert(list.get(i));
+//	    }
 		
 		flag = this.imageDao.doInsert(imageVO);
-		flag += this.housesDao.doInsert(housesVO);
+		flag = this.housesDao.doInsert(housesVO);
 		flag += this.housesLinkDao.doInsert(housesLinkVO);	
 		
 		return flag;
@@ -285,6 +292,6 @@ public class ImageServiceImpl implements ImageService {
 		
 		return flag;
 	}
-
 	
-	}
+
+}

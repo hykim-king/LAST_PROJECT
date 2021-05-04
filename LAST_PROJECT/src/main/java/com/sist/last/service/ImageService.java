@@ -1,7 +1,11 @@
 package com.sist.last.service;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import com.sist.last.cmn.DTO;
 import com.sist.last.vo.Image;
@@ -36,7 +40,7 @@ public interface ImageService {
 	 * @throws SQLException
 	 */
 	int doInsertHousesImg(DTO image, DTO houses, DTO housesLink) throws SQLException;	
-
+	
 	/**
 	 * 상품 사진 업로드
 	 * 옵션 잠시 지워놓음..
