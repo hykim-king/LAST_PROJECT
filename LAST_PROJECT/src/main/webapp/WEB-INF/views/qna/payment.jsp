@@ -169,7 +169,7 @@ ${vo}
 				 if("1"==data.msgId){//결제성공
 					 alert(data.msgContents);
 						//결제성공시 화면이동
-						//moveTomain();
+						moveTomain();
 				 }else{//결제실패
 					 alert(data.msgId+"\n"+data.msgContents); 
 				 }
@@ -183,7 +183,7 @@ ${vo}
  	function moveTomain(){
 		console.log("moveTomain");
 		
-		window.location.href = "${hContext}/houses/home_view.do?memberId="+${member.memberId} ;
+		window.location.href = "${hContext}/houses/home_view.do?memberId=${member.memberId}";
 	} 
 	
 /* 	//결제 취소
