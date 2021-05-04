@@ -415,12 +415,12 @@ $("#test5").on("click",function(e){//등록상품내역
 					pageTotal  = totalCount/4;//42/10->4.2
 					pageTotal = Math.ceil(pageTotal);//42/10->4.2->5
 					
-					html += "<table class ='table'>";
+					html += "<table id='productTable' class ='table'>";
 					html += "	<thead>";
 					html += "		<th scope = 'col'>#</th>";
 					html += "		<th scope='col'>상품명</th>";
 					html += "		<th scope='col'>가격</th>";
-					html += "		<th scope='col'>등록일</th>";
+					html += "		<th scope='col'>등록일</th>";	
 					html += "	</thead>";
 					html += "	<tbody>";
 				     					
@@ -431,6 +431,7 @@ $("#test5").on("click",function(e){//등록상품내역
 						html += "    <td>"+value.title+"</td>";
 						html += "    <td>"+value.price+"</td>";
 						html += "    <td>"+value.regDt+"</td>";
+						html += "    <td>"+value.storeSeq+"</td>";
 						html += "</tr>";
 					});
 					html += "	</tbody>";
@@ -459,6 +460,10 @@ $("#test5").on("click",function(e){//등록상품내역
     	});
 	}//--doRetrieve
 });
+
+
+
+
 
 $("#test6").on("click",function(e){//나의 리뷰
 	console.log("test6");
@@ -539,6 +544,20 @@ $("#test6").on("click",function(e){//나의 리뷰
     	});
 	}//--doRetrieve
 });
+
+
+//--productTable click
+$(document).on("click","#productTable>tbody>tr",function(e){
+	console.log("productTable>tbody");
+	let tds = $(this).children();
+	var uIdData = tds.eq(4).text();
+	console.log(uIdData);
+	
+	window.location.href = "${hContext}/opt/opt_view.do?storeSeq="+uIdData;
+	
+});
+//--//table click
+
 
 //paging
 //pageTotal : 총페이지 수 : 총글수/페이지 사이즈(10)
