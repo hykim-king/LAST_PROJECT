@@ -41,7 +41,15 @@
 							<h5 class="user-name"> </h5>
 						</div>
 						<div class="user-avatar">
-							<img src="${hContext}${member.savePath}/${member.saveName}">
+						<img src="<c:choose>
+									<c:when test="${empty member.savePath}">
+										${hContext}/resources/images/logo.png
+									</c:when>
+									<c:otherwise>
+										${hContext}${member.savePath}/${member.saveName}
+									</c:otherwise>
+								</c:choose>">
+							<%-- <img src="${hContext}${member.savePath}/${member.saveName}"> --%>
 						</div>
 						<h5 class="user-name">${member.nickname}</h5>
 						<h6 class="user-email">${member.memberId }</h6>
@@ -143,7 +151,7 @@
 			e.preventDefault();
 			
 			doUpdateSession();
-			window.location.href = "${hContext}/houses/home_view.do";
+			window.location.href = "${hContext}/mypage/Member_MyPage.do";
 		});
 		
 		//회원 수정 후 session 업데이트
