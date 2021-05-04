@@ -205,9 +205,9 @@ public class MemberController {
 				LOG.debug("loginMember:"+loginMember);
 				int flag = memberService.doLoginCnt(loginMember);
 				LOG.debug("doLoginCnt() flag:"+flag);
-				memberService.upgradeGrades(loginMember);
 			}
 			
+			loginMember = (Member) memberService.doSelectOne(loginMember);
 		} else {
 			loginMember.setMemberId(member.getMemberId());
 			loginMember.setNickname(member.getNickname());
@@ -253,9 +253,8 @@ public class MemberController {
 				LOG.debug("loginMember:"+loginMember);
 				int flag = memberService.doLoginCnt(loginMember);
 				LOG.debug("doLoginCnt() flag:"+flag);
-				memberService.upgradeGrades(loginMember);
 			}
-			
+			loginMember = (Member) memberService.doSelectOne(loginMember);
 			session.setAttribute("member", loginMember);
 		}
 		//Gson 불필요.

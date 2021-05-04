@@ -226,8 +226,15 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int doLoginCnt(DTO dto) throws SQLException {
-
-		return this.memberDao.doLoginCnt(dto);
+		int flag = this.memberDao.doLoginCnt(dto);
+		Member member = (Member) memberDao.doSelectOne(dto);
+		try {
+			this.upgradeGrades(member);
+		} catch (IllegalAccessException | SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return flag;
 	}
 
 }
