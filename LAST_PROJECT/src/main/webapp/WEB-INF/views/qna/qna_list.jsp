@@ -200,11 +200,9 @@
 			console.log("qnaSeq:"+qnaSeq);
 			
 			window.location.href = "${hContext}/qna/qna_regist.do?memberId=${member.memberId}"+"qnaSeq="+qnaSeq ;
-
 		});	//--doRegistBtn
 		
 		
-
 		
 		//조회버튼 실행시 
 		function doRetrieve(page){
@@ -229,7 +227,7 @@
 	        		var html = "";
 	        		
 	        		//페이징 변수
-	        		let totalCount = 0;//총 글수
+	        		let totalCount = parseData.length;//총 글수
 	        		let pageTotal = 1;//총 페이지수
 	        		
 	        		console.log("parseData.length:"+parseData.length);
@@ -238,7 +236,6 @@
 					//data가 있는 경우
 					if(parseData.length>0){
 						
-						totalCount = parseData[0].totalCount;
 						pageTotal  = totalCount/$("#pageSize").val();//42/10->4.2
 						pageTotal = Math.ceil(pageTotal);//42/10->4.2->5
 						
@@ -250,10 +247,10 @@
 	    					html +=			"<a href='${hContext}/qna/qna_detail.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top' src='${hContext}/"+value.imgId+"' ></a>";
 	    					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
 	    					html+="		<div id='buttonClick' class='row col-lg-12'>";
-	    					html+="			<h5 class='card-title col-lg-8'>"+value.memberId+"</h5>";
+	    					html+="			<h6 class='card-title col-lg-8'>"+value.memberId+"</h6>";
 	    					html+="			<small class = 'gotta' style = 'display:none;''>"+value.qnaSeq+"</small>";
 	    					html+="		</div>";
-	    					html+="		<div id='rowQnaCardClick' class='text-center col-lg-12'>";
+	    					html+="		<div id='rowQnaCardClick' class='text-center'>";
 	    					html+="			<h5 class='text-muted'>"+value.title+"</h5>";
 	    					html+="			<small class = 'gotta' style = 'display:none;''>"+value.qnaSeq+"</small>";
 	    					html+="		</div>";	
