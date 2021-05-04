@@ -431,7 +431,7 @@ $("#test5").on("click",function(e){//등록상품내역
 						html += "    <td>"+value.title+"</td>";
 						html += "    <td>"+value.price+"</td>";
 						html += "    <td>"+value.regDt+"</td>";
-						html += "    <td>"+value.storeSeq+"</td>";
+						html += "    <td style = 'display:none;'>"+value.storeSeq+"</td>";
 						html += "</tr>";
 					});
 					html += "	</tbody>";
