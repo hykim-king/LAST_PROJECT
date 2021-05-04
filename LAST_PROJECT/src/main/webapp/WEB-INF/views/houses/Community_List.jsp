@@ -262,7 +262,7 @@
 		let url = "${hContext}/scrap/do_insert.do"
 			let parameters = {
 				"scrapSeq" :-1,
-				"memberId" :memberId,//이부분은 차후 세션에서 받을 예정
+				"memberId" :"${member.memberId}",//이부분은 차후 세션에서 받을 예정
 				"housesSeq" :housesSeq,
 				"modId":"${member.memberId}"//이부분은 차후 세션에서 받을 예정
 				};
