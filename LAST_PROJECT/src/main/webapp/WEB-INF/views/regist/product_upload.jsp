@@ -59,7 +59,7 @@
 
 		<!-- form -->
 		<form id="regFrm" action="${hContext}/image/product_upload.do" method="POST" enctype="multipart/form-data" class="form-horizontal">
-			<input type="hidden" class="form-control" id="memberId" name="memberId" value="${member.nickname }">
+			<input type="hidden" class="form-control" id="memberId" name="memberId" value="${member.memberId }">
 			<input type="hidden" class="form-control" id="category" name="category" value="10">
 
 			<div class="form-group">
