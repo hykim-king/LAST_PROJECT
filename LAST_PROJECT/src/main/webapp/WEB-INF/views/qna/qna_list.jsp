@@ -42,6 +42,7 @@
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="${hContext}/resources/js/jquery.min.js"></script>
     <%-- <script src="${hContext}/resources/css/bootstrap.min.css"></script> --%>
+    <script src="${hContext}/resources/js/bootstrap.min.js"></script>
     <script src="${hContext}/resources/js/eclass.js"></script>
 	<script src="${hContext}/resources/js/eutil.js"></script>
 	<script src="${hContext}/resources/js/jquery.bootpag.js"></script>
