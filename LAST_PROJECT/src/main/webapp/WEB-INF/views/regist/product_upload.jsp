@@ -55,12 +55,9 @@
 		</div>
 		<!--// 제목 -->
 
-		${list }
-
 		<!-- form -->
 		<form id="regFrm" action="${hContext}/image/product_upload.do" method="POST" enctype="multipart/form-data" class="form-horizontal">
 			<input type="hidden" class="form-control" id="memberId" name="memberId" value="${member.memberId }">
-			<input type="hidden" class="form-control" id="category" name="category" value="10">
 
 			<div class="form-group">
 				<label for="title" class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">상품명</label>
@@ -82,11 +79,24 @@
 					<input type="text" class="form-control" id="company" name="company" placeholder="제조사">
 				</div>
 			</div>	
+			
+	        <div class="form-group">
+		    	<label for="div" class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">카테고리</label>
+		    	<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+		        	<select name="category" id="category" class="form-control">			
+		        		<option value="10" <c:if test="${category=='10'}"> selected </c:if>>가구</option>	
+		        		<option value="20" <c:if test="${category=='20'}"> selected </c:if>>주방</option>	
+		        		<option value="30" <c:if test="${category=='30'}"> selected </c:if>>가전</option>	
+		        		<option value="40" <c:if test="${category=='40'}"> selected </c:if>>생활</option>	
+		        		<option value="50" <c:if test="${category=='50'}"> selected </c:if>>DIY/공구</option>														        	
+		        	</select>
+	        	</div>
+	        </div>			
 					
 			<div class="form-group">
 				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">옵션</label>
 				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
-					<input type="text" class="form-control" id="opt1" name="opt1" placeholder="옵션1">
+					<input type="text" class="form-control" id="opt1" name="opt1" placeholder="옵션">
 					<!-- <input type="text" class="form-control" id="opt2" name="opt2" placeholder="옵션2"> -->
 				</div>
 			</div>	
@@ -191,6 +201,16 @@
 				$("#tag").focus();
 				return;
 			}
+			
+			
+			
+			/* let regExp = /^[0-9]*$/;//숫자만
+			if(regExp.test($("#price","#quantity").val()) == false){
+            	alert("가격과 수량은 숫자만 입력하실 수 있습니다.");
+            	return;
+            } */
+			
+			//console.log("regExp: "+regExp.test($("#price").val()));
 			
 			if(confirm("등록하시겠습니까?")==false)return;
 			
