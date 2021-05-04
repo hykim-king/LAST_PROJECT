@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.Message;
 import com.sist.last.cmn.Search;
+import com.sist.last.cmn.SearchScrap;
 import com.sist.last.cmn.StringUtil;
 import com.sist.last.service.ScrapServiceImpl;
 import com.sist.last.vo.Scrap;
@@ -182,7 +183,7 @@ public class ScrapController {
 	@RequestMapping(value = "scrap/do_retrieveById.do",method = RequestMethod.GET
 			,produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String doRetrieveById(Search search) throws SQLException {
+	public String doRetrieveById(SearchScrap search) throws SQLException {
 		LOG.debug("===================================");
 		LOG.debug("=param:"+search);
 		LOG.debug("===================================");

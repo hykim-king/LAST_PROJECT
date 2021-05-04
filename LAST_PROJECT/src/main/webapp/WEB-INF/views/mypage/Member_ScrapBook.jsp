@@ -58,46 +58,28 @@
 
 </head>
 <body>
-
+<%-- ${sessionScope.member} --%>
 
 	<!-- div container -->
 	<div class="wrap container">
-<!-- 
-		카테고리존
-		<div class="container">
-			<div class="row">
-	    		<div class="container">
-					<ul class="filter__controls">
-						<li class="active">스크랩북</li>
-					</ul>
-					<div id="memberInfo" class="col-lg-3 col-md-3">
-						<h5>회원 닉네임</h5>
-					</div>
-					<hr>
-
-				</div>
-			</div>
-		</div> -->
-
 
 <!-- --------------------------------------------------------------------------------------------------- -->
 
 	 	<!-- ======= Portfolio Section ======= -->
 	    <section id="portfolio" class="portfolio section-bg">
 	      <div class="container">
-	
-	        <div class="section-title">
-	          <h2>스크랩북</h2>
-	          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+	      	<div class="section-title">
+	        	<h2>스크랩북</h2>
 	        </div>
+	      </div>
 	
 	        <div class="row">
 	          <div class="col-lg-12 d-flex justify-content-center">
 	            <ul id="portfolio-flters">
 	              <li data-filter="*" class="filter-active">All</li>
-	              <li data-filter=".filter-app">App</li>
+<!-- 	          <li data-filter=".filter-app">App</li>
 	              <li data-filter=".filter-card">Card</li>
-	              <li data-filter=".filter-web">Web</li>
+	              <li data-filter=".filter-web">Web</li> -->
 	            </ul>
 	          </div>
 	        </div>
@@ -106,7 +88,6 @@
 	
 	   		  <!-- row -->	
 			  <div id="rowCard" class="row">
-	
 			  </div>	
 			   <!-- //row -->	
 	
@@ -117,14 +98,13 @@
 							
 							</div>
 						</div>
-			
-						<div class="col-xs-8 col-sm-9 col-md-8 col-lg-3">
+<!--   						<div class="col-xs-8 col-sm-9 col-md-8 col-lg-3">
 							<select class="form-control input-sm" name="pageSize" id="pageSize" >
 					    		<option value="4">4개씩 보기</option>	    		  		
 								<option value="8">8개씩 보기</option>
 								<option value="12">12개씩 보기</option>
 				    		</select>			
-						</div>
+						</div>   -->
 					</div>
 				<!--// pagenation -->
 	
@@ -133,37 +113,10 @@
 	      </div>
 	    </section><!-- End Portfolio Section -->
 
-
-
-
-
-
-
-
-
-
-
 <!-- --------------------------------------------------------------------------------------------------- -->
-
-
-<!-- 
-		상품존
-		<div class="container">
-			<div class="row product__filter" id="MixItUp666159">
-			</div>
-		</div>
-		//상품존 -->
 
 	</div>
 	<!--// div container -->
-
-
-
-
-
-
-
-
 
 
 
@@ -174,7 +127,11 @@
 			console.log("1.document:최초수행!");
 			doRetrieve(1);
 		});//--document ready  
-	
+		
+		$("#pageSize").on("change", function(e){//change: SelectBox의 이벤트
+	    	console.log("pageSize change");
+	     	doRetrieve(1);
+		});
 		
 	function doRetrieve(page) {
 		console.log("doRetrieve() call");
@@ -185,11 +142,9 @@
 		    	asyn:"true",
 		    	dataType:"html",
 		    	data:{
-		    			pageSize: $("#pageSize").val(),
-		    			//searchDiv: "",
-		    			//searchWord: "", 
+		    			pageSize: "99", 
 		    			pageNum: page,
-		    			searchWord:"soeon"  //세션아이디
+		    			loginId: "${member.memberId}"
 		    	},
 		    		
 		    	success:function(data){//통신 성공
@@ -204,18 +159,21 @@
 		    			
 	    			//data가 있는 경우
 		    		if(parseData.length>0){
-		    				
+/* 		    			totalCount = parseData[0].totalCnt;
+	    				pageTotal =  totalCount/$("#pageSize").val(); //42/10 ->4.2
+	    				pageTotal = Math.ceil(pageTotal); // 42/10 ->5 */
+	    					
 		    			$.each(parseData, function(i, value) {
 		    				console.log("value");
 		    					
 							html += '<div class="col-lg-4 col-md-6 portfolio-item filter-card">';
 							html += '	<div class="portfolio-wrap">';
-							html += '		<img src="${hContext}/resources/soeon/img/portfolio/portfolio-8.jpg" class="img-fluid" alt="">';
+							html += '		<img src="${hContext}/resources/soeon/img/logo/INTERY_logo.png" class="img-fluid" alt="">';
 							html += '   	<div class="portfolio-info">';
 							html += '      		<h4>' + value.memberId + "님의 집에 놀러가보세요!" + '</h4>';
 							html += '    	</div>';
 							html += '    	<div class="portfolio-links">';
-							html += '      		<a onclick="deleteScrap(\''+value.scrapSeq+'\');" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 3">';
+							html += '      		<a onclick="deleteScrap(\''+value.scrapSeq+'\');" data-gallery="portfolioGallery" class="portfolio-lightbox" title="스크랩 취소">';
 							html += '      			<i class="bx bx-tag"></i></a>';
 							html += '      		</a>';
 							html += '     		<a href="${hContext}/houses/houses_detail.do?housesSeq='+value.housesSeq+'" title="구경가기"><i class="bx bx-link"></i></a>  ';   
@@ -223,35 +181,26 @@
 							html += '	</div>';
 							html += '</div>';
 							
-						//	html += '		<a href="${hContext}/houses/houses_detail.do?housesSeq='+value.housesSeq+'" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 3"></a>';
-							
-/* html += '<a href="${hContext}/houses/houses_detail.do?housesSeq='+value.housesSeq+'"  data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 3">'
-									
-							<a href='${hContext}/houses/houses_detail.do?housesSeq="+value.housesSeq+"'> */
 		    			});
 		    				
 		    		}else{ //data가 없는 경우
-		    				html += " <div class='col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals'>";
-		    				html += "    <div class='product__item'>";
-		    				html += " 	   <div class='product__item__pic set-bg' data-setbg='${hContext}/resources/store/img/img01.JPG' style='background-image: url('${hContext}/resources/img/img01.JPG');'>";
-		    				html += " 	   </div>";
-		    				html += " 	   <div class='product__item__text' id='productItem'>";
-		    				html += "			<div>";
-		    				html += "				<h5 class='text-center' colspan='99'>마음에 드는 집을 스크랩 해보세요!</h5>";    		
-		    				html += "			</div>";
-		    				html += " 	   </div>";
-		    				html += "    </div>";
-		    				html += " </div>";
+		    			
+							html += "<div class='col-lg-12 col-md-12 col-sm-12'>";
+							html += "	<h5 class='text-center' colspan='99'>마음에 드는 집을 스크랩 해보세요!</h5>";
+							html += "</div>";
 		    		}
 	    				
 		    		//tbody에 데이터 추가
 		    		$("#rowCard").append(html);
 		    		
+/* 		    		//페이징 처리: 총 페이지, 현재글
+		    		renderingPage(pageTotal,page); */
+		    		
 		        },
-		        error:function(data){//실패시 처리
+		        error:function(data){
 		        		console.log("error:"+data);
 		        },
-		        complete:function(data){//성공/실패와 관계없이 수행!
+		        complete:function(data){
 		        	console.log("complete:"+data);
 		        }
 		}); 
@@ -259,7 +208,33 @@
 	}	
 		
 		
+/* 	//paging
+	//pageTotal : 총페이지 수 : 총글수/페이지사이즈(10)
+	//page :      현재 페이지
+	//maxVisible : bottom page
+	function renderingPage(pageTotal,page){
+		//이전 연결된 Event 핸들러를 요소에서 제거
+		$("#page-selection").unbind('page');
 		
+		$('#page-selection').bootpag({
+		    total: pageTotal,
+		    page: page,
+		    maxVisible: 10,
+		    leaps: true,
+		    firstLastUse: true,
+		    first: '←',
+		    last: '→',
+		    wrapClass: 'pagination',
+		    activeClass: 'active',
+		    disabledClass: 'disabled',
+		    nextClass: 'next',
+		    prevClass: 'prev',
+		    lastClass: 'last',
+		    firstClass: 'first'
+		}).on("page", function(event, num){
+			doRetrieve(num); //or some ajax content loading
+		}); 			
+	} */	
 
 		
 	function deleteScrap(srcapSeq){
@@ -290,12 +265,7 @@
 	}
 		
 		
-	
-		
-		
-		
-		
-	
+
 	</script>
 
 </body>

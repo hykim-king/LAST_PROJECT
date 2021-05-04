@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.Search;
+import com.sist.last.cmn.SearchScrap;
 import com.sist.last.vo.Scrap;
 
 @Repository
@@ -175,7 +176,7 @@ public class ScrapDaoImpl extends DTO {
 	
 	public List<?> doRetrieveById(DTO dto) throws SQLException {
 
-		Search param = (Search) dto;
+		SearchScrap param = (SearchScrap) dto;
 		
 		LOG.debug("1=param====="+param);
 

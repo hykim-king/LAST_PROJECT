@@ -114,7 +114,7 @@
 		WHERE scrap_seq = #{scrapSeq}
 	</select>
 
-	<select id="doRetrieveById" parameterType="Search" resultType="Scrap" resultMap="scrapResult">
+	<select id="doRetrieveById" parameterType="com.sist.last.cmn.SearchScrap" resultType="Scrap" resultMap="scrapResult">
 		
 		 SELECT A.*,B.*                                                                                      
 		 FROM(                                                                                               
@@ -136,7 +136,7 @@
 		         FROM (                                                                                      
 		             SELECT *                                                                                
 		             FROM scrap                  
-					WHERE mod_id=#{searchWord}
+					 WHERE mod_id = #{loginId}
 		             ORDER BY reg_dt desc                                                                    
 		         )t1                                                                                         
 		     )t2   
@@ -144,7 +144,7 @@
 		 )A CROSS JOIN                                                                                       
 		     (SELECT COUNT(*) total_cnt      
 				FROM scrap
-				WHERE mod_id=#{searchWord}					
+				WHERE mod_id = #{loginId}		
 		     )B
 		
 	</select>

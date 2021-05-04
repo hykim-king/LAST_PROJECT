@@ -137,7 +137,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar a:hover, .navbar .active, .navbar li:hover > a {
-  color: #d43076;
+  color: #212121;
 }
 
 .navbar .dropdown ul {
@@ -376,12 +376,12 @@ section {
 }
 
 .section-title h2 {
-  font-size: 32px;
-  font-weight: bold;
+  font-size: 35px;
+  font-weight: extra bold;
   margin-bottom: 15px;
   padding-bottom: 15px;
   position: relative;
-  color: #345676;
+  color:#000000;
 }
 
 .section-title h2::after {
@@ -390,7 +390,7 @@ section {
   display: block;
   width: 50px;
   height: 3px;
-  background: #d43076;
+  background: #ffffff;
   bottom: 0;
   left: 0;
 }
@@ -404,7 +404,7 @@ section {
 --------------------------------------------------------------*/
 .breadcrumbs {
   padding: 15px 0;
-  background-color: #fcf2f7;
+  background-color: #ffffff;
   min-height: 40px;
 }
 
@@ -720,7 +720,7 @@ section {
   margin: 0 auto 35px auto;
   list-style: none;
   text-align: center;
-  background: #fff;
+  background: #efebe9;
   border-radius: 50px;
   padding: 2px 15px;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.08);
@@ -740,7 +740,7 @@ section {
 }
 
 .portfolio #portfolio-flters li:hover, .portfolio #portfolio-flters li.filter-active {
-  color: #d43076;
+  color: #d7ccc8;
 }
 
 .portfolio #portfolio-flters li:last-child {
@@ -852,11 +852,11 @@ section {
   height: 12px;
   background-color: #fff;
   opacity: 1;
-  border: 1px solid #d43076;
+  border: 1px solid #d7ccc8;
 }
 
 .portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet-active {
-  background-color: #d43076;
+  background-color: #d7ccc8;
 }
 
 .portfolio-details .portfolio-info {
@@ -865,8 +865,8 @@ section {
 }
 
 .portfolio-details .portfolio-info h3 {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 40px;
+  font-weight: 600;
   margin-bottom: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid #eee;
@@ -894,6 +894,7 @@ section {
 
 .portfolio-details .portfolio-description p {
   padding: 0;
+  font-size: 20px;
 }
 
 /*--------------------------------------------------------------
@@ -967,11 +968,11 @@ section {
   height: 12px;
   background-color: #fff;
   opacity: 1;
-  border: 1px solid #d43076;
+  border: 1px solid #8c7b75;
 }
 
 .testimonials .swiper-pagination .swiper-pagination-bullet-active {
-  background-color: #d43076;
+  background-color: #8c7b75;
 }
 
 @media (max-width: 767px) {

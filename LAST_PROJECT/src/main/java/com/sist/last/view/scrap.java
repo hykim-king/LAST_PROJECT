@@ -29,24 +29,36 @@ public class scrap {
 	ImageServiceImpl imageService;
 	
 	
-	@RequestMapping(value="houses/houses_detail.do") //url에 이 경로치면 
-	public String housesDetail(Model model, Houses houses) throws Exception {
+	@RequestMapping(value="houses/houses_detail.do", method=RequestMethod.GET) //url에 이 경로
+	public String housesDetail(Houses houses, Model model) throws Exception {
 		LOG.debug("=================");
 		LOG.debug("=housesDetail()=");
 		LOG.debug("=================");
 		
 		Houses outVO = (Houses) this.housesService.doSelectOne(houses);
+		LOG.debug("=================");
+		LOG.debug("=outVO()=" + outVO);
+		LOG.debug("=================");
+		
 		model.addAttribute("vo", outVO);
 
-//		Image imageVO = new Image();
-//		imageVO.setImgId(houses.getImgId());
-//
-//		List<Image> image = (List<Image>) this.imageService.doRetrieve(imageVO);
-//		
-//		model.addAttribute("image",image);
+		Image imageVO = new Image();
+		imageVO.setImgId(outVO.getImgId());
+
+		List<Image> imageList = (List<Image>) this.imageService.doRetrieve(imageVO);
 		
+		for(Image image : imageList) {
+			LOG.debug("=image=" + image);
+			LOG.debug("=image.getSaveName()=" + image.getSaveName());
+			LOG.debug("=image.getSavePath()=" + image.getSavePath());
 		
-		return "houses/Community_Detail_Info";              //이 페이지 띄워주는거 같음!!!!
+			String imagePath = image.getSavePath() + "/" + image.getSaveName();
+			
+			model.addAttribute("imagePath",imagePath);
+		}
+		model.addAttribute("imageList", imageList);
+		
+		return "houses/Community_Detail_Info";//이 페이지 띄워주는거 같음!!!!
 	}
 	
 	@RequestMapping(value="mypage/scrap_list.do")
