@@ -98,8 +98,16 @@ ${member.memberId }
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
-                    <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5350%2F2020%2F12%2F11%2F0000097162_001_20201211110314106.jpg&type=sc960_832" width="150">
+                  	<img src="<c:choose>
+									<c:when test="${empty member.savePath}">
+										${hContext}/resources/images/logo.png
+									</c:when>
+									<c:otherwise>
+										${hContext}${member.savePath}/${member.saveName}
+									</c:otherwise>
+								</c:choose>" width="150">
                     <div class="mt-3">
+                      <p class="text-secondary mb-1">${member.grade}</p>
                       <h4>${member.nickname}</h4>
                       <p class="text-secondary mb-1">${member.introduce}</p>
                       <button id="scrap_book_btn" class="btn btn-primary">스크랩북</button>
