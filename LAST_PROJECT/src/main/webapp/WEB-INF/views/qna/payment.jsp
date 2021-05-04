@@ -51,7 +51,6 @@
 </head>
 <body>
 ${vo}
-${payment}
 <!-- 결제 데이터 가져오기 -->
 		<!-- 제목 -->
 	 	<div class="page-header">
@@ -68,7 +67,7 @@ ${payment}
                         <table id="cartTable">
                             <thead>
                                 <tr>
-                                	<th style="visibility:hidden;position:absolute;">${payment.paySeq}</th>
+                                	<th style="visibility:hidden;position:absolute;">paySeq</th>
                                 	<th style="visibility:hidden;position:absolute;">${vo.storeSeq}</th>
                                 	<th style="visibility:hidden;position:absolute;">${member.memberId}</th>
                                     <th>상품명</th>
@@ -87,7 +86,7 @@ ${payment}
                             </thead>
                             <tbody>
                             	<tr>                                                                                                       
-								    <td style='visibility:hidden;position:absolute;'>${payment.paySeq}</td>                                  
+								    <td style='visibility:hidden;position:absolute;'>paySeq</td>                                  
 								    <td style='visibility:hidden;position:absolute;'>${vo.storeSeq}</td>                                
 								    <td style='visibility:hidden;position:absolute;'>${member.memberId}</td>                                
 								    <td class='cart-title first-row' id='title'>${vo.title}</td>                                        
@@ -115,7 +114,7 @@ ${payment}
                         <div class="col-lg-4 offset-lg-4 pull-right">
                             <div class="proceed-checkout">
                                 <a href="#" class="proceed-btn" id="paymentBtn">결제</a>
-                                <a href="#" class="proceed-btn" id="cancelBtn">취소</a>
+                                <!-- <a href="#" class="proceed-btn" id="cancelBtn">취소</a> -->
                             </div>
                         </div>
                     </div>
@@ -142,7 +141,6 @@ ${payment}
 		
 		 let url = "${hContext}/payment/do_insert.do";
 		 let parameters = {
-				 			"paySeq" 	: "${payment.paySeq}",
 							"storeSeq"  : "${vo.storeSeq}",
 							"memberId"  : "${member.memberId}",
 							"title"     : "${vo.title}",
@@ -164,9 +162,6 @@ ${payment}
 		 
 		 EClass.callAjax(url, parameters, method, async, function(data) {
 				 console.log("data:"+data);
-				 console.log("data:"+data.paySeq);
-				 console.log("data:"+data.storeSeq);
-				 console.log("data:"+data.memberId);
 				 
 				 //성공/실패 여부 메세지 출력
 				 console.log("data.msgContents:"+data.msgContents);
@@ -174,24 +169,24 @@ ${payment}
 				 if("1"==data.msgId){//결제성공
 					 alert(data.msgContents);
 						//결제성공시 화면이동
-						moveTomain();
+						//moveTomain();
 				 }else{//결제실패
 					 alert(data.msgId+"\n"+data.msgContents); 
 				 }
 				 
-			 });
+			 }); 
 	 	
 	});//--paymentBtn
 	
 	
 	//결제 성공시 화면이동(해창님-Community_Home으로 이동)
-	function moveTomain(){
+ 	function moveTomain(){
 		console.log("moveTomain");
 		
 		window.location.href = "${hContext}/houses/home_view.do?memberId="+${member.memberId} ;
-	}
+	} 
 	
-	//결제 취소
+/* 	//결제 취소
 		$("#cancelBtn").on("click",function(e){
 			console.log("cancelBtn");
 
@@ -227,7 +222,7 @@ ${payment}
 					 
 				 });
 			
-		});	//--cancelBtn
+		});	//--cancelBtn */
 
 			
 	/* 숫자 3자리 콤마찍기 */

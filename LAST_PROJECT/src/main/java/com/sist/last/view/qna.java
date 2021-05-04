@@ -114,7 +114,7 @@ public class qna {
 	 * @throws SQLException
 	 */
 	@RequestMapping(value = "qna/payment.do", method = RequestMethod.GET)
-	public String paymentView(Model model,Basket basket,Payment payment) throws SQLException{
+	public String paymentView(Model model,Basket basket) throws SQLException{
 		
 		LOG.debug("=================");
 		LOG.debug("==paymentView==");
