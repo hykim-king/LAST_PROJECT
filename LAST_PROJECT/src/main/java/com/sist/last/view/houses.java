@@ -20,7 +20,11 @@ import com.sist.last.cmn.DTO;
 import com.sist.last.cmn.SearchOrder;
 import com.sist.last.service.HousesService;
 import com.sist.last.service.HousesServiceImpl;
+import com.sist.last.service.OptServiceImpl;
+import com.sist.last.service.ProductServiceImpl;
 import com.sist.last.vo.Houses;
+import com.sist.last.vo.Opt;
+import com.sist.last.vo.Product;
 
 
 
@@ -33,6 +37,12 @@ public class houses {
 	
 	@Autowired
 	HousesService housesService;
+	
+	@Autowired
+	ProductServiceImpl productService;
+	
+	@Autowired
+	OptServiceImpl optService;
 	
 	@RequestMapping(value="houses/home_view.do",method= RequestMethod.GET)
 	public String homeView(Model model) throws SQLException {
@@ -79,6 +89,26 @@ public class houses {
 //		return "qna/qna_list";
 //	}
 	
+	//opt/opt_view.do?storeSeq=TESTNOTDEL
+	
+	@RequestMapping(value="opt/opt_view.do",method= RequestMethod.GET)
+	public String optView(Product product, Model model) throws SQLException {
+		
+		Product outVO = (Product) productService.doSelectOne(product);
+		
+		Opt optOne = new Opt();
+		
+		optOne.setStoreSeq(outVO.getStoreSeq());
+		optOne.setDiv(1);
+		
+		List<Opt> outOne = (List<Opt>) optService.doRetrieve(optOne);
+		
+		model.addAttribute("outOne",outOne);
+		model.addAttribute("vo",outVO);
+		
+		
+		return "houses/producOptOne";
+	}
 	
 	public List<?> getCodedopageRetrieve(List<DTO> codeList) throws SQLException {
 		
