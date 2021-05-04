@@ -35,6 +35,11 @@
 
 	<link rel="stylesheet" type="text/css"
 	href="${hContext }/resources/jji/mypage.css" />
+	
+	  <!-- Custom styles for this template -->
+  <link href="${hContext}/resources/lhc/shop-homepage.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/lhc/base.css">
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/lhc/normalize.css">
  </head>
 <body>
     <!-- Header Start -->
@@ -137,7 +142,6 @@
 			window.location.href = '<c:out value="${hContext}/member/do_logoff.do"/>';
 		}
 	</script>
-    <script src="js/header-14.js"></script>
   	
 
 </body>
