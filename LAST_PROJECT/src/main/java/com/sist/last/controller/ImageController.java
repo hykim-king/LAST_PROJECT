@@ -285,7 +285,7 @@ public class ImageController {
 			 saveName = imageVO.getSaveName(); 
 		  }	 
 		  
-		  list.add(imageVO);
+		  list.add(imageVO);  
 		
 		String housesSeq = mReg.getParameter("housesSeq");
 		String memberId = mReg.getParameter("memberId");
