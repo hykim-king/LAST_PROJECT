@@ -101,8 +101,22 @@
                         <h5><span id="price">${vo.price}</span>원</h5>
                         <ul>
                             <li>브랜드: <span>${vo.company}</span></li>
-                            <li>카테고리: <span>${vo.category}</span></li>
-                            <li>태그: <span></span>${vo.tag}</li>
+                            <c:if test="${vo.category=='10'}">
+		            			<li>카테고리: <span>가구</span></li>
+		            		</c:if>                            
+		            		<c:if test="${vo.category=='20'}">
+		            			<li>카테고리: <span>주방</span></li>
+		            		</c:if>
+		            		<c:if test="${vo.category=='30'}">
+		            			<li>카테고리: <span>가전</span></li>
+		            		</c:if>
+		            		<c:if test="${vo.category=='40'}">
+		            			<li>카테고리: <span>생활</span></li>
+		            		</c:if>
+		            		<c:if test="${vo.category=='50'}">
+		            			<li>카테고리: <span>DIY/공구</span></li>
+		            		</c:if>
+                            <li>태그: <span>${vo.tag}</span></li>
                         </ul>
 						<div class="row mt-4">
 							<div class="col-md-6">
@@ -145,7 +159,7 @@
                 <div class="col-lg-12">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#descriptionTab" role="tab">상품정보</a>
+                            <a class="nav-link" data-toggle="tab" href="#descriptionTab" role="tab">상품정보</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#reviewTab" role="tab">리뷰</a>
@@ -221,7 +235,7 @@
 						    	</div>
 						    	<!-- pagenation -->
 								<div class="text center">
-									<div id="page-selection" class="text-right page">
+									<div id="page-selection" class="text-center page">
 									
 									</div>
 								</div>
@@ -250,6 +264,10 @@
         </div>
     </section>
     <!-- 스토어 단건 조회 -->
+
+	<div clas="container">
+		<br/>
+	</div>
 
     <!-- 추천 상품 -->
     <section class="related-products spad">
@@ -335,7 +353,7 @@
 
 		$(document).ready(function() {
 			console.log("1.document:최초수행!");
-			//storeSelectOne(); //스토어 단건 조회
+			reviewRetrieve(1);
 			qtyChange();
 			optionRetrieve();	
 		});
@@ -673,7 +691,7 @@
 	        				html += " </div>                                                                              ";
             
 	        				$("#totalReview").text(value.totalReviews);
-	        				$("#totalReviews").val(value.totalReviews);
+	        				$("#totalReviews").text(value.totalReviews);
 	        				$("#avgStar").text(value.avgStars);
 	        				
 	        			});
