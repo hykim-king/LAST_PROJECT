@@ -66,17 +66,16 @@
 <!-- --------------------------------------------------------------------------------------------------- -->
 
 	 	<!-- ======= Portfolio Section ======= -->
-	    <section id="portfolio" class="portfolio section-bg">
-	      <div class="container">
-	      	<div class="section-title">
-	        	<h2>스크랩북</h2>
-	        </div>
-	      </div>
-	
-	        <div class="row">
+		<section id="portfolio" class="portfolio section-bg">
+			<div class="container">
+<!-- 			<div class="section-title">
+	        		<h2>스크랩북</h2>
+	        	</div> -->
+	      	</div>
+			<div class="row">
 	          <div class="col-lg-12 d-flex justify-content-center">
 	            <ul id="portfolio-flters">
-	              <li data-filter="*" class="filter-active">All</li>
+	              <li data-filter="*" class="filter-active">스크랩북</li>
 <!-- 	          <li data-filter=".filter-app">App</li>
 	              <li data-filter=".filter-card">Card</li>
 	              <li data-filter=".filter-web">Web</li> -->
@@ -85,36 +84,33 @@
 	        </div>
 	
 	        <div class="row portfolio-container">
-	
-	   		  <!-- row -->	
-			  <div id="rowCard" class="row">
-			  </div>	
-			   <!-- //row -->	
+				<!-- row -->	
+			  	<div id="rowCard" class="row">
+			  
+			  	</div>	
+			   	<!-- //row -->	
 	
 		    	<!-- pagenation -->
-					<div class="row col-lg-10">
-						<div class="col-xs-8 col-sm-9 col-md-8 col-lg-7">
-							<div id="page-selection" class="text-right page">
+				<div class="row col-lg-10">
+					<div class="col-xs-8 col-sm-9 col-md-8 col-lg-7">
+						<div id="page-selection" class="text-right page">
 							
-							</div>
 						</div>
-<!--   						<div class="col-xs-8 col-sm-9 col-md-8 col-lg-3">
-							<select class="form-control input-sm" name="pageSize" id="pageSize" >
-					    		<option value="4">4개씩 보기</option>	    		  		
-								<option value="8">8개씩 보기</option>
-								<option value="12">12개씩 보기</option>
-				    		</select>			
-						</div>   -->
 					</div>
+<!--   				<div class="col-xs-8 col-sm-9 col-md-8 col-lg-3">
+						<select class="form-control input-sm" name="pageSize" id="pageSize" >
+					    	<option value="4">4개씩 보기</option>	    		  		
+							<option value="8">8개씩 보기</option>
+							<option value="12">12개씩 보기</option>
+				    	</select>			
+					</div>   -->
+				</div>
 				<!--// pagenation -->
 	
 	        </div>
-	
-	      </div>
 	    </section><!-- End Portfolio Section -->
 
 <!-- --------------------------------------------------------------------------------------------------- -->
-
 	</div>
 	<!--// div container -->
 
@@ -172,11 +168,11 @@
 							html += '   	<div class="portfolio-info">';
 							html += '      		<h4>' + value.memberId + "님의 집에 놀러가보세요!" + '</h4>';
 							html += '    	</div>';
+							html += '    	<br>';
 							html += '    	<div class="portfolio-links">';
-							html += '      		<a onclick="deleteScrap(\''+value.scrapSeq+'\');" data-gallery="portfolioGallery" class="portfolio-lightbox" title="스크랩 취소">';
-							html += '      			<i class="bx bx-tag"></i></a>';
-							html += '      		</a>';
-							html += '     		<a href="${hContext}/houses/houses_detail.do?housesSeq='+value.housesSeq+'" title="구경가기"><i class="bx bx-link"></i></a>  ';   
+							html += '     		<a href="${hContext}/houses/houses_detail.do?housesSeq='+value.housesSeq+'" title="구경가기">구경가기</a>  ';   
+							html += '    	<br>';
+							html += '      		<a onclick="deleteScrap(\''+value.scrapSeq+'\');" data-gallery="portfolioGallery" class="portfolio-lightbox" title="스크랩 취소">스크랩취소</a>';
 							html += '    	</div>';
 							html += '	</div>';
 							html += '</div>';
@@ -186,7 +182,7 @@
 		    		}else{ //data가 없는 경우
 		    			
 							html += "<div class='col-lg-12 col-md-12 col-sm-12'>";
-							html += "	<h5 class='text-center' colspan='99'>마음에 드는 집을 스크랩 해보세요!</h5>";
+							html += "	<h3 class='text-center' colspan='99'>마음에 드는 집을 스크랩 해보세요!</h3>";
 							html += "</div>";
 		    		}
 	    				
