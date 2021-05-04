@@ -147,7 +147,7 @@
 		console.log("storeSeq"+storeSeq);
 		let url = "${hContext}/product/do_delete.do";
 		let parameters = {
-				storeSeq:storeSeq
+							storeSeq:storeSeq
 						};
 		let method = "POST";
 		let async  = true;

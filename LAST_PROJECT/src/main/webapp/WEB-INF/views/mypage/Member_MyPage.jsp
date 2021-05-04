@@ -338,7 +338,7 @@ $("#test3").on("click",function(e){//주문배송내역 조회
 					pageTotal  = totalCount/$("#pageSize").val();//42/10->4.2
 					pageTotal = Math.ceil(pageTotal);//42/10->4.2->5
 					
-					html += "<table class ='table'>";
+					html += "<table id='paymentTable' class ='table'>";
 					html += "	<thead>";
 					html += "		<th scope = 'col'>#</th>";
 					html += "		<th scope='col'>상품명</th>";
@@ -356,6 +356,7 @@ $("#test3").on("click",function(e){//주문배송내역 조회
 						html += "    <td>"+value.price+"</td>";
 						html += "    <td>"+value.regDt+"</td>";
 						html += "    <td>"+value.status+"</td>";
+						html += "    <td style = 'display:none;'>"+value.paySeq+"</td>";
 						html += "</tr>";
 					});
 					html += "	</tbody>";
@@ -594,7 +595,36 @@ function renderingPage(pageTotal,page) {
 	}); 
 	
 }
-
+//--paymentTable click
+$(document).on("click","#paymentTable>tbody>tr",function(e){
+	console.log("paymentTable>tbody");
+	let tds = $(this).children();
+	var uIdData = tds.eq(5).text();
+	console.log(uIdData);
+	
+	let url = "${hContext}/payment/do_delete.do";
+	let parameters = {
+						paySeq:uIdData
+					};
+	let method = "POST";
+	let async  = true;
+	
+	console.log("parameters:"+parameters);
+	console.log("url:"+url);
+	
+	if(confirm("삭제 하시겠습니까?")==false) return;
+	
+		EClass.callAjax(url, parameters, method, async, function(data) {
+			alert("삭제 성공");
+			
+			window.location.href = "${hContext}/mypage/Member_MyPage.do";
+	}); 
+	
+	
+	
+	
+});
+//--//table click
 
 //집들이 삭제
 function deleteHouse(housesSeq) {
