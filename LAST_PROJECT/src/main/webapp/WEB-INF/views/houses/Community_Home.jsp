@@ -96,6 +96,9 @@
 			              	<input  type="button" class="btn btn-primary btn-sm col-lg-3"  value="스크랩" />
 			              	<small class="gotta" style="display:none;">${vo.housesSeq }</small>
 				            </div>
+							<div class="row">
+							<small class = "gotta col-lg-8">scrap:${vo.totalScrap }</small>
+							</div>
 				            <div id="rowPopularCardClick" class="text-center">
 			                <a href="${hContext}/houses/houses_detail.do?housesSeq=${vo.housesSeq}">
 			                <h4 class="text-muted">
@@ -195,6 +198,9 @@
     					html+="			<h6 class='card-title col-lg-8'>"+value.memberId+"</h6>";
     					html+="			<input type='button' class='btn btn-primary btn-sm col-lg-3'  value='스크랩' name='doScrapBtn' id='doScrapBtn'/>";
     					html+="			<small class = 'gotta' style = 'display:none;''>"+value.housesSeq+"</small>";
+    					html+="		</div>";
+ 						html+="		<div class='row'>";
+ 						html+="			<small class = 'gotta col-lg-8'>scrap:"+value.totalScrap+"</small>";
     					html+="		</div>";
     					html+="		<div id='rowCardClick' class='text-center'>";
     					html+="			<h4 class='text-muted'>"+value.title+"</h4>";

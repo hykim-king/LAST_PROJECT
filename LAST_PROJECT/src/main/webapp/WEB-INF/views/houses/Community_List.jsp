@@ -198,6 +198,9 @@
     					html+="			<input type='button' class='btn btn-primary btn-sm col-lg-3'  value='스크랩' name='doScrapBtn' id='doScrapBtn'/>";
     					html+="			<small class = 'gotta' style = 'display:none;''>"+value.housesSeq+"</small>";
     					html+="		</div>";
+ 						html+="		<div class='row'>";
+ 						html+="			<small class = 'gotta col-lg-8'>scrap:"+value.totalScrap+"</small>";
+    					html+="		</div>";
     					html+="		<div id='rowCardClick' class='text-center col-lg-12'>";
     					html+="			<h4 class='text-muted'>"+value.title+"</h4>";
     					html+="			<small class = 'gotta' style = 'display:none;''>"+value.housesSeq+"</small>";
