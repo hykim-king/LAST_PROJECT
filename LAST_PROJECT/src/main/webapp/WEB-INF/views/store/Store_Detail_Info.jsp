@@ -177,6 +177,7 @@
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
                                 <h5><span id="productContents">${vo.contents}</span></h5>
+                                <br/>
                                 </div>
                             </div>
                         </div>
@@ -191,7 +192,7 @@
 		                            </div>
 		                        </div>
 		                    </div>
-                            <div class="container">
+                            <div class="rating">
 					        	<label for="content">comment</label>
 					        	<div class="rating">
 					                <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
@@ -242,12 +243,14 @@
 								<!--// pagenation -->
 						    </div>
 						    <!-- // 댓글  -->		
+						    <br/>
                     	 </div>
                     	 </div>
                         <div class="tab-pane" id="qnaTab" role="tabpanel">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
-                                	<h5>문의 <span id="qna"></span></h5>
+                                	<h5><span id="qna">질문과 답변을 이용해주세요 :)</span></h5>
+                                	<br/>
                                 </div>
                             </div>
                         </div>                        
@@ -255,6 +258,7 @@
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
                                 	<h5><span id="refund">${vo.refund}</span></h5>
+                                	<br/>
                                 </div>
                             </div>
                         </div>
@@ -275,74 +279,13 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                         <h2>추천 상품</h2>
+                		 <br/>
                 </div>
             </div>
             <div style="text-align: center;">
-                <div class="related__products__slider owl-carousel">
-                    <div class="col-lg-3">
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="${hContext}/resources/img/shop/product-1.jpg">
-                                <div class="product__label">
-                                    <span>Cupcake</span>
-                                </div>
-                            </div>
-                            <div class="product__item__text">
-                                <h6><a href="#">Dozen Cupcakes</a></h6>
-                                <div class="product__item__price">$32.00</div>
-                                <div class="cart_add">
-                                    <a href="#">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="${hContext}/resources/img/shop/product-2.jpg">
-                                <div class="product__label">
-                                    <span>Cupcake</span>
-                                </div>
-                            </div>
-                            <div class="product__item__text">
-                                <h6><a href="#">Cookies and Cream</a></h6>
-                                <div class="product__item__price">$30.00</div>
-                                <div class="cart_add">
-                                    <a href="#">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="${hContext}/resources/img/shop/product-3.jpg">
-                                <div class="product__label">
-                                    <span>Cupcake</span>
-                                </div>
-                            </div>
-                            <div class="product__item__text">
-                                <h6><a href="#">Gluten Free Mini Dozen</a></h6>
-                                <div class="product__item__price">$31.00</div>
-                                <div class="cart_add">
-                                    <a href="#">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="${hContext}/resources/img/shop/product-4.jpg">
-                                <div class="product__label">
-                                    <span>Cupcake</span>
-                                </div>
-                            </div>
-                            <div class="product__item__text">
-                                <h6><a href="#">Cookie Dough</a></h6>
-                                <div class="product__item__price">$25.00</div>
-                                <div class="cart_add">
-                                    <a href="#">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="related__products__slider owl-carousel" id="recommendProduct">
+					
+					
                 </div>
             </div>
         </div>
@@ -357,6 +300,7 @@
 			qtyChange();
 			optionRetrieve();	
 			optionRetrieveTwo();	
+			recommendRetrieve(1,20);
 		});
 		
 		$("#pageSize").on("change", function(e){//change: SelectBox의 이벤트
@@ -403,7 +347,6 @@
 		function optionRetrieve() {
 			console.log("optionRetrieve()");
 		
-			var storeSeqData = "2021/04/2364420dadcc1e40648ecd785ec9fcc8a8";
 			var divData = "1";
 			
 	      	$.ajax({
@@ -701,7 +644,7 @@
 	        			
 	        	} else {//data가 없는 경우
         			html += "	<div class='blog__details__comment__item__text'>           ";
-        			html += "        <span>등록된 리뷰가 없습니다. 리뷰를 등록해주세요 :)</span>       ";
+        			html += "        <span>리뷰를 등록해주세요 :)</span>                         ";
         			html += "    </div>                                                    ";
            				
 	        	}
@@ -771,7 +714,7 @@
     			console.log("data:"+data.msgContents);	
     			if(data.msgId=="1") { //수정 성공
         			alert(data.msgContents);   
-        			doRetrieve(1);
+        			reviewRetrieve(1);
     			} else { //수정 실패
         			alert(data.msgId+ "\n" +data.msgContents);
     			}
@@ -783,7 +726,6 @@
 		function optionRetrieveTwo() {
 			console.log("optionRetrieve()");
 		
-			var storeSeqData = "2021/04/2364420dadcc1e40648ecd785ec9fcc8a8";
 			var divData = "2";
 			
 	      	$.ajax({
@@ -863,6 +805,70 @@
 		function refundRetrieve() {
 			console.log("refundRetrieve()");
 			
+		}
+		
+		/* 카테고리별 추천상품 */
+		function recommendRetrieve(page,div) {
+			
+			$.ajax({
+	    		type: "GET",
+	    		url:"${hContext}/product/do_retrieve.do",
+	    		asyn:"true",
+	    		dataType:"html",
+	    		data:{
+	    			pageSize: "4",
+	    			searchDiv: "${vo.category}",
+	    			searchWord: "",
+	    			orderDiv: div,
+	    			pageNum: page
+	    		},
+	    		
+	    		success:function(data){//통신 성공
+	        		console.log("success data:"+data);
+	        		var parseData = JSON.parse(data);
+	        		console.log("parseData.length:"+parseData.length);
+	        		
+	    			//기존 데이터 삭제
+	    			var html="";
+
+	    			$("#recommendProduct").empty();
+
+    				//data가 있는 경우
+	    			if(parseData.length>0){
+	    				
+	    				$.each(parseData, function(i, value) {
+	    					
+							html += " <div class='col-lg-3' >                                                                       ";
+							html += " <div class='product__item' >                                                                  ";
+		    				html += "   <div class='product__item__pic set-bg'>                                                     ";
+		    				html += "      <img class='product__item__pic set-bg' src='${hContext}/"+value.imgId+"'></a>            ";
+		    				html += "       <div class='product__label'><span>"+value.category+"</span></div>                       ";
+		    				html += "   </div>                                                                                      ";
+		    				html += "   <div class='product__item__text'>                                                           ";
+		    				html += "     <h6><a href='#'>"+value.title+"</a></h6>                                                  ";
+		    				html += "     <div class='product__item__price'>"+numberWithCommas(value.price)+"원</div>                ";
+		    				html += "     <div class='cart_add'>                                                                    ";
+		    				html += "         <a href='${hContext}/store/store_detail.do?storeSeq="+value.storeSeq+"'>보러가기</a>     ";
+		    				html += "     </div>                                                                                    ";
+		    				html += "   </div>                                                                                      ";    
+		    				html += "   </div>                                                                                      ";    
+		    				html += " </div>                                                                                        ";    
+
+	    				});
+	    				
+	    			}
+	    			
+					//데이터 추가
+					$("#recommendProduct").append(html);
+
+	        	},
+	        	error:function(data){//실패시 처리
+	        		console.log("error:"+data);
+	        	},
+	        	complete:function(data){//성공/실패와 관계없이 수행!
+	        		console.log("complete:"+data);
+	        	}
+	    	});
 		}
 		
 		/* 콤마 제거 */
