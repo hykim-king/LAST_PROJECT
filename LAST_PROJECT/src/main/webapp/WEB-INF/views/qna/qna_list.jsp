@@ -245,7 +245,7 @@
 							console.log(i+","+value.name);
 	    					html+="<div  class='col-lg-3 col-md-6 mb-4'>";
 	    					html+="	<div class='card h-100'>";
-	    					html +=			"<a href='${hContext}/qna/qna_detail.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top' src='${hContext}/"+value.imgId+"' ></a>";
+	    					html +=			"<a href='${hContext}/qna/qna_detail.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top' src='${hContext}/"+value.imgId+"' width='200' height='300'></a>";
 	    					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
 	    					html+="		<div id='buttonClick' class='row col-lg-12'>";
 	    					html+="			<h6 class='card-title col-lg-8'>"+value.memberId+"</h6>";
