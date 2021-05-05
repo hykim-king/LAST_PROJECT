@@ -57,7 +57,9 @@
 	 		<h2>결제</h2>
 	 	</div>
 	    <!--// 제목 -->
-	    
+	    	<!-- hidden -->
+	<input type="hidden" id="totalProductPay" name="totalProductPay" value="${vo.quantity*vo.price}">
+	<!-- hidden -->
 	 <!-- Shopping Payment Section Begin -->
     <section class="shopping-cart spad">
         <div class="container">
@@ -141,7 +143,7 @@
 	$("#paymentBtn").on("click",function(e){
 		console.log("paymentBtn");
 		e.preventDefault();//한번만 호출
-		
+		var totalProductPay = $("#totalProductPay").val();
 		 let url = "${hContext}/payment/do_insert.do";
 		 let parameters = {
 							"storeSeq"  : "${vo.storeSeq}",
@@ -150,7 +152,7 @@
 							"optone"    : "${vo.optone}",
 							"opttwo"    : "${vo.opttwo}",
 							"quantity"  : "${vo.quantity}",
-							"price"     : "${vo.price}",
+							"price"     : totalProductPay,
 							"shipfee"   : "${vo.shipfee}",
 							"status"	:  1,
 							"modId"		: "${member.memberId}"
