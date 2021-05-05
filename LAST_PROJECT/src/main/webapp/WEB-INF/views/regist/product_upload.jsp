@@ -63,7 +63,6 @@
 
 	<!-- div container -->
 	<div class="container">
-	${sessionScope.member }
 
 		<!-- 제목 -->
 		<div class="page-header">
