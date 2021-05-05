@@ -192,7 +192,7 @@
 		                            </div>
 		                        </div>
 		                    </div>
-                            <div class="rating">
+                            <div class="container">
 					        	<label for="content">comment</label>
 					        	<div class="rating">
 					                <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
@@ -445,7 +445,7 @@
 		function buyNow(storeSeq) {
 			console.log("buyNow btn click");
 			
-			window.location.href = "${hContext}/qna/payment.do?storeSeq="+storeSeq;
+			window.location.href = "${hContext}/qna/buynow.do?storeSeq="+storeSeq;
 			
 		}
 		
