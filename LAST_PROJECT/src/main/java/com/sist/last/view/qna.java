@@ -105,10 +105,31 @@ public class qna {
 		return "qna/qna_list";	
 	}//--qnaListView
 	
+	/**
+	 * 스토어 상세페이지(바로구매) -> 결제페이지
+	 * @param model
+	 * @return qna/payment
+	 * @throws SQLException
+	 */
+	@RequestMapping(value = "qna/buynow.do", method = RequestMethod.GET)
+	public String buyNowView(Model model,Basket basket) throws SQLException{
+		
+		LOG.debug("=================");
+		LOG.debug("==buyNowView==");
+		LOG.debug("=================");
+		
+		Basket outVO = (Basket) basketService.doSelectOne(basket);
+		LOG.debug("=================");
+		LOG.debug("==buyNowView Basket outVO:=="+outVO);
+		LOG.debug("=================");
+		model.addAttribute("vo", outVO);
 
+
+		return "qna/payment";
+	}//--buyNowView
 	
 	/**
-	 * 결제페이지
+	 * 장바구니 -> 결제페이지
 	 * @param model
 	 * @return qna/payment
 	 * @throws SQLException
@@ -126,12 +147,6 @@ public class qna {
 		LOG.debug("=================");
 		model.addAttribute("vo", outVO);
 		
-		//int payOutVO = paymentService.doInsert(basket);
-		//LOG.debug("=================");
-		//LOG.debug("==Payment payOutVO:=="+outVO);
-		//LOG.debug("=================");
-		//model.addAttribute("payment", payOutVO);
-
 		return "qna/payment";
 	}//--paymentView
 	

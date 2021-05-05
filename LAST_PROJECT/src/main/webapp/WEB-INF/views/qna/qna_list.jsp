@@ -251,8 +251,8 @@
 	    					html+="			<h6 class='card-title col-lg-8'>"+value.memberId+"</h6>";
 	    					html+="			<small class = 'gotta' style = 'display:none;''>"+value.qnaSeq+"</small>";
 	    					html+="		</div>";
-	    					html+="		<div id='rowQnaCardClick' class='text-center'>";
-	    					html+="			<h5 class='text-muted'>"+value.title+"</h5>";
+	    					html+="		<div id='rowQnaCardClick' class='text-center col-lg-12'>";
+	    					html+="			<h4 class='text-muted'>"+value.title+"</h4>";
 	    					html+="			<small class = 'gotta' style = 'display:none;''>"+value.qnaSeq+"</small>";
 	    					html+="		</div>";	
 	    					html+="	</div>";	
