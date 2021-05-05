@@ -44,8 +44,7 @@ public class qna {
 	BasketServiceImpl basketService;
 	
 	@Autowired
-	PaymentServiceImpl paymentService;
-	
+	ProductServiceImpl productService;
 	public qna() { }
 	
 	/**
@@ -112,16 +111,18 @@ public class qna {
 	 * @throws SQLException
 	 */
 	@RequestMapping(value = "qna/buynow.do", method = RequestMethod.GET)
-	public String buyNowView(Model model,Basket basket) throws SQLException{
+	public String buyNowView(Model model,Product product) throws SQLException{
 		
 		LOG.debug("=================");
 		LOG.debug("==buyNowView==");
 		LOG.debug("=================");
 		
-		Basket outVO = (Basket) basketService.doSelectOne(basket);
-		LOG.debug("=================");
-		LOG.debug("==buyNowView Basket outVO:=="+outVO);
-		LOG.debug("=================");
+		Product outVO = (Product) this.productService.doSelectOne(product);
+		
+		LOG.debug("==============");
+		LOG.debug("=Product outVO="+outVO); 
+		LOG.debug("==============");
+		
 		model.addAttribute("vo", outVO);
 
 
