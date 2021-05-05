@@ -14,10 +14,9 @@
 ```
 
 ### 🔗 팀 구성
-``` 
-- 팀장 : 이해창
-- 팀원 : 곽소언, 김서연, 오솔미, 이주옥, 임하람, 장종익, 조연수
-```
+- 팀장 : [이해창](https://github.com/leehaechang)
+- 팀원 : [곽소언](https://github.com/soeonkwak), [김서연](https://github.com/jjinrj), [오솔미](https://github.com/solmioh), [이주옥](https://github.com/juok02), [임하람](https://github.com/raaamizi), [장종익](https://github.com/jji307), [조연수](https://github.com/yeonsu-cho)
+
 
    #### 담당업무
    ``` 
