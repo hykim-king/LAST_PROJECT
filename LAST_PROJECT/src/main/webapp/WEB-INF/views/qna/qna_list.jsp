@@ -59,9 +59,9 @@
 </head>
 <body>
 
-<!-- div container -->
-	<div class=" container">
-	
+
+	<!-- div container -->
+	<div class=" container">	
 	<!-- Jumbotron -->
 	<!-- 수평선 긋기 -->
 	 <hr class="my-2">
@@ -70,7 +70,7 @@
 	    	<h2>
 				<c:choose>
 					<c:when test="${null != sessionScope.memberInfo }"><!-- 로그인 했을때 -->
-							${sessionScope.memberInfo.nickname}님을 위한 질문과 답변
+							${sessionScope.memberInfo.memberId}님을 위한 질문과 답변
 					</c:when>
 					<c:otherwise><!-- 로그인 안했을때 -->
 						당신을 위한 질문과 답변
@@ -86,8 +86,12 @@
 	<hr class="my-2">
 	<!-- 수평선 긋기 -->
 	<!--// Jumbotron -->
+	</div>
+	<!-- //div container -->
 	
-	 <h4>최근 Q&A를 확인해보세요!</h4><br/>
+	<!-- div container -->
+<div class="container">
+  <h4>최근 Q&A를 확인해보세요!</h4><br/>
 		<div class="row col-lg-12">			
 		<!-- 프로젝트 출력 -->	   	
 	   	  <div class="row col-lg-12">
@@ -133,9 +137,7 @@
 		</div>
 		<!--// pagenation -->
 		</div>
-
-	</div>
-	<!-- /container -->
+</div>
 	
 	<!-- javascript -->
 	<script type="text/javascript">
@@ -207,7 +209,6 @@
 		
 		//조회버튼 실행시 
 		function doRetrieve(page){
-			//console.log("page:"+page);
 			$.ajax({
 	    		type: "GET",
 	    		url:"${hContext}/qna/do_retrieve.do",
@@ -242,13 +243,13 @@
 						
 						
 						$.each(parseData,function(i,value){
-							console.log(i+","+value.name);
+							//console.log(i+","+value.name);
 	    					html+="<div  class='col-lg-3 col-md-6 mb-4'>";
 	    					html+="	<div class='card h-100'>";
-	    					html +=			"<a href='${hContext}/qna/qna_detail.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top' src='${hContext}/"+value.imgId+"' width='200' height='300'></a>";
-	    					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
+	    					html +="<a href='${hContext}/qna/qna_detail.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top' src='${hContext}/"+value.imgId+"' width='200' height='300'></a>";
+	    					html+="		<h6  class='text-muted'>"+value.tag+"</h6>";
 	    					html+="		<div id='buttonClick' class='row col-lg-12'>";
-	    					html+="			<h6 class='card-title col-lg-8'>"+value.memberId+"</h6>";
+	    					html+="			<h6 class='card-title '>"+value.memberId+"</h6>";
 	    					html+="			<small class = 'gotta' style = 'display:none;''>"+value.qnaSeq+"</small>";
 	    					html+="		</div>";
 	    					html+="		<div id='rowQnaCardClick' class='text-center col-lg-12'>";

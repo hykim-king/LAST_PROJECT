@@ -92,7 +92,6 @@ ${member.memberId }
 
 			<div class="container">
     <div class="main-body">
-    ${sessionScope.member }
           <div id="profile" class="row gutters-sm">
             <div class="col-md-4 mb-3">
               <div class="card">
@@ -480,7 +479,7 @@ $("#test6").on("click",function(e){//나의 리뷰
 		console.log("page:"+page);
 		$.ajax({
     		type: "GET",
-    		url:"${hContext}/review/review_list.do",
+    		url:"${hContext}/review/do_retrieve_my.do",
     		asyn:"true",
     		dataType:"html",
     		data:{
@@ -512,7 +511,7 @@ $("#test6").on("click",function(e){//나의 리뷰
 					html += "<table class ='table'>";
 					html += "	<thead>";
 					html += "		<th scope = 'col'>#</th>";
-					html += "		<th scope='col'>내용</th>";
+					html += "		<th scope='col'>리뷰내용</th>";
 					html += "		<th scope='col'>작성날짜</th>";
 					html += "	</thead>";
 					html += "	<tbody>";

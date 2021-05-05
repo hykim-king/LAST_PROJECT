@@ -45,6 +45,12 @@ public class ReviewServiceImpl implements ReviewService {
 				
 		return this.reviewDao.doRetrieve(dto);
 	}
+	
+	@Override
+	public List<?> doRetrieveMy(DTO dto) throws SQLException {
+				
+		return this.reviewDao.doRetrieveMy(dto);
+	}
 
 	@Override
 	public DTO doSelectOne(DTO dto) throws SQLException {

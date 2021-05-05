@@ -69,7 +69,8 @@
 <body>
 <%-- ${vo }
 ${vo.memberId}
-${member.memberId} --%>
+${member.memberId} 
+${sessionScope.member }--%>
 
 	<!-- div container -->
 	<div class="wrap container">
@@ -215,21 +216,6 @@ ${member.memberId} --%>
 	});
 	
 //------------------------댓글 이벤트처리------------------------
-	//댓글등록버튼클릭
-	$("#commentInsertBtn").on("click", function(){
-		
-        if(eUtil.ISEmpty($("#content").val()) == true){
-        	alert("내용을 입력 해주세요!.");
-        	$("#content").focus();
-        	return;            	
-        }
-	
-		var insertData = $("#content").val();
-		console.log(insertData);
-	    commentInsert(insertData);
-		commentList(1);
-		$("#content").val("");
-	});
 
 	//댓글목록조회
 	function commentList(page){
@@ -263,10 +249,10 @@ ${member.memberId} --%>
     					
 			        $.each(parseData, function(i, value){ 
 		                html += "<div class='commentArea' style='border-bottom:1px solid darkgray; margin-bottom: 15px;'>";
-		                html += "	<div class='commentInfo"+value.cno+"'>"+" 작성자: "+value.memberId;
+		                html += "		<div>작성자: "+value.memberId + "</div>";
+		                html += "		<div>내용: "+value.contents +"</div>";
+		                html += "		<div>"+value.regDt +"</div>";
 		                html += "		<a href='javascript:commentDelete(\""+value.replySeq+"\",\"" + value.reviewSeq + "\");'> 삭제 </a>";
-		                html += "		<p> 내용: "+value.contents +"</p>";
-		                html += "	</div>"
 		                html += "</div>"  
 			        });
 
@@ -295,6 +281,26 @@ ${member.memberId} --%>
 	}
 
 	//댓글등록버튼클릭
+	$("#commentInsertBtn").on("click", function(){
+		if(checkLogin() == false){
+			alert("로그인 후 댓글을 남겨보세요:)")
+			$("#content").val("");
+			return;
+		}
+        if(eUtil.ISEmpty($("#content").val()) == true){
+        	alert("내용을 입력 해주세요:)");
+        	$("#content").focus();
+        	return;            	
+        }
+	
+		var insertData = $("#content").val();
+		console.log(insertData);
+	    commentInsert(insertData);
+		commentList(1);
+		$("#content").val("");
+	});
+	
+	//댓글등록
 	function commentInsert(insertData){
 		let url = "${hContext}/reply/do_insert.do";
 		let parameters = {
@@ -320,7 +326,7 @@ ${member.memberId} --%>
 	function commentDelete(replySeq, reviewSeq){
 		console.log("commentDelete call");
 		console.log("replySeq : " + replySeq);
- 
+
 		if(confirm("삭제하시겠습니까?")==false){
 			return;
 		}
@@ -346,42 +352,51 @@ ${member.memberId} --%>
 	} 
 //------------------------//댓글 이벤트처리------------------------
 
+	function checkLogin(){
+		console.log("checkLogin click")
+		var loginId = "${member.memberId}"
+			if(loginId.length>0){
+				console.log(loginId.length);
+				return true;
+			}else{
+				return false;
+			}
+	}
 
-		//paging
-		//pageTotal : 총페이지 수 : 총글수/페이지사이즈(10)
-		//page :      현재 페이지
-		//maxVisible : bottom page
-		function renderingPage(pageTotal,page){
-			//이전 연결된 Event 핸들러를 요소에서 제거
-			$("#page-selection").unbind('page');
+	//paging
+	//pageTotal : 총페이지 수 : 총글수/페이지사이즈(10)
+	//page :      현재 페이지
+	//maxVisible : bottom page
+	function renderingPage(pageTotal,page){
+		//이전 연결된 Event 핸들러를 요소에서 제거
+		$("#page-selection").unbind('page');
 			
-			$('#page-selection').bootpag({
-			    total: pageTotal,
-			    page: page,
-			    maxVisible: 10,
-			    leaps: true,
-			    firstLastUse: true,
-			    first: '←',
-			    last: '→',
-			    wrapClass: 'pagination',
-			    activeClass: 'active',
-			    disabledClass: 'disabled',
-			    nextClass: 'next',
-			    prevClass: 'prev',
-			    lastClass: 'last',
-			    firstClass: 'first'
-			}).on("page", function(event, num){
-				commentList(num); //or some ajax content loading
-			}); 			
-		}
+		$('#page-selection').bootpag({
+		    total: pageTotal,
+		    page: page,
+		    maxVisible: 10,
+		    leaps: true,
+		    firstLastUse: true,
+		    first: '←',
+		    last: '→',
+		    wrapClass: 'pagination',
+			activeClass: 'active',
+			disabledClass: 'disabled',
+		    nextClass: 'next',
+			prevClass: 'prev',
+			lastClass: 'last',
+		    firstClass: 'first'
+		}).on("page", function(event, num){
+			commentList(num); //or some ajax content loading
+		}); 			
+	}
 	
 	
 	//스크랩 버튼 클릭 이벤트 처리
 	$("#scrap_btn").on("click", function(e){
 		console.log("scrap_btn click");
-		var memberLogin= "${member.memberId}";
-		if(memberLogin==""){
-			alert("로그인 후 이용 가능합니다.");
+		if(checkLogin()==false){
+			alert("로그인 후 이용 가능합니다:)");
 			return;
 		}else{
 		
