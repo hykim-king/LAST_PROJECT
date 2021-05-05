@@ -32,25 +32,28 @@
    ```
 
 ### 🔗 기획서
-[LAST_기획서.pdf](https://github.com/code-you-dream-with-me/LAST_PROJECT/files/6410604/LAST_.pdf)
+- [LAST_기획서.pdf](https://github.com/code-you-dream-with-me/LAST_PROJECT/files/6410604/LAST_.pdf)
 
 ### 🔗 요구사항정의서
+- [요구사항정의서](https://github.com/code-you-dream-with-me/LAST_PROJECT/issues/1)
 
 ### 🔗 WBS
+- [WBS](https://github.com/code-you-dream-with-me/LAST_PROJECT/issues/2) 
 
-### 🔗 개발아키텍쳐 : Spring MVC
-<img src="https://user-images.githubusercontent.com/78997066/116967283-ea69e580-acec-11eb-9654-49fbd947bd20.png" width=70%>
+### 🔗 개발 아키텍쳐_Spring MVC
+<img src="https://user-images.githubusercontent.com/78997066/117125198-2fb51280-add4-11eb-8178-e367a7a22d13.png" width="70%">
 
 ### 🔗 개발 기술
+- [개발 기술](https://github.com/code-you-dream-with-me/LAST_PROJECT/issues/4)
 
 ### 🔗 개발 목록
+- [프로그램 목록](https://github.com/code-you-dream-with-me/LAST_PROJECT/issues/5)
 
 ### 🔗 단위테스트
 - [JUnit Test](https://github.com/code-you-dream-with-me/LAST_PROJECT/tree/main/LAST_PROJECT/src/test/java/com/sist/last)
-### 🔗 통합테스트
 
 ### 🔗 사용 오픈 API
-
+- [로그인 API](https://github.com/code-you-dream-with-me/LAST_PROJECT/tree/main/LAST_PROJECT/src/main/webapp/WEB-INF/views/login)
 #### 카카오 로그인 API
 ``` 
 - link : https://developers.kakao.com/
