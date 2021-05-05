@@ -55,7 +55,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="product__details__img">
-                        <div class="product__details__big__img">
+                        <div class="product__details__big__img" style="width: 550px; height: 550px;">
                         <c:choose>
 		            		<c:when test="${imageList.size() >0 }">
 		            			<c:forEach var="vo" items="${imageList}">
@@ -92,7 +92,21 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="product__details__text">
-                        <!-- <div class="product__label">category</div> -->
+	                    <c:if test="${vo.category=='10'}">
+			            	<div class="product__label">가구</div>
+			            </c:if>                            
+			            <c:if test="${vo.category=='20'}">
+			            	<div class="product__label">주방</div>
+			            </c:if>
+			            <c:if test="${vo.category=='30'}">
+			            	<div class="product__label">가전</div>
+			            </c:if>
+			            <c:if test="${vo.category=='40'}">
+			            	<div class="product__label">생활</div>
+			            </c:if>
+			            <c:if test="${vo.category=='50'}">
+			            	<div class="product__label">DIY/공구</div>
+			            </c:if>
                         <h4 id="title">${vo.title}</h4>
                         <h4 id="storeSeq" style="display: none;">${vo.storeSeq}</h4>
                         <h4 id="memberId" style="display: none;">${vo.memberId}</h4>
@@ -175,7 +189,7 @@
                     <div class="tab-content">
                         <div class="tab-pane" id="descriptionTab" role="tabpanel">
                             <div class="row d-flex justify-content-center">
-                                <div class="col-lg-8">
+                                <div class="col-lg-8" style="padding: 50px 0px 0px 50px">
                                 <h5><span id="productContents">${vo.contents}</span></h5>
                                 <br/>
                                 </div>
@@ -186,29 +200,32 @@
                 		<div class="container">
 		                    <div class="row d-flex justify-content-center">
 		                        <div class="col-lg-4 col-md-7">
-		                            <div class="blog__details__recipe">
-			                            <div class="blog__details__recipe__item">
-			                                <h6>리뷰<span id="totalReview">${vo.totalReview}</span></h6>
-			                                <h6>평점<span id="avgStar">${vo.avgStar}</span></h6>
+		                            <div class="blog__details__recipe text-center">
+			                            <div class="blog__details__recipe__item" style="float: left;">
+			                                <h6>리뷰&nbsp;<span id="totalReview">${vo.totalReview}</span></h6>
+			                            </div>
+			                            <div class="blog__details__recipe__item" style="float: right;">
+			                                <h6>평점&nbsp;<span id="avgStar">${vo.avgStar}</span></h6>
 			                            </div>
 			                        </div>
 		                        </div>
 		                    </div>
                             <div class="container">
 					        	<label for="content">만족도</label>
-					        	<div class="rating">
+					        	<div class="rating" style="display: flex; width:120px; line-height:120px;">
 					                <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
-					                <input type="checkbox" name="rating" id="rating1" value="1" class="rate_radio" title="1점" onclick='getCheckboxValue(event)'>
+					                <input type="checkbox" name="rating" id="rating1" value="1" class="rate_radio"  title="1점" onclick='getCheckboxValue(event)'>
 					                <label for="rating1"></label>
-					                <input type="checkbox" name="rating" id="rating2" value="2" class="rate_radio" title="2점" onclick='getCheckboxValue(event)'>
+					                <input type="checkbox" name="rating" id="rating2" value="2" class="rate_radio"  title="2점" onclick='getCheckboxValue(event)'>
 					                <label for="rating2"></label>
-					                <input type="checkbox" name="rating" id="rating3" value="3" class="rate_radio" title="3점" onclick='getCheckboxValue(event)'>
+					                <input type="checkbox" name="rating" id="rating3" value="3" class="rate_radio"  title="3점" onclick='getCheckboxValue(event)'>
 					                <label for="rating3"></label>
-					                <input type="checkbox" name="rating" id="rating4" value="4" class="rate_radio" title="4점" onclick='getCheckboxValue(event)'>
+					                <input type="checkbox" name="rating" id="rating4" value="4" class="rate_radio"  title="4점" onclick='getCheckboxValue(event)'>
 					                <label for="rating4"></label>
-					                <input type="checkbox" name="rating" id="rating5" value="5" class="rate_radio" title="5점" onclick='getCheckboxValue(event)'>
+					                <input type="checkbox" name="rating" id="rating5" value="5" class="rate_radio"  title="5점" onclick='getCheckboxValue(event)'>
 					                <label for="rating5"></label>
 				           		</div>
+				           		<br/>
 				            	<input type="hidden" id="starRating">
 						        <form name="commentInsertForm">
 						            <div class="input-group">
@@ -249,7 +266,7 @@
                     	 </div>
                         <div class="tab-pane" id="qnaTab" role="tabpanel">
                             <div class="row d-flex justify-content-center">
-                                <div class="col-lg-8">
+                                <div class="col-lg-8" style="padding: 50px 0px 0px 50px">
                                 	<h5><span id="qna">질문과 답변을 이용해주세요 :)</span></h5>
                                 	<br/>
                                 </div>
@@ -257,7 +274,7 @@
                         </div>                        
                         <div class="tab-pane" id="refundTab" role="tabpanel">
                             <div class="row d-flex justify-content-center">
-                                <div class="col-lg-8">
+                                <div class="col-lg-8" style="padding: 50px 0px 0px 50px">
                                 	<h5><span id="refund">${vo.refund}</span></h5>
                                 	<br/>
                                 </div>
@@ -278,7 +295,7 @@
     <section class="related-products spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 text-center">
+                <div class="col-lg-12 text-center" style="padding: 50px 0px 0px 50px">
                         <h2>추천 상품</h2>
                 		 <br/>
                 </div>
