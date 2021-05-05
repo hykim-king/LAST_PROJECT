@@ -40,13 +40,14 @@
 ### 🔗 WBS
 - [WBS](https://github.com/code-you-dream-with-me/LAST_PROJECT/issues/2) 
 
-### 🔗 개발아키텍쳐 : Spring MVC
-- [Spring MVC](https://github.com/code-you-dream-with-me/LAST_PROJECT/issues/3)
+### 🔗 개발 아키텍쳐
+- [Spring MVC](https://user-images.githubusercontent.com/78997066/117122711-1e1e3b80-add1-11eb-82ef-c74ddb002af7.png)
 
 ### 🔗 개발 기술
 - [개발 기술](https://github.com/code-you-dream-with-me/LAST_PROJECT/issues/4)
+
 ### 🔗 개발 목록
-- [개발 목록](https://github.com/code-you-dream-with-me/LAST_PROJECT/issues/5)
+- [프로그램 목록](https://github.com/code-you-dream-with-me/LAST_PROJECT/issues/5)
 
 ### 🔗 단위테스트
 - [JUnit Test](https://github.com/code-you-dream-with-me/LAST_PROJECT/tree/main/LAST_PROJECT/src/test/java/com/sist/last)
