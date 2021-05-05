@@ -47,41 +47,97 @@
 	
 </head>
 <body>
-	${vo }
-	${outOne }
+	<!-- hidden -->
 	<input type="hidden" id="storeSeq" name="storeSeq" value="${vo.storeSeq }">
+	<!-- hidden -->
 	<div class="container">
-		<div class="row col-lg-12">	
-		<h6>옵션1</h6>	
-			<div class="col-xs-8 col-sm-9 col-md-6 col-lg-6">
-	   			<input type = "text" size = "20" name = "optOneOne" id = "optOneOne" value="" placeholder = "옵션1 이름 들어갑니다" />
-	   			<input type = "number" size = "20" name = "priceOne" id = "priceOne" value="" placeholder = "옵션1 가격 들어갑니다" />
-				<input type="button" class="btn btn-primary btn-sm"  value="등록" id="oneOne"/>
-			</div>		
+		<div class="row">	
+		<h2>옵션1</h2>	
+			<div class="col-lg-12">
+	   			<input type = "text" class="col-lg-5" name = "optOneOne" id = "optOneOne" value="" placeholder = "옵션1 이름 들어갑니다" />
+	   		</div>
+	   		<div class="col-lg-12">
+	   			<input type = "number" class="col-lg-5" name = "priceOne" id = "priceOne" value="" placeholder = "옵션1 가격 들어갑니다" />
+	   		</div>
+	   		<div class="col-lg-12">
+				<input type="button" class="btn btn-primary btn-sm col-lg-2"  value="등록" id="oneOne"/>
+			</div>
+		
+		<br/>
+		<br/>
+		<h2>옵션2</h2>	
+			<div class="col-lg-12">
+		   		<input type = "text" class="col-lg-5" name = "optTwoOne" id = "optTwoOne" value="" placeholder = "옵션2 이름 들어갑니다" />
+		   	</div>
+		   	<div class="col-lg-12">
+		   		<input type = "number" class="col-lg-5" name = "priceTwo" id = "priceTwo" value="" placeholder = "옵션2 가격 들어갑니다" />
+		   	</div>
+		   	<div class="col-lg-12">
+				<input type="button" class="btn btn-primary btn-sm col-lg-2"  value="등록" id="oneTwo"/>
+			</div>
+
 		</div>
 		<br/>
-	<div class="row col-lg-12">	
-		<h6>옵션2</h6>	
-			<div class="col-xs-8 col-sm-9 col-md-6 col-lg-6">
-	   			<input type = "text" size = "20" name = "optTwoOne" id = "optTwoOne" value="" placeholder = "옵션2 이름 들어갑니다" />
-	   			<input type = "number" size = "20" name = "priceTwo" id = "priceTwo" value="" placeholder = "옵션2 가격 들어갑니다" />
-				<input type="button" class="btn btn-primary btn-sm"  value="등록" id="oneTwo"/>
+		<div class="row ">
+				<div class="col-xs-8 col-sm-9 col-md-6 col-lg-7">
+				</div>	
+				<div class="col-xs-8 col-sm-9 col-md-6 col-lg-5">
+		   			<input type="button" class="btn btn-primary btn-sm col-lg-3"  value="상품 삭제" id="doDelete"/>
+					<input type="button" class="btn btn-primary btn-sm col-lg-2"  value="이전" id="doReturn"/>
+				</div>
+		</div>
+		<br/>
+		<br/>
+		<div class="row col-lg-12">	
+		<!--  optOnetable  -->
+			<div class="col-lg-6">				
+				<table id="optOneTable" class="table table-striped table-bordered table-hover table-condensed">
+					<thead class="bg-primary">  
+						<th class="text-center col-lg-4">옵션명</th>
+						<th class="text-center col-lg-2">가격</th>
+					</thead>
+				    <tbody>
+				        <!-- 문자: 왼쪽, 숫자: 오른쪽, 같은면: 가운데 -->
+				    	<tr>
+				    		<td class="text-center">없음</td>
+				    		<td class="text-center">없음</td>		
+				    	</tr>		
+				    </tbody>
+				</table>
 			</div>
-	</div>
-	
-	<div class="row col-lg-12">	
-			<div class="col-xs-8 col-sm-9 col-md-6 col-lg-6">
-	   			<input type="button" class="btn btn-primary btn-sm"  value="삭제" id="doDelete"/>
-				<input type="button" class="btn btn-primary btn-sm"  value="이전" id="doReturn"/>
+        <!--// optOnetable -->
+        <!--  optTwotable  -->
+			<div class="col-lg-6">				
+				<table id="optTwotable" class="table table-striped table-bordered table-hover table-condensed">
+					<thead class="bg-primary">  
+						<th class="text-center col-lg-4">옵션명</th>
+						<th class="text-center col-lg-2">가격</th>
+					</thead>
+				    <tbody>
+				        <!-- 문자: 왼쪽, 숫자: 오른쪽, 같은면: 가운데 -->
+				    	<tr>
+				    		<td class="text-center">없음</td>
+				    		<td class="text-center">없음</td>		
+				    	</tr>		
+				    </tbody>
+				</table>
 			</div>
+        <!--// optTwotable -->
+		</div>
 	</div>
-	
+	<!-- container -->
+		
+		
+		
+		
 	<script type="text/javascript">
 	//jquery 객채생성이 완료
 	$(document).ready(function() {
 		console.log("1.document:최초수행!");
 
+		optOnetable()
 		
+		optTwotable()
 	});//--document ready
 	
 	//옵션1 1버튼
@@ -169,6 +225,176 @@
 		
 	});
 	
+	
+	//--optOnetable 
+		    function optOnetable() {
+	     	$.ajax({
+	    		type: "GET",
+	    		url:"${hContext }/opt/do_retrieve.do",
+	    		asyn:"true",
+	    		dataType:"html",
+	    		data:{
+	    			storeSeq: "${vo.storeSeq}",
+	    			div: 1
+	    		},
+	    		success:function(data){//통신 성공
+	        		//console.log("success data:"+data);
+	    			var parseData = JSON.parse(data);
+	    			
+	    			//기존 데이터 삭제.
+	    			$("#optOneTable>tbody").empty();
+	    			var html = "";
+	    			
+	    			
+	    			//data가 있는 경우
+	    			if(parseData.length>0) {	    				
+	    				$.each(parseData, function(i, value) {
+	    					//console.log(i+","+value.name);
+	    					html +="<tr>";
+	    					html +="	 <td class='text-center'>"+value.title+"</td>";
+	    					html +="	 <td class='text-left'>"+value.price+"</td>"; 		
+	    					html +="	 <td class='text-left' style = 'display:none;'>"+value.optSeq+"</td>"; 
+	    					html +="</tr>";		
+	    				});
+	    				
+	    			}else {//data가 없는 경우
+	    				html +="<tr>";
+	    				html +="	<td class='text-center' colspan='99'>등록된 옵션이 없습니다.</td>";    		
+	    				html +="</tr>";    				
+	    			}
+	    			
+	    			//body에 데이터 추가
+	    			$("#optOneTable>tbody").append(html);
+	    			
+	    			
+	        	},
+	        	error:function(data){//실패시 처리
+	        		console.log("error:"+data);
+	        	},
+	        	complete:function(data){//성공/실패와 관계없이 수행!
+	        		console.log("complete:"+data);
+	        	}
+	    	});
+	    }
+	    
+	
+			//--optTwotable 
+		    function optTwotable() {
+	     	$.ajax({
+	    		type: "GET",
+	    		url:"${hContext }/opt/do_retrieve.do",
+	    		asyn:"true",
+	    		dataType:"html",
+	    		data:{
+	    			storeSeq: "${vo.storeSeq}",
+	    			div: 2
+	    		},
+	    		success:function(data){//통신 성공
+	        		//console.log("success data:"+data);
+	    			var parseData = JSON.parse(data);
+	    			
+	    			//기존 데이터 삭제.
+	    			$("#optTwotable>tbody").empty();
+	    			var html = "";
+	    			
+	    			
+	    			//data가 있는 경우
+	    			if(parseData.length>0) {	    				
+	    				$.each(parseData, function(i, value) {
+	    					//console.log(i+","+value.name);
+	    					html +="<tr>";
+	    					html +="	 <td class='text-center'>"+value.title+"</td>";
+	    					html +="	 <td class='text-left'>"+value.price+"</td>";
+	    					html +="	 <td class='text-left' style = 'display:none;'>"+value.optSeq+"</td>"; 
+	    					html +="</tr>";		
+	    				});
+	    				
+	    			}else {//data가 없는 경우
+	    				html +="<tr>";
+	    				html +="	<td class='text-center' colspan='99'>등록된 옵션이 없습니다.</td>";    		
+	    				html +="</tr>";    				
+	    			}
+	    			
+	    			//body에 데이터 추가
+	    			$("#optTwotable>tbody").append(html);
+	    			
+	    			
+	        	},
+	        	error:function(data){//실패시 처리
+	        		console.log("error:"+data);
+	        	},
+	        	complete:function(data){//성공/실패와 관계없이 수행!
+	        		console.log("complete:"+data);
+	        	}
+	    	});
+	    }
+	    
+			
+			//--optOnetable click
+			$("#optOneTable>tbody").on("click","tr",function(e){
+				e.preventDefault();
+				console.log("optOneTable>tbody");
+				let tds = $(this).children();
+				var uIdData = tds.eq(2).text();
+				console.log(uIdData);
+				
+	 			let url = "${hContext}/opt/do_delete.do"
+				let parameters = {"optSeq":uIdData};
+				let method = "POST";
+				let async = true;
+				
+				if(confirm("삭제 하시겠습니까?")==false) return;
+				
+	 			EClass.callAjax(url , parameters, method ,async, function(data){
+	 				console.log("data:"+data);
+
+						alert(data.msgContents);
+						optOnetable()
+						
+						optTwotable()
+	
+				}); 
+					 
+	 
+				
+					
+
+				
+			});
+			//--//optOnetable click
+			
+			//--optTwotable click
+			$("#optTwotable>tbody").on("click","tr",function(e){
+				e.preventDefault();
+				console.log("optTwotable>tbody");
+				let tds = $(this).children();
+				var uIdData = tds.eq(2).text();
+				console.log(uIdData);
+				
+	 			let url = "${hContext}/opt/do_delete.do"
+				let parameters = {"optSeq":uIdData};
+				let method = "POST";
+				let async = true;
+				
+				if(confirm("삭제 하시겠습니까?")==false) return;
+				
+	 			EClass.callAjax(url , parameters, method ,async, function(data){
+	 				console.log("data:"+data);
+
+						alert(data.msgContents);
+						optOnetable()
+						
+						optTwotable()
+	
+				}); 
+					 
+	 
+				
+					
+
+				
+			});
+			//--//optTwotable click
 	
 	</script>
 </body>
