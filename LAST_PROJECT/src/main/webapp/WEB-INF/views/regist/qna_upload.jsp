@@ -17,7 +17,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../cmn/common.jsp"%>
-<%@ include file="../cmn/header.jsp" %>
+<%-- <%@ include file="../cmn/header.jsp" %> --%>
 <c:set var="hContext" value="${pageContext.request.contextPath }"></c:set>
 <!DOCTYPE html>
 <html>
@@ -28,7 +28,17 @@
 <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
 <title>Intery</title>
 
+<style>
+	img { display: block; margin: 0px auto; margin-top: 20px; }
+	body, h1, h2, h3, h4, h5, h6, p, span { font-family: 'Noto Sans KR'!important; }
+	.page-header { text-align: center;}
+
+</style>
+
 <!-- 부트스트랩 -->
+<!-- 폰트 -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
 <link href="${hContext}/resources/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
@@ -46,26 +56,35 @@
 </head>
 <body>
 
+	<header>
+		<div class="site-header__middle">
+			<a href="http://localhost:8080/last/houses/home_view.do"><img src="${hContext }/resources/images/logo.png" width="100"/></a> 
+		</div>
+	</header>
+
 	<!-- div container -->
 	<div class="container">
 	${sessionScope.member }
 
 		<!-- 제목 -->
 		<div class="page-header">
-			<h2>Q&A 등록</h2>
+			<!-- <h2>Q&A 등록</h2> -->
+			<h2 class="question-form__header__heading text-black bold" style="font-weight: bold;">질문하기</h2>
 		</div>
 		<!--// 제목 -->
 
 		<!-- form -->
-		<form id="regFrm" action="${hContext}/image/qna_upload.do" method="POST" enctype="multipart/form-data" class="form-horizontal">
+		<form id="regFrm" action="${hContext}/image/qna_upload.do" method="POST" enctype="multipart/form-data">
 			<input type="hidden" class="form-control" id="memberId" name="memberId" value="${member.memberId }"> 	
 						
 			<div class="form-group">
 				<label for="title" class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">제목</label>
 				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
-					<input type="text" class="form-control" id="title" name="title" placeholder="제목">
+					<input type="text" class="form-control" id="title" name="title" placeholder="제목을 적어주세요.">
 				</div>
 			</div>
+			
+			&nbsp;
 
 			<div class="form-group">
 				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">사진추가</label>
@@ -73,26 +92,34 @@
 					<input type="file" class="form-control" id="image" name="image" placeholder="사진">
 				</div>
 			</div>
+			
+			&nbsp;
 
 			<div class="form-group">
 				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">내용</label>
 				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
-					<textarea rows="5" cols="20" name="contents" id="contents" class="form-control" placeholder="내용을 입력하세요."></textarea>
+					<textarea rows="5" cols="20" name="contents" id="contents" class="form-control" placeholder="내용을 적어주세요."></textarea>
 				</div>
 			</div>
+			
+			&nbsp;
 
 			<div class="form-group">
 				<label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">태그</label>
 				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
-					<input type="text" class="form-control" id="tag" name="tag" placeholder="태그를 입력하세요.(최대 5개)">
+					<input type="text" class="form-control" id="tag" name="tag" placeholder="주요 키워드를 입력하세요.(최대 5개)">
 				</div>
 			</div>
-
-			<div class="row text-right">
-				<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
-					<button type="submit" class="btn btn-primary btn-sm" value="등록" id="doInsert">등록</button>
+			
+			&nbsp;
+			
+			<footer class="question-form__footer">
+				<div class="row text-right question-form__footer__submit row">
+					<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10" style="float:center;width:55%;">
+						<button type="submit" class="btn btn-lg btn-priority col-6 offset-3" value="등록" id="doInsert">등록</button>
+					</div>
 				</div>
-			</div>
+			</footer>
 
 		</form>
 		<!--// form -->
