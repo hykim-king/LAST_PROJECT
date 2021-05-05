@@ -48,7 +48,7 @@
 	<script src="${hContext}/resources/js/jquery.bootpag.js"></script>
 </head>
 	<body>
-	${vo }
+<%-- 	${vo } --%>
    <input type="hidden" name="qnaSeq"   id="qnaSeq" value="${vo.qnaSeq}" />
 	<!-- QnA 단건조회 -->
 	<section class="ftco-section ftco-degree-bg">
