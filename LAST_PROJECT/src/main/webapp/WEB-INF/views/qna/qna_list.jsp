@@ -130,11 +130,11 @@
 		  </div>	
 		   <!-- //row -->	
 		<!-- pagenation -->
-<!-- 		<div class="row col-lg-12">
+ 		<div class="row col-lg-12">
 			<div id="page-selection" class="text-right page">
 				
 			</div>
-		</div> -->
+		</div> 
 		<!--// pagenation -->
 		</div>
 </div>
@@ -161,7 +161,8 @@
 		//pageTotal:총 페이지수= 총글수/페이지사이즈(10)
 		//page:현재페이지
 		//maxVisible:bottom 페이지
-/* 		function renderingPage(pageTotal,page){
+		function renderingPage(pageTotal,page){
+			console.log("renderingPage");
 			//이전 연결된 Event 핸들러 요소에서 제거
 			$("#page-selection").unbind('page');
 			
@@ -183,7 +184,7 @@
 			}).on("page", function(event, num){
 				doRetrieve(num);//ajax 서버 호출
 			}); 
-		}//--renderingPage */
+		}//--renderingPage 
 		
 		
 		//등록 버튼 
@@ -229,18 +230,19 @@
 	        		var html = "";
 	        		
 	        		//페이징 변수
-	        		//let totalCount = parseData.length;//총 글수
-	        		//let pageTotal = 1;//총 페이지수
+	        		let totalCount = 0;//총 글수
+	        		let pageTotal = 1;//총 페이지수
 	        		
 	        		//console.log("parseData.length:"+parseData.length);
 	        		//console.log("totalCount:"+parseData[0].totalCount);
 	        		
 					//data가 있는 경우
 					if(parseData.length>0){
-						
-						//pageTotal  = totalCount/$("#pageSize").val();//42/10->4.2
-						//pageTotal = Math.ceil(pageTotal);//42/10->4.2->5
-						
+						totalCount = parseData[0].totalCnt;
+						console.log("totalCount:"+totalCount);
+	    				pageTotal =  totalCount/$("#pageSize").val(); //42/10 ->4.2
+	    				pageTotal = Math.ceil(pageTotal); // 42/10 ->5
+	    				
 						
 						$.each(parseData,function(i,value){
 							//console.log(i+","+value.name);
@@ -271,7 +273,7 @@
 					
 					//페이징처리
 					//console.log(pageTotal+","+page);
-					//renderingPage(pageTotal,page);
+					renderingPage(pageTotal,page);
 		
 	        	},
 	        	error:function(data){//실패시 처리

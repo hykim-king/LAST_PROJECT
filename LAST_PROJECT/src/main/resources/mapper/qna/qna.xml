@@ -72,7 +72,7 @@
 	) A                                                                         
 	CROSS JOIN                                                           
 	(                                                                            
-		SELECT COUNT(*) total_cnt                                
+		SELECT COUNT(*) totalCnt                                
 	    FROM qna                                                      
 		<include refid="searchCondition"/>
 	) B                                                                                                                     
