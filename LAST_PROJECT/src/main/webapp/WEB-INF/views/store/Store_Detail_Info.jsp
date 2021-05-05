@@ -66,7 +66,7 @@
 		            		</c:when>
 		            	</c:choose>  
                         </div>
-                        <div class="product__details__thumb">
+                        <%-- <div class="product__details__thumb">
                             <div class="pt__item active">
                                 <img data-imgbigurl="${hContext}/resources/img/shop/details/product-big-2.jpg"
                                 src="${hContext}/resources/img/shop/details/product-big-2.jpg" alt="">
@@ -87,12 +87,12 @@
                                 <img data-imgbigurl="${hContext}/resources/img/shop/details/product-big-5.jpg"
                                 src="${hContext}/resources/img/shop/details/product-big-5.jpg" alt="">
                             </div>
-                        </div>
+                        </div> --%>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="product__details__text">
-                        <div class="product__label">category</div>
+                        <!-- <div class="product__label">category</div> -->
                         <h4 id="title">${vo.title}</h4>
                         <h4 id="storeSeq" style="display: none;">${vo.storeSeq}</h4>
                         <h4 id="memberId" style="display: none;">${vo.memberId}</h4>
@@ -186,14 +186,16 @@
                 		<div class="container">
 		                    <div class="row d-flex justify-content-center">
 		                        <div class="col-lg-4 col-md-7">
-		                            <div class="map__inner">
-		                                <h6>리뷰 <span id="totalReview">${vo.totalReview}</span></h6>
-		                                <h6>평점 <span id="avgStar">${vo.avgStar}</span></h6>
-		                            </div>
+		                            <div class="blog__details__recipe">
+			                            <div class="blog__details__recipe__item">
+			                                <h6>리뷰<span id="totalReview">${vo.totalReview}</span></h6>
+			                                <h6>평점<span id="avgStar">${vo.avgStar}</span></h6>
+			                            </div>
+			                        </div>
 		                        </div>
 		                    </div>
                             <div class="container">
-					        	<label for="content">comment</label>
+					        	<label for="content">만족도</label>
 					        	<div class="rating">
 					                <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
 					                <input type="checkbox" name="rating" id="rating1" value="1" class="rate_radio" title="1점" onclick='getCheckboxValue(event)'>
@@ -210,7 +212,6 @@
 				            	<input type="hidden" id="starRating">
 						        <form name="commentInsertForm">
 						            <div class="input-group">
-						               <%-- <input type="hidden" name="bno" value="${detail.bno}"/> --%>
 						               <input type="text" class="form-control" id="reviewContents" name="reviewContents" placeholder="평점과 이용경험을 남겨주세요.">
 						               <span class="input-group-btn">
 						                    <button class="btn btn-default" type="button" onClick="reviewInsert('${vo.storeSeq}');">등록</button>
@@ -520,6 +521,10 @@
 
 		}
 		
+		function reviewShow() {
+			$("#reviewContents").focus();
+		}
+		
 		/* 리뷰 등록 */
 		function reviewInsert(storeSeq) {
 			console.log("reviewInsert()");
@@ -631,8 +636,10 @@
 	        				html += "    </div>                                                                           ";
 	        				html += "	<div class='blog__details__comment__btns '>                                       ";
 	        				html += "        <span id='star'>("+value.starScore+"점)</span>                               ";
+	        				html += " <div class='row full-right' >                                                                   ";
 	        				html += "        <a href='javascript:reviewUpdate(&quot;"+value.reviewSeq+"&quot;);'>수정</a>  ";
 	        				html += "        <a href='javascript:reviewDelete(&quot;"+value.reviewSeq+"&quot;);'>삭제</a>  ";
+	        				html += "    </div>                                                                           ";
 	        				html += "    </div>                                                                           ";
 	        				html += " </div>                                                                              ";
             
