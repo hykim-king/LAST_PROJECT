@@ -989,7 +989,7 @@ ol {
 
 .map__inner {
   text-align: center;
-  background: #ffffff;
+  background: rgba(223, 223, 224, 0.7);
   -webkit-box-shadow: 0 0 10px rgba(223, 223, 224, 0.7);
           box-shadow: 0 0 10px rgba(223, 223, 224, 0.7);
   padding: 30px 25px 25px;
@@ -2787,6 +2787,7 @@ ol {
 .blog__details__recipe__item span {
   font-size: 14px;
   color: #888888;
+  text-align: center;
 }
 
 .blog__details__recipe__details {
@@ -4051,6 +4052,7 @@ ol {
       padding: 10px;
       box-sizing: border-box;
   }
+  
   .rating .rate_radio {
       position: relative;
       display: inline-block;
@@ -4062,22 +4064,27 @@ ol {
       cursor: pointer;
       vertical-align: top;
       display: none;
+      float: left;
   }
+  
   .rating .rate_radio + label {
       position: relative;
-      display: inline-block;
-      margin-left: -4px;
+      display: block;
+      float: left;
       z-index: 10;
       width: 60px;
       height: 60px;
-      background-image: url("/img/starrate.png");
+      background-image: url(../img/starrate.png);
       background-repeat: no-repeat;
       background-size: 60px 60px;
       cursor: pointer;
-      background-color: #f0f0f0;
   }
-  .rating .rate_radio:checked + label {
+  
+  .rating .ratefill {
       background-color: #ff8;
+      width: 0;
+      height: 60px;
+      position: absolute;
   }
 
 }
