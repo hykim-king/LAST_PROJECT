@@ -40,8 +40,8 @@
 ### 🔗 WBS
 - [WBS](https://github.com/code-you-dream-with-me/LAST_PROJECT/issues/2) 
 
-### 🔗 개발 아키텍쳐
-- [Spring MVC](https://user-images.githubusercontent.com/78997066/117122711-1e1e3b80-add1-11eb-82ef-c74ddb002af7.png)
+### 🔗 개발 아키텍쳐_Spring MVC
+<img src="https://user-images.githubusercontent.com/78997066/117125198-2fb51280-add4-11eb-8178-e367a7a22d13.png" width="70%">
 
 ### 🔗 개발 기술
 - [개발 기술](https://github.com/code-you-dream-with-me/LAST_PROJECT/issues/4)
