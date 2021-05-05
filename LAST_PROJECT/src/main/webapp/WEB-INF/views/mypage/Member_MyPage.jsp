@@ -594,7 +594,7 @@ function renderingPage(pageTotal,page) {
 $(document).on("click","#paymentTable>tbody>tr",function(e){
 	console.log("paymentTable>tbody");
 	let tds = $(this).children();
-	var uIdData = tds.eq(5).text();
+	var uIdData = tds.eq(4).text();
 	console.log(uIdData);
 	
 	let url = "${hContext}/payment/do_delete.do";
@@ -607,10 +607,10 @@ $(document).on("click","#paymentTable>tbody>tr",function(e){
 	console.log("parameters:"+parameters);
 	console.log("url:"+url);
 	
-	if(confirm("삭제 하시겠습니까?")==false) return;
+	if(confirm("결제 취소 하시겠습니까?")==false) return;
 	
 		EClass.callAjax(url, parameters, method, async, function(data) {
-			alert("삭제 성공");
+			alert("취소 성공");
 			
 			window.location.href = "${hContext}/mypage/Member_MyPage.do";
 	}); 
