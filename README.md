@@ -53,14 +53,15 @@
 
 ### 🔗 사용 오픈 API
 - [로그인 API](https://github.com/code-you-dream-with-me/LAST_PROJECT/tree/main/LAST_PROJECT/src/main/webapp/WEB-INF/views/login)
-#### 카카오 로그인 API
-``` 
-- link : https://developers.kakao.com/
-- 사용처 : 로그인 기능
-```
 
-#### 네이버 로그인 API
-``` 
-- link : https://developers.naver.com/
-- 사용처 : 로그인 기능
-```
+   #### 카카오 로그인 API
+   ``` 
+   - link : https://developers.kakao.com/
+   - 사용처 : 로그인 기능
+   ```
+
+   #### 네이버 로그인 API
+   ``` 
+   - link : https://developers.naver.com/
+   - 사용처 : 로그인 기능
+   ```
