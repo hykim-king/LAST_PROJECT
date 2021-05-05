@@ -89,7 +89,7 @@
 				<c:forEach var = "vo" items = "${list }"> 
 					<div class="col-lg-3 col-md-6 mb-4">
 			            <div class="card h-100">
-			              <a href="${hContext}/houses/houses_detail.do?housesSeq=${vo.housesSeq}"><img class="card-img-top" src="${hContext }${vo.imgId }" alt=""></a>
+			              <a href="${hContext}/houses/houses_detail.do?housesSeq=${vo.housesSeq}"><img class="card-img-top" src="${hContext }${vo.imgId }" width="200" height="300" alt=""></a>
 			              <h6  class="text-muted">${vo.tag}</h6 >
 			              <div id="pupularButtonClick"  class="row">			              
 			               <h6  class="card-title col-lg-8">${vo.memberId}</h6 >	
@@ -189,7 +189,7 @@
     					
     					html+="<div  class='col-lg-3 col-md-6 mb-4'>";
     					html+="	<div class='card h-100'>";
-    					html+="		<a href='${hContext}/houses/houses_detail.do?housesSeq="+value.housesSeq+"'><img class='card-img-top' src='${hContext}/"+value.imgId+"' ></a>";
+    					html+="		<a href='${hContext}/houses/houses_detail.do?housesSeq="+value.housesSeq+"'><img class='card-img-top' src='${hContext}/"+value.imgId+"' width='200' height='300' ></a>";
     					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
     					html+="		<div id='buttonClick' class='row '>";
     					html+="			<h6 class='card-title col-lg-8'>"+value.memberId+"</h6>";
@@ -272,7 +272,7 @@
     					
     					html+="<div  class='col-lg-3 col-md-6 mb-4'>";
     					html+="	<div class='card h-100'>";
-    					html +=			"<a href='${hContext}/qna/qna_detail.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top col-lg-3 col-md-6 mb-4' src='${hContext}/"+value.imgId+"' ></a>";
+    					html +=			"<a href='${hContext}/qna/qna_detail.do?qnaSeq="+value.qnaSeq+"'><img class='card-img-top' src='${hContext}/"+value.imgId+"' width='200' height='300' ></a>";
     					html+="		<h6  class='text-muted'>"+value.tag+"</h6 >";
     					html+="		<div id='buttonClick' class='row'>";
     					html+="			<h6 class='card-title col-lg-8'>"+value.memberId+"</h6>";
