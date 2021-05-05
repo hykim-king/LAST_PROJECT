@@ -90,7 +90,8 @@
 		<br/>
 		<div class="row col-lg-12">	
 		<!--  optOnetable  -->
-			<div class="col-lg-6">				
+			<div class="col-lg-6">
+			<h2>색상</h2>					
 				<table id="optOneTable" class="table table-striped table-bordered table-hover table-condensed">
 					<thead class="bg-primary">  
 						<th class="text-center col-lg-4">옵션명</th>
@@ -107,7 +108,8 @@
 			</div>
         <!--// optOnetable -->
         <!--  optTwotable  -->
-			<div class="col-lg-6">				
+			<div class="col-lg-6">
+			<h2>사이즈</h2>					
 				<table id="optTwotable" class="table table-striped table-bordered table-hover table-condensed">
 					<thead class="bg-primary">  
 						<th class="text-center col-lg-4">옵션명</th>
@@ -163,6 +165,10 @@
 		
   		EClass.callAjax(url, parameters, method, async, function(data) {
   			alert("등록 성공");
+  			
+  			optOnetable()
+  			
+  			optTwotable()
 		}); 
 		
 	});
@@ -190,6 +196,10 @@
 		
   		EClass.callAjax(url, parameters, method, async, function(data) {
   			alert("등록 성공");
+  			
+  			optOnetable()
+  			
+  			optTwotable()
 		}); 
 		
 	});
