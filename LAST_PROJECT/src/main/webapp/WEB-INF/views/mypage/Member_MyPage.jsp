@@ -340,7 +340,6 @@ $("#test3").on("click",function(e){//주문배송내역 조회
 					html += "		<th scope = 'col'>#</th>";
 					html += "		<th scope='col'>상품명</th>";
 					html += "		<th scope='col'>금액</th>";
-					html += "		<th scope='col'>날짜</th>";
 					html += "		<th scope='col'>결재상태</th>";
 					html += "	</thead>";
 					html += "	<tbody>";
@@ -351,7 +350,6 @@ $("#test3").on("click",function(e){//주문배송내역 조회
 						html += "   <th scope ='row'>"+(i+1)+"</th>";
 						html += "    <td>"+value.title+"</td>";
 						html += "    <td>"+value.price+"</td>";
-						html += "    <td>"+value.regDt+"</td>";
 						html += "    <td>"+value.status+"</td>";
 						html += "    <td style = 'display:none;'>"+value.paySeq+"</td>";
 						html += "</tr>";
