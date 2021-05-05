@@ -164,7 +164,7 @@
                         <div class="product__details__text">
                             <h5>주문금액 <span id="total"></span>원</h5>
                             <a class="primary-btn" onClick="addBasket();">장바구니</a>
-                            <a class="primary-btn" onClick="buyNow('${vo.storeSeq}');">바로구매</a>
+                            <%-- <a class="primary-btn" onClick="buyNow('${vo.storeSeq}');">바로구매</a> --%>
                         </div>
                     </div>
                 </div>
