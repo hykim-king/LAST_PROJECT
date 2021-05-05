@@ -67,35 +67,34 @@
 		            ,t2.img_id     AS imgId
 		            ,t2.total_scrap AS totalScrap                                                                                            
 		      FROM(                                                    
-		          SELECT rownum rnum
-                        ,t1.houses_seq  
-                        ,t1.member_id
-                        ,t1.title
-                        ,t1.tag
-                        ,t1.reg_dt
+		          SELECT rownum rnum, t1.*                                                    
+		          FROM(                                                
+		          SELECT t3.houses_seq  
+                        ,t3.member_id
+                        ,t3.title
+                        ,t3.tag
+                        ,t3.reg_dt
                         ,(
                             SELECT save_path||'/'||save_name   
                             FROM image
-                            WHERE img_id = t1.img_id
+                            WHERE img_id = t3.img_id
                             AND img_num = '1'
                         ) img_id
 		  				,(                                                  
 		              	SELECT COUNT(*)                                      
 		              	FROM scrap                                             
-		              	WHERE houses_seq = t1.houses_seq                       
-		            		) total_scrap                                                    
-		          FROM(                                                
-		          SELECT *                                             
-		          FROM houses
+		              	WHERE houses_seq = t3.houses_seq                       
+		            		) total_scrap                                                        
+		          FROM houses t3
 		          <include refid="searchCondition"/>
 		          <include refid="orderByRecent"/>
+		          <include refid="orderByScrap"/>
 		          )t1                                                                                           
 		        <![CDATA[
 		        WHERE ROWNUM <= (#{pageSize} * (#{pageNum} - 1) + #{pageSize})                                                               
 		    )t2      
 		    WHERE rnum >= (#{pageSize} * (#{pageNum} - 1) + 1)                                                                
 			]]>
-			<include refid="orderByScrap"/>
 		)A                                                            
 		CROSS JOIN                                                   
 		(                                                            
