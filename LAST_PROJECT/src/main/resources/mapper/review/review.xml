@@ -114,10 +114,51 @@
 	 			)t2 
 	 	WHERE rnum >= (#{pageSize}*(#{pageNum}-1)+1)  
 	 	]]>                                                                        
-		)A CROSS JOIN(                                                                                  
+		)A CROSS JOIN (                                                                                  
 				SELECT COUNT(*) totalCnt                                     
 				FROM review
 				WHERE review_fk = #{reviewFk}                                                                              
+		)B                                              
+
+	</select>
+	
+	<!-- retrieveMy -->
+	<select id="doRetrieveMy" parameterType="SearchReview" resultType="Review">
+		SELECT a.*, b.*                                                               
+		FROM(                                                                         
+				SELECT t2.rnum as num,                                                               
+					   t2.review_seq as reviewSeq,                                                         
+					   t2.member_id as memberId,                                                          
+					   t2.review_fk as reviewFk,                                                          
+					   t2.div,                                                                
+					   t2.contents,                                                           
+					   CASE WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD')=TO_CHAR(t2.reg_dt,'YYYY/MM/DD')
+					   THEN TO_CHAR(t2.reg_dt,'HH24:MI')                                      
+					   ELSE TO_CHAR(t2.reg_dt,'YYYY/MM/DD')                                   
+					   END as regDt,                                                            
+					   t2.mod_id as modId,                                                             
+					   CASE WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD')=TO_CHAR(t2.mod_dt,'YYYY/MM/DD')
+					   THEN TO_CHAR(t2.mod_dt,'HH24:MI')                                      
+					   ELSE TO_CHAR(t2.mod_dt,'YYYY/MM/DD')                                   
+					   END as modDt                                                             
+				FROM(                                                                         
+								SELECT ROWNUM rnum,t1.*                                       
+								FROM (                                                        
+										SELECT *                                              
+										FROM review                                             
+										WHERE member_id = #{memberId}                                   
+										ORDER BY mod_dt DESC                                  
+									)t1 
+									<![CDATA[
+	 					WHERE ROWNUM <= (#{pageSize}*(#{pageNum}-1)+#{pageSize})
+	 					                                                                 
+	 			)t2 
+	 	WHERE rnum >= (#{pageSize}*(#{pageNum}-1)+1)  
+	 	]]>                                                                        
+		)A CROSS JOIN (                                                                                  
+				SELECT COUNT(*) totalCnt                                     
+				FROM review
+				WHERE member_id = #{memberId}                                                                               
 		)B                                              
 
 	</select>

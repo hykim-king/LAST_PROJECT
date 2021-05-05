@@ -133,6 +133,47 @@ public class ReviewController {
 		return jsonList;
 
 	}
+	
+	@RequestMapping(value = "review/do_retrieve_my.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public String doRetrieveMy(SearchReview search) throws SQLException {
+
+		LOG.debug("----------------");
+		LOG.debug("param: " + search);
+		LOG.debug("----------------");
+
+		// review fk값 nvl 처리
+		search.setReviewFk(StringUtil.nvl(search.getReviewFk(), "-1"));
+
+		// 페이지 num
+		if (search.getPageNum() == 0) {
+			search.setPageNum(1);
+		}
+
+		// 페이지 size
+		if (search.getPageSize() == 0) {
+			search.setPageSize(10);
+		}
+
+		LOG.debug("----------------");
+		LOG.debug("param_init: " + search);
+		LOG.debug("----------------");
+
+		List<Review> list = (List<Review>) this.reviewService.doRetrieveMy(search);
+
+		for (Review vo : list) {
+			LOG.debug(vo.toString());
+		}
+		
+		// List to Json
+		Gson gson = new Gson();
+
+		String jsonList = gson.toJson(list);
+		LOG.debug("jsonList: " + jsonList);
+
+		return jsonList;
+
+	}
 
 	@RequestMapping(value = "review/do_update.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody

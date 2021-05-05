@@ -56,7 +56,7 @@ public class JTestReviewDao {
 		review02 = new Review("2", "tjdus", "1", "1", "test2", "", "", "");
 		review03 = new Review("3", "tjdus", "1", "2", "test3", "", "", "");
 	
-		search01 = new SearchReview(2, 1, "1");
+		search01 = new SearchReview(2, 1, "1","");
 		
 	}
 

@@ -23,6 +23,15 @@ public interface ReviewService {
 	 * @throws SQLException
 	 */
 	List<?> doRetrieve(DTO dto) throws SQLException;
+	
+	/**
+	 * 마이페이지
+	 * 
+	 * @param review
+	 * @return List<Review>
+	 * @throws SQLException
+	 */
+	List<?> doRetrieveMy(DTO dto) throws SQLException;
 
 	/**
 	 * 단건조회

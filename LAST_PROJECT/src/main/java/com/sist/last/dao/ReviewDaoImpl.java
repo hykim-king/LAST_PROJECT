@@ -79,6 +79,27 @@ public class ReviewDaoImpl {
 		return list;
 	}
 	
+	public List<?> doRetrieveMy(DTO dto) throws SQLException {		
+
+		SearchReview param = (SearchReview) dto;
+		
+		//mybatis sql: NAMESPACE+.+id;
+		String statement = this.NAMESPACE+".doRetrieveMy";                                
+		
+		LOG.debug("========================");
+		LOG.debug("param: " + param);
+		LOG.debug("statement: " + statement);
+		LOG.debug("========================");
+		
+		List<Review> list = sqlSessionTemplate.selectList(statement, param);
+		
+		for (Review vo : list) {
+			LOG.debug(vo.toString());
+		}
+				
+		return list;
+	}
+	
 	public DTO doSelectOne(DTO dto) throws SQLException {
 		Review inVO = (Review) dto;
 		Review outVO = null;
