@@ -150,7 +150,7 @@ public class BasketController {
 		String resultMsg="";
 		
 		if(1==flag) {
-			resultMsg = basket.getBasketSeq() + "이(가) 장바구니에서 삭제되었습니다.";
+			resultMsg = basket.getTitle() + "이(가) 장바구니에서 삭제되었습니다.";
 		}else {
 			resultMsg = "삭제 실패.";
 		}
@@ -200,13 +200,14 @@ public class BasketController {
 				message.setMsgId(flag + "");
 			}
 		} else {
-			resultMsg = "장바구니에 이미 존재하는 상품입니다.";
+			resultMsg = "장바구니에 동일한 상품이 존재합니다.";
 			message.setMsgId("1");
 		}
 		message.setMsgContents(resultMsg);
 		
 		Gson gson = new Gson();
-		String jsonStr = gson.toJson(message);  //메세지를 json으로 
+		String jsonStr = gson.toJson(message); 
+		
 		LOG.debug("================================");
 		LOG.debug("=jsonStr:" + jsonStr);
 		LOG.debug("================================");
