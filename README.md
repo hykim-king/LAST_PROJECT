@@ -39,19 +39,35 @@
 - [LAST_기획서.pdf](https://github.com/code-you-dream-with-me/LAST_PROJECT/files/6410604/LAST_.pdf)
 
 ### 🔗 요구사항정의서
-- [요구사항정의서](https://github.com/code-you-dream-with-me/LAST_PROJECT/issues/1)
+<details markdown="1">
+<summary>접기/펼치기</summary>
+
+<img src="https://user-images.githubusercontent.com/78997066/117229387-e4dbdf00-ae55-11eb-880e-c76bdc5367e0.png">
+</details>
 
 ### 🔗 WBS
-- [WBS](https://github.com/code-you-dream-with-me/LAST_PROJECT/issues/2) 
+<details markdown="1">
+<summary>접기/펼치기</summary>
+
+<img src="https://user-images.githubusercontent.com/78997066/117229473-0fc63300-ae56-11eb-8e76-5408e1586dc5.png">
+</details>
 
 ### 🔗 개발 아키텍쳐_Spring MVC
 <img src="https://user-images.githubusercontent.com/78997066/117125198-2fb51280-add4-11eb-8178-e367a7a22d13.png" width="70%">
 
-### 🔗 개발 기술
-- [개발 기술](https://github.com/code-you-dream-with-me/LAST_PROJECT/issues/4)
+### 🔗 개발 환경
+<details markdown="1">
+<summary>접기/펼치기</summary>
+
+<img src="https://user-images.githubusercontent.com/78997066/117229569-3a17f080-ae56-11eb-9753-68cf9a25553f.png">
+</details>
 
 ### 🔗 개발 목록
-- [프로그램 목록](https://github.com/code-you-dream-with-me/LAST_PROJECT/issues/5)
+<details markdown="1">
+<summary>접기/펼치기</summary>
+
+<img src="https://user-images.githubusercontent.com/78997066/117229710-79ded800-ae56-11eb-8dc6-8e8d5f4e56b2.png">
+</details>
 
 ### 🔗 단위테스트
 - [JUnit Test](https://github.com/code-you-dream-with-me/LAST_PROJECT/tree/main/LAST_PROJECT/src/test/java/com/sist/last)
