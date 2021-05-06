@@ -95,6 +95,12 @@
 
 ### 🔗 단위테스트
 - [JUnit Test](https://github.com/code-you-dream-with-me/LAST_PROJECT/tree/main/LAST_PROJECT/src/test/java/com/sist/last)
+- [단위테스트_LAST.xls](https://github.com/code-you-dream-with-me/LAST_PROJECT/files/6431510/_LAST.xls)
+<details markdown="2">
+<summary>접기/펼치기</summary>
+
+[단위테스트_이미지URL](https://github.com/code-you-dream-with-me/LAST_PROJECT/issues/7)
+</details>
 
 ### 🔗 사용 오픈 API
 - [로그인 API](https://github.com/code-you-dream-with-me/LAST_PROJECT/tree/main/LAST_PROJECT/src/main/webapp/WEB-INF/views/login)
