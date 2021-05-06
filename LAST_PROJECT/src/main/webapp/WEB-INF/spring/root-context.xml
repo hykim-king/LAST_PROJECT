@@ -21,8 +21,6 @@
 		<property name="maxInMemorySize"  value="52428800"></property>
 	</bean>
  
-
-
 	<!--3. Session: Authenticator+PasswordAuthentication -->
 	<!-- sqlSessionTemplate -->
 	<bean id="sqlSessionTemplate"
@@ -56,7 +54,7 @@
 	
 	<!-- 트랜잭션 advisor -->
 	<aop:config>
-		<aop:pointcut expression="execution(* com.sist.list..*ServiceImpl.*(..))" id="txPointcut" />
+		<aop:pointcut expression="execution(* com.sist.last..*ServiceImpl.*(..))" id="txPointcut" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
 	</aop:config>
 	<!--// aspectj Transaction처리 -->
