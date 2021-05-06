@@ -417,12 +417,11 @@
 			console.log("addBasket btn click");
 			console.log("optone : "+$("#optone option:selected").val());
 			
-/* 			if($("#optone option:selected").val()==1) {
+			if($("#optone option:selected").val()==1) {
 				alert("옵션을 선택하세요.");
 				$("#optone").focus();
 				return;
 			}
-			 */
 
 			var memberIdData = "${member.memberId}";
 			var shipfeeData = "3000";
@@ -866,7 +865,6 @@
 							html += " <div class='product__item' >                                                                  ";
 		    				html += "   <div class='product__item__pic set-bg'>                                                     ";
 		    				html += "      <img class='product__item__pic set-bg' src='${hContext}/"+value.imgId+"'></a>            ";
-		    				html += "       <div class='product__label'><span>"+value.category+"</span></div>                       ";
 		    				html += "   </div>                                                                                      ";
 		    				html += "   <div class='product__item__text'>                                                           ";
 		    				html += "     <h6><a href='#'>"+value.title+"</a></h6>                                                  ";
