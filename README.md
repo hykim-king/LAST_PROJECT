@@ -8,7 +8,31 @@
 ```
 
 ### 🔗 프로젝트 개요
-<img src="https://user-images.githubusercontent.com/78997066/117141830-f4bdd980-ade9-11eb-929d-3a576a665727.PNG" width="70%">
+
+<table>
+    <tr>
+      <td align="center">팀</td>
+      <td>LAST</td>
+      <td align="center" bgcolor="#F2F2F2">프로젝트명</td>
+      <td>Intery(인테리)</td>
+    </tr>
+    <tr>
+      <td align="center">기간</td>
+      <td colspan="3">2021.03.22 ~ 2021.05.06</td>
+    </tr>
+    <tr>
+      <td align="center">프로젝트 종류</td>
+      <td colspan="3">인테리어 공유 및 관련 용품 구매 사이트</td>
+    </tr>
+    <tr>
+        <td align="center">프로젝트 목표</td>
+        <td colspan="3">
+            1. 온라인 집들이로 다양한 인테리어 공유 콘텐츠 제공</br>
+            2. 구매까지 한 번에 이루어질 수 있도록 편리한 구매 경험 제공</br>
+            3. 누구나 쉽고 재미있게 자신의 공간을 만들어가는 문화 가치 증진
+        </td>
+      </tr>
+</table>
 
 ### 🔗 팀 구성
 - 팀장 : [이해창](https://github.com/leehaechang)
